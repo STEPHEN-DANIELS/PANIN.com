@@ -470,7 +470,6 @@
         <div class="feedback" id="feedback61"></div>
     </div>
 
-
 <script>
     const answers = {
         q1: { correct: "B", explanation: "Reflective practice involves self-assessment and improvement of teaching methods." },
@@ -516,8 +515,9 @@
     };
 
     let score = 0;
-    let totalAnswered = 0;
     const answeredQuestions = new Set();
+    const totalQuestions = Object.keys(answers).length;
+    document.getElementById("totalQuestions").textContent = totalQuestions;
 
     document.querySelectorAll('input[type="radio"]').forEach(radio => {
         radio.addEventListener('change', function () {
@@ -526,34 +526,30 @@
             const feedbackDiv = document.getElementById(feedbackId);
             const correctAnswer = answers[questionId]?.correct;
 
-            if (!correctAnswer) return;
-
-            const previouslyAnswered = answeredQuestions.has(questionId);
-            const isCorrect = (this.value === correctAnswer);
+            if (!correctAnswer || answeredQuestions.has(questionId)) return;
 
             feedbackDiv.style.display = 'block';
 
-            if (isCorrect) {
+            if (this.value === correctAnswer) {
                 feedbackDiv.className = 'feedback correct';
                 feedbackDiv.textContent = "Correct! " + answers[questionId].explanation;
-                if (!previouslyAnswered) score++;
+                score++;
             } else {
                 feedbackDiv.className = 'feedback incorrect';
                 feedbackDiv.textContent = "Incorrect. The correct answer is " + correctAnswer + ". " + answers[questionId].explanation;
-                if (!previouslyAnswered && score > 0) score += 0; // no penalty, just don't increase
             }
 
-            if (!previouslyAnswered) {
-                totalAnswered++;
-                answeredQuestions.add(questionId);
-            }
+            answeredQuestions.add(questionId);
 
-            // Update score display
-            document.getElementById("score").textContent = score;
-            document.getElementById("total").textContent = totalAnswered;
+            if (answeredQuestions.size === totalQuestions) {
+                document.getElementById("finalScoreValue").textContent = score;
+                document.getElementById("finalScore").style.display = "block";
+                window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+            }
         });
     });
 </script>
+
 
 
 </body>
