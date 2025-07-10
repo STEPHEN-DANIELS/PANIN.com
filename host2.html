@@ -54,7 +54,72 @@
         }
     </style>
 </head>
-    <form action="https://formspree.io/f/yourFormID" method="POST">
+    <script>
+    const answers = {
+        q1: { correct: "B", explanation: "Reflective practice involves self-assessment and improvement of teaching methods." },
+        q2: { correct: "B", explanation: "A community of practice is a collaborative environment for educators." },
+        q3: { correct: "B", explanation: "Understanding child development helps tailor instruction." },
+        q4: { correct: "B", explanation: "The NTC licenses and regulates the teaching profession in Ghana." },
+        q5: { correct: "B", explanation: "A safe and supportive classroom supports well-being and growth." },
+        q6: { correct: "B", explanation: "Ethical conduct is central to professional values." },
+        q7: { correct: "B", explanation: "Effective management involves inclusivity and safety." },
+        q9: { correct: "B", explanation: "Mentoring supports a community of practice." },
+        q11: { correct: "B", explanation: "Materials should align with objectives and student needs." },
+        q12: { correct: "B", explanation: "Fairness and transparency define ethical teaching." },
+        q15: { correct: "B", explanation: "This reflects inclusive teaching practice." },
+        q16: { correct: "B", explanation: "Collaboration with parents shows a community approach." },
+        q17: { correct: "B", explanation: "Formative assessment identifies learning gaps." },
+        q18: { correct: "B", explanation: "That’s unethical conduct in assessment." },
+        q19: { correct: "B", explanation: "Implementing new strategies = active development." },
+        q20: { correct: "B", explanation: "Child development knowledge shapes lessons." },
+        q22: { correct: "B", explanation: "Creating a safe space is key to effective classrooms." },
+        q23: { correct: "C", explanation: "Collaborative learning supports engagement." },
+        q25: { correct: "B", explanation: "Reflective practice drives growth." },
+        q28: { correct: "B", explanation: "Transparent grading upholds ethics." },
+        q35: { correct: "C", explanation: "Professional knowledge informs and enhances practice." },
+        q36: { correct: "B", explanation: "Outdated knowledge can disadvantage students." },
+        q37: { correct: "B", explanation: "Support and mentorship improve retention." },
+        q38: { correct: "B", explanation: "Leaders guide, authority figures enforce." },
+        q39: { correct: "B", explanation: "Positive values foster school culture." },
+        q40: { correct: "B", explanation: "Development knowledge supports inclusion." },
+        q41: { correct: "B", explanation: "Inquiry-based learning builds critical thinking." },
+        q43: { correct: "B", explanation: "Mentorship and feedback help struggling teachers." },
+        q44: { correct: "B", explanation: "Fair assessment promotes equity." },
+        q46: { correct: "B", explanation: "Inclusive classrooms benefit all learners." },
+        q50: { correct: "C", explanation: "Calm, constructive intervention shows best practice." },
+        q51: { correct: "C", explanation: "Collaborative inquiry blends all three domains." },
+        q52: { correct: "B", explanation: "Assessment informs learning decisions." },
+        q53: { correct: "B", explanation: "Differentiation is key for diverse learners." },
+        q54: { correct: "B", explanation: "Continuous learning keeps teaching effective." },
+        q55: { correct: "B", explanation: "Values like honesty build professionalism." },
+        q56: { correct: "B", explanation: "Clear expectations and reinforcement are best." },
+        q58: { correct: "B", explanation: "Peer sessions support collective growth." },
+        q59: { correct: "B", explanation: "Listening and responding builds trust." },
+        q61: { correct: "B", explanation: "Exit tickets assess understanding immediately." }
+    };
+
+    document.querySelectorAll('input[type="radio"]').forEach(radio => {
+        radio.addEventListener('change', function () {
+            const questionId = this.name;
+            const feedbackId = "feedback" + questionId.substring(1);
+            const feedbackDiv = document.getElementById(feedbackId);
+            const correctAnswer = answers[questionId]?.correct;
+
+            if (!correctAnswer) return;
+
+            feedbackDiv.style.display = 'block';
+
+            if (this.value === correctAnswer) {
+                feedbackDiv.className = 'feedback correct';
+                feedbackDiv.textContent = "Correct! " + answers[questionId].explanation;
+            } else {
+                feedbackDiv.className = 'feedback incorrect';
+                feedbackDiv.textContent = "Incorrect. The correct answer is " + correctAnswer + ". " + answers[questionId].explanation;
+            }
+        });
+    });
+</script>
+
 <body>
     <h1>Essential Professional Skills (EPS) Quiz - 40 Questions</h1>
     
