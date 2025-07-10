@@ -54,72 +54,7 @@
         }
     </style>
 </head>
-    <script>
-    const answers = {
-        q1: { correct: "B", explanation: "Reflective practice involves self-assessment and improvement of teaching methods." },
-        q2: { correct: "B", explanation: "A community of practice is a collaborative environment for educators." },
-        q3: { correct: "B", explanation: "Understanding child development helps tailor instruction." },
-        q4: { correct: "B", explanation: "The NTC licenses and regulates the teaching profession in Ghana." },
-        q5: { correct: "B", explanation: "A safe and supportive classroom supports well-being and growth." },
-        q6: { correct: "B", explanation: "Ethical conduct is central to professional values." },
-        q7: { correct: "B", explanation: "Effective management involves inclusivity and safety." },
-        q9: { correct: "B", explanation: "Mentoring supports a community of practice." },
-        q11: { correct: "B", explanation: "Materials should align with objectives and student needs." },
-        q12: { correct: "B", explanation: "Fairness and transparency define ethical teaching." },
-        q15: { correct: "B", explanation: "This reflects inclusive teaching practice." },
-        q16: { correct: "B", explanation: "Collaboration with parents shows a community approach." },
-        q17: { correct: "B", explanation: "Formative assessment identifies learning gaps." },
-        q18: { correct: "B", explanation: "That’s unethical conduct in assessment." },
-        q19: { correct: "B", explanation: "Implementing new strategies = active development." },
-        q20: { correct: "B", explanation: "Child development knowledge shapes lessons." },
-        q22: { correct: "B", explanation: "Creating a safe space is key to effective classrooms." },
-        q23: { correct: "C", explanation: "Collaborative learning supports engagement." },
-        q25: { correct: "B", explanation: "Reflective practice drives growth." },
-        q28: { correct: "B", explanation: "Transparent grading upholds ethics." },
-        q35: { correct: "C", explanation: "Professional knowledge informs and enhances practice." },
-        q36: { correct: "B", explanation: "Outdated knowledge can disadvantage students." },
-        q37: { correct: "B", explanation: "Support and mentorship improve retention." },
-        q38: { correct: "B", explanation: "Leaders guide, authority figures enforce." },
-        q39: { correct: "B", explanation: "Positive values foster school culture." },
-        q40: { correct: "B", explanation: "Development knowledge supports inclusion." },
-        q41: { correct: "B", explanation: "Inquiry-based learning builds critical thinking." },
-        q43: { correct: "B", explanation: "Mentorship and feedback help struggling teachers." },
-        q44: { correct: "B", explanation: "Fair assessment promotes equity." },
-        q46: { correct: "B", explanation: "Inclusive classrooms benefit all learners." },
-        q50: { correct: "C", explanation: "Calm, constructive intervention shows best practice." },
-        q51: { correct: "C", explanation: "Collaborative inquiry blends all three domains." },
-        q52: { correct: "B", explanation: "Assessment informs learning decisions." },
-        q53: { correct: "B", explanation: "Differentiation is key for diverse learners." },
-        q54: { correct: "B", explanation: "Continuous learning keeps teaching effective." },
-        q55: { correct: "B", explanation: "Values like honesty build professionalism." },
-        q56: { correct: "B", explanation: "Clear expectations and reinforcement are best." },
-        q58: { correct: "B", explanation: "Peer sessions support collective growth." },
-        q59: { correct: "B", explanation: "Listening and responding builds trust." },
-        q61: { correct: "B", explanation: "Exit tickets assess understanding immediately." }
-    };
-
-    document.querySelectorAll('input[type="radio"]').forEach(radio => {
-        radio.addEventListener('change', function () {
-            const questionId = this.name;
-            const feedbackId = "feedback" + questionId.substring(1);
-            const feedbackDiv = document.getElementById(feedbackId);
-            const correctAnswer = answers[questionId]?.correct;
-
-            if (!correctAnswer) return;
-
-            feedbackDiv.style.display = 'block';
-
-            if (this.value === correctAnswer) {
-                feedbackDiv.className = 'feedback correct';
-                feedbackDiv.textContent = "Correct! " + answers[questionId].explanation;
-            } else {
-                feedbackDiv.className = 'feedback incorrect';
-                feedbackDiv.textContent = "Incorrect. The correct answer is " + correctAnswer + ". " + answers[questionId].explanation;
-            }
-        });
-    });
-</script>
-
+    
 <body>
     <h1>Essential Professional Skills (EPS) Quiz - 40 Questions</h1>
     
@@ -537,66 +472,71 @@
         <div class="feedback" id="feedback61"></div>
     </div>
 
-    <script>
-        // Answer key and explanations for the 40 selected questions
-        const answers = {
-            q1: { correct: "B", explanation: "Reflective practice involves self-assessment and improvement of teaching methods to enhance professional development." },
-            q2: { correct: "B", explanation: "A community of practice is a collaborative environment where teachers share experiences, mentor peers, and uphold ethical standards." },
-            q3: { correct: "B", explanation: "Understanding learning theories and child development enables teachers to adapt to diverse student needs and support reforms." },
-            q4: { correct: "B", explanation: "The National Teaching Council in Ghana focuses on licensing and regulating teachers." },
-            q5: { correct: "B", explanation: "A supportive environment fosters emotional well-being and academic growth, beyond just physical safety." },
-            q6: { correct: "B", explanation: "Ethical conduct is a core aspect of professional values, ensuring fairness and integrity." },
-            q7: { correct: "B", explanation: "Effective management creates a safe, inclusive, and supportive space for learning." },
-            q9: { correct: "B", explanation: "Mentoring a colleague contributes to a community of practice through collaboration." },
-            q11: { correct: "B", explanation: "Appropriate materials are suited to learning objectives and student needs." },
-            q12: { correct: "B", explanation: "Ethical conduct ensures fairness, integrity, and transparency in all professional interactions." },
-            q15: { correct: "B", explanation: "Positioning a visually impaired student’s desk demonstrates inclusion." },
-            q16: { correct: "B", explanation: "Collaborating with parents aligns with the community of practice concept." },
-            q17: { correct: "B", explanation: "A short quiz during instruction is a formative assessment to identify struggles." },
-            q18: { correct: "B", explanation: "Sharing exam questions is unethical misconduct." },
-            q19: { correct: "B", explanation: "Implementing new strategies shows professional development in action." },
-            q20: { correct: "B", explanation: "Designing lessons for various learning styles applies child development knowledge." },
-            q22: { correct: "B", explanation: "A safe and supportive classroom applies principles of managing learning environments." },
-            q23: { correct: "C", explanation: "Collaborative learning fosters a classroom community of practice." },
-            q25: { correct: "B", explanation: "A personal growth plan reflects professional development through reflective practice." },
-            q28: { correct: "B", explanation: "Transparent grading aligns with ethical conduct in assessment." },
-            q35: { correct: "C", explanation: "Professional Knowledge informs Professional Practice by providing a theoretical foundation." },
-            q36: { correct: "B", explanation: "Neglecting policy updates can disadvantage students by misaligning teaching with goals." },
-            q37: { correct: "B", explanation: "A community of practice mitigates turnover through collaboration and support." },
-            q38: { correct: "B", explanation: "A leader guides and inspires, while an authority figure enforces rules." },
-            q39: { correct: "B", explanation: "Professional values set a positive example, influencing school culture." },
-            q40: { correct: "B", explanation: "Child development knowledge tailors practice for inclusive environments." },
-            q41: { correct: "B", explanation: "Inquiry-based learning challenges teachers but fosters critical thinking." },
-            q43: { correct: "B", explanation: "Peer observation and mentorship support struggling teachers." },
-            q44: { correct: "B", explanation: "Fair assessment ensures accountability for supporting student learning." },
-            q46: { correct: "B", explanation: "Inclusive environments benefit all students by fostering tolerance and equity." },
-            q50: { correct: "C", explanation: "Calmly addressing disruptions demonstrates effective classroom management." },
-            q51: { correct: "C", explanation: "A collaborative inquiry group integrates Knowledge, Practice, and Values." },
-            q52: { correct: "B", explanation: "Assessment supports learning and informs instruction, not just grading." },
-            q53: { correct: "B", explanation: "Researching learning theories and differentiation supports diverse learners." },
-            q54: { correct: "B", explanation: "Attending workshops and integrating strategies shows continuous learning." },
-            q55: { correct: "B", explanation: "A policy promoting honesty fosters academic integrity." },
-            q56: { correct: "B", explanation: "Clear expectations and positive reinforcement address misbehavior." },
-            q58: { correct: "B", explanation: "Peer mentoring and collaborative sessions cultivate a community of practice." },
-            q59: { correct: "B", explanation: "Listening and explaining professionally fosters parent-teacher relationships." },
-            q61: { correct: "B", explanation: "Exit tickets are a practical formative assessment strategy." }
-        };
 
-        // Add event listeners to all radio buttons
-        document.querySelectorAll('input[type="radio"]').forEach(radio => {
-            radio.addEventListener('change', function() {
-                const questionId = this.name;
-                const feedbackDiv = document.getElementById(feedback${questionId.substring(1)});
-                feedbackDiv.style.display = 'block';
-                if (this.value === answers[questionId].correct) {
-                    feedbackDiv.className = 'feedback correct';
-                    feedbackDiv.textContent = Correct! ${answers[questionId].explanation};
-                } else {
-                    feedbackDiv.className = 'feedback incorrect';
-                    feedbackDiv.textContent = Incorrect. The correct answer is ${answers[questionId].correct}. ${answers[questionId].explanation};
-                }
-            });
+    <script>
+    const answers = {
+        q1: { correct: "B", explanation: "Reflective practice involves self-assessment and improvement of teaching methods." },
+        q2: { correct: "B", explanation: "A community of practice is a collaborative environment for educators." },
+        q3: { correct: "B", explanation: "Understanding child development helps tailor instruction." },
+        q4: { correct: "B", explanation: "The NTC licenses and regulates the teaching profession in Ghana." },
+        q5: { correct: "B", explanation: "A safe and supportive classroom supports well-being and growth." },
+        q6: { correct: "B", explanation: "Ethical conduct is central to professional values." },
+        q7: { correct: "B", explanation: "Effective management involves inclusivity and safety." },
+        q9: { correct: "B", explanation: "Mentoring supports a community of practice." },
+        q11: { correct: "B", explanation: "Materials should align with objectives and student needs." },
+        q12: { correct: "B", explanation: "Fairness and transparency define ethical teaching." },
+        q15: { correct: "B", explanation: "This reflects inclusive teaching practice." },
+        q16: { correct: "B", explanation: "Collaboration with parents shows a community approach." },
+        q17: { correct: "B", explanation: "Formative assessment identifies learning gaps." },
+        q18: { correct: "B", explanation: "That’s unethical conduct in assessment." },
+        q19: { correct: "B", explanation: "Implementing new strategies = active development." },
+        q20: { correct: "B", explanation: "Child development knowledge shapes lessons." },
+        q22: { correct: "B", explanation: "Creating a safe space is key to effective classrooms." },
+        q23: { correct: "C", explanation: "Collaborative learning supports engagement." },
+        q25: { correct: "B", explanation: "Reflective practice drives growth." },
+        q28: { correct: "B", explanation: "Transparent grading upholds ethics." },
+        q35: { correct: "C", explanation: "Professional knowledge informs and enhances practice." },
+        q36: { correct: "B", explanation: "Outdated knowledge can disadvantage students." },
+        q37: { correct: "B", explanation: "Support and mentorship improve retention." },
+        q38: { correct: "B", explanation: "Leaders guide, authority figures enforce." },
+        q39: { correct: "B", explanation: "Positive values foster school culture." },
+        q40: { correct: "B", explanation: "Development knowledge supports inclusion." },
+        q41: { correct: "B", explanation: "Inquiry-based learning builds critical thinking." },
+        q43: { correct: "B", explanation: "Mentorship and feedback help struggling teachers." },
+        q44: { correct: "B", explanation: "Fair assessment promotes equity." },
+        q46: { correct: "B", explanation: "Inclusive classrooms benefit all learners." },
+        q50: { correct: "C", explanation: "Calm, constructive intervention shows best practice." },
+        q51: { correct: "C", explanation: "Collaborative inquiry blends all three domains." },
+        q52: { correct: "B", explanation: "Assessment informs learning decisions." },
+        q53: { correct: "B", explanation: "Differentiation is key for diverse learners." },
+        q54: { correct: "B", explanation: "Continuous learning keeps teaching effective." },
+        q55: { correct: "B", explanation: "Values like honesty build professionalism." },
+        q56: { correct: "B", explanation: "Clear expectations and reinforcement are best." },
+        q58: { correct: "B", explanation: "Peer sessions support collective growth." },
+        q59: { correct: "B", explanation: "Listening and responding builds trust." },
+        q61: { correct: "B", explanation: "Exit tickets assess understanding immediately." }
+    };
+
+    document.querySelectorAll('input[type="radio"]').forEach(radio => {
+        radio.addEventListener('change', function () {
+            const questionId = this.name;
+            const feedbackId = "feedback" + questionId.substring(1);
+            const feedbackDiv = document.getElementById(feedbackId);
+            const correctAnswer = answers[questionId]?.correct;
+
+            if (!correctAnswer) return;
+
+            feedbackDiv.style.display = 'block';
+
+            if (this.value === correctAnswer) {
+                feedbackDiv.className = 'feedback correct';
+                feedbackDiv.textContent = "Correct! " + answers[questionId].explanation;
+            } else {
+                feedbackDiv.className = 'feedback incorrect';
+                feedbackDiv.textContent = "Incorrect. The correct answer is " + correctAnswer + ". " + answers[questionId].explanation;
+            }
         });
-    </script>
+    });
+</script>
 </body>
 </html>
