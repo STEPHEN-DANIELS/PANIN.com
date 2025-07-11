@@ -865,5 +865,51 @@
   });
 </script>
 
+  <script>
+    const name = localStorage.getItem("student_name");
+    const className = localStorage.getItem("student_class");
+    const index = localStorage.getItem("student_index");
+
+    document.getElementById("displayName").textContent = name || "Student";
+    document.getElementById("displayClass").textContent = className || "N/A";
+    document.getElementById("displayIndex").textContent = index || "N/A";
+
+    const answers = {
+      q1: "B",
+      // Add your full answer key here
+    };
+
+    document.getElementById("quizForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      let score = 0;
+      const total = Object.keys(answers).length;
+
+      Object.keys(answers).forEach(q => {
+        const selected = document.querySelector(`input[name="${q}"]:checked`);
+        if (selected && selected.value === answers[q]) {
+          score++;
+        }
+      });
+
+      document.getElementById("finalResult").style.display = "block";
+      document.getElementById("finalResult").innerHTML = `
+        🎉 Thank you, <strong>${name}</strong> (Class: <strong>${className}</strong>, Index: <strong>${index}</strong>).<br>
+        You scored <strong>${score}/${total}</strong>.
+      `;
+
+      sendToGoogleSheet(name, className, index, score);
+      localStorage.clear();
+    });
+
+    function sendToGoogleSheet(name, className, index, score) {
+      fetch("https://script.google.com/macros/s/YOUR_SCRIPT_ID_HERE/exec", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, class: className, index, score })
+      })
+      .then(() => console.log("Score submitted"))
+      .catch(err => console.error("Failed to submit", err));
+    }
+  </script>
 </body>
 </html>
