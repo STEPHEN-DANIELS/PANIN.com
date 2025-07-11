@@ -814,5 +814,56 @@
         // Initialize the quiz when the page loads
         window.onload = initializeQuiz;
     </script>
+    <div id="finalResult" style="display: none; text-align: center; padding: 20px; margin-top: 30px; background-color: #e8f5e9; border: 1px solid #2e7d32; border-radius: 10px; font-size: 18px; color: #2e7d32;">
+  <!-- Final result will appear here -->
+</div>
+
+<script>
+  const name = localStorage.getItem("student_name");
+  const className = localStorage.getItem("student_class");
+  const index = localStorage.getItem("student_index");
+
+  // Display info at the top of the quiz page
+  document.getElementById("displayName").textContent = name || "Student";
+  document.getElementById("displayClass").textContent = className || "N/A";
+  document.getElementById("displayIndex").textContent = index || "N/A";
+
+  // Answer key
+  const answers = {
+    q1: "B", q2: "B", q3: "B", q4: "B", q5: "B", q6: "B", q7: "B",
+    q9: "B", q11: "B", q12: "B", q15: "B", q16: "B", q17: "B",
+    q18: "B", q19: "B", q20: "B", q22: "B", q23: "C", q25: "B",
+    q28: "B", q35: "C", q36: "B", q37: "B", q38: "B", q39: "B",
+    q40: "B", q41: "B", q43: "B", q44: "B", q46: "B", q50: "C",
+    q51: "C", q52: "B", q53: "B", q54: "B", q55: "B", q56: "B",
+    q58: "B", q59: "B", q61: "B"
+  };
+
+  const totalQuestions = Object.keys(answers).length;
+  let score = 0;
+  const answered = new Set();
+
+  document.querySelectorAll('input[type="radio"]').forEach(radio => {
+    radio.addEventListener("change", function () {
+      const questionId = this.name;
+      if (!answered.has(questionId)) {
+        answered.add(questionId);
+        if (this.value === answers[questionId]) {
+          score++;
+        }
+      }
+
+      if (answered.size === totalQuestions) {
+        const resultDiv = document.getElementById("finalResult");
+        resultDiv.innerHTML = `🎉 Thank you, <strong>${name}</strong> (Class: <strong>${className}</strong>, Index: <strong>${index}</strong>).<br>You scored <strong>${score}/${totalQuestions}</strong>.`;
+        resultDiv.style.display = "block";
+
+        // Optional: clear localStorage
+        localStorage.clear();
+      }
+    });
+  });
+</script>
+
 </body>
 </html>
