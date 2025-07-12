@@ -39,20 +39,18 @@
 
     .logo {
       width: 90px;
-      height: auto;
-      border-radius: 8px;
-      margin-bottom: 15px;
+      margin-bottom: 10px;
+      border-radius: 10px;
     }
 
     .typing {
-      overflow: hidden;
-      white-space: nowrap;
-      border-right: 2px solid #fff;
-      width: 100%;
       font-weight: 700;
       font-size: 24px;
       margin-bottom: 10px;
-      animation: typing 4s steps(40, end), blink 0.75s step-end infinite;
+      border-right: 2px solid #fff;
+      white-space: nowrap;
+      overflow: hidden;
+      animation: typing 3.5s steps(40, end), blink 0.8s step-end infinite;
     }
 
     @keyframes typing {
@@ -64,9 +62,9 @@
       50% { border-color: transparent }
     }
 
-    .subtitle {
-      font-size: 16px;
-      margin-bottom: 20px;
+    h2 {
+      font-size: 18px;
+      margin-bottom: 25px;
       color: #e0f7fa;
     }
 
@@ -113,6 +111,15 @@
       object-fit: cover;
     }
 
+    .welcome-gif {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      width: 80px;
+      height: 80px;
+      border-radius: 10px;
+    }
+
     .footer {
       margin-top: 20px;
       font-size: 14px;
@@ -123,18 +130,29 @@
       .form-container {
         padding: 25px;
       }
+      .welcome-gif {
+        display: none;
+      }
     }
   </style>
 </head>
 <body>
 
-  <div class="form-container">
-    <img src="logo.jpg" alt="School Logo" class="logo">
-    <div class="typing">Welcome to Sarfo's Site</div>
-    <div class="subtitle">PMT 121 TRIAL QUESTIONS</div>
+  <!-- Welcome GIF -->
+  <img class="welcome-gif" src="https://gifdb.com/images/high/welcome-home-498-x-498-gif-40v8rvzquq58e0ot.gif" alt="Welcome">
 
+  <div class="form-container">
+    <!-- School Logo -->
+    <img src="logo.jpg" alt="School Logo" class="logo">
+
+    <!-- Typing Header -->
+    <div class="typing">Welcome to Sarfo's Site</div>
+    <h2>PMT 121 TRIAL QUESTIONS</h2>
+
+    <!-- Profile image -->
     <img class="profile-pic" src="PAN.jpeg" alt="Profile Picture">
 
+    <!-- Form -->
     <form id="welcomeForm">
       <label for="name">Name:</label>
       <input type="text" id="name" name="name" required>
@@ -148,6 +166,7 @@
       <input type="submit" value="Start Quiz">
     </form>
 
+    <!-- Footer -->
     <div class="footer">Designed by Stephen Daniels, TA_PROF. BONYAH</div>
   </div>
 
@@ -171,5 +190,6 @@
       window.location.href = "Quiz.html";
     });
   </script>
+
 </body>
 </html>
