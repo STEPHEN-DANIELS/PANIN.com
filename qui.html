@@ -160,4 +160,69 @@
       .form-container {
         padding: 25px;
       }
-      .wel
+      .welcome-gif {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Welcome GIF -->
+  <img class="welcome-gif" src="https://gifdb.com/images/high/welcome-home-498-x-498-gif-40v8rvzquq58e0ot.gif" alt="Welcome">
+
+  <div class="form-container">
+    <!-- School Logo -->
+    <img src="logo.jpg" alt="School Logo" class="logo">
+
+    <!-- Typing Header inside glowing box -->
+    <div class="typing-box">
+      <div class="typing">Welcome to Sarfo's Site</div>
+    </div>
+
+    <h2>PMT 121 TRIAL QUESTIONS</h2>
+
+    <!-- Profile image -->
+    <img class="profile-pic" src="PAN.jpeg" alt="Profile Picture">
+
+    <!-- Form -->
+    <form id="welcomeForm">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required>
+
+      <label for="class">Class:</label>
+      <input type="text" id="class" name="class" required>
+
+      <label for="index">Index Number:</label>
+      <input type="number" id="index" name="index" required>
+
+      <input type="submit" value="Start Quiz">
+    </form>
+
+    <!-- Footer -->
+    <div class="footer">Designed by Stephen Daniels, TA_PROF. BONYAH</div>
+  </div>
+
+  <script>
+    document.getElementById("welcomeForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const name = document.getElementById("name").value.trim();
+      const className = document.getElementById("class").value.trim();
+      const index = document.getElementById("index").value.trim();
+
+      if (!name || !className || !index) {
+        alert("Please fill in all fields before starting the quiz.");
+        return;
+      }
+
+      localStorage.setItem("student_name", name);
+      localStorage.setItem("student_class", className);
+      localStorage.setItem("student_index", index);
+
+      alert(`Welcome, ${name}! Redirecting to quiz...`);
+      window.location.href = "Quiz.html";
+    });
+  </script>
+
+</body>
+</html>
