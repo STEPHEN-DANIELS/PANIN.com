@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Welcome to BRAINZ Site</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #c2e9fb, #a1c4fd);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .form-container {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      max-width: 500px;
+      width: 90%;
+      text-align: center;
+      position: relative;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .form-container h1 {
+      color: #2c3e50;
+      margin-bottom: 10px;
+    }
+
+    .form-container h2 {
+      color: #2980b9;
+      margin-bottom: 20px;
+      font-size: 18px;
+    }
+
+    .form-container label {
+      display: block;
+      text-align: left;
+      margin: 15px 0 5px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .form-container input[type="text"],
+    .form-container input[type="number"] {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      margin-bottom: 15px;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .form-container input[type="text"]:focus,
+    .form-container input[type="number"]:focus {
+      border-color: #2980b9;
+      box-shadow: 0 0 5px rgba(41, 128, 185, 0.4);
+      outline: none;
+    }
+
+    .form-container input[type="submit"] {
+      background-color: #27ae60;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .form-container input[type="submit"]:hover {
+      background-color: #1e8449;
+    }
+
+    .profile-pic {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 10px;
+      border: 3px solid #2980b9;
+    }
+
+    .welcome-gif {
+      position: absolute;
+      top: -30px;
+      left: -30px;
+      width: 80px;
+      height: 80px;
+    }
+
+    .footer {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #555;
+    }
+
+    @media (max-width: 500px) {
+      .form-container {
+        padding: 20px;
+      }
+      .welcome-gif {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-container">
+    <img class="welcome-gif" src="https://gifdb.com/images/high/welcome-home-498-x-498-gif-40v8rvzquq58e0ot.gif" alt="Welcome">
+    <img class="profile-pic" src="" alt="Profile Picture">
+    <h1>Welcome to BRAINZ Site</h1>
+    <h2>MATHS CURRICULUM QUIZ QUESTIONS</h2>
+
+    <form id="welcomeForm">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required>
+
+      <label for="class">Class:</label>
+      <input type="text" id="class" name="class" required>
+
+      <label for="index">Index Number:</label>
+      <input type="number" id="index" name="index" required>
+
+      <input type="submit" value="Start Quiz">
+    </form>
+
+    <div class="footer">Designed by BRAINZ,</div>
+  </div>
+
+  <script>
+    document.getElementById("welcomeForm").addEventListener("submit", function(e) {
+      e.preventDefault(); // prevent default form action
+
+      const name = document.getElementById("name").value.trim();
+      const className = document.getElementById("class").value.trim();
+      const index = document.getElementById("index").value.trim();
+
+      if (!name || !className || !index) {
+        alert("Please fill in all fields before starting the quiz.");
+        return;
+      }
+
+      // Store in localStorage
+      localStorage.setItem("student_name", name);
+      localStorage.setItem("student_class", className);
+      localStorage.setItem("student_index", index);
+
+      // Optional confirmation
+      alert(Welcome, ${name}! Redirecting you to the quiz page...);
+
+      // Redirect
+      window.location.href = "Quiz.html";
+    });
+  </script>
+
+</body>
+</html>
