@@ -9,8 +9,11 @@
     body {
       margin: 0;
       font-family: 'Poppins', sans-serif;
-      background: url('logo.jpg') no-repeat center center fixed;
-      background-size: cover;
+      background: url('pmt-pic.jpg') no-repeat center center fixed;
+      background-size: auto 100%;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-color: #ffffff;
       min-height: 100vh;
       display: flex;
       justify-content: center;
@@ -19,7 +22,7 @@
     }
 
     .form-container {
-      background: rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.85);
       border-radius: 15px;
       padding: 40px 30px;
       width: 90%;
@@ -27,7 +30,7 @@
       text-align: center;
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
       backdrop-filter: blur(10px);
-      color: white;
+      color: black;
       animation: fadeIn 1s ease-in-out;
       position: relative;
     }
@@ -44,10 +47,11 @@
     }
 
     .typing {
-      font-weight: 700;
+      font-weight: bold;
       font-size: 24px;
       margin-bottom: 10px;
-      border-right: 2px solid #fff;
+      color: black;
+      border-right: 2px solid black;
       white-space: nowrap;
       overflow: hidden;
       animation: typing 3.5s steps(40, end), blink 0.8s step-end infinite;
@@ -65,14 +69,16 @@
     h2 {
       font-size: 18px;
       margin-bottom: 25px;
-      color: #e0f7fa;
+      color: black;
+      font-weight: bold;
     }
 
     label {
       display: block;
       text-align: left;
       margin: 10px 0 5px;
-      font-weight: 600;
+      font-weight: bold;
+      color: black;
     }
 
     input[type="text"],
@@ -80,7 +86,7 @@
       width: 100%;
       padding: 12px;
       border-radius: 10px;
-      border: none;
+      border: 1px solid #ccc;
       margin-bottom: 15px;
       font-size: 16px;
     }
@@ -123,7 +129,8 @@
     .footer {
       margin-top: 20px;
       font-size: 14px;
-      color: #f1f1f1;
+      color: black;
+      font-weight: bold;
     }
 
     @media (max-width: 500px) {
