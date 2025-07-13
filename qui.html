@@ -10,8 +10,8 @@
     body {
       margin: 0;
       font-family: 'Poppins', sans-serif;
-      background:
-        linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+      background: 
+        linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
         url('logo.jpg') no-repeat center center fixed;
       background-size: cover;
       min-height: 100vh;
@@ -77,7 +77,6 @@
       display: block;
       text-align: left;
       margin: 10px 0 5px;
-      font-weight: normal;
     }
 
     input[type="text"],
@@ -183,22 +182,14 @@
   </div>
 
   <script>
-    function submitToWebhook(name, className, index, score, total) {
-      fetch("https://connect.pabbly.com/workflow/sendwebhookdata/IjU3NjYwNTZhMDYzNjA0MzA1MjZjNTUzNzUxMzIi_pc", {
+    function submitToGoogleSheet(name, className, index, score = "N/A", total = "N/A") {
+      fetch("YOUR_WEB_APP_URL", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: name,
-          class: className,
-          index: index,
-          score: score,
-          total: total
-        })
-      }).then(res => {
-        console.log("Submitted to webhook");
-      }).catch(err => {
-        console.error("Webhook error:", err);
-      });
+        body: JSON.stringify({ name, class: className, index, score, total })
+      })
+      .then(res => console.log("Submitted to Google Sheet"))
+      .catch(err => console.error("Google Sheet submission failed:", err));
     }
 
     document.getElementById("welcomeForm").addEventListener("submit", function(e) {
@@ -216,8 +207,7 @@
       localStorage.setItem("student_class", className);
       localStorage.setItem("student_index", index);
 
-      // Send data to webhook with placeholder score (0/0)
-      submitToWebhook(name, className, index, 0, 0);
+      submitToGoogleSheet(name, className, index);
 
       alert(`Welcome, ${name}! Redirecting to quiz...`);
       window.location.href = "Opanin.html";
