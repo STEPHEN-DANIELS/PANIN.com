@@ -44,24 +44,17 @@
       border-radius: 10px;
     }
 
-    .typing {
+    .welcome-box {
       font-weight: bold;
       font-size: 24px;
-      margin-bottom: 10px;
-      color: black;
-      border-right: 2px solid black;
-      white-space: nowrap;
-      overflow: hidden;
-      animation: typing 3.5s steps(40, end), blink 0.8s step-end infinite;
-    }
-
-    @keyframes typing {
-      from { width: 0 }
-      to { width: 100% }
-    }
-
-    @keyframes blink {
-      50% { border-color: transparent }
+      color: #333;
+      padding: 12px 20px;
+      border: 2px solid #00bcd4;
+      border-radius: 8px;
+      background-color: #e0f7fa;
+      display: inline-block;
+      margin-bottom: 20px;
+      box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
     }
 
     h2 {
@@ -77,6 +70,8 @@
       display: block;
       text-align: left;
       margin: 10px 0 5px;
+      font-weight: normal;
+      color: black;
     }
 
     input[type="text"],
@@ -156,8 +151,9 @@
     <!-- School Logo -->
     <img src="logo.jpg" alt="School Logo" class="logo">
 
-    <!-- Typing Header -->
-    <div class="typing">Welcome to Sarfo's Site</div>
+    <!-- Rectangle Welcome Box -->
+    <div class="welcome-box">Welcome to Sarfo's Site</div>
+
     <h2>PMT 121 TRIAL QUESTIONS</h2>
 
     <!-- Profile image -->
@@ -182,16 +178,6 @@
   </div>
 
   <script>
-    function submitToGoogleSheet(name, className, index, score = "N/A", total = "N/A") {
-      fetch("YOUR_WEB_APP_URL", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, class: className, index, score, total })
-      })
-      .then(res => console.log("Submitted to Google Sheet"))
-      .catch(err => console.error("Google Sheet submission failed:", err));
-    }
-
     document.getElementById("welcomeForm").addEventListener("submit", function(e) {
       e.preventDefault();
       const name = document.getElementById("name").value.trim();
@@ -207,10 +193,8 @@
       localStorage.setItem("student_class", className);
       localStorage.setItem("student_index", index);
 
-      submitToGoogleSheet(name, className, index);
-
       alert(`Welcome, ${name}! Redirecting to quiz...`);
-      window.location.href = "Opanin.html";
+      window.location.href = "Quiz.html";
     });
   </script>
 
