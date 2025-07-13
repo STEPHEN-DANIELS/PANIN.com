@@ -1132,8 +1132,7 @@
     </script>
     
     <script>
-        const publishedUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQmDX47fsnf2nB72Mlbju91L7XqHaeuMC3eOYoV1i4Isy1KWL7ul8hFMR5Pp5jcE_wYuUYvjpnGEq9c/pub?output=csv&gid=0';
-
+        const publishedUrl = '<iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQmDX47fsnf2nB72Mlbju91L7XqHaeuMC3eOYoV1i4Isy1KWL7ul8hFMR5Pp5jcE_wYuUYvjpnGEq9c/pubhtml?widget=true&amp;headers=false"></iframe>
         fetch(publishedUrl)
             .then(response => response.text())
             .then(data => {
