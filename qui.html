@@ -43,4 +43,165 @@
       50% { box-shadow: 0 0 20px #00ffcc, 0 0 30px #00ffcc; }
     }
 
-    @keyframes bounceF
+    @keyframes bounceFade {
+      0% { transform: scale(0.95); opacity: 0; }
+      50% { transform: scale(1.05); opacity: 0.8; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .logo {
+      width: 90px;
+      margin-bottom: 10px;
+      border-radius: 10px;
+    }
+
+    .welcome-box {
+      font-weight: bold;
+      font-size: 24px;
+      color: #000;
+      padding: 14px 20px;
+      border: 2px solid #00bcd4;
+      border-radius: 12px;
+      background-color: #e0f7fa;
+      display: inline-block;
+      margin-bottom: 20px;
+      animation: glowBox 2s infinite alternate, bounceFade 1s ease-in-out;
+    }
+
+    h2 {
+      font-size: 20px;
+      margin-bottom: 25px;
+      font-weight: bold;
+      background: linear-gradient(45deg, #00bcd4, #00796b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    label {
+      display: block;
+      text-align: left;
+      margin: 10px 0 5px;
+      font-weight: normal;
+      color: black;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      margin-bottom: 15px;
+      font-size: 16px;
+    }
+
+    input[type="submit"] {
+      width: 100%;
+      padding: 14px;
+      background-color: #00c853;
+      color: white;
+      font-weight: bold;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #00a843;
+    }
+
+    .profile-pic {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 3px solid #fff;
+      margin-bottom: 20px;
+      object-fit: cover;
+    }
+
+    .welcome-gif {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      width: 80px;
+      height: 80px;
+      border-radius: 10px;
+    }
+
+    .footer {
+      margin-top: 20px;
+      font-size: 14px;
+      color: black;
+      font-weight: bold;
+    }
+
+    @media (max-width: 500px) {
+      .form-container {
+        padding: 25px;
+      }
+      .welcome-gif {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Welcome GIF -->
+  <img class="welcome-gif" src="https://gifdb.com/images/high/welcome-home-498-x-498-gif-40v8rvzquq58e0ot.gif" alt="Welcome">
+
+  <div class="form-container">
+    <!-- School Logo -->
+    <img src="logo.jpg" alt="School Logo" class="logo">
+
+    <!-- Glowing Welcome Box -->
+    <div class="welcome-box">Welcome to Sarfo's Site</div>
+
+    <h2>PMT 121 TRIAL QUESTIONS</h2>
+
+    <!-- Profile image -->
+    <img class="profile-pic" src="PAN.jpeg" alt="Profile Picture">
+
+    <!-- Form -->
+    <form id="welcomeForm">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required>
+
+      <label for="class">Class:</label>
+      <input type="text" id="class" name="class" required>
+
+      <label for="index">Index Number:</label>
+      <input type="number" id="index" name="index" required>
+
+      <input type="submit" value="Start Quiz">
+    </form>
+
+    <!-- Footer -->
+    <div class="footer">Designed by Stephen Daniels, TA_PROF. BONYAH</div>
+  </div>
+
+  <script>
+    document.getElementById("welcomeForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const name = document.getElementById("name").value.trim();
+      const className = document.getElementById("class").value.trim();
+      const index = document.getElementById("index").value.trim();
+
+      if (!name || !className || !index) {
+        alert("Please fill in all fields before starting the quiz.");
+        return;
+      }
+
+      localStorage.setItem("student_name", name);
+      localStorage.setItem("student_class", className);
+      localStorage.setItem("student_index", index);
+
+      alert(`Welcome, ${name}! Redirecting to quiz...`);
+      window.location.href = "Opanin.html";
+    });
+  </script>
+
+</body>
+</html>
