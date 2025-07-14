@@ -156,8 +156,24 @@
     <!-- School Logo -->
     <img src="logo.jpg" alt="School Logo" class="logo">
 
-    <!-- Glowing Welcome Box -->
-    <div class="welcome-box">Welcome to Sarfo's Site</div>
+    <!-- Glowing Welcome Box --><span id="typing-text"></span>
+
+<script>
+  const text = "Welcome to Sarfo's Site";
+  let i = 0;
+  const typingText = document.getElementById("typing-text");
+
+  function typeText() {
+    if (i < text.length) {
+      typingText.innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typeText, 100);
+    }
+  }
+
+  typeText();
+</script>
+    <div class="welcome-box"></div>
 
     <h2>PMT 121 TRIAL QUESTIONS</h2>
 
