@@ -1,207 +1,1144 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Welcome to Sarfo's Site</title>
-  <link rel="icon" href="logo.jpg" type="image/png">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: 
-        linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
-        url('logo.jpg') no-repeat center center fixed;
-      background-size: cover;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematics Curriculum 2025 Quiz</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    .form-container {
-      background: rgba(255, 255, 255, 0.9);
-      border-radius: 15px;
-      padding: 40px 30px;
-      width: 90%;
-      max-width: 480px;
-      text-align: center;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
-      animation: fadeIn 1s ease-in-out;
-      position: relative;
-      color: black;
-    }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f8fafc;
+            color: #334155;
+            line-height: 1.6;
+        }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(40px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
 
-    @keyframes glowBox {
-      0%, 100% { box-shadow: 0 0 10px #00e6e6, 0 0 20px #00e6e6; }
-      50% { box-shadow: 0 0 20px #00ffcc, 0 0 30px #00ffcc; }
-    }
+        .header {
+            background: linear-gradient(135deg, #3b82f6, #1e40af);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
 
-    @keyframes bounceFade {
-      0% { transform: scale(0.95); opacity: 0; }
-      50% { transform: scale(1.05); opacity: 0.8; }
-      100% { transform: scale(1); opacity: 1; }
-    }
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
 
-    .logo {
-      width: 90px;
-      margin-bottom: 10px;
-      border-radius: 10px;
-    }
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
 
-    .welcome-box {
-      font-weight: bold;
-      font-size: 24px;
-      color: #000;
-      padding: 14px 20px;
-      border: 2px solid #00bcd4;
-      border-radius: 12px;
-      background-color: #e0f7fa;
-      display: inline-block;
-      margin-bottom: 20px;
-      animation: glowBox 2s infinite alternate, bounceFade 1s ease-in-out;
-    }
+        .quiz-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
 
-    h2 {
-      font-size: 20px;
-      margin-bottom: 25px;
-      font-weight: bold;
-      background: linear-gradient(45deg, #00bcd4, #00796b);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
+        .progress-bar {
+            background: #e2e8f0;
+            height: 8px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
 
-    label {
-      display: block;
-      text-align: left;
-      margin: 10px 0 5px;
-      font-weight: normal;
-      color: black;
-    }
+        .progress-fill {
+            background: linear-gradient(90deg, #3b82f6, #1e40af);
+            height: 100%;
+            transition: width 0.3s ease;
+        }
 
-    input[type="text"],
-    input[type="number"] {
-      width: 100%;
-      padding: 12px;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-      margin-bottom: 15px;
-      font-size: 16px;
-    }
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e2e8f0;
+        }
 
-    input[type="submit"] {
-      width: 100%;
-      padding: 14px;
-      background-color: #00c853;
-      color: white;
-      font-weight: bold;
-      font-size: 16px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
+        .question-number {
+            font-weight: bold;
+            color: #3b82f6;
+            font-size: 1.1rem;
+        }
 
-    input[type="submit"]:hover {
-      background-color: #00a843;
-    }
+        .category-badge {
+            background: #dbeafe;
+            color: #1e40af;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
 
-    .profile-pic {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      border: 3px solid #fff;
-      margin-bottom: 20px;
-      object-fit: cover;
-    }
+        .question-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #1e293b;
+        }
 
-    .welcome-gif {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      width: 80px;
-      height: 80px;
-      border-radius: 10px;
-    }
+        .options {
+            list-style: none;
+        }
 
-    .footer {
-      margin-top: 20px;
-      font-size: 14px;
-      color: black;
-      font-weight: bold;
-    }
+        .option {
+            margin-bottom: 12px;
+            padding: 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: white;
+        }
 
-    @media (max-width: 500px) {
-      .form-container {
-        padding: 25px;
-      }
-      .welcome-gif {
-        display: none;
-      }
-    }
-  </style>
+        .option:hover {
+            border-color: #3b82f6;
+            background: #f8fafc;
+        }
+
+        .option.selected {
+            border-color: #3b82f6;
+            background: #dbeafe;
+        }
+
+        .option.correct {
+            border-color: #10b981;
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .option.incorrect {
+            border-color: #ef4444;
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .option.disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .feedback {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .feedback.correct {
+            background: #d1fae5;
+            border: 1px solid #10b981;
+            color: #065f46;
+        }
+
+        .feedback.incorrect {
+            background: #fee2e2;
+            border: 1px solid #ef4444;
+            color: #991b1b;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1e40af;
+        }
+
+        .btn-secondary {
+            background: #6b7280;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #4b5563;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .results {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            display: none;
+        }
+
+        .score-display {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #3b82f6;
+            margin-bottom: 10px;
+        }
+
+        .score-breakdown {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .score-item {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .score-item h3 {
+            color: #1e293b;
+            margin-bottom: 10px;
+        }
+
+        .category-results {
+            margin: 30px 0;
+            text-align: left;
+        }
+
+        .category-result {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: #f8fafc;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .difficulty-badge {
+            background: #fbbf24;
+            color: #92400e;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .difficulty-badge.easy {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .difficulty-badge.medium {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .difficulty-badge.hard {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .quiz-container {
+                padding: 20px;
+            }
+            
+            .controls {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <div class="header">
+            <h1>Mathematics Curriculum 2025 Quiz</h1>
+            <p>Test your knowledge on Units 1-5: Comprehensive Mathematics Curriculum Assessment</p>
+        </div>
 
-  <!-- Welcome GIF -->
-  <img class="welcome-gif" src="https://gifdb.com/images/high/welcome-home-498-x-498-gif-40v8rvzquq58e0ot.gif" alt="Welcome">
+        <!-- Student Name Input -->
+        <div id="name-input" class="quiz-container">
+            <h2>Welcome to the Mathematics Curriculum Quiz</h2>
+            <p>Please enter your name before starting the quiz:</p>
+            <div style="margin: 20px 0;">
+                <input type="text" id="student-name" placeholder="Enter your full name" style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 1rem;" />
+            </div>
+            <button class="btn btn-primary" onclick="startQuiz()" disabled id="start-btn">Start Quiz</button>
+        </div>
 
-  <div class="form-container">
-    <!-- School Logo -->
-    <img src="logo.jpg" alt="School Logo" class="logo">
+        <div id="quiz-container" class="quiz-container" style="display: none;">
+            <div class="progress-bar">
+                <div id="progress-fill" class="progress-fill" style="width: 0%"></div>
+            </div>
 
-    <!-- Glowing Welcome Box -->
-    <div class="welcome-box">Welcome to Sarfo's Site</div>
+            <div class="question-header">
+                <span id="question-number" class="question-number">Question 1 of 60</span>
+                <span id="category-badge" class="category-badge">Unit 1: Mathematics Curriculum</span>
+            </div>
 
-    <h2>PMT 121 TRIAL QUESTIONS</h2>
+            <div id="question-text" class="question-text"></div>
 
-    <!-- Profile image -->
-    <img class="profile-pic" src="PAN.jpeg" alt="Profile Picture">
+            <ul id="options" class="options"></ul>
 
-    <!-- Form -->
-    <form id="welcomeForm">
-      <label for="name">Name:</label>
-      <input type="text" id="name" name="name" required>
+            <div id="feedback" class="feedback"></div>
 
-      <label for="class">Class:</label>
-      <input type="text" id="class" name="class" required>
+            <div class="controls">
+                <button id="prev-btn" class="btn btn-secondary" onclick="previousQuestion()" disabled>Previous</button>
+                <div>
+                    <button id="check-btn" class="btn btn-primary" onclick="checkAnswer()" disabled>Check Answer</button>
+                    <button id="next-btn" class="btn btn-primary" onclick="nextQuestion()" style="display: none;">Next Question</button>
+                </div>
+            </div>
+        </div>
 
-      <label for="index">Index Number:</label>
-      <input type="number" id="index" name="index" required>
+        <div id="results" class="results">
+            <h2 id="thank-you-message">Thank you for submitting the quiz!</h2>
+            <div id="score-display" class="score-display">0%</div>
+            <p>You scored <span id="final-score"></span> out of <span id="total-questions"></span> questions</p>
+            
+            <div class="score-breakdown">
+                <div class="score-item">
+                    <h3>Correct Answers</h3>
+                    <div id="correct-count">0</div>
+                </div>
+                <div class="score-item">
+                    <h3>Incorrect Answers</h3>
+                    <div id="incorrect-count">0</div>
+                </div>
+                <div class="score-item">
+                    <h3>Time Taken</h3>
+                    <div id="time-taken">0:00</div>
+                </div>
+            </div>
 
-      <input type="submit" value="Start Quiz">
-    </form>
+            <div class="category-results">
+                <h3>Results by Unit:</h3>
+                <div id="category-breakdown"></div>
+            </div>
 
-    <!-- Footer -->
-    <div class="footer">Designed by Stephen Daniels, TA_PROF. BONYAH</div>
-  </div>
+            <button class="btn btn-primary" onclick="restartQuiz()">Retake Quiz</button>
+        </div>
+    </div>
 
-  <script>
-    document.getElementById("welcomeForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const name = document.getElementById("name").value.trim();
-      const className = document.getElementById("class").value.trim();
-      const index = document.getElementById("index").value.trim();
+    <script>
+        let studentName = "";
 
-      if (!name || !className || !index) {
-        alert("Please fill in all fields before starting the quiz.");
-        return;
-      }
+        const questions = [
+            {
+                id: 1,
+                question: "The word 'curriculum' is derived from the Latin word 'curere' which means:",
+                options: ["To learn", "To run", "To teach", "To study"],
+                correctAnswer: 1,
+                category: "Unit 1: Mathematics Curriculum",
+                difficulty: "Easy",
+                explanation: "The word curriculum is derived from the Latin word 'curere' which means 'to run', referring to a course to be run for reaching a certain goal or destination."
+            },
+            {
+                id: 2,
+                question: "According to Howson, Keitel and Kilpatrick (1982), curriculum is composed of all the following components EXCEPT:",
+                options: ["An aim", "A content", "A budget plan", "An assessment procedure"],
+                correctAnswer: 2,
+                category: "Unit 1: Mathematics Curriculum",
+                difficulty: "Medium",
+                explanation: "Unit 1 states that Howson, Keitel and Kilpatrick (1982) describe curriculum to be composed of an aim, a content, an objective, a method for transmitting the content and an assessment procedure."
+            },
+            {
+                id: 3,
+                question: "The modern concept of curriculum emphasizes not only academic subjects but also:",
+                options: ["Only textbook content", "Other activities planned and guided by the school", "Examination preparation only", "Teacher training programs"],
+                correctAnswer: 1,
+                category: "Unit 1: Mathematics Curriculum",
+                difficulty: "Easy",
+                explanation: "Unit 1 explains that the modern concept of curriculum emphasizes not only academic subjects but also other activities planned and guided by the school, including speech days, excursions, fieldtrips, sporting activities and moral training."
+            },
+            {
+                id: 4,
+                question: "Which type of curriculum refers to values, beliefs, and attitudes conveyed through school environment but not explicitly stated in formal documents?",
+                options: ["Written curriculum", "Intended curriculum", "Hidden curriculum", "Formal curriculum"],
+                correctAnswer: 2,
+                category: "Unit 1: Mathematics Curriculum",
+                difficulty: "Medium",
+                explanation: "Unit 1 describes the unwritten curriculum, also known as the hidden or implicit curriculum, as referring to values, beliefs, attitudes, and social norms conveyed through school environment but not explicitly stated in formalized documents."
+            },
+            {
+                id: 5,
+                question: "What are the three main types of curriculum changes mentioned in Unit 1?",
+                options: ["Innovation, Creation, Implementation", "Adaptation, Innovation, Adoption", "Planning, Development, Evaluation", "Design, Implementation, Assessment"],
+                correctAnswer: 1,
+                category: "Unit 1: Mathematics Curriculum",
+                difficulty: "Medium",
+                explanation: "Unit 1 states that curriculum changes may occur in three major ways: Adaptation (importing and modifying another country's curriculum), Innovation (creating completely new curriculum), and Adoption (importing without changes)."
+            },
+            {
+                id: 6,
+                question: "In the IEA model mentioned in Unit 1, the 'attained curriculum' represents:",
+                options: ["What society intends students to learn", "What is actually taught in classroom", "What students have learned and think about mathematics", "The formal curriculum documents"],
+                correctAnswer: 2,
+                category: "Unit 1: Mathematics Curriculum",
+                difficulty: "Medium",
+                explanation: "Unit 1 explains that in the IEA model, the attained curriculum represents what students have learned and what they think about mathematics."
+            },
+            {
+                id: 7,
+                question: "What is the primary aim of the mathematics curriculum according to Unit 1?",
+                options: ["To develop computational skills only", "To prepare students for examinations", "To develop mathematically literate, creative problem solvers who can participate fully in Ghanaian society", "To teach advanced mathematical theories"],
+                correctAnswer: 2,
+                category: "Unit 1: Mathematics Curriculum",
+                difficulty: "Easy",
+                explanation: "Unit 1 states that the curriculum is aimed at developing individuals to become mathematically literate, good problem solvers who are capable to think creatively and have confidence and competence to participate fully in Ghanaian society."
+            },
+            {
+                id: 8,
+                question: "According to Unit 1, which domain of Bloom's Taxonomy focuses on mental skills and knowledge?",
+                options: ["Affective domain", "Psychomotor domain", "Cognitive domain", "Social domain"],
+                correctAnswer: 2,
+                category: "Unit 1: Mathematics Curriculum",
+                difficulty: "Easy",
+                explanation: "Unit 1 explains that in Bloom's Taxonomy, the cognitive domain focuses on mental skills (knowledge), while affective deals with growth in feelings/emotional areas and psychomotor deals with manual or physical skills."
+            },
+            {
+                id: 9,
+                question: "The Greek word from which 'Mathematics' is derived means:",
+                options: ["Number study", "Inclined to learn", "Logical thinking", "Problem solving"],
+                correctAnswer: 1,
+                category: "Unit 2: Nature of Mathematics",
+                difficulty: "Medium",
+                explanation: "Unit 2 states that Mathematics is derived from the Greek word 'Ganita', which means 'inclined to learn', coined by the Pythagoreans during the 6th century B.C."
+            },
+            {
+                id: 10,
+                question: "According to Unit 2, Pure Mathematics is defined as:",
+                options: ["Mathematics applied to solve real-world problems", "A study of basic concepts and structures for deeper understanding of the subject", "Mathematics used in engineering applications", "Simple arithmetic operations"],
+                correctAnswer: 1,
+                category: "Unit 2: Nature of Mathematics",
+                difficulty: "Medium",
+                explanation: "Unit 2 defines Pure Mathematics as a study of the basic concepts and structures for the purpose of a deeper understanding of the subject, dealing with basic information/facts where various concepts, proofs and theories are discussed."
+            },
+            {
+                id: 11,
+                question: "Mathematical ideas progress from:",
+                options: ["Abstract to concrete", "General to particular", "Concrete to abstract", "Complex to simple"],
+                correctAnswer: 2,
+                category: "Unit 2: Nature of Mathematics",
+                difficulty: "Medium",
+                explanation: "Unit 2 explains that mathematical ideas grow from concrete to abstract, particular to general, and its knowledge is conceptual as well as procedural."
+            },
+            {
+                id: 12,
+                question: "According to Unit 2, the two major aspects of the structure of Mathematics are:",
+                options: ["Theory and Practice", "Products aspects and Process aspects", "Concrete and Abstract", "Pure and Applied"],
+                correctAnswer: 1,
+                category: "Unit 2: Nature of Mathematics",
+                difficulty: "Medium",
+                explanation: "Unit 2 states that there are two major aspects of mathematics structure: Products aspects (Substantive structure) and Process aspects (Syntactical Structure)."
+            },
+            {
+                id: 13,
+                question: "Van Dormolen (1986) defined 'kernels' of mathematics as:",
+                options: ["Core mathematical concepts only", "Advanced mathematical theories", "General expressions that have to be learned as knowledge", "Basic arithmetic operations"],
+                correctAnswer: 2,
+                category: "Unit 2: Nature of Mathematics",
+                difficulty: "Hard",
+                explanation: "Unit 2 explains that van Dormolen defined kernels as 'general expressions that have to be learned as knowledge' and include rules, definitions, methods and conventions that constitute mathematical knowledge."
+            },
+            {
+                id: 14,
+                question: "The Instrumentalist perspective views mathematics as:",
+                options: ["A body of absolute truths", "An accumulation of facts, rules and skills to be used in pursuit of external goals", "A creative human activity", "A social construction"],
+                correctAnswer: 1,
+                category: "Unit 2: Nature of Mathematics",
+                difficulty: "Hard",
+                explanation: "Unit 2 describes the Instrumentalist perspective as viewing mathematics as an accumulation of facts, rules and skills to be used instrumentally in pursuit of some external end or goal."
+            },
+            {
+                id: 15,
+                question: "Which perspective emphasizes that mathematical objects exist in their own right in some abstract realm?",
+                options: ["Instrumentalist", "Platonist", "Fallibilist", "Social Constructivist"],
+                correctAnswer: 1,
+                category: "Unit 2: Nature of Mathematics",
+                difficulty: "Hard",
+                explanation: "Unit 2 explains that the Platonist perspective emphasizes that mathematical objects exist in their own right in some abstract realm, independent of human thought and language."
+            },
+            {
+                id: 16,
+                question: "The Problem-solving/Social Constructivism perspective views mathematics as:",
+                options: ["A finished, complete body of knowledge", "An untidy activity that leads to results open to revision", "A set of absolute truths", "A collection of mechanical skills"],
+                correctAnswer: 1,
+                category: "Unit 2: Nature of Mathematics",
+                difficulty: "Hard",
+                explanation: "Unit 2 states that the problem-solving view sees mathematics as not a finished product but an untidy activity that leads to results that are open to revision."
+            },
+            {
+                id: 17,
+                question: "Absolutist perspectives view mathematics as:",
+                options: ["Subjective and uncertain", "Objective, absolute, certain and incorrigible", "Constantly changing and evolving", "Culturally dependent"],
+                correctAnswer: 1,
+                category: "Unit 2: Nature of Mathematics",
+                difficulty: "Medium",
+                explanation: "Unit 2 explains that absolutist perspectives view mathematics as an objective, absolute, certain and incorrigible body of knowledge, which rests on the firm foundations of deductive logic."
+            },
+            {
+                id: 18,
+                question: "Recreational mathematics is characterized by problems that are:",
+                options: ["Only for entertainment purposes", "Too simple for serious study", "Fun and understandable to interested lay persons", "Only involving games and puzzles"],
+                correctAnswer: 2,
+                category: "Unit 2: Nature of Mathematics",
+                difficulty: "Easy",
+                explanation: "Unit 2 defines recreational mathematics as mathematics that is fun and popular, with problems understandable to the interested lay person, though solutions may be harder."
+            },
+            {
+                id: 19,
+                question: "According to Unit 2, triangular numbers are called so because of:",
+                options: ["Their mathematical properties", "Their sequence pattern", "The arrangement of dots associated with each number", "Their geometric relationships"],
+                correctAnswer: 2,
+                category: "Unit 2: Nature of Mathematics",
+                difficulty: "Medium",
+                explanation: "Unit 2 explains that triangular numbers are called so because of the arrangement of dots that is associated with each number, showing triangular patterns."
+            },
+            {
+                id: 20,
+                question: "Curriculum development is described in Unit 3 as a process that starts with:",
+                options: ["Content selection", "Method selection", "Situation analysis", "Evaluation"],
+                correctAnswer: 2,
+                category: "Unit 3: Curriculum Development",
+                difficulty: "Easy",
+                explanation: "Unit 3 states that curriculum development is a continuous process which starts with situation analysis, continues with formulation of objectives, content selection, method selection, implementation, and evaluation."
+            },
+            {
+                id: 21,
+                question: "In the cyclical curriculum development process, what comes after 'Selection of Objectives'?",
+                options: ["Evaluation", "Selection and Organization of Content", "Selection of Methods", "Situation Analysis"],
+                correctAnswer: 1,
+                category: "Unit 3: Curriculum Development",
+                difficulty: "Medium",
+                explanation: "Unit 3 shows the cyclical process as: 1) Situation Analysis, 2) Selection of Objectives, 3) Selection and Organization of Content, 4) Selection of Methods, 5) Evaluation."
+            },
+            {
+                id: 22,
+                question: "Situation analysis in curriculum development involves considering all of the following factors EXCEPT:",
+                options: ["Changes and trends in society", "Pupils' abilities and educational needs", "Personal preferences of curriculum developers", "Teachers' values, attitudes, and skills"],
+                correctAnswer: 2,
+                category: "Unit 3: Curriculum Development",
+                difficulty: "Medium",
+                explanation: "Unit 3 lists factors for situation analysis including: changes in society, expectations of parents/employers, subject matter nature, education system requirements, pupils' abilities, material resources, and teachers' characteristics - but not personal preferences of developers."
+            },
+            {
+                id: 23,
+                question: "According to Unit 3, the Subject-Centred curriculum organization is characterized by:",
+                options: ["Focus on individual student development", "Integration of multiple subjects", "Emphasis on separate, logically organized subjects", "Problem-based learning approaches"],
+                correctAnswer: 2,
+                category: "Unit 3: Curriculum Development",
+                difficulty: "Medium",
+                explanation: "Unit 3 explains that subject-centred organization emphasizes separate subjects that are logically and systematically organized, where each subject maintains its distinct identity."
+            },
+            {
+                id: 24,
+                question: "The Core Curriculum pattern is intended to provide:",
+                options: ["Specialized knowledge for gifted students", "Common learning or general education for all students", "Advanced preparation for university", "Vocational training skills"],
+                correctAnswer: 1,
+                category: "Unit 3: Curriculum Development",
+                difficulty: "Medium",
+                explanation: "Unit 3 states that the core curriculum pattern is intended to provide common learning, or general education, for all students - teaching common concepts, skills, values and attitudes needed by all individuals."
+            },
+            {
+                id: 25,
+                question: "The 'Separate Subjects Core' refers to:",
+                options: ["Individual subjects taught by different specialists", "Integrated subjects taught together", "Optional subjects for advanced students", "Remedial subjects for struggling students"],
+                correctAnswer: 0,
+                category: "Unit 3: Curriculum Development",
+                difficulty: "Medium",
+                explanation: "Unit 3 defines the Separate Subjects Core as a series of required individual subjects separately taught by subject matter specialists, like English and Mathematics at JSS level in Ghana."
+            },
+            {
+                id: 26,
+                question: "According to Unit 3, a mathematics syllabus differs from curriculum in that a syllabus:",
+                options: ["Is broader than curriculum", "Is an outline of topics while curriculum describes what happens in the course", "Only covers theoretical aspects", "Is used only for examinations"],
+                correctAnswer: 1,
+                category: "Unit 3: Curriculum Development",
+                difficulty: "Medium",
+                explanation: "Unit 3 explains that a curriculum differs from a syllabus in that a syllabus is an outline of subjects or topics students will cover in a course whilst curriculum means a written description of what happens in the course."
+            },
+            {
+                id: 27,
+                question: "The two main types of syllabuses mentioned in Unit 3 are:",
+                options: ["National and international syllabuses", "Examination syllabuses and teaching syllabuses", "Primary and secondary syllabuses", "Theoretical and practical syllabuses"],
+                correctAnswer: 1,
+                category: "Unit 3: Curriculum Development",
+                difficulty: "Easy",
+                explanation: "Unit 3 states that principally, there are two main types of syllabuses: examination syllabuses (like WAEC) and teaching syllabuses."
+            },
+            {
+                id: 28,
+                question: "A teaching syllabus typically includes all of the following EXCEPT:",
+                options: ["General and specific objectives", "Content and teacher-learner activities", "Standardized test scores", "Assessment procedures"],
+                correctAnswer: 2,
+                category: "Unit 3: Curriculum Development",
+                difficulty: "Medium",
+                explanation: "Unit 3 describes teaching syllabuses as having general and specific objectives, rationale, content, teaching methods, and assessment procedures (usually formative), but not standardized test scores."
+            },
+            {
+                id: 29,
+                question: "According to Unit 3, curriculum materials for mathematics may include all of the following EXCEPT:",
+                options: ["Geoboards and Dienes' Blocks", "Abacus and spikes abacus", "Personal student notebooks", "Overhead projectors and computers"],
+                correctAnswer: 2,
+                category: "Unit 3: Curriculum Development",
+                difficulty: "Easy",
+                explanation: "Unit 3 lists various curriculum materials including solids, abacus, spikes abacus, geoboard, Dienes' Blocks, chalkboard, overhead projectors, computers, but personal student notebooks are not specifically mentioned as curriculum materials."
+            },
+            {
+                id: 30,
+                question: "The three essential curriculum materials mentioned in Unit 3 are:",
+                options: ["Textbook, chalkboard, and computer", "Teaching syllabus, teacher's handbook, and pupil's textbook", "Objectives, content, and assessment", "Visual aids, audio aids, and manipulatives"],
+                correctAnswer: 1,
+                category: "Unit 3: Curriculum Development",
+                difficulty: "Medium",
+                explanation: "Unit 3 specifically states that the three essential curriculum materials are the teaching syllabus, the teacher's handbook, and the pupil's textbook."
+            },
+            {
+                id: 31,
+                question: "A scheme of work according to Unit 3 is:",
+                options: ["A detailed daily lesson plan", "A breakdown of the syllabus into manageable teaching units for specific periods", "A list of teaching materials", "An assessment schedule"],
+                correctAnswer: 1,
+                category: "Unit 3: Curriculum Development",
+                difficulty: "Medium",
+                explanation: "Unit 3 defines a scheme of work as a breakdown of the syllabus into manageable teaching units for specific periods."
+            },
+            {
+                id: 32,
+                question: "The main purpose of a lesson plan is to:",
+                options: ["Document teaching activities for inspection", "Guide the teacher through organized learning activities", "Provide homework assignments", "Create assessment criteria"],
+                correctAnswer: 1,
+                category: "Unit 3: Curriculum Development",
+                difficulty: "Easy",
+                explanation: "Unit 3 explains that a lesson plan guides the teacher through organized learning activities to achieve specific objectives."
+            },
+            {
+                id: 33,
+                question: "According to Unit 4, the Traditional/Direct Instruction approach is characterized by:",
+                options: ["Student-centered discovery learning", "Teacher-centered instruction with emphasis on drill and practice", "Collaborative group work", "Technology-based learning"],
+                correctAnswer: 1,
+                category: "Unit 4: Teaching Approaches",
+                difficulty: "Medium",
+                explanation: "Unit 4 describes the traditional approach as teacher-centered with emphasis on drill and practice."
+            },
+            {
+                id: 34,
+                question: "The Constructivist approach to teaching mathematics emphasizes:",
+                options: ["Memorization of formulas", "Students building their own understanding through experience", "Teacher demonstration only", "Standardized procedures"],
+                correctAnswer: 1,
+                category: "Unit 4: Teaching Approaches",
+                difficulty: "Medium",
+                explanation: "Unit 4 explains that constructivism emphasizes students building their own understanding through active experience."
+            },
+            {
+                id: 35,
+                question: "Scaffolding in mathematics education refers to:",
+                options: ["Building physical models", "Temporary support structures to help students achieve learning goals", "Constructing mathematical proofs", "Creating visual displays"],
+                correctAnswer: 1,
+                category: "Unit 4: Teaching Approaches",
+                difficulty: "Medium",
+                explanation: "Unit 4 defines scaffolding as temporary support structures provided to help students achieve their learning goals."
+            },
+            {
+                id: 36,
+                question: "The four-step problem-solving process includes all EXCEPT:",
+                options: ["Understanding the problem", "Making a plan", "Memorizing formulas", "Looking back"],
+                correctAnswer: 2,
+                category: "Unit 4: Teaching Approaches",
+                difficulty: "Medium",
+                explanation: "Unit 4 outlines the four steps as: understanding the problem, making a plan, carrying out the plan, and looking back."
+            },
+            {
+                id: 37,
+                question: "Differentiation in mathematics teaching means:",
+                options: ["Teaching calculus concepts", "Adapting instruction to meet diverse student needs", "Separating students by ability", "Using different textbooks"],
+                correctAnswer: 1,
+                category: "Unit 4: Teaching Approaches",
+                difficulty: "Medium",
+                explanation: "Unit 4 describes differentiation as adapting instruction to meet the diverse needs of all students."
+            },
+            {
+                id: 38,
+                question: "Formative assessment is primarily used to:",
+                options: ["Assign final grades", "Monitor student progress and adjust instruction", "Compare students to national standards", "Determine promotion to next grade"],
+                correctAnswer: 1,
+                category: "Unit 4: Teaching Approaches",
+                difficulty: "Easy",
+                explanation: "Unit 4 explains that formative assessment monitors student progress and helps adjust instruction accordingly."
+            },
+            {
+                id: 39,
+                question: "According to Unit 4, summative assessment is conducted:",
+                options: ["During daily lessons", "At the end of instruction periods", "Only for struggling students", "Continuously throughout learning"],
+                correctAnswer: 1,
+                category: "Unit 4: Teaching Approaches",
+                difficulty: "Easy",
+                explanation: "Unit 4 states that summative assessment is conducted at the end of instruction periods to evaluate learning outcomes."
+            },
+            {
+                id: 40,
+                question: "The mathematics laboratory mentioned in Unit 5 is designed to:",
+                options: ["Conduct science experiments", "Provide hands-on mathematical experiences", "Store teaching materials only", "Test student abilities"],
+                correctAnswer: 1,
+                category: "Unit 5: Resources and Environment",
+                difficulty: "Easy",
+                explanation: "Unit 5 describes the mathematics laboratory as providing hands-on mathematical experiences for students."
+            },
+            {
+                id: 41,
+                question: "A mathematics corner in the classroom should include:",
+                options: ["Only textbooks", "Mathematical displays, models, and learning aids", "Computer equipment only", "Assessment papers"],
+                correctAnswer: 1,
+                category: "Unit 5: Resources and Environment",
+                difficulty: "Easy",
+                explanation: "Unit 5 explains that a mathematics corner should include mathematical displays, models, and various learning aids."
+            },
+            {
+                id: 42,
+                question: "Effective mathematics teaching environment promotes:",
+                options: ["Competitive individual work only", "Collaborative learning and mathematical discourse", "Silent independent study", "Memorization of procedures"],
+                correctAnswer: 1,
+                category: "Unit 5: Resources and Environment",
+                difficulty: "Medium",
+                explanation: "Unit 5 emphasizes that effective environments promote collaborative learning and mathematical discourse."
+            },
+            {
+                id: 43,
+                question: "Which factor does NOT influence curriculum development according to Unit 3?",
+                options: ["Social and economic factors", "Educational philosophy", "Teacher's personal preferences", "Available resources"],
+                correctAnswer: 2,
+                category: "Unit 3: Curriculum Development",
+                difficulty: "Medium",
+                explanation: "Unit 3 lists various factors influencing curriculum development but emphasizes objective factors rather than personal preferences."
+            },
+            {
+                id: 44,
+                question: "The spiral curriculum approach means:",
+                options: ["Teaching topics once thoroughly", "Revisiting topics at increasing levels of complexity", "Following a linear progression", "Teaching advanced topics first"],
+                correctAnswer: 1,
+                category: "Unit 3: Curriculum Development",
+                difficulty: "Medium",
+                explanation: "The spiral approach involves revisiting mathematical topics at increasing levels of complexity and depth."
+            },
+            {
+                id: 45,
+                question: "According to Unit 1, curriculum evaluation serves to:",
+                options: ["Punish poor performance", "Determine effectiveness and guide improvements", "Rank schools competitively", "Reduce teaching workload"],
+                correctAnswer: 1,
+                category: "Unit 1: Mathematics Curriculum",
+                difficulty: "Medium",
+                explanation: "Unit 1 explains that curriculum evaluation determines effectiveness and guides necessary improvements."
+            },
+            {
+                id: 46,
+                question: "The cognitive domain in Bloom's taxonomy includes:",
+                options: ["Physical skills only", "Knowledge, comprehension, and thinking skills", "Emotional development", "Social interactions"],
+                correctAnswer: 1,
+                category: "Unit 1: Mathematics Curriculum",
+                difficulty: "Easy",
+                explanation: "Unit 1 describes the cognitive domain as encompassing knowledge, comprehension, and various thinking skills."
+            },
+            {
+                id: 47,
+                question: "Applied Mathematics focuses on:",
+                options: ["Abstract theoretical concepts", "Using mathematics to solve real-world problems", "Historical development of mathematics", "Mathematical proofs only"],
+                correctAnswer: 1,
+                category: "Unit 2: Nature of Mathematics",
+                difficulty: "Easy",
+                explanation: "Unit 2 explains that Applied Mathematics focuses on using mathematical knowledge to solve real-world problems."
+            },
+            {
+                id: 48,
+                question: "The Fallibilist perspective views mathematics as:",
+                options: ["Absolutely certain and unchanging", "Open to revision and correction", "Based on cultural preferences", "Purely abstract concepts"],
+                correctAnswer: 1,
+                category: "Unit 2: Nature of Mathematics",
+                difficulty: "Hard",
+                explanation: "Unit 2 describes the Fallibilist perspective as viewing mathematics as open to revision and correction rather than absolutely certain."
+            },
+            {
+                id: 49,
+                question: "Mathematical communication involves:",
+                options: ["Using symbols only", "Expressing mathematical ideas clearly through various modes", "Memorizing mathematical terms", "Working in isolation"],
+                correctAnswer: 1,
+                category: "Unit 4: Teaching Approaches",
+                difficulty: "Medium",
+                explanation: "Unit 4 emphasizes that mathematical communication involves expressing ideas clearly through various modes including verbal, written, and visual."
+            },
+            {
+                id: 50,
+                question: "The use of manipulatives in mathematics teaching helps students:",
+                options: ["Memorize facts faster", "Visualize and understand abstract concepts", "Complete homework quickly", "Avoid thinking deeply"],
+                correctAnswer: 1,
+                category: "Unit 5: Resources and Environment",
+                difficulty: "Easy",
+                explanation: "Unit 5 explains that manipulatives help students visualize and understand abstract mathematical concepts."
+            },
+            {
+                id: 51,
+                question: "Curriculum alignment refers to:",
+                options: ["Arranging desks in rows", "Ensuring consistency between objectives, instruction, and assessment", "Following textbook order", "Using same materials"],
+                correctAnswer: 1,
+                category: "Unit 3: Curriculum Development",
+                difficulty: "Medium",
+                explanation: "Curriculum alignment ensures consistency between learning objectives, instructional methods, and assessment procedures."
+            },
+            {
+                id: 52,
+                question: "The inductive teaching method involves:",
+                options: ["Starting with general principles", "Moving from specific examples to general principles", "Following strict procedures", "Using only abstract concepts"],
+                correctAnswer: 1,
+                category: "Unit 4: Teaching Approaches",
+                difficulty: "Medium",
+                explanation: "Unit 4 describes inductive teaching as moving from specific examples to general principles and patterns."
+            },
+            {
+                id: 53,
+                question: "Authentic assessment in mathematics should:",
+                options: ["Test memorized facts only", "Reflect real-world applications of mathematical knowledge", "Be multiple choice format", "Avoid problem-solving"],
+                correctAnswer: 1,
+                category: "Unit 4: Teaching Approaches",
+                difficulty: "Medium",
+                explanation: "Unit 4 emphasizes that authentic assessment should reflect real-world applications of mathematical knowledge and skills."
+            },
+            {
+                id: 54,
+                question: "The mathematics curriculum should develop students' ability to:",
+                options: ["Follow procedures mechanically", "Think critically and solve problems creatively", "Memorize formulas perfectly", "Work in isolation"],
+                correctAnswer: 1,
+                category: "Unit 1: Mathematics Curriculum",
+                difficulty: "Easy",
+                explanation: "Unit 1 emphasizes developing critical thinking and creative problem-solving abilities in students."
+            },
+            {
+                id: 55,
+                question: "Mathematical literacy involves:",
+                options: ["Advanced calculus skills", "Understanding and using mathematics in daily life", "Knowing all mathematical formulas", "Competing in mathematics contests"],
+                correctAnswer: 1,
+                category: "Unit 1: Mathematics Curriculum",
+                difficulty: "Easy",
+                explanation: "Unit 1 defines mathematical literacy as the ability to understand and use mathematics effectively in daily life."
+            },
+            {
+                id: 56,
+                question: "The role of technology in mathematics education is to:",
+                options: ["Replace human thinking", "Enhance learning and exploration of mathematical concepts", "Eliminate the need for basic skills", "Provide entertainment only"],
+                correctAnswer: 1,
+                category: "Unit 4: Teaching Approaches",
+                difficulty: "Medium",
+                explanation: "Unit 4 explains that technology should enhance learning and exploration of mathematical concepts rather than replace fundamental thinking."
+            },
+            {
+                id: 57,
+                question: "Peer learning in mathematics involves:",
+                options: ["Students competing against each other", "Students learning from and with each other", "Individual silent work", "Teacher instruction only"],
+                correctAnswer: 1,
+                category: "Unit 4: Teaching Approaches",
+                difficulty: "Easy",
+                explanation: "Unit 4 describes peer learning as students learning from and with each other through collaboration and discussion."
+            },
+            {
+                id: 58,
+                question: "The hidden curriculum in mathematics includes:",
+                options: ["Written lesson objectives", "Implicit messages about mathematics and learning", "Textbook content", "Assessment procedures"],
+                correctAnswer: 1,
+                category: "Unit 1: Mathematics Curriculum",
+                difficulty: "Medium",
+                explanation: "Unit 1 explains that the hidden curriculum includes implicit messages about the nature of mathematics and learning."
+            },
+            {
+                id: 59,
+                question: "Continuous professional development for mathematics teachers should focus on:",
+                options: ["Administrative duties only", "Improving pedagogical knowledge and skills", "Reducing teaching workload", "Following rigid procedures"],
+                correctAnswer: 1,
+                category: "Unit 5: Resources and Environment",
+                difficulty: "Medium",
+                explanation: "Unit 5 emphasizes that professional development should focus on improving teachers' pedagogical knowledge and skills."
+            },
+            {
+                id: 60,
+                question: "The ultimate goal of mathematics education is to:",
+                options: ["Prepare students for standardized tests", "Develop mathematically literate citizens who can contribute to society", "Create professional mathematicians", "Memorize mathematical facts"],
+                correctAnswer: 1,
+                category: "Unit 1: Mathematics Curriculum",
+                difficulty: "Easy",
+                explanation: "Unit 1 states that the ultimate goal is to develop mathematically literate citizens who can think critically and contribute meaningfully to society."
+            }
+        ];
 
-      localStorage.setItem("student_name", name);
-      localStorage.setItem("student_class", className);
-      localStorage.setItem("student_index", index);
+        let currentQuestionIndex = 0;
+        let userAnswers = [];
+        let startTime = Date.now();
+        let shuffledQuestions = [];
 
-      alert(`Welcome, ${name}! Redirecting to quiz...`);
-      window.location.href = "Quiz.html";
-    });
-  </script>
+        // Function to shuffle array
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
 
+        // Enable start button when name is entered
+        document.addEventListener('DOMContentLoaded', function() {
+            const nameInput = document.getElementById('student-name');
+            const startBtn = document.getElementById('start-btn');
+            
+            nameInput.addEventListener('input', function() {
+                if (this.value.trim().length > 0) {
+                    startBtn.disabled = false;
+                } else {
+                    startBtn.disabled = true;
+                }
+            });
+        });
+
+        function startQuiz() {
+            studentName = document.getElementById('student-name').value.trim();
+            if (studentName) {
+                document.getElementById('name-input').style.display = 'none';
+                document.getElementById('quiz-container').style.display = 'block';
+                initializeQuiz();
+            }
+        }
+
+        function initializeQuiz() {
+            // Shuffle questions for each new quiz attempt
+            shuffledQuestions = shuffleArray(questions);
+            userAnswers = new Array(shuffledQuestions.length).fill(null);
+            startTime = Date.now();
+            displayQuestion();
+        }
+
+        function displayQuestion() {
+            const question = shuffledQuestions[currentQuestionIndex];
+            
+            document.getElementById('question-number').textContent = `Question ${currentQuestionIndex + 1} of ${shuffledQuestions.length}`;
+            document.getElementById('category-badge').textContent = question.category;
+            document.getElementById('question-text').textContent = question.question;
+            
+            const optionsContainer = document.getElementById('options');
+            optionsContainer.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const li = document.createElement('li');
+                li.className = 'option';
+                li.textContent = option;
+                li.onclick = () => selectOption(index);
+                li.setAttribute('data-index', index);
+                optionsContainer.appendChild(li);
+            });
+            
+            updateProgress();
+            updateControls();
+            hideFeedback();
+            
+            // Restore previous answer if any
+            if (userAnswers[currentQuestionIndex] !== null) {
+                selectOption(userAnswers[currentQuestionIndex]);
+                if (userAnswers[currentQuestionIndex] !== null) {
+                    checkAnswer();
+                }
+            }
+        }
+
+        function selectOption(index) {
+            const options = document.querySelectorAll('.option');
+            options.forEach(option => option.classList.remove('selected'));
+            options[index].classList.add('selected');
+            
+            userAnswers[currentQuestionIndex] = index;
+            document.getElementById('check-btn').disabled = false;
+        }
+
+        function checkAnswer() {
+            const question = shuffledQuestions[currentQuestionIndex];
+            const selectedAnswer = userAnswers[currentQuestionIndex];
+            const options = document.querySelectorAll('.option');
+            
+            options.forEach((option, index) => {
+                option.classList.add('disabled');
+                if (index === question.correctAnswer) {
+                    option.classList.add('correct');
+                } else if (index === selectedAnswer && index !== question.correctAnswer) {
+                    option.classList.add('incorrect');
+                }
+            });
+            
+            showFeedback(selectedAnswer === question.correctAnswer, question.explanation);
+            
+            document.getElementById('check-btn').style.display = 'none';
+            document.getElementById('next-btn').style.display = 'inline-block';
+            
+            if (currentQuestionIndex === shuffledQuestions.length - 1) {
+                document.getElementById('next-btn').textContent = 'View Results';
+            }
+        }
+
+        function showFeedback(isCorrect, explanation) {
+            const feedback = document.getElementById('feedback');
+            feedback.className = `feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+            feedback.innerHTML = `
+                <strong>${isCorrect ? '✓ Correct!' : '✗ Incorrect'}</strong>
+                <p>Your answer has been recorded. ${isCorrect ? 'Well done!' : 'Keep learning!'}</p>
+            `;
+            feedback.style.display = 'block';
+        }
+
+        function hideFeedback() {
+            document.getElementById('feedback').style.display = 'none';
+            document.getElementById('check-btn').style.display = 'inline-block';
+            document.getElementById('next-btn').style.display = 'none';
+            document.getElementById('check-btn').disabled = true;
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIndex < shuffledQuestions.length - 1) {
+                currentQuestionIndex++;
+                displayQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                displayQuestion();
+            }
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestionIndex + 1) / shuffledQuestions.length) * 100;
+            document.getElementById('progress-fill').style.width = `${progress}%`;
+        }
+
+        function updateControls() {
+            document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
+        }
+
+        function showResults() {
+            const correctAnswers = userAnswers.filter((answer, index) => 
+                answer !== null && answer === questions[index].correctAnswer
+            ).length;
+            
+            const totalAnswered = userAnswers.filter(answer => answer !== null).length;
+            const score = Math.round((correctAnswers / totalAnswered) * 100);
+            const timeElapsed = Math.floor((Date.now() - startTime) / 1000);
+            
+            document.getElementById('quiz-container').style.display = 'none';
+            document.getElementById('results').style.display = 'block';
+            
+            // Personalized thank you message
+            document.getElementById('thank-you-message').textContent = `Thank you ${studentName} for submitting the quiz!`;
+            
+            document.getElementById('score-display').textContent = `${score}%`;
+            document.getElementById('final-score').textContent = correctAnswers;
+            document.getElementById('total-questions').textContent = shuffledQuestions.length;
+            document.getElementById('correct-count').textContent = correctAnswers;
+            document.getElementById('incorrect-count').textContent = totalAnswered - correctAnswers;
+            document.getElementById('time-taken').textContent = formatTime(timeElapsed);
+            
+            showCategoryBreakdown();
+        }
+
+        function showCategoryBreakdown() {
+            const categories = {
+                "Unit 1: Mathematics Curriculum": { correct: 0, total: 0 },
+                "Unit 2: Nature of Mathematics": { correct: 0, total: 0 },
+                "Unit 3: Curriculum Development": { correct: 0, total: 0 },
+                "Unit 4: Teaching Approaches": { correct: 0, total: 0 },
+                "Unit 5: Resources and Environment": { correct: 0, total: 0 }
+            };
+            
+            shuffledQuestions.forEach((question, index) => {
+                categories[question.category].total++;
+                if (userAnswers[index] === question.correctAnswer) {
+                    categories[question.category].correct++;
+                }
+            });
+            
+            const container = document.getElementById('category-breakdown');
+            container.innerHTML = '';
+            
+            Object.entries(categories).forEach(([category, data]) => {
+                const percentage = data.total > 0 ? Math.round((data.correct / data.total) * 100) : 0;
+                const div = document.createElement('div');
+                div.className = 'category-result';
+                div.innerHTML = `
+                    <span>${category}</span>
+                    <span>${data.correct}/${data.total} (${percentage}%)</span>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = seconds % 60;
+            return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+        }
+
+        function restartQuiz() {
+            currentQuestionIndex = 0;
+            // Shuffle questions again for a new quiz attempt
+            shuffledQuestions = shuffleArray(questions);
+            userAnswers = new Array(shuffledQuestions.length).fill(null);
+            startTime = Date.now();
+            
+            document.getElementById('quiz-container').style.display = 'block';
+            document.getElementById('results').style.display = 'none';
+            
+            displayQuestion();
+        }
+
+        // Initialize the quiz when the page loads
+        window.onload = initializeQuiz;
+    </script>
 </body>
 </html>
