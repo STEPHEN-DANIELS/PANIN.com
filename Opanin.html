@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mathematics Curriculum 2025 Quiz</title>
-    <meta name="description" content="Test your knowledge on Units 1-5: Comprehensive Mathematics Curriculum Assessment with Google Sheets results tracking">
     <style>
         * {
             margin: 0;
@@ -249,20 +248,6 @@
             border: 1px solid #e2e8f0;
         }
 
-        .google-sheets-notice {
-            background: #dbeafe;
-            border: 1px solid #3b82f6;
-            border-radius: 8px;
-            padding: 15px;
-            margin: 20px 0;
-            text-align: center;
-        }
-
-        .google-sheets-notice p {
-            color: #1e40af;
-            font-weight: 500;
-        }
-
         .difficulty-badge {
             background: #fbbf24;
             color: #92400e;
@@ -321,9 +306,6 @@
             <div style="margin: 20px 0;">
                 <input type="text" id="student-name" placeholder="Enter your full name" style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 1rem;" />
             </div>
-            <div class="google-sheets-notice">
-                <p>📊 Your quiz results will be automatically saved to Google Sheets for progress tracking</p>
-            </div>
             <button class="btn btn-primary" onclick="startQuiz()" disabled id="start-btn">Start Quiz</button>
         </div>
 
@@ -333,7 +315,7 @@
             </div>
 
             <div class="question-header">
-                <span id="question-number" class="question-number">Question 1 of 10</span>
+                <span id="question-number" class="question-number">Question 1 of 60</span>
                 <span id="category-badge" class="category-badge">Unit 1: Mathematics Curriculum</span>
             </div>
 
@@ -353,7 +335,7 @@
         </div>
 
         <div id="results" class="results">
-            <h2 id="thank-you-message">Thank you for completing the quiz!</h2>
+            <h2 id="thank-you-message">Thank you for submitting the quiz!</h2>
             <div id="score-display" class="score-display">0%</div>
             <p>You scored <span id="final-score"></span> out of <span id="total-questions"></span> questions</p>
             
@@ -372,11 +354,6 @@
                 </div>
             </div>
 
-            <div class="google-sheets-notice">
-                <p>✅ Your results have been successfully submitted to Google Sheets!</p>
-                <p>Your instructor can now view your quiz performance and progress.</p>
-            </div>
-
             <div class="category-results">
                 <h3>Results by Unit:</h3>
                 <div id="category-breakdown"></div>
@@ -388,12 +365,7 @@
 
     <script>
         let studentName = "";
-        let currentQuestionIndex = 0;
-        let userAnswers = [];
-        let startTime = null;
-        let selectedAnswer = null;
 
-        // Sample quiz questions (first 10 questions from the original file)
         const questions = [
             {
                 id: 1,
@@ -484,8 +456,8 @@
                 category: "Unit 2: Nature of Mathematics",
                 difficulty: "Medium",
                 explanation: "Unit 2 defines Pure Mathematics as a study of the basic concepts and structures for the purpose of a deeper understanding of the subject, dealing with basic information/facts where various concepts, proofs and theories are discussed."
-            }
-             {
+            },
+            {
                 id: 11,
                 question: "Mathematical ideas progress from:",
                 options: ["Abstract to concrete", "General to particular", "Concrete to abstract", "Complex to simple"],
@@ -1037,201 +1009,80 @@
                     option.classList.add('incorrect');
                 }
             });
-        ];
-
-        // Initialize the quiz
-        userAnswers = new Array(questions.length).fill(null);
-
-        // Enable start button when name is entered
-        document.getElementById('student-name').addEventListener('input', function() {
-            const startBtn = document.getElementById('start-btn');
-            startBtn.disabled = this.value.trim() === '';
-        });
-
-        function startQuiz() {
-            studentName = document.getElementById('student-name').value.trim();
-            if (!studentName) return;
-
-            startTime = Date.now();
-            document.getElementById('name-input').style.display = 'none';
-            document.getElementById('quiz-container').style.display = 'block';
-            document.getElementById('total-questions').textContent = questions.length;
             
-            loadQuestion();
+            showFeedback(selectedAnswer === question.correctAnswer, question.explanation);
+            
+            document.getElementById('check-btn').style.display = 'none';
+            document.getElementById('next-btn').style.display = 'inline-block';
+            
+            if (currentQuestionIndex === shuffledQuestions.length - 1) {
+                document.getElementById('next-btn').textContent = 'View Results';
+            }
         }
 
-        function loadQuestion() {
-            const question = questions[currentQuestionIndex];
-            
-            // Update progress
-            const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
-            document.getElementById('progress-fill').style.width = progress + '%';
-            
-            // Update question info
-            document.getElementById('question-number').textContent = `Question ${currentQuestionIndex + 1} of ${questions.length}`;
-            document.getElementById('category-badge').textContent = question.category;
-            document.getElementById('question-text').textContent = question.question;
-            
-            // Load options
-            const optionsContainer = document.getElementById('options');
-            optionsContainer.innerHTML = '';
-            
-            question.options.forEach((option, index) => {
-                const li = document.createElement('li');
-                li.className = 'option';
-                li.textContent = option;
-                li.onclick = () => selectAnswer(index);
-                optionsContainer.appendChild(li);
-            });
-            
-            // Reset feedback and buttons
+        function showFeedback(isCorrect, explanation) {
+            const feedback = document.getElementById('feedback');
+            feedback.className = `feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+            feedback.innerHTML = `
+                <strong>${isCorrect ? '✓ Correct!' : '✗ Incorrect'}</strong>
+                <p>Your answer has been recorded. ${isCorrect ? 'Well done!' : 'Keep learning!'}</p>
+            `;
+            feedback.style.display = 'block';
+        }
+
+        function hideFeedback() {
             document.getElementById('feedback').style.display = 'none';
             document.getElementById('check-btn').style.display = 'inline-block';
             document.getElementById('next-btn').style.display = 'none';
             document.getElementById('check-btn').disabled = true;
-            
-            // Update navigation buttons
-            document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
-            
-            // Load previous answer if exists
-            if (userAnswers[currentQuestionIndex] !== null) {
-                selectedAnswer = userAnswers[currentQuestionIndex];
-                showFeedback();
-            } else {
-                selectedAnswer = null;
-            }
-        }
-
-        function selectAnswer(answerIndex) {
-            if (userAnswers[currentQuestionIndex] !== null) return; // Already answered
-            
-            selectedAnswer = answerIndex;
-            
-            // Update visual selection
-            const options = document.querySelectorAll('.option');
-            options.forEach((option, index) => {
-                option.classList.toggle('selected', index === answerIndex);
-            });
-            
-            document.getElementById('check-btn').disabled = false;
-        }
-
-        function checkAnswer() {
-            if (selectedAnswer === null) return;
-            
-            userAnswers[currentQuestionIndex] = selectedAnswer;
-            showFeedback();
-        }
-
-        function showFeedback() {
-            const question = questions[currentQuestionIndex];
-            const isCorrect = selectedAnswer === question.correctAnswer;
-            
-            // Update options styling
-            const options = document.querySelectorAll('.option');
-            options.forEach((option, index) => {
-                option.classList.remove('selected');
-                option.classList.add('disabled');
-                
-                if (index === question.correctAnswer) {
-                    option.classList.add('correct');
-                } else if (index === selectedAnswer && !isCorrect) {
-                    option.classList.add('incorrect');
-                }
-            });
-            
-            // Show feedback
-            const feedback = document.getElementById('feedback');
-            feedback.className = `feedback ${isCorrect ? 'correct' : 'incorrect'}`;
-            feedback.innerHTML = `
-                <strong>${isCorrect ? '✅ Correct!' : '❌ Incorrect'}</strong><br>
-                ${question.explanation}
-            `;
-            feedback.style.display = 'block';
-            
-            // Update buttons
-            document.getElementById('check-btn').style.display = 'none';
-            document.getElementById('next-btn').style.display = 'inline-block';
-            document.getElementById('next-btn').textContent = 
-                currentQuestionIndex === questions.length - 1 ? 'Finish Quiz' : 'Next Question';
         }
 
         function nextQuestion() {
-            if (currentQuestionIndex < questions.length - 1) {
+            if (currentQuestionIndex < shuffledQuestions.length - 1) {
                 currentQuestionIndex++;
-                loadQuestion();
+                displayQuestion();
             } else {
-                finishQuiz();
+                showResults();
             }
         }
 
         function previousQuestion() {
             if (currentQuestionIndex > 0) {
                 currentQuestionIndex--;
-                loadQuestion();
+                displayQuestion();
             }
         }
 
-        function finishQuiz() {
-            const endTime = Date.now();
-            const timeTaken = Math.floor((endTime - startTime) / 1000);
-            
-            // Calculate results
-            const correctAnswers = userAnswers.reduce((count, answer, index) => {
-                return count + (answer === questions[currentQuestionIndex].correctAnswer ? 1 : 0);
-            }, 0);
-            
-            const score = Math.round((correctAnswers / questions.length) * 100);
-            
-            // Submit to Google Sheets
-            submitToGoogleSheets({
-                studentName,
-                score,
-                correctAnswers,
-                totalQuestions: questions.length,
-                timeTaken,
-                completedAt: new Date().toISOString()
-            });
-            
-            // Show results
-            showResults(correctAnswers, score, timeTaken);
+        function updateProgress() {
+            const progress = ((currentQuestionIndex + 1) / shuffledQuestions.length) * 100;
+            document.getElementById('progress-fill').style.width = `${progress}%`;
         }
 
-        function submitToGoogleSheets(data) {
-            // This is where you would integrate with Google Sheets
-            // For demonstration, we'll log the data that would be submitted
-            
-            console.log('Submitting to Google Sheets:', data);
-            
-            // Method 1: Google Forms (Replace with your actual form URL)
-            // const formUrl = 'https://docs.google.com/spreadsheets/d/1JXHr86NK6x4XXm1W2CoIcm_r4kIJ7TTkBTK8C4F1Aoo/edit?gid=0#gid=0';
-            // const formData = new FormData();
-            // formData.append('entry.123456789', data.studentName); // Replace with actual entry IDs
-            // formData.append('entry.987654321', data.score);
-            // fetch(formUrl, { method: 'POST', body: formData, mode: 'no-cors' });
-            
-            // Method 2: Google Apps Script Web App
-            // const scriptUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQmDX47fsnf2nB72Mlbju91L7XqHaeuMC3eOYoV1i4Isy1KWL7ul8hFMR5Pp5jcE_wYuUYvjpnGEq9c/pubhtml';
-            // fetch(scriptUrl, {
-            //     method: 'POST',
-            //     body: JSON.stringify(data),
-            //     headers: { 'Content-Type': 'application/json' }
-            // });
-            
-            // For now, we'll simulate a successful submission
-            console.log('✅ Quiz results ready for Google Sheets submission');
+        function updateControls() {
+            document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
         }
 
-        function showResults(correctAnswers, score, timeTaken) {
+        function showResults() {
+            const correctAnswers = userAnswers.filter((answer, index) => 
+                answer !== null && answer === questions[index].correctAnswer
+            ).length;
+            
+            const totalAnswered = userAnswers.filter(answer => answer !== null).length;
+            const score = Math.round((correctAnswers / totalAnswered) * 100);
+            const timeElapsed = Math.floor((Date.now() - startTime) / 1000);
+            
             document.getElementById('quiz-container').style.display = 'none';
             document.getElementById('results').style.display = 'block';
             
-            document.getElementById('thank-you-message').textContent = `Thank you, ${studentName}!`;
-            document.getElementById('score-display').textContent = score + '%';
+            // Personalized thank you message
+            document.getElementById('thank-you-message').textContent = `Thank you ${studentName} for submitting the quiz!`;
+            
+            document.getElementById('score-display').textContent = `${score}%`;
             document.getElementById('final-score').textContent = correctAnswers;
+            document.getElementById('total-questions').textContent = shuffledQuestions.length;
             document.getElementById('correct-count').textContent = correctAnswers;
-            document.getElementById('incorrect-count').textContent = questions.length - correctAnswers;
-            document.getElementById('time-taken').textContent = formatTime(timeTaken);
+            document.getElementById('incorrect-count').textContent = totalAnswered - correctAnswers;
+            document.getElementById('time-taken').textContent = formatTime(timeElapsed);
             
             showCategoryBreakdown();
         }
@@ -1239,13 +1090,13 @@
         function showCategoryBreakdown() {
             const categories = {
                 "Unit 1: Mathematics Curriculum": { correct: 0, total: 0 },
-                "Unit 2: Nature of Mathematics": { correct: 0, total: 0 }
+                "Unit 2: Nature of Mathematics": { correct: 0, total: 0 },
+                "Unit 3: Curriculum Development": { correct: 0, total: 0 },
+                "Unit 4: Teaching Approaches": { correct: 0, total: 0 },
+                "Unit 5: Resources and Environment": { correct: 0, total: 0 }
             };
             
-            questions.forEach((question, index) => {
-                if (!categories[question.category]) {
-                    categories[question.category] = { correct: 0, total: 0 };
-                }
+            shuffledQuestions.forEach((question, index) => {
                 categories[question.category].total++;
                 if (userAnswers[index] === question.correctAnswer) {
                     categories[question.category].correct++;
@@ -1256,16 +1107,14 @@
             container.innerHTML = '';
             
             Object.entries(categories).forEach(([category, data]) => {
-                if (data.total > 0) {
-                    const percentage = Math.round((data.correct / data.total) * 100);
-                    const div = document.createElement('div');
-                    div.className = 'category-result';
-                    div.innerHTML = `
-                        <span>${category}</span>
-                        <span>${data.correct}/${data.total} (${percentage}%)</span>
-                    `;
-                    container.appendChild(div);
-                }
+                const percentage = data.total > 0 ? Math.round((data.correct / data.total) * 100) : 0;
+                const div = document.createElement('div');
+                div.className = 'category-result';
+                div.innerHTML = `
+                    <span>${category}</span>
+                    <span>${data.correct}/${data.total} (${percentage}%)</span>
+                `;
+                container.appendChild(div);
             });
         }
 
@@ -1277,23 +1126,19 @@
 
         function restartQuiz() {
             currentQuestionIndex = 0;
-            userAnswers = new Array(questions.length).fill(null);
-            selectedAnswer = null;
-            startTime = null;
+            // Shuffle questions again for a new quiz attempt
+            shuffledQuestions = shuffleArray(questions);
+            userAnswers = new Array(shuffledQuestions.length).fill(null);
+            startTime = Date.now();
             
-            document.getElementById('quiz-container').style.display = 'none';
+            document.getElementById('quiz-container').style.display = 'block';
             document.getElementById('results').style.display = 'none';
-            document.getElementById('name-input').style.display = 'block';
             
-            // Clear the name input
-            document.getElementById('student-name').value = '';
-            document.getElementById('start-btn').disabled = true;
+            displayQuestion();
         }
 
-        // Initialize page
-        window.onload = function() {
-            console.log('Quiz initialized with Google Sheets integration ready');
-        };
+        // Initialize the quiz when the page loads
+        window.onload = initializeQuiz;
     </script>
 </body>
 </html>
