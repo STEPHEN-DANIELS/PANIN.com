@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Primary Hub — Class 1 to 4</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Fredoka:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg: #f7fafc;
+      --text: #1a202c;
+      --muted: #4a5568;
+      --c1:#FFB703; /* class 1 */
+      --c2:#8EECF5; /* class 2 */
+      --c3:#B5E48C; /* class 3 */
+      --c4:#F7A4A4; /* class 4 */
+      --card:#ffffff;
+      --accent:#5A67D8;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:'Poppins', system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      background: radial-gradient(1200px 600px at 10% -10%, #eef2ff, transparent 60%),
+                  radial-gradient(800px 300px at 110% 10%, #fff1f2, transparent 60%),
+                  var(--bg);
+      color:var(--text);
+      line-height:1.55;
+    }
+    header{
+      position:sticky; top:0; z-index:10;
+      background: rgba(255,255,255,0.8);
+      backdrop-filter: blur(8px);
+      border-bottom:1px solid #e2e8f0;
+    }
+    .wrap{max-width:1100px; margin:0 auto; padding:16px;}
+    nav{
+      display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+      justify-content:space-between;
+    }
+    .brand{
+      font-family:'Fredoka', sans-serif; font-weight:700; letter-spacing:.5px;
+      display:flex; align-items:center; gap:10px;
+    }
+    .brand .logo{
+      width:36px; height:36px; border-radius:10px; background:linear-gradient(135deg,#6366f1,#22d3ee);
+      display:grid; place-items:center; color:white; font-weight:700;
+      box-shadow:0 6px 14px rgba(99,102,241,.25);
+    }
+    .links a{
+      text-decoration:none; color:var(--muted); font-weight:600; padding:8px 12px; border-radius:10px;
+    }
+    .links a:hover{ background:#edf2f7; color:#2d3748; }
+    .hero{
+      padding:28px 16px 8px;
+    }
+    .hero .panel{
+      background: linear-gradient(135deg,#ffffff 0%, #f1f5ff 100%);
+      border:1px solid #e5e7eb; border-radius:18px; padding:22px;
+      display:grid; grid-template-columns:1.2fr .8fr; gap:20px;
+      box-shadow:0 10px 24px rgba(0,0,0,.06);
+    }
+    .hero h1{
+      font-family:'Fredoka', sans-serif; font-weight:700; margin:0 0 8px;
+      font-size:clamp(24px, 4vw, 34px);
+    }
+    .hero p{ margin:0; color:var(--muted) }
+    .stats{
+      display:flex; gap:10px; margin-top:12px; flex-wrap:wrap;
+    }
+    .chip{
+      background:#fff; border:1px solid #e2e8f0; border-radius:12px; padding:8px 12px; font-size:14px;
+    }
+    .ill{
+      min-height:160px; border-radius:14px; border:1px dashed #cbd5e1;
+      display:grid; place-items:center; font-weight:600; color:#64748b;
+      background:
+        radial-gradient(18px 18px at 85% 25%, #e9d5ff 20%, transparent 21%),
+        radial-gradient(22px 22px at 12% 70%, #cffafe 20%, transparent 21%),
+        radial-gradient(14px 14px at 55% 40%, #fde68a 20%, transparent 21%),
+        #fff;
+    }
+
+    /* Class sections */
+    section.level{ padding:28px 16px; scroll-margin-top:80px;}
+    .grid{
+      display:grid; gap:16px;
+      grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
+    }
+    .card{
+      background:var(--card); border:1px solid #e5e7eb; border-radius:16px; padding:16px;
+      box-shadow:0 8px 16px rgba(0,0,0,.05);
+    }
+    .tag{
+      display:inline-block; font-weight:700; font-size:12px; padding:6px 10px; border-radius:999px; color:#111827;
+      background:#eef2ff; border:1px solid #c7d2fe; margin-bottom:8px;
+    }
+    .class-title{ margin:.2rem 0 .6rem; font-family:'Fredoka'; font-size:22px; }
+    .topic{ font-weight:700; margin:.2rem 0; }
+    ul{ padding-left:18px; margin:.3rem 0 0; }
+    li{ margin:.25rem 0; }
+
+    /* Quiz */
+    .quiz{ margin-top:10px; border-top:1px dashed #e5e7eb; padding-top:10px; }
+    .quiz label{ display:block; margin:6px 0; }
+    .quiz button{
+      margin-top:8px; padding:8px 12px; border:none; border-radius:10px; background:var(--accent); color:#fff; font-weight:700; cursor:pointer;
+    }
+    .quiz .result{ margin-top:6px; font-weight:700; }
+    .progress{
+      margin-top:8px; height:8px; background:#e2e8f0; border-radius:999px; overflow:hidden;
+    }
+    .bar{ height:100%; width:0%; background:linear-gradient(90deg,#22c55e,#14b8a6); transition:width .5s ease; }
+
+    /* Color edges for sections */
+    .level[data-c="1"] .brandline{background:var(--c1)}
+    .level[data-c="2"] .brandline{background:var(--c2)}
+    .level[data-c="3"] .brandline{background:var(--c3)}
+    .level[data-c="4"] .brandline{background:var(--c4)}
+    .brandline{height:6px; border-radius:999px; margin-bottom:12px;}
+
+    footer{
+      padding:28px 16px; text-align:center; color:var(--muted);
+    }
+
+    /* Small screens */
+    @media (max-width:800px){
+      .hero .panel{ grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <nav>
+        <div class="brand">
+          <div class="logo">P</div>
+          <div>Primary Hub</div>
+        </div>
+        <div class="links">
+          <a href="#c1">Class 1</a>
+          <a href="#c2">Class 2</a>
+          <a href="#c3">Class 3</a>
+          <a href="#c4">Class 4</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <div class="panel">
+        <div>
+          <h1>Welcome to Primary Hub (Class 1–4)</h1>
+          <p>Short, fun lessons with quick quizzes. Earn progress as you learn! 🌟</p>
+          <div class="stats">
+            <span class="chip">🎯 Phonics & Numbers</span>
+            <span class="chip">🧠 Problem Solving</span>
+            <span class="chip">🎨 Shapes & Patterns</span>
+            <span class="chip">📖 Reading</span>
+          </div>
+        </div>
+        <div class="ill">Learn • Play • Grow</div>
+      </div>
+    </section>
+
+    <!-- CLASS 1 -->
+    <section class="level" id="c1" data-c="1">
+      <div class="brandline"></div>
+      <h2 class="class-title">Class 1</h2>
+      <div class="grid">
+        <div class="card">
+          <span class="tag">Literacy</span>
+          <div class="topic">Phonics — a, e, i, o, u</div>
+          <ul>
+            <li>Say the sound of each vowel.</li>
+            <li>Match letters to pictures (a = apple, e = egg).</li>
+          </ul>
+          <div class="quiz" data-quiz="c1q1">
+            <strong>Quick Check:</strong> What sound does <b>a</b> make in <i>apple</i>?
+            <label><input type="radio" name="c1q1" value="0"> /e/</label>
+            <label><input type="radio" name="c1q1" value="1"> /a/</label>
+            <label><input type="radio" name="c1q1" value="0"> /o/</label>
+            <button>Check</button>
+            <div class="result"></div>
+            <div class="progress"><div class="bar"></div></div>
+          </div>
+        </div>
+        <div class="card">
+          <span class="tag">Numeracy</span>
+          <div class="topic">Counting 1–20</div>
+          <ul>
+            <li>Count objects up to 20.</li>
+            <li>Write numbers neatly.</li>
+          </ul>
+          <div class="quiz" data-quiz="c1q2">
+            <strong>Quick Check:</strong> What comes after 13?
+            <label><input type="radio" name="c1q2" value="0"> 12</label>
+            <label><input type="radio" name="c1q2" value="1"> 14</label>
+            <label><input type="radio" name="c1q2" value="0"> 11</label>
+            <button>Check</button>
+            <div class="result"></div>
+            <div class="progress"><div class="bar"></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CLASS 2 -->
+    <section class="level" id="c2" data-c="2">
+      <div class="brandline"></div>
+      <h2 class="class-title">Class 2</h2>
+      <div class="grid">
+        <div class="card">
+          <span class="tag">Literacy</span>
+          <div class="topic">Simple Sentences</div>
+          <ul>
+            <li>Subject + Verb + Object (e.g., “The cat drinks milk”).</li>
+            <li>Capital letter at the start; full stop at the end.</li>
+          </ul>
+          <div class="quiz" data-quiz="c2q1">
+            <strong>Quick Check:</strong> Choose the correct sentence.
+            <label><input type="radio" name="c2q1" value="0"> the boy runs fast</label>
+            <label><input type="radio" name="c2q1" value="1"> The boy runs fast.</label>
+            <label><input type="radio" name="c2q1" value="0"> the Boy runs Fast</label>
+            <button>Check</button>
+            <div class="result"></div>
+            <div class="progress"><div class="bar"></div></div>
+          </div>
+        </div>
+        <div class="card">
+          <span class="tag">Numeracy</span>
+          <div class="topic">Addition & Subtraction within 100</div>
+          <ul>
+            <li>Use number lines and tens/ones.</li>
+            <li>Check by inverse (add ↔ subtract).</li>
+          </ul>
+          <div class="quiz" data-quiz="c2q2">
+            <strong>Quick Check:</strong> 46 − 9 = ?
+            <label><input type="radio" name="c2q2" value="0"> 39</label>
+            <label><input type="radio" name="c2q2" value="1"> 37</label>
+            <label><input type="radio" name="c2q2" value="0"> 35</label>
+            <button>Check</button>
+            <div class="result"></div>
+            <div class="progress"><div class="bar"></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CLASS 3 -->
+    <section class="level" id="c3" data-c="3">
+      <div class="brandline"></div>
+      <h2 class="class-title">Class 3</h2>
+      <div class="grid">
+        <div class="card">
+          <span class="tag">Literacy</span>
+          <div class="topic">Short Paragraphs</div>
+          <ul>
+            <li>Topic sentence + 2–3 supporting ideas.</li>
+            <li>Use sequence words: first, next, finally.</li>
+          </ul>
+          <div class="quiz" data-quiz="c3q1">
+            <strong>Quick Check:</strong> A paragraph should start with a…
+            <label><input type="radio" name="c3q1" value="1"> Topic sentence</label>
+            <label><input type="radio" name="c3q1" value="0"> Random detail</label>
+            <label><input type="radio" name="c3q1" value="0"> Question mark</label>
+            <button>Check</button>
+            <div class="result"></div>
+            <div class="progress"><div class="bar"></div></div>
+          </div>
+        </div>
+        <div class="card">
+          <span class="tag">Numeracy</span>
+          <div class="topic">Multiplication Facts (×2, ×5, ×10)</div>
+          <ul>
+            <li>Use skip counting and arrays.</li>
+            <li>Relate to real objects (pairs, groups).</li>
+          </ul>
+          <div class="quiz" data-quiz="c3q2">
+            <strong>Quick Check:</strong> 5 × 7 = ?
+            <label><input type="radio" name="c3q2" value="0"> 30</label>
+            <label><input type="radio" name="c3q2" value="1"> 35</label>
+            <label><input type="radio" name="c3q2" value="0"> 40</label>
+            <button>Check</button>
+            <div class="result"></div>
+            <div class="progress"><div class="bar"></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CLASS 4 -->
+    <section class="level" id="c4" data-c="4">
+      <div class="brandline"></div>
+      <h2 class="class-title">Class 4</h2>
+      <div class="grid">
+        <div class="card">
+          <span class="tag">Literacy</span>
+          <div class="topic">Parts of Speech (Nouns, Verbs, Adjectives)</div>
+          <ul>
+            <li>Identify and use in sentences.</li>
+            <li>Expand sentences with adjectives.</li>
+          </ul>
+          <div class="quiz" data-quiz="c4q1">
+            <strong>Quick Check:</strong> In “The brave girl runs.”, “brave” is a…
+            <label><input type="radio" name="c4q1" value="1"> Adjective</label>
+            <label><input type="radio" name="c4q1" value="0"> Noun</label>
+            <label><input type="radio" name="c4q1" value="0"> Verb</label>
+            <button>Check</button>
+            <div class="result"></div>
+            <div class="progress"><div class="bar"></div></div>
+          </div>
+        </div>
+        <div class="card">
+          <span class="tag">Numeracy</span>
+          <div class="topic">Fractions (½, ¼, ¾)</div>
+          <ul>
+            <li>Shade parts of shapes; compare fractions.</li>
+            <li>Link to real life (pizza, chocolate bars).</li>
+          </ul>
+          <div class="quiz" data-quiz="c4q2">
+            <strong>Quick Check:</strong> Which is greater?
+            <label><input type="radio" name="c4q2" value="1"> 3/4</label>
+            <label><input type="radio" name="c4q2" value="0"> 2/4</label>
+            <label><input type="radio" name="c4q2" value="0"> 1/4</label>
+            <button>Check</button>
+            <div class="result"></div>
+            <div class="progress"><div class="bar"></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>© <span id="y"></span> Primary Hub • Learn something new every day 🌈</footer>
+
+  <script>
+    // Year
+    document.getElementById('y').textContent = new Date().getFullYear();
+
+    // Simple quiz handler + progress saved in localStorage
+    const storeKey = 'primaryHubProgress';
+    const progress = JSON.parse(localStorage.getItem(storeKey) || '{}');
+
+    function updateBar(el, ok){
+      const bar = el.querySelector('.bar');
+      bar.style.width = ok ? '100%' : '0%';
+    }
+    function loadProgress(){
+      document.querySelectorAll('.quiz').forEach(q=>{
+        const id = q.dataset.quiz;
+        const passed = !!progress[id];
+        q.querySelector('.result').textContent = passed ? '✅ Great job!' : '';
+        updateBar(q, passed);
+      });
+    }
+    loadProgress();
+
+    document.querySelectorAll('.quiz button').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const wrap = btn.closest('.quiz');
+        const name = wrap.dataset.quiz;
+        const chosen = wrap.querySelector('input[type=radio]:checked');
+        const result = wrap.querySelector('.result');
+        if(!chosen){ result.textContent = 'Please select an answer.'; return; }
+        if(chosen.value === '1'){
+          result.textContent = '✅ Correct! Well done.';
+          progress[name] = true;
+          localStorage.setItem(storeKey, JSON.stringify(progress));
+          updateBar(wrap, true);
+        }else{
+          result.textContent = '❌ Not quite. Try again!';
+          updateBar(wrap, false);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
