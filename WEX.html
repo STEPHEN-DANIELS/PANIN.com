@@ -193,17 +193,16 @@
 </head>
 <body>
              
-    <div class="app-container">
+   <div class="app-container">
         <!-- Header with Logo, Name, and Menu Button -->
-        <header class="p-4 bg-white shadow-lg sticky top-0 z-10 text-center">
-            <!-- EMBEDDED LOGO (Base64 SVG for guaranteed loading) -->
-           <img id="WEX LOGO.jpg" 
-                 src="WEX LOGO.jpg" 
-                 alt="Wexford School Logo" 
-                 class="mx-auto h-12 w-12 mb-1"
-                 onerror="this.style.display='none'"> 
+        <header>
+            <!-- EMBEDDED LOGO (Simple Placeholder for reliability) -->
+            <svg class="logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="48" fill="#fff" stroke="var(--primary-green)" stroke-width="4"/>
+                <polygon points="50,25 75,73 25,73" fill="var(--primary-green)"/>
+            </svg>
             <h1>Wexford Edu Hub</h1>
-            <p class="subtitle">INNOVATION, TECHNOLOGY AND DISCIPLINE</p>
+            <p class="subtitle">Video Resources by Grade Level</p>
 
             <!-- Hamburger Menu Button -->
             <button class="menu-button" onclick="toggleMenu()">
@@ -211,6 +210,7 @@
             </button>
         </header>
 
+        <!-- Main Conten
 
         <!-- Main Content Area -->
         <main>
