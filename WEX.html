@@ -310,37 +310,190 @@
                 </div>
             </div>
 
-        </main>
+        <body>
 
-        <!-- Fixed Bottom Navigation (Tabs) -->
-        <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-xl z-20">
-            <div class="max-w-600 mx-auto flex justify-around items-center h-16">
-                <!-- Lower Primary Tab Button -->
-                <button id="btn-lower-primary" class="tab-button flex flex-col items-center justify-center w-1/4 active" onclick="switchTab('lower-primary')">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M12 20a9 9 0 100-18 9 9 0 000 18z"></path></svg>
-                    <span class="text-xs mt-1">Lwr Primary</span>
-                </button>
+    <div class="upload-widget-container">
+        
+        <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-primary pb-2">Add New Video Resource</h2>
+        
+        <!-- Loading Indicator -->
+        <div id="loading-indicator" class="text-center p-4 text-gray-500 bg-yellow-50 rounded-lg hidden">
+            <p>Connecting to database and authenticating...</p>
+        </div>
 
-                <!-- Upper Primary Tab Button -->
-                <button id="btn-upper-primary" class="tab-button flex flex-col items-center justify-center w-1/4" onclick="switchTab('upper-primary')">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.45-1.071M17 20v-2.111a1.98 1.98 0 00.99 1.716l.162.083c.489.248.692.748.514 1.25-.177.498-.69.794-1.218.756-.098-.007-.196-.017-.294-.031m-4.5-9L17 5m-11 0l7 7m0 0l-7 7m7-7h14"></path></svg>
-                    <span class="text-xs mt-1">Upr Primary</span>
-                </button>
-
-                <!-- JHS Tab Button -->
-                <button id="btn-jhs" class="tab-button flex flex-col items-center justify-center w-1/4" onclick="switchTab('jhs')">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18.75c3.04 0 5.5-2.46 5.5-5.5s-2.46-5.5-5.5-5.5-5.5 2.46-5.5 5.5 2.46 5.5 5.5 5.5zm0-11c1.93 0 3.5 1.57 3.5 3.5s-1.57 3.5-3.5 3.5-3.5-1.57-3.5-3.5 1.57-3.5 3.5-3.5z"></path></svg>
-                    <span class="text-xs mt-1">JHS</span>
-                </button>
-                
-                <!-- Upload/Design Tab Button -->
-                <button id="btn-designer-upload" class="tab-button flex flex-col items-center justify-center w-1/4" onclick="switchTab('designer-upload')">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
-                    <span class="text-xs mt-1">Upload</span>
-                </button>
+        <form id="video-upload-form" class="space-y-4">
+            
+            <div class="space-y-1">
+                <label for="video-title" class="block text-sm font-medium text-gray-700">Video Title</label>
+                <input type="text" id="video-title" required class="w-full p-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary">
             </div>
-        </nav>
 
+            <div class="space-y-1">
+                <label for="video-link" class="block text-sm font-medium text-gray-700">Video Link (External URL)</label>
+                <input type="url" id="video-link" required class="w-full p-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary" placeholder="https://youtube.com/watch?v=...">
+                <p class="text-xs text-gray-500 mt-1">Must be a link to an externally hosted video (e.g., YouTube).</p>
+            </div>
+            
+            <div class="flex space-x-4">
+                <div class="space-y-1 flex-1">
+                    <label for="video-grade" class="block text-sm font-medium text-gray-700">Grade Level</label>
+                    <select id="video-grade" required class="w-full p-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary">
+                        <option value="">Select Grade</option>
+                        <option value="lp">Lower Primary</option>
+                        <option value="up">Upper Primary</option>
+                        <option value="jhs">JHS</option>
+                    </select>
+                </div>
+                <div class="space-y-1 flex-1">
+                    <label for="video-subject" class="block text-sm font-medium text-gray-700">Subject</label>
+                    <select id="video-subject" required class="w-full p-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary">
+                        <option value="">Select Subject</option>
+                        <option value="Maths">Maths</option>
+                        <option value="English">English</option>
+                        <option value="Science">Science</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="pt-4">
+                <button type="submit" id="submit-btn" class="submit-button w-full" disabled>
+                    Submit Video Resource
+                </button>
+                <div id="upload-status" class="mt-2 text-sm font-medium text-center hidden"></div>
+            </div>
+        </form>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        
+        // --- MANDATORY CANVAS/FIREBASE GLOBAL VARIABLES ---
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = typeof _firebase_config !== 'undefined' ? JSON.parse(_firebase_config) : {};
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+        // --------------------------------------------------
+
+        let db = null;
+        let auth = null;
+        let userId = null;
+
+        const loadingIndicator = document.getElementById('loading-indicator');
+        const submitButton = document.getElementById('submit-btn');
+        const uploadStatus = document.getElementById('upload-status');
+        const uploadForm = document.getElementById('video-upload-form');
+        
+        // Helper function to show status messages
+        const updateStatus = (message, color) => {
+            uploadStatus.textContent = message;
+            uploadStatus.className = mt-2 text-sm font-medium text-center ${color};
+            uploadStatus.classList.remove('hidden');
+        };
+
+        const getColorForSubject = (subject) => {
+            switch (subject) {
+                case 'Maths': return 'bg-blue-100';
+                case 'English': return 'bg-red-100';
+                case 'Science': return 'bg-green-100';
+                default: return 'bg-gray-100';
+            }
+        };
+
+
+        /**
+         * FIREBASE INITIALIZATION AND AUTHENTICATION
+         */
+        const initializeFirebase = async () => {
+            loadingIndicator.classList.remove('hidden');
+
+            try {
+                const app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+                
+                // Sign in with token or anonymously
+                if (initialAuthToken) {
+                    await signInWithCustomToken(auth, initialAuthToken);
+                } else {
+                    await signInAnonymously(auth);
+                }
+
+                // Wait for auth state change to get the definitive userId
+                onAuthStateChanged(auth, (user) => {
+                    if (user) {
+                        userId = user.uid;
+                        loadingIndicator.classList.add('hidden');
+                        submitButton.disabled = false; // Enable upload button
+                        updateStatus("Ready to upload!", "text-primary");
+                    } else {
+                        console.error("Authentication failed. Cannot access Firestore.");
+                        loadingIndicator.innerHTML = '<p class="text-red-500">Error: Authentication failed.</p>';
+                    }
+                });
+
+            } catch (error) {
+                console.error("Error initializing Firebase:", error);
+                loadingIndicator.innerHTML = <p class="text-red-500">Error initializing app: ${error.message}</p>;
+            }
+        };
+
+        /**
+         * VIDEO UPLOAD LOGIC
+         */
+        const uploadVideo = async (event) => {
+            event.preventDefault();
+
+            if (!db || !userId) {
+                updateStatus("Authentication pending. Please wait.", "text-yellow-500");
+                return;
+            }
+
+            const title = document.getElementById('video-title').value.trim();
+            const link = document.getElementById('video-link').value.trim();
+            const grade = document.getElementById('video-grade').value;
+            const subject = document.getElementById('video-subject').value;
+
+            if (!title || !link || !grade || !subject) {
+                updateStatus("Please fill in all fields.", "text-red-500");
+                return;
+            }
+
+            submitButton.disabled = true;
+            updateStatus("Uploading metadata...", "text-blue-500");
+
+            try {
+                const videoData = {
+                    title: title,
+                    link: link,
+                    grade: grade, // lp, up, jhs
+                    subject: subject, // Maths, English, Science
+                    uploadedBy: userId,
+                    createdAt: Date.now(),
+                    duration: 'N/A', // Cannot determine from link alone
+                    colorClass: getColorForSubject(subject)
+                };
+
+                // Save to the public collection where the main app reads from
+                const videosRef = collection(db, artifacts/${appId}/public/data/videos);
+                await addDoc(videosRef, videoData);
+
+                updateStatus("Video resource added successfully! It is now live in the main hub.", "text-primary");
+                uploadForm.reset();
+            } catch (error) {
+                console.error("Error uploading video:", error);
+                updateStatus(Upload failed: ${error.message}, "text-red-500");
+            } finally {
+                submitButton.disabled = false;
+            }
+        };
+
+        uploadForm.addEventListener('submit', uploadVideo);
+
+        // Initialize Firebase when the window loads
+        window.onload = initializeFirebase;
+    </script>
+</body>
         <!-- Designed By Footer -->
         <footer class="p-2 text-center text-xs text-gray-600 bg-white border-t border-gray-100 mt-auto">
             Designed by *Sir Stephen Panin Sarfo*
