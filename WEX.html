@@ -192,25 +192,31 @@
     </style>
 </head>
 <body>
-             
-   <div class="app-container">
+
+    <div class="app-container">
         <!-- Header with Logo, Name, and Menu Button -->
         <header>
-            <!-- EMBEDDED LOGO (Simple Placeholder for reliability) -->
-            <svg class="logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="50" cy="50" r="48" fill="#fff" stroke="var(--primary-green)" stroke-width="4"/>
-                <polygon points="50,25 75,73 25,73" fill="var(--primary-green)"/>
+            <!-- EMBEDDED LOGO: Stylized Graduation Cap (Mortarboard) for Education -->
+            <svg class="logo" viewBox="0 0 100 100" xmlns="WEX LOGO.jpg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="5">
+                <!-- Base of the Cap -->
+                <path d="M5 60 L50 80 L95 60 L50 40 Z" fill="var(--primary-green)"/>
+                <!-- Top Square of the Cap (Darker shade of green for depth) -->
+                <path d="M5 60 L95 60 M5 60 L50 40 M50 40 L95 60" fill="#066A30" opacity="0.9"/>
+                <!-- Tassel Center Point -->
+                <circle cx="50" cy="40" r="4" fill="var(--white)"/>
+                <!-- Tassel Line -->
+                <line x1="50" y1="40" x2="65" y2="15" stroke="var(--white)" stroke-width="3"/>
+                <!-- Tassel End (Gold/Yellow) -->
+                <circle cx="65" cy="15" r="7" fill="#FBBF24"/>
             </svg>
             <h1>Wexford Edu Hub</h1>
-            <p class="subtitle">INNOVATION, TECHNOLOGY AND DISCIPLINE</p>
+            <p class="subtitle">Innovation,Technology and Discipline</p>
 
             <!-- Hamburger Menu Button -->
             <button class="menu-button" onclick="toggleMenu()">
                 <svg class="menu-button-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
             </button>
         </header>
-
-        <!-- Main Conten
 
         <!-- Main Content Area -->
         <main>
@@ -223,8 +229,8 @@
                         <!-- JHS is now on the bottom nav, removed from here -->
                         <li><a href="https://stephen-daniels.github.io/PANIN.com/Staff.html" onclick="showPage('staff'); toggleMenu();" style="display: block; padding: 10px 0; border-bottom: 1px solid #eee; text-decoration: none; color: var(--dark-gray);">Staff</a></li>
                         <li><a href="#" onclick="showPage('trial'); toggleMenu();" style="display: block; padding: 10px 0; border-bottom: 1px solid #eee; text-decoration: none; color: var(--dark-gray);">Trial Questions</a></li>
-                        <li><a href="#" onclick="showPage('about'); toggleMenu();" style="display: block; padding: 10px 0; border-bottom: 1px solid #eee; text-decoration: none; color: var(--dark-gray);">About</a></li>
-                        <li><a href="#" onclick="showPage('others'); toggleMenu();" style="display: block; padding: 10px 0; border-bottom: 1px solid #eee; text-decoration: none; color: var(--dark-gray);">Others</a></li>
+                        <li><a href="This app is design to be a central communication and information hub for students, parents and staff" onclick="showPage('about'); toggleMenu();" style="display: block; padding: 10px 0; border-bottom: 1px solid #eee; text-decoration: none; color: var(--dark-gray);">About</a></li>
+                        <li><a href="https://www.ck12.org/c/arithmetic/add-whole-numbers/?by=ck12&difficulty=all#all&noback=true" onclick="showPage('others'); toggleMenu();" style="display: block; padding: 10px 0; border-bottom: 1px solid #eee; text-decoration: none; color: var(--dark-gray);">Others</a></li>
                     </ul>
                     <button onclick="toggleMenu()" style="position: absolute; top: 10px; right: 10px; background: var(--primary-green); color: var(--white); border: none; border-radius: 50%; width: 30px; height: 30px; font-size: 1.2rem; cursor: pointer;">X</button>
                 </div>
