@@ -192,15 +192,16 @@
     </style>
 </head>
 <body>
-
+             
     <div class="app-container">
         <!-- Header with Logo, Name, and Menu Button -->
-        <header>
-            <!-- EMBEDDED LOGO (Simple Placeholder for reliability) -->
-            <svg class="logo" viewBox="0 0 100 100" xmlns="WEX LOGO.jpg">
-                <circle cx="50" cy="50" r="48" fill="#fff" stroke="var(--primary-green)" stroke-width="4"/>
-                <polygon points="50,25 75,73 25,73" fill="var(--primary-green)"/>
-            </svg>
+        <header class="p-4 bg-white shadow-lg sticky top-0 z-10 text-center">
+            <!-- EMBEDDED LOGO (Base64 SVG for guaranteed loading) -->
+           <img id="WEX LOGO.jpg" 
+                 src="WEX LOGO.jpg" 
+                 alt="Wexford School Logo" 
+                 class="mx-auto h-12 w-12 mb-1"
+                 onerror="this.style.display='none'"> 
             <h1>Wexford Edu Hub</h1>
             <p class="subtitle">INNOVATION, TECHNOLOGY AND DISCIPLINE</p>
 
