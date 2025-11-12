@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wexford Edu Hub</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Tailwind Configuration for custom font (Inter) and custom school colors
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        // School Green
+                        'primary': '#0B8F4A', 
+                        // Lighter Green for accents/secondary text
+                        'secondary': '#5EDC8D', 
+                        // General off-white background
+                        'background': '#F9FAFB', 
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom styles for the app container */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F3F4F6; /* Light gray for body background */
+        }
+        .app-container {
+            max-width: 600px; /* Max width for large screens */
+            min-height: 100vh; /* Full height on mobile */
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--background);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding-bottom: 70px; /* Space for fixed navigation */
+        }
+        /* Active Tab Styling */
+        .tab-button.active {
+            color: var(--primary);
+            font-weight: 700;
+            border-top: 3px solid var(--primary);
+            padding-top: 0px; 
+            background-color: #f7f7f7; /* Slight hover/active background */
+        }
+        .tab-button {
+            transition: all 0.15s;
+        }
+        /* Ensures the video card link takes up the full space */
+        .video-card-link {
+            display: block;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- Header with Logo and Name -->
+        <header class="p-4 bg-white shadow-lg sticky top-0 z-10 text-center">
+            <!-- EMBEDDED LOGO (Base64 SVG for guaranteed loading) -->
+            <img id="school-logo" 
+                 src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI0OCIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjMGI4ZjRhIiBzdHJva2Utd2lkdGg9IjQiLz48cG9seWdvbiBwb2ludHM9IjUwLDI1IDc1LDczIDI1LDczIiBmaWxsPSIjMGI4ZjRhIi8+PC9zdmc+" 
+                 alt="Wexford School Logo" 
+                 class="mx-auto h-12 w-12 mb-1"
+                 onerror="this.style.display='none'"> 
+            <h1 class="text-2xl font-extrabold text-gray-800">Wexford Edu Hub</h1>
+            <p class="text-sm text-primary font-medium">Video Resources by Grade Level</p>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="flex-grow p-4 space-y-4">
+
+            <!-- Tab Content Containers (All Grade Levels) -->
+            
+            <!-- === LOWER PRIMARY TAB === -->
+            <div id="lower-primary-tab" class="tab-content active space-y-8">
+                <!-- Highlighted Grade Header -->
+                <div class="bg-primary text-white p-3 rounded-xl shadow-lg">
+                    <h2 class="text-xl font-bold">Lower Primary (Grades 1-3)</h2>
+                </div>
+
+                <!-- === Maths Section - Lower Primary === -->
+                <section class="bg-white p-4 rounded-xl shadow-lg border-t-4 border-primary">
+                    <h3 class="text-xl font-semibold text-primary mb-4 border-b border-gray-200 pb-2">Maths Resources</h3>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                        <!-- Video Card 1 (Linked) -->
+                        <a href="https://wexfordhub.com/lp/maths/counting100" target="_blank" class="video-card-link">
+                            <div class="video-card bg-gray-50 rounded-lg overflow-hidden shadow-md cursor-pointer hover:shadow-lg transition">
+                                <div class="h-24 bg-blue-100 relative flex items-center justify-center">
+                                    <span class="absolute bottom-1 right-2 text-xs bg-gray-900 bg-opacity-70 text-white px-2 py-0.5 rounded">03:45</span>
+                                </div>
+                                <div class="p-2">
+                                    <p class="font-medium text-gray-800 text-sm truncate">Counting to 100 with Shapes</p>
+                                    <p class="text-xs text-gray-500 mt-0.5">Lesson 1.2</p>
+                                </div>
+                            </div>
+                        </a>
+                        <!-- Video Card 2 (Linked) -->
+                        <a href="https://wexfordhub.com/lp/maths/addition-subtraction" target="_blank" class="video-card-link">
+                            <div class="video-card bg-gray-50 rounded-lg overflow-hidden shadow-md cursor-pointer hover:shadow-lg transition">
+                                <div class="h-24 bg-blue-100 relative flex items-center justify-center">
+                                    <span class="absolute bottom-1 right-2 text-xs bg-gray-900 bg-opacity-70 text-white px-2 py-0.5 rounded">05:10</span>
+                                </div>
+                                <div class="p-2">
+                                    <p class="font-medium text-gray-800 text-sm truncate">Basic Addition and Subtraction</p>
+                                    <p class="text-xs text-gray-500 mt-0.5">Lesson 2.1</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </section>
+                
+                <!-- === English Section - Lower Primary === -->
+                <section class="bg-white p-4 rounded-xl shadow-lg border-t-4 border-primary">
+                    <h3 class="text-xl font-semibold text-primary mb-4 border-b border-gray-200 pb-2">English Resources</h3>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                        <!-- Video Card 1 (Linked) -->
+                        <a href="https://wexfordhub.com/lp/english/phonics-sh" target="_blank" class="video-card-link">
+                            <div class="video-card bg-gray-50 rounded-lg overflow-hidden shadow-md cursor-pointer hover:shadow-lg transition">
+                                <div class="h-24 bg-red-100 relative flex items-center justify-center">
+                                    <span class="absolute bottom-1 right-2 text-xs bg-gray-900 bg-opacity-70 text-white px-2 py-0.5 rounded">04:00</span>
+                                </div>
+                                <div class="p-2">
+                                    <p class="font-medium text-gray-800 text-sm truncate">Phonics: The 'Sh' Sound</p>
+                                    <p class="text-xs text-gray-500 mt-0.5">Unit 3</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </section>
+
+                 <!-- === Science Section - Lower Primary === -->
+                <section class="bg-white p-4 rounded-xl shadow-lg border-t-4 border-primary">
+                    <h3 class="text-xl font-semibold text-primary mb-4 border-b border-gray-200 pb-2">Science Resources</h3>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                        <!-- Video Card 1 (Linked) -->
+                        <a href="https://wexfordhub.com/lp/science/water-cycle-song" target="_blank" class="video-card-link">
+                            <div class="video-card bg-gray-50 rounded-lg overflow-hidden shadow-md cursor-pointer hover:shadow-lg transition">
+                                <div class="h-24 bg-green-100 relative flex items-center justify-center">
+                                    <span class="absolute bottom-1 right-2 text-xs bg-gray-900 bg-opacity-70 text-white px-2 py-0.5 rounded">02:30</span>
+                                </div>
+                                <div class="p-2">
+                                    <p class="font-medium text-gray-800 text-sm truncate">The Water Cycle Song</p>
+                                    <p class="text-xs text-gray-500 mt-0.5">Module 4</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </section>
+            </div>
+
+            <!-- === UPPER PRIMARY TAB (Updated with new link wrappers) === -->
+            <div id="upper-primary-tab" class="tab-content hidden space-y-8">
+                <!-- Highlighted Grade Header -->
+                <div class="bg-primary text-white p-3 rounded-xl shadow-lg">
+                    <h2 class="text-xl font-bold">Upper Primary (Grades 4-6)</h2>
+                </div>
+
+                <!-- === Maths Section - Upper Primary === -->
+                <section class="bg-white p-4 rounded-xl shadow-lg border-t-4 border-primary">
+                    <h3 class="text-xl font-semibold text-primary mb-4 border-b border-gray-200 pb-2">Maths Resources</h3>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                        <!-- Video Card 1 (Linked) -->
+                        <a href="https://wexfordhub.com/up/maths/decimals-intro" target="_blank" class="video-card-link">
+                            <div class="video-card bg-gray-50 rounded-lg overflow-hidden shadow-md cursor-pointer hover:shadow-lg transition">
+                                <div class="h-24 bg-blue-100 relative flex items-center justify-center">
+                                    <span class="absolute bottom-1 right-2 text-xs bg-gray-900 bg-opacity-70 text-white px-2 py-0.5 rounded">08:20</span>
+                                </div>
+                                <div class="p-2">
+                                    <p class="font-medium text-gray-800 text-sm truncate">Introduction to Decimals</p>
+                                    <p class="text-xs text-gray-500 mt-0.5">Chapter 5</p>
+                                </div>
+                            </div>
+                        </a>
+                        
+                        <!-- New Video Card Example (Linked) -->
+                        <a href="https://wexfordhub.com/up/maths/fractions-review" target="_blank" class="video-card-link">
+                            <div class="video-card bg-gray-50 rounded-lg overflow-hidden shadow-md cursor-pointer hover:shadow-lg transition">
+                                <div class="h-24 bg-blue-200 relative flex items-center justify-center">
+                                    <span class="absolute bottom-1 right-2 text-xs bg-gray-900 bg-opacity-70 text-white px-2 py-0.5 rounded">11:55</span>
+                                </div>
+                                <div class="p-2">
+                                    <p class="font-medium text-gray-800 text-sm truncate">Reviewing Fractions (NEW)</p>
+                                    <p class="text-xs text-gray-500 mt-0.5">Lesson 5.1</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </section>
+                
+                <!-- === English Section - Upper Primary === -->
+                <section class="bg-white p-4 rounded-xl shadow-lg border-t-4 border-primary">
+                    <h3 class="text-xl font-semibold text-primary mb-4 border-b border-gray-200 pb-2">English Resources</h3>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                        <!-- Video Card 1 (Linked) -->
+                        <a href="https://wexfordhub.com/up/english/compound-sentences" target="_blank" class="video-card-link">
+                            <div class="video-card bg-gray-50 rounded-lg overflow-hidden shadow-md cursor-pointer hover:shadow-lg transition">
+                                <div class="h-24 bg-red-100 relative flex items-center justify-center">
+                                    <span class="absolute bottom-1 right-2 text-xs bg-gray-900 bg-opacity-70 text-white px-2 py-0.5 rounded">10:05</span>
+                                </div>
+                                <div class="p-2">
+                                    <p class="font-medium text-gray-800 text-sm truncate">Writing Compound Sentences</p>
+                                    <p class="text-xs text-gray-500 mt-0.5">Unit 1.1</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </section>
+                 
+                 <!-- === Science Section - Upper Primary === -->
+                <section class="bg-white p-4 rounded-xl shadow-lg border-t-4 border-primary">
+                    <h3 class="text-xl font-semibold text-primary mb-4 border-b border-gray-200 pb-2">Science Resources</h3>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                        <!-- Video Card 1 (Linked) -->
+                        <a href="https://wexfordhub.com/up/science/states-of-matter" target="_blank" class="video-card-link">
+                            <div class="video-card bg-gray-50 rounded-lg overflow-hidden shadow-md cursor-pointer hover:shadow-lg transition">
+                                <div class="h-24 bg-green-100 relative flex items-center justify-center">
+                                    <span class="absolute bottom-1 right-2 text-xs bg-gray-900 bg-opacity-70 text-white px-2 py-0.5 rounded">07:40</span>
+                                </div>
+                                <div class="p-2">
+                                    <p class="font-medium text-gray-800 text-sm truncate">States of Matter Explained</p>
+                                    <p class="text-xs text-gray-500 mt-0.5">Chapter 3</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </section>
+            </div>
+
+            <!-- === JHS TAB === -->
+            <div id="jhs-tab" class="tab-content hidden space-y-8">
+                <!-- Highlighted Grade Header -->
+                <div class="bg-primary text-white p-3 rounded-xl shadow-lg">
+                    <h2 class="text-xl font-bold">JHS (Junior High School)</h2>
+                </div>
+                
+                <!-- === Maths Section - JHS === -->
+                <section class="bg-white p-4 rounded-xl shadow-lg border-t-4 border-primary">
+                    <h3 class="text-xl font-semibold text-primary mb-4 border-b border-gray-200 pb-2">Maths Resources</h3>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                        <!-- Video Card 1 (Linked) -->
+                        <a href="https://wexfordhub.com/jhs/maths/algebra-part1" target="_blank" class="video-card-link">
+                            <div class="video-card bg-gray-50 rounded-lg overflow-hidden shadow-md cursor-pointer hover:shadow-lg transition">
+                                <div class="h-24 bg-blue-100 relative flex items-center justify-center">
+                                    <span class="absolute bottom-1 right-2 text-xs bg-gray-900 bg-opacity-70 text-white px-2 py-0.5 rounded">12:15</span>
+                                </div>
+                                <div class="p-2">
+                                    <p class="font-medium text-gray-800 text-sm truncate">Algebraic Equations: Part I</p>
+                                    <p class="text-xs text-gray-500 mt-0.5">JHS 1</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </section>
+                
+                <!-- === English Section - JHS === -->
+                <section class="bg-white p-4 rounded-xl shadow-lg border-t-4 border-primary">
+                    <h3 class="text-xl font-semibold text-primary mb-4 border-b border-gray-200 pb-2">English Resources</h3>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                        <!-- Video Card 1 (Linked) -->
+                        <a href="https://wexfordhub.com/jhs/english/narrative-essay" target="_blank" class="video-card-link">
+                            <div class="video-card bg-gray-50 rounded-lg overflow-hidden shadow-md cursor-pointer hover:shadow-lg transition">
+                                <div class="h-24 bg-red-100 relative flex items-center justify-center">
+                                    <span class="absolute bottom-1 right-2 text-xs bg-gray-900 bg-opacity-70 text-white px-2 py-0.5 rounded">15:50</span>
+                                </div>
+                                <div class="p-2">
+                                    <p class="font-medium text-gray-800 text-sm truncate">Introduction to Narrative Essay Writing</p>
+                                    <p class="text-xs text-gray-500 mt-0.5">JHS 2</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </section>
+                
+                 <!-- === Science Section - JHS === -->
+                <section class="bg-white p-4 rounded-xl shadow-lg border-t-4 border-primary">
+                    <h3 class="text-xl font-semibold text-primary mb-4 border-b border-gray-200 pb-2">Science Resources</h3>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                        <!-- Video Card 1 (Linked) -->
+                        <a href="https://wexfordhub.com/jhs/science/circulatory-system" target="_blank" class="video-card-link">
+                            <div class="video-card bg-gray-50 rounded-lg overflow-hidden shadow-md cursor-pointer hover:shadow-lg transition">
+                                <div class="h-24 bg-green-100 relative flex items-center justify-center">
+                                    <span class="absolute bottom-1 right-2 text-xs bg-gray-900 bg-opacity-70 text-white px-2 py-0.5 rounded">11:00</span>
+                                </div>
+                                <div class="p-2">
+                                    <p class="font-medium text-gray-800 text-sm truncate">The Human Circulatory System</p>
+                                    <p class="text-xs text-gray-500 mt-0.5">JHS 3</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </section>
+            </div>
+            
+            <!-- Designer Upload Area (Simplified for content insertion) -->
+            <div id="designer-upload-tab" class="tab-content hidden">
+                <h2 class="text-2xl font-bold text-gray-700">Designer Upload Area</h2>
+                <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-200 text-center space-y-4">
+                    <svg class="w-12 h-12 mx-auto text-primary mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+                    <p class="text-gray-600 font-medium">This is where you can manually add new video card HTML into the respective grade sections.</p>
+                    <p class="text-sm text-gray-400">Example Video Card HTML structure is available in the other tabs.</p>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- Fixed Bottom Navigation (Tabs) -->
+        <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-xl z-20">
+            <div class="max-w-600 mx-auto flex justify-around items-center h-16">
+                <!-- Lower Primary Tab Button -->
+                <button id="btn-lower-primary" class="tab-button flex flex-col items-center justify-center w-1/4 active" onclick="switchTab('lower-primary')">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M12 20a9 9 0 100-18 9 9 0 000 18z"></path></svg>
+                    <span class="text-xs mt-1">Lwr Primary</span>
+                </button>
+
+                <!-- Upper Primary Tab Button -->
+                <button id="btn-upper-primary" class="tab-button flex flex-col items-center justify-center w-1/4" onclick="switchTab('upper-primary')">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.45-1.071M17 20v-2.111a1.98 1.98 0 00.99 1.716l.162.083c.489.248.692.748.514 1.25-.177.498-.69.794-1.218.756-.098-.007-.196-.017-.294-.031m-4.5-9L17 5m-11 0l7 7m0 0l-7 7m7-7h14"></path></svg>
+                    <span class="text-xs mt-1">Upr Primary</span>
+                </button>
+
+                <!-- JHS Tab Button -->
+                <button id="btn-jhs" class="tab-button flex flex-col items-center justify-center w-1/4" onclick="switchTab('jhs')">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18.75c3.04 0 5.5-2.46 5.5-5.5s-2.46-5.5-5.5-5.5-5.5 2.46-5.5 5.5 2.46 5.5 5.5 5.5zm0-11c1.93 0 3.5 1.57 3.5 3.5s-1.57 3.5-3.5 3.5-3.5-1.57-3.5-3.5 1.57-3.5 3.5-3.5z"></path></svg>
+                    <span class="text-xs mt-1">JHS</span>
+                </button>
+                
+                <!-- Upload/Design Tab Button -->
+                <button id="btn-designer-upload" class="tab-button flex flex-col items-center justify-center w-1/4" onclick="switchTab('designer-upload')">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+                    <span class="text-xs mt-1">Upload</span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Designed By Footer -->
+        <footer class="p-2 text-center text-xs text-gray-600 bg-white border-t border-gray-100 mt-auto">
+            Designed by *Sir Stephen*
+        </footer>
+    </div>
+
+    <script>
+        // === App Logic ===
+
+        function switchTab(tabName) {
+            // 1. Hide all content tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.add('hidden');
+            });
+
+            // 2. Deactivate all navigation buttons
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+
+            // 3. Show the requested tab content
+            const activeContent = document.getElementById(tabName + '-tab');
+            if (activeContent) {
+                activeContent.classList.remove('hidden');
+            }
+
+            // 4. Activate the corresponding button
+            const activeButton = document.getElementById('btn-' + tabName);
+            if (activeButton) {
+                activeButton.classList.add('active');
+            }
+        }
+
+        // Initial setup on load
+        window.onload = () => {
+             // Ensure the app starts on the Lower Primary tab
+            switchTab('lower-primary');
+        };
+    </script>
+</body>
+</html>
