@@ -3,396 +3,1555 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wexford Edu Hub</title>
+    <title>Wexford Edu Hub - Premium Learning Platform</title>
     <style>
-        /* Define School Colors and Font */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
         :root {
             --primary-green: #0B8F4A;
+            --primary-dark: #076838;
+            --primary-light: #E8F5EE;
             --white: #FFFFFF;
-            --light-gray: #F3F4F6;
-            --dark-gray: #374151;
-            --font-family: Arial, sans-serif;
+            --light-gray: #F8FAFC;
+            --border-gray: #E2E8F0;
+            --text-dark: #1E293B;
+            --text-medium: #475569;
+            --text-light: #94A3B8;
         }
 
-        /* Basic Reset and Container */
-        body {
-            font-family: var(--font-family);
+        * {
             margin: 0;
-            background-color: var(--light-gray);
-        }
-        .app-container {
-            max-width: 600px;
-            margin: 0 auto;
-            background-color: var(--white);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            padding-bottom: 70px; /* Space for footer/nav */
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        /* Header Styling */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        /* Animated Background Particles */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .particle:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .particle:nth-child(2) {
+            width: 60px;
+            height: 60px;
+            left: 30%;
+            animation-delay: 2s;
+        }
+
+        .particle:nth-child(3) {
+            width: 100px;
+            height: 100px;
+            left: 50%;
+            animation-delay: 4s;
+        }
+
+        .particle:nth-child(4) {
+            width: 70px;
+            height: 70px;
+            left: 70%;
+            animation-delay: 6s;
+        }
+
+        .particle:nth-child(5) {
+            width: 90px;
+            height: 90px;
+            left: 85%;
+            animation-delay: 8s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.5;
+            }
+            90% {
+                opacity: 0.5;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .app-container {
+            max-width: 480px;
+            margin: 0 auto;
+            background: var(--white);
+            min-height: 100vh;
+            position: relative;
+            box-shadow: 0 0 80px rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
+
+        /* Premium Header */
         header {
-            background-color: var(--white);
-            padding: 1rem;
-            text-align: center;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            padding: 1.5rem 1.25rem;
             position: sticky;
             top: 0;
-            z-index: 10;
-        }
-        .logo {
-            width: 48px;
-            height: 48px;
-            margin-bottom: 8px;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        h1 {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--dark-gray);
-            margin: 0;
-        }
-        .subtitle {
-            font-size: 0.875rem;
-            color: var(--primary-green);
-            margin-top: 4px;
+            z-index: 100;
+            border-bottom: 1px solid rgba(11, 143, 74, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            animation: slideDown 0.6s ease-out;
         }
 
-        /* Menu Button (Hamburger) */
-        .menu-button {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0.5rem;
-        }
-        .menu-button-icon {
-            width: 24px;
-            height: 24px;
-            fill: var(--dark-gray);
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
 
-        /* Main Content and Tab Header */
-        main {
-            padding: 1rem;
-            flex-grow: 1;
-        }
-        .grade-header {
-            background-color: var(--primary-green);
-            color: var(--white);
-            padding: 0.75rem;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            font-size: 1.25rem;
-            font-weight: bold;
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
-        /* Subject Section Styling (Demarcation) */
-        .subject-section {
-            background-color: var(--white);
-            padding: 1rem;
-            border-radius: 8px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-            margin-bottom: 1.5rem;
-            border-top: 4px solid var(--primary-green);
-        }
-        .subject-header {
-            font-size: 1.125rem;
-            font-weight: 600;
-            color: var(--primary-green);
-            border-bottom: 1px solid #ccc;
-            padding-bottom: 0.5rem;
-            margin-bottom: 1rem;
-        }
-        .video-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        .logo-section {
+            display: flex;
+            align-items: center;
             gap: 1rem;
         }
-        .video-card {
-            background-color: #f7f7f7;
-            border-radius: 6px;
+
+        .logo {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            object-fit: cover;
+            box-shadow: 0 8px 24px rgba(11, 143, 74, 0.3);
+            border: 3px solid var(--primary-light);
+            transition: transform 0.5s ease;
+        }
+
+        .logo:hover {
+            transform: rotate(360deg) scale(1.1);
+        }
+
+        .title-section h1 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 0.75rem;
+            color: var(--primary-green);
+            font-weight: 600;
+            margin-top: 3px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .search-button,
+        .menu-button {
+            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(11, 143, 74, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .search-button:hover,
+        .menu-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(11, 143, 74, 0.4);
+        }
+
+        .search-button svg,
+        .menu-button svg {
+            width: 22px;
+            height: 22px;
+            fill: var(--white);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%);
+            color: var(--white);
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            font-size: 0.7rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulse 2s ease infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        /* Search Modal */
+        .search-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            z-index: 300;
+            align-items: flex-start;
+            justify-content: center;
+            padding-top: 2rem;
+        }
+
+        .search-modal.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .search-content {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 2rem;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.4s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            border: 2px solid var(--border-gray);
+            border-radius: 12px;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-green);
+            box-shadow: 0 0 0 4px var(--primary-light);
+        }
+
+        .close-search {
+            margin-top: 1rem;
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--border-gray);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Stats Banner */
+        .stats-banner {
+            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
+            padding: 1.5rem;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            color: var(--white);
+        }
+
+        .stat-number {
+            font-size: 1.75rem;
+            font-weight: 800;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            opacity: 0.9;
+            font-weight: 500;
+        }
+
+        /* Main Content */
+        main {
+            padding: 1.5rem 1.25rem 100px;
+            background: var(--light-gray);
+        }
+
+        /* Welcome Banner */
+        .welcome-banner {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem 1.5rem;
+            border-radius: 20px;
+            color: var(--white);
+            margin-bottom: 2rem;
+            position: relative;
             overflow: hidden;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 40px rgba(102, 126, 234, 0.4);
+            animation: scaleIn 0.6s ease-out;
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .welcome-banner::before {
+            content: '🎓';
+            position: absolute;
+            font-size: 8rem;
+            right: -2rem;
+            top: -2rem;
+            opacity: 0.15;
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .welcome-banner h2 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .welcome-banner p {
+            font-size: 0.95rem;
+            opacity: 0.95;
+            line-height: 1.5;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .quick-action {
+            background: var(--white);
+            padding: 1.25rem 0.75rem;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quick-action:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+            border-color: var(--primary-green);
+        }
+
+        .quick-action-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            display: block;
+            animation: bounce 2s ease infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .quick-action-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        /* Grade Header */
+        .grade-header {
+            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
+            color: var(--white);
+            padding: 1.5rem 1.75rem;
+            border-radius: 20px;
+            margin-bottom: 2rem;
+            font-size: 1.6rem;
+            font-weight: 800;
+            box-shadow: 0 10px 40px rgba(11, 143, 74, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .grade-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: pulse 3s ease infinite;
+        }
+
+        /* Progress Section */
+        .progress-section {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .progress-title {
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .progress-percentage {
+            font-weight: 800;
+            color: var(--primary-green);
+            font-size: 1.25rem;
+        }
+
+        .progress-bar-container {
+            height: 12px;
+            background: var(--border-gray);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
+            border-radius: 20px;
+            transition: width 1.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        /* Achievement Badges */
+        .achievements {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+        }
+
+        .achievement-badge {
+            min-width: 70px;
+            text-align: center;
+        }
+
+        .achievement-icon {
+            font-size: 2.5rem;
+            display: block;
+            margin-bottom: 0.25rem;
+            transition: all 0.3s ease;
+        }
+
+        .achievement-badge:hover .achievement-icon {
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        .achievement-label {
+            font-size: 0.7rem;
+            color: var(--text-medium);
+            font-weight: 600;
+        }
+
+        /* Subject Sections */
+        .subject-section {
+            background: var(--white);
+            padding: 1.75rem;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            margin-bottom: 1.75rem;
+            border: 1px solid var(--border-gray);
+            transition: all 0.4s ease;
+        }
+
+        .subject-section:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.12);
+        }
+
+        .subject-header {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .subject-header::before {
+            content: '';
+            width: 5px;
+            height: 32px;
+            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
+            border-radius: 4px;
+        }
+
+        .subject-badge {
+            margin-left: auto;
+            background: var(--primary-light);
+            color: var(--primary-green);
+            padding: 0.375rem 0.875rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        /* Video Grid */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.25rem;
+        }
+
+        .video-card {
+            background: var(--white);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            border: 2px solid var(--border-gray);
             text-decoration: none;
             color: inherit;
-            display: block;
+            cursor: pointer;
+            transition: all 0.4s ease;
         }
+
+        .video-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
+            border-color: var(--primary-green);
+        }
+
         .video-thumbnail {
-            height: 60px;
-            background-color: #e0e0e0;
+            height: 120px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
         }
-        .video-info {
-            padding: 0.5rem;
-        }
-        .video-title {
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--dark-gray);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .video-lesson {
-            font-size: 0.7rem;
-            color: #6b7280;
-            margin-top: 3px;
+
+        .video-thumbnail::after {
+            content: '▶';
+            position: absolute;
+            color: var(--white);
+            font-size: 2rem;
+            opacity: 0.9;
+            background: rgba(0, 0, 0, 0.3);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
         }
 
-        /* Fixed Bottom Navigation */
+        .video-card:hover .video-thumbnail::after {
+            transform: scale(1.2);
+            background: rgba(11, 143, 74, 0.8);
+        }
+
+        .video-info {
+            padding: 1rem;
+        }
+
+        .video-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .video-lesson {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+        }
+
+        .video-lesson::before {
+            content: '📚';
+            font-size: 1rem;
+        }
+
+        /* Coming Soon Badge */
+        .coming-soon {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--white);
+            border-radius: 30px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin: 1rem 0;
+            box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Side Menu */
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            z-index: 200;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .side-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 85%;
+            max-width: 340px;
+            height: 100%;
+            background: var(--white);
+            box-shadow: 0 0 60px rgba(0, 0, 0, 0.3);
+            transform: translateX(-100%);
+            transition: transform 0.4s ease;
+            z-index: 201;
+            overflow-y: auto;
+        }
+
+        .menu-overlay.active .side-menu {
+            transform: translateX(0);
+        }
+
+        .menu-header {
+            padding: 2.5rem 2rem;
+            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-header::before {
+            content: '📚';
+            position: absolute;
+            font-size: 10rem;
+            right: -3rem;
+            top: -3rem;
+            opacity: 0.1;
+        }
+
+        .menu-header h3 {
+            font-size: 1.75rem;
+            font-weight: 800;
+            position: relative;
+            z-index: 1;
+        }
+
+        .menu-close {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            color: var(--white);
+            font-size: 1.25rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 2;
+        }
+
+        .menu-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .menu-list {
+            list-style: none;
+            padding: 1.5rem 0;
+        }
+
+        .menu-list li a {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.25rem 2rem;
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+
+        .menu-list li a:hover {
+            background: var(--primary-light);
+            border-left-color: var(--primary-green);
+            color: var(--primary-green);
+            padding-left: 2.5rem;
+        }
+
+        .menu-contact {
+            padding: 2rem;
+            border-top: 1px solid var(--border-gray);
+            margin-top: auto;
+        }
+
+        .menu-contact h4 {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+
+        .menu-contact p {
+            font-size: 0.8rem;
+            color: var(--text-medium);
+            line-height: 1.6;
+        }
+
+        /* Bottom Navigation */
         nav {
             position: fixed;
             bottom: 0;
-            left: 0;
-            right: 0;
-            background-color: var(--white);
-            border-top: 1px solid #e5e7eb;
-            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-            z-index: 20;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 480px;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid var(--border-gray);
+            box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.12);
+            z-index: 100;
         }
+
         .nav-buttons {
-            max-width: 600px;
-            margin: 0 auto;
             display: flex;
             justify-content: space-around;
-            height: 60px;
+            padding: 0.75rem 0.5rem;
         }
+
         .tab-button {
             flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            padding: 0.75rem;
             border: none;
-            background: none;
-            color: #9ca3af;
+            background: transparent;
+            color: var(--text-light);
             cursor: pointer;
-            font-size: 0.75rem;
-            transition: color 0.15s;
-        }
-        .tab-button.active {
-            color: var(--primary-green);
-            border-top: 3px solid var(--primary-green);
-            padding-top: 3px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            border-radius: 14px;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
         }
 
-        /* Utility for Hiding/Showing Tabs */
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
-        .menu-page { display: none; }
+        .tab-button svg {
+            margin-bottom: 0.375rem;
+            transition: all 0.3s ease;
+        }
+
+        .tab-button.active {
+            color: var(--primary-green);
+            background: var(--primary-light);
+        }
+
+        .tab-button.active svg {
+            transform: scale(1.15);
+        }
+
+        .tab-button:hover:not(.active) {
+            color: var(--text-medium);
+            background: var(--light-gray);
+        }
+
+        /* Upload Form */
+        .upload-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            padding: 2rem;
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+        }
+
+        .upload-form input,
+        .upload-form select,
+        .upload-form textarea {
+            padding: 1.125rem 1.25rem;
+            border: 2px solid var(--border-gray);
+            border-radius: 14px;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .upload-form input:focus,
+        .upload-form select:focus,
+        .upload-form textarea:focus {
+            outline: none;
+            border-color: var(--primary-green);
+            box-shadow: 0 0 0 4px var(--primary-light);
+        }
+
+        .upload-form button {
+            padding: 1.25rem;
+            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
+            color: var(--white);
+            border: none;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 1.125rem;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 24px rgba(11, 143, 74, 0.3);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .upload-form button:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 40px rgba(11, 143, 74, 0.4);
+        }
+
+        /* Footer */
+        footer {
+            padding: 2rem 1.5rem;
+            text-align: center;
+            font-size: 0.875rem;
+            color: var(--text-light);
+            background: var(--white);
+            border-top: 1px solid var(--border-gray);
+            font-weight: 600;
+        }
+
+        /* Content Visibility */
+        .tab-content,
+        .menu-page {
+            display: none;
+        }
+
+        .tab-content.active,
+        .menu-page.active {
+            display: block;
+            animation: fadeInContent 0.5s ease-out;
+        }
+
+        @keyframes fadeInContent {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 380px) {
+            .video-grid {
+                grid-template-columns: 1fr;
+            }
+            .quick-actions {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--light-gray);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-green);
+            border-radius: 10px;
+        }
     </style>
 </head>
 <body>
+    <!-- Animated Background -->
+    <div class="bg-animation">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
 
     <div class="app-container">
-        <!-- Header with Logo, Name, and Menu Button --><header>
-            <!-- Provided Image Logo --><img src="WEX LOGO.jpg" alt="New Wexford Community School Logo" class="logo">
-            <h1>Wexford Edu Hub</h1>
-             <p class="subtitle">Innovation,Technology and Discipline</p>
-
-            <!-- Hamburger Menu Button --><button class="menu-button" onclick="toggleMenu()">
-                <svg class="menu-button-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
-            </button>
+        <!-- Header -->
+        <header>
+            <div class="header-content">
+                <div class="logo-section">
+                    <img src="WEX LOGO.jpg" alt="Wexford Logo" class="logo">
+                    <div class="title-section">
+                        <h1>Wexford Edu Hub</h1>
+                        <p class="subtitle">Innovation, Technology & Discipline</p>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button class="search-button" onclick="toggleSearch()">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="11" cy="11" r="8" fill="none" stroke="currentColor" stroke-width="2"/>
+                            <path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </button>
+                    <button class="menu-button" onclick="toggleMenu()">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/>
+                        </svg>
+                        <span class="notification-badge">3</span>
+                    </button>
+                </div>
+            </div>
         </header>
 
-        <!-- Main Content Area -->
+        <!-- Search Modal -->
+        <div id="search-modal" class="search-modal" onclick="closeSearchOnOverlay(event)">
+            <div class="search-content">
+                <h3 style="margin-bottom: 1rem; font-weight: 800; color: var(--text-dark);">🔍 Search Resources</h3>
+                <input type="text" class="search-input" placeholder="Search for videos, subjects, lessons..." onkeyup="handleSearch(event)">
+                <button class="close-search" onclick="toggleSearch()">Close</button>
+            </div>
+        </div>
+
+        <!-- Stats Banner -->
+        <div class="stats-banner">
+            <div class="stat-item">
+                <span class="stat-number">150+</span>
+                <span class="stat-label">Videos</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">12</span>
+                <span class="stat-label">Subjects</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">500+</span>
+                <span class="stat-label">Students</span>
+            </div>
+        </div>
+
+        <!-- Side Menu -->
+        <div id="menu-overlay" class="menu-overlay" onclick="closeMenuOnOverlay(event)">
+            <div class="side-menu">
+                <div class="menu-header">
+                    <h3>Navigation Menu</h3>
+                    <button class="menu-close" onclick="toggleMenu()">✕</button>
+                </div>
+                <ul class="menu-list">
+                    <li><a href="https://stephen-daniels.github.io/PANIN.com/Staff.html" onclick="toggleMenu()">
+                        👥 Staff Directory
+                    </a></li>
+                    <li><a href="#" onclick="showPage('trial'); toggleMenu()">
+                        📝 Trial Questions
+                    </a></li>
+                    <li><a href="#" onclick="showPage('about'); toggleMenu()">
+                        ℹ️ About Us
+                    </a></li>
+                    <li><a href="https://www.ck12.org/c/arithmetic/add-whole-numbers/?by=ck12&difficulty=all#all&noback=true" onclick="toggleMenu()">
+                        🔗 External Resources
+                    </a></li>
+                    <li><a href="#" onclick="showPage('upload'); toggleMenu()">
+                        📤 Upload Content
+                    </a></li>
+                </ul>
+                
+                <div class="menu-contact">
+                    <h4>📞 Contact Us</h4>
+                    <p>
+                        Email: info@wexfordedu.com<br>
+                        Phone: +233 XX XXX XXXX<br>
+                        Location: Accra, Ghana
+                    </p>
+                </div>
+            </div>
+        </div>
+
         <main>
+            <!-- Welcome Banner -->
+            <div class="welcome-banner">
+                <h2>Welcome Back! 👋</h2>
+                <p>Continue your learning journey with our latest resources and interactive lessons</p>
+            </div>
 
-            <!-- Menu Overlay (Initially Hidden) -->
-            <div id="side-menu" class="menu-page" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.7); z-index: 50; display: none;">
-                <div style="width: 70%; max-width: 300px; background: var(--white); height: 100%; padding: 20px; box-shadow: 4px 0 10px rgba(0, 0, 0, 0.2);">
-                    <h3 style="font-size: 1.5rem; color: var(--primary-green); border-bottom: 2px solid var(--primary-green); padding-bottom: 10px; margin-bottom: 15px;">Menu</h3>
-                    <ul style="list-style: none; padding: 0;">
-                        <!-- JHS is now on the bottom nav, removed from here -->
-                        <li><a href="https://stephen-daniels.github.io/PANIN.com/Staff.html" onclick="showPage('staff'); toggleMenu();" style="display: block; padding: 10px 0; border-bottom: 1px solid #eee; text-decoration: none; color: var(--dark-gray);">Staff</a></li>
-                        <li><a href="#" onclick="showPage('trial'); toggleMenu();" style="display: block; padding: 10px 0; border-bottom: 1px solid #eee; text-decoration: none; color: var(--dark-gray);">Trial Questions</a></li>
-                        <li><a href="#" onclick="showPage('about'); toggleMenu();" style="display: block; padding: 10px 0; border-bottom: 1px solid #eee; text-decoration: none; color: var(--dark-gray);">About</a></li>
-                        <li><a href="https://www.ck12.org/c/arithmetic/add-whole-numbers/?by=ck12&difficulty=all#all&noback=true" onclick="showPage('others'); toggleMenu();" style="display: block; padding: 10px 0; border-bottom: 1px solid #eee; text-decoration: none; color: var(--dark-gray);">Others</a></li>
-                    </ul>
-                    <button onclick="toggleMenu()" style="position: absolute; top: 10px; right: 10px; background: var(--primary-green); color: var(--white); border: none; border-radius: 50%; width: 30px; height: 30px; font-size: 1.2rem; cursor: pointer;">X</button>
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <div class="quick-action" onclick="switchTab('lower-primary')">
+                    <span class="quick-action-icon">🎨</span>
+                    <span class="quick-action-label">Primary</span>
+                </div>
+                <div class="quick-action" onclick="switchTab('jhs')">
+                    <span class="quick-action-icon">🎓</span>
+                    <span class="quick-action-label">JHS</span>
+                </div>
+                <div class="quick-action" onclick="showPage('trial')">
+                    <span class="quick-action-icon">📝</span>
+                    <span class="quick-action-label">Quizzes</span>
+                </div>
+                <div class="quick-action" onclick="showPage('upload')">
+                    <span class="quick-action-icon">📤</span>
+                    <span class="quick-action-label">Upload</span>
                 </div>
             </div>
 
-            <!-- MAIN TAB CONTENT SECTIONS -->
-
-            <!-- === TAB CONTENT: Lower Primary === -->
+            <!-- Lower Primary Tab -->
             <div id="lower-primary" class="tab-content active">
-                <div class="grade-header">Lower Primary (Grades 1-3)</div>
+                <div class="grade-header">🎨 Lower Primary (Grades 1-3)</div>
 
-                <section id="lp-maths" class="subject-section">
-                    <h3 class="subject-header">Maths Resources</h3>
-                    <div class="video-grid">
-                        <a href="https://www.youtube.com/watch?v=11eckLmJEMw&list=RD11eckLmJEMw&start_radio=1" class="video-card"><div class="video-thumbnail" style="background-color: #D1E7DD;"></div><div class="video-info"><p class="video-title">Counting Shapes</p><p class="video-lesson">Lesson 1.2</p></div></a>
-                        <a href="https://www.youtube.com/watch?v=NybHckSEQBI" class="video-card"><div class="video-thumbnail" style="background-color: #D1E7DD;"></div><div class="video-info"><p class="video-title">Addition Basics</p><p class="video-lesson">Lesson 2.1</p></div></a>
+                <!-- Progress Section -->
+                <div class="progress-section">
+                    <div class="progress-header">
+                        <span class="progress-title">📊 Your Progress</span>
+                        <span class="progress-percentage">65%</span>
                     </div>
-                </section>
-
-                <section id="lp-english" class="subject-section">
-                    <h3 class="subject-header">English Resources</h3>
-                    <div class="video-grid">
-                        <a href="https://www.youtube.com/watch?v=-4CL3Xn-ycw&list=PL0HMo9RIVkoxyScPHjfleUL7q8Z3hOxqn" class="video-card"><div class="video-thumbnail" style="background-color: #F8D7DA;"></div><div class="video-info"><p class="video-title">Phonics: 'Sh' Sound</p><p class="video-lesson">Unit 3</p></div></a>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" style="width: 65%;"></div>
                     </div>
-                </section>
-
-                <section id="lp-science" class="subject-section">
-                    <h3 class="subject-header">Science Resources</h3>
-                    <div class="video-grid">
-                        <a href="https://www.youtube.com/watch?v=AVC-426M6V0" class="video-card"><div class="video-thumbnail" style="background-color: #CCE5FF;"></div><div class="video-info"><p class="video-title">The Water Cycle</p><p class="video-lesson">Module 4</p></div></a>
+                    <div class="achievements">
+                        <div class="achievement-badge">
+                            <span class="achievement-icon">🏆</span>
+                            <span class="achievement-label">Champion</span>
+                        </div>
+                        <div class="achievement-badge">
+                            <span class="achievement-icon">⭐</span>
+                            <span class="achievement-label">Star</span>
+                        </div>
+                        <div class="achievement-badge">
+                            <span class="achievement-icon">🎯</span>
+                            <span class="achievement-label">Achiever</span>
+                        </div>
+                        <div class="achievement-badge">
+                            <span class="achievement-icon">🔥</span>
+                            <span class="achievement-label">Streak</span>
+                        </div>
                     </div>
-                </section>
-            </div>
-
-            <!-- === TAB CONTENT: Upper Primary === -->
-            <div id="upper-primary" class="tab-content">
-                <div class="grade-header">Upper Primary (Grades 4-6)</div>
-                <section class="subject-section"><h3 class="subject-header">Maths Resources</h3><p style="color:#6b7280; font-size: 0.9rem;">Content coming soon...</p></section>
-                 <div class="video-grid">
-                     <video controls width="250">
-
-    <source src="new.mp4" type="video/mp4">
-</video>
-                      <source src="multi-base.mp4" type="video/mp4">
-</video>
-                        <a href="https://stephen-daniels.github.io/PANIN.com/new.mp4" class="video-card"><div class="video-thumbnail" style="background-color: #CCE5FF;"></div><div class="video-info"><p class="video-title">The Water Cycle</p><p class="video-lesson">Module 4</p></div></a>
-                     <a href="https://stephen-daniels.github.io/PANIN.com/multi-base.mp4" class="video-card"><div class="video-thumbnail" style="background-color: #CCE5FF;"></div><div class="video-info"><p class="video-title">The Water Cycle</p><p class="video-lesson">Module 4</p></div></a>
-                    </div>
-                <section class="subject-section"><h3 class="subject-header">English Resources</h3><p style="color:#6b7280; font-size: 0.9rem;">Content coming soon...</p></section>
-                <section class="subject-section"><h3 class="subject-header">Science Resources</h3><p style="color:#6b7280; font-size: 0.9rem;">Content coming soon...</p></section>
-            </div>
-            
-            <!-- === TAB CONTENT: JHS (Now a main tab) === -->
-            <div id="jhs" class="tab-content">
-                <div class="grade-header">JHS (Junior High School)</div>
-                <section class="subject-section"><h3 class="subject-header">Maths Resources</h3><p style="color:#6b7280; font-size: 0.9rem;">Content coming soon...</p></section>
-                <section class="subject-section"><h3 class="subject-header">English Resources</h3><p style="color:#6b7280; font-size: 0.9rem;">Content coming soon...</p></section>
-                <section class="subject-section"><h3 class="subject-header">Science Resources</h3><p style="color:#6b7280; font-size: 0.9rem;">Content coming soon...</p></section>
-            </div>
-
-            <!-- === MENU PAGES (Accessed via Hamburger) === -->
-            <div id="staff" class="menu-page"><h2 class="grade-header" style="background-color: #3b82f6;">Staff Directory</h2><p style="padding: 1rem;">This page is for Staff bios and contact information.</p></div>
-            <div id="trial" class="menu-page"><h2 class="grade-header" style="background-color: #f59e0b;">Trial Questions</h2><p style="padding: 1rem;">This page will contain sample quizzes and practice questions.</p></div>
-            <div id="about" class="menu-page"><h2 class="grade-header" style="background-color: #10b981;">About Wexford Edu Hub</h2><p style="padding: 1rem;">Information about the school and the resource hub<br>This app is design to be a central communication and information hub for students, parents and staff.</br></p></div>
-            <div id="others" class="menu-page"><h2 class="grade-header" style="background-color: #6366f1;">Other Resources</h2><p style="padding: 1rem;">Links to external learning tools or additional materials.</p></div>
-            <div id="upload" class="menu-page"><h2 class="grade-header" style="background-color: #ef4444;">Video Upload Area</h2>
-                <div style="padding: 1rem;">
-                    <p style="color: #6b7280; margin-bottom: 1rem;">This form serves as a placeholder for uploading video links. In a live version, this data would be sent to a database.</p>
-                    <!-- Simple Upload Placeholder Form -->
-                    <form onsubmit="event.preventDefault(); alert('Video link submitted (Static Preview)');" style="display: flex; flex-direction: column; gap: 10px;">
-                        <input type="text" placeholder="Video Title" required style="padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
-                        <input type="url" placeholder="Video Link (URL)" required style="padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
-                        <select required style="padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
-                            <option value="">Select Grade Level...</option>
-                            <option>Lower Primary</option>
-                            <option>Upper Primary</option>
-                            <option>JHS</option>
-                        </select>
-                        <button type="submit" style="padding: 10px; background-color: var(--primary-green); color: var(--white); border: none; border-radius: 4px; font-weight: bold;">Submit Video Link</button>
-                    </form>
                 </div>
+
+                <section class="subject-section">
+                    <h3 class="subject-header">
+                        📊 Maths Resources
+                        <span class="subject-badge">8 Videos</span>
+                    </h3>
+                    <div class="video-grid">
+                        <a href="https://www.youtube.com/watch?v=11eckLmJEMw&list=RD11eckLmJEMw&start_radio=1" class="video-card">
+                            <div class="video-thumbnail" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
+                            <div class="video-info">
+                                <p class="video-title">Counting Shapes</p>
+                                <p class="video-lesson">Lesson 1.2</p>
+                            </div>
+                        </a>
+                        <a href="https://www.youtube.com/watch?v=NybHckSEQBI" class="video-card">
+                            <div class="video-thumbnail" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"></div>
+                            <div class="video-info">
+                                <p class="video-title">Addition Basics</p>
+                                <p class="video-lesson">Lesson 2.1</p>
+                            </div>
+                        </a>
+                    </div>
+                </section>
+
+                <section class="subject-section">
+                    <h3 class="subject-header">
+                        📚 English Resources
+                        <span class="subject-badge">5 Videos</span>
+                    </h3>
+                    <div class="video-grid">
+                        <a href="https://www.youtube.com/watch?v=-4CL3Xn-ycw&list=PL0HMo9RIVkoxyScPHjfleUL7q8Z3hOxqn" class="video-card">
+                            <div class="video-thumbnail" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);"></div>
+                            <div class="video-info">
+                                <p class="video-title">Phonics: 'Sh' Sound</p>
+                                <p class="video-lesson">Unit 3</p>
+                            </div>
+                        </a>
+                    </div>
+                </section>
+
+                <section class="subject-section">
+                    <h3 class="subject-header">
+                        🔬 Science Resources
+                        <span class="subject-badge">6 Videos</span>
+                    </h3>
+                    <div class="video-grid">
+                        <a href="https://www.youtube.com/watch?v=AVC-426M6V0" class="video-card">
+                            <div class="video-thumbnail" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);"></div>
+                            <div class="video-info">
+                                <p class="video-title">The Water Cycle</p>
+                                <p class="video-lesson">Module 4</p>
+                            </div>
+                        </a>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Upper Primary Tab -->
+            <div id="upper-primary" class="tab-content">
+                <div class="grade-header">📖 Upper Primary (Grades 4-6)</div>
+                
+                <div class="progress-section">
+                    <div class="progress-header">
+                        <span class="progress-title">📊 Your Progress</span>
+                        <span class="progress-percentage">45%</span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" style="width: 45%;"></div>
+                    </div>
+                </div>
+
+                <section class="subject-section">
+                    <h3 class="subject-header">
+                        📊 Maths Resources
+                        <span class="subject-badge">12 Videos</span>
+                    </h3>
+                    <div class="video-grid">
+                        <div class="video-card">
+                            <video controls style="width: 100%; height: 120px; object-fit: cover; border-radius: 0;">
+                                <source src="new.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-info">
+                                <p class="video-title">Math Fundamentals</p>
+                                <p class="video-lesson">Lesson 5.1</p>
+                            </div>
+                        </div>
+                        <div class="video-card">
+                            <video controls style="width: 100%; height: 120px; object-fit: cover; border-radius: 0;">
+                                <source src="multi-base.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-info">
+                                <p class="video-title">Multi-Base Numbers</p>
+                                <p class="video-lesson">Lesson 5.2</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="subject-section">
+                    <h3 class="subject-header">
+                        📚 English Resources
+                        <span class="subject-badge">Coming Soon</span>
+                    </h3>
+                    <span class="coming-soon">📅 New content arriving soon!</span>
+                </section>
+
+                <section class="subject-section">
+                    <h3 class="subject-header">
+                        🔬 Science Resources
+                        <span class="subject-badge">Coming Soon</span>
+                    </h3>
+                    <span class="coming-soon">📅 Exciting experiments on the way!</span>
+                </section>
+            </div>
+
+            <!-- JHS Tab -->
+            <div id="jhs" class="tab-content">
+                <div class="grade-header">🎓 JHS (Junior High School)</div>
+                
+                <div class="progress-section">
+                    <div class="progress-header">
+                        <span class="progress-title">📊 Your Progress</span>
+                        <span class="progress-percentage">30%</span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" style="width: 30%;"></div>
+                    </div>
+                </div>
+
+                <section class="subject-section">
+                    <h3 class="subject-header">
+                        📊 Mathematics
+                        <span class="subject-badge">Coming Soon</span>
+                    </h3>
+                    <span class="coming-soon">📅 Advanced math lessons launching soon!</span>
+                </section>
+
+                <section class="subject-section">
+                    <h3 class="subject-header">
+                        📚 English Language
+                        <span class="subject-badge">Coming Soon</span>
+                    </h3>
+                    <span class="coming-soon">📅 Grammar and composition videos incoming!</span>
+                </section>
+
+                <section class="subject-section">
+                    <h3 class="subject-header">
+                        🔬 Integrated Science
+                        <span class="subject-badge">Coming Soon</span>
+                    </h3>
+                    <span class="coming-soon">📅 Lab experiments and theory videos coming!</span>
+                </section>
+            </div>
+
+            <!-- Trial Questions Page -->
+            <div id="trial" class="menu-page">
+                <div class="grade-header" style="background: linear-gradient(135deg, #3B82F6 0%, #8B5CF6 100%);">📝 Trial Questions & Quizzes</div>
+                
+                <section class="subject-section">
+                    <h3 class="subject-header">🎯 Practice Makes Perfect</h3>
+                    <p style="color: var(--text-medium); line-height: 1.6; margin-bottom: 1.5rem;">
+                        Test your knowledge with our comprehensive collection of practice questions and interactive quizzes designed to help you excel in your examinations.
+                    </p>
+                    
+                    <div style="display: grid; gap: 1rem;">
+                        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 1.5rem; border-radius: 16px; color: white; cursor: pointer; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                            <h4 style="font-size: 1.1rem; margin-bottom: 0.5rem; font-weight: 700;">📐 Mathematics Quiz</h4>
+                            <p style="font-size: 0.875rem; opacity: 0.95;">20 Questions • 30 Minutes</p>
+                        </div>
+                        
+                        <div style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); padding: 1.5rem; border-radius: 16px; color: white; cursor: pointer; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                            <h4 style="font-size: 1.1rem; margin-bottom: 0.5rem; font-weight: 700;">📖 English Quiz</h4>
+                            <p style="font-size: 0.875rem; opacity: 0.95;">15 Questions • 25 Minutes</p>
+                        </div>
+                        
+                        <div style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%); padding: 1.5rem; border-radius: 16px; color: white; cursor: pointer; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                            <h4 style="font-size: 1.1rem; margin-bottom: 0.5rem; font-weight: 700;">🔬 Science Quiz</h4>
+                            <p style="font-size: 0.875rem; opacity: 0.95;">18 Questions • 28 Minutes</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- About Page -->
+            <div id="about" class="menu-page">
+                <div class="grade-header" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">ℹ️ About Wexford Edu Hub</div>
+                
+                <section class="subject-section">
+                    <h3 class="subject-header">🎯 Our Mission</h3>
+                    <p style="color: var(--text-medium); line-height: 1.8; margin-bottom: 1.5rem;">
+                        Welcome to Wexford Edu Hub - a cutting-edge digital learning platform revolutionizing education through technology, innovation, and discipline. We serve as a central communication and information hub for students, parents, and staff.
+                    </p>
+                    
+                    <h3 class="subject-header">✨ What We Offer</h3>
+                    <div style="display: grid; gap: 1rem; margin-bottom: 1.5rem;">
+                        <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: var(--light-gray); border-radius: 12px;">
+                            <span style="font-size: 2rem;">📹</span>
+                            <div>
+                                <h4 style="font-weight: 700; margin-bottom: 0.25rem;">Video Library</h4>
+                                <p style="font-size: 0.875rem; color: var(--text-medium);">Comprehensive collection of educational videos</p>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: var(--light-gray); border-radius: 12px;">
+                            <span style="font-size: 2rem;">📝</span>
+                            <div>
+                                <h4 style="font-weight: 700; margin-bottom: 0.25rem;">Interactive Quizzes</h4>
+                                <p style="font-size: 0.875rem; color: var(--text-medium);">Test your knowledge with practice questions</p>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: var(--light-gray); border-radius: 12px;">
+                            <span style="font-size: 2rem;">📊</span>
+                            <div>
+                                <h4 style="font-weight: 700; margin-bottom: 0.25rem;">Progress Tracking</h4>
+                                <p style="font-size: 0.875rem; color: var(--text-medium);">Monitor your learning journey</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h3 class="subject-header">🏆 Our Values</h3>
+                    <p style="color: var(--text-medium); line-height: 1.8;">
+                        <strong>Innovation:</strong> Embracing technology for better learning<br>
+                        <strong>Technology:</strong> Leveraging digital tools for education<br>
+                        <strong>Discipline:</strong> Building character through consistent effort
+                    </p>
+                </section>
+            </div>
+
+            <!-- Upload Page -->
+            <div id="upload" class="menu-page">
+                <div class="grade-header" style="background: linear-gradient(135deg, #ee0979 0%, #ff6a00 100%);">📤 Upload Video Resource</div>
+                
+                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 1.5rem; border-radius: 16px; margin-bottom: 1.5rem; color: white;">
+                    <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">🎬 Share Your Knowledge</h3>
+                    <p style="font-size: 0.875rem; opacity: 0.95;">Upload educational videos to help students learn and grow. Your contributions make a difference!</p>
+                </div>
+                
+                <form class="upload-form" onsubmit="handleUpload(event)">
+                    <input type="text" placeholder="📌 Video Title" required>
+                    <input type="url" placeholder="🔗 Video Link (URL)" required>
+                    <select required>
+                        <option value="">🎯 Select Grade Level...</option>
+                        <option>Lower Primary (1-3)</option>
+                        <option>Upper Primary (4-6)</option>
+                        <option>JHS (7-9)</option>
+                    </select>
+                    <select required>
+                        <option value="">📚 Select Subject...</option>
+                        <option>Mathematics</option>
+                        <option>English Language</option>
+                        <option>Science</option>
+                        <option>Social Studies</option>
+                        <option>ICT</option>
+                        <option>Creative Arts</option>
+                    </select>
+                    <textarea placeholder="📝 Video Description (Optional)" rows="3" style="resize: vertical;"></textarea>
+                    <button type="submit">🚀 Submit Video Link</button>
+                </form>
             </div>
         </main>
 
-        <!-- Fixed Bottom Navigation (Tabs) -->
+        <!-- Bottom Navigation -->
         <nav>
             <div class="nav-buttons">
-                <!-- Lower Primary Tab Button -->
                 <button id="btn-lower-primary" class="tab-button active" onclick="switchTab('lower-primary')">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18 17l-3-3-4 4-5-5-3 3"/></svg>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 3v18h18"/><path d="M18 17l-3-3-4 4-5-5-3 3"/>
+                    </svg>
                     <span>Lwr Primary</span>
                 </button>
-                <!-- Upper Primary Tab Button -->
                 <button id="btn-upper-primary" class="tab-button" onclick="switchTab('upper-primary')">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h16a2 2 0 012 2v14zM10 16.5l2-2 2 2M12 7.5v6"/></svg>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h16a2 2 0 012 2v14z"/>
+                    </svg>
                     <span>Upr Primary</span>
                 </button>
-                <!-- JHS Tab Button (NEWLY ADDED) -->
                 <button id="btn-jhs" class="tab-button" onclick="switchTab('jhs')">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 18.75c3.04 0 5.5-2.46 5.5-5.5s-2.46-5.5-5.5-5.5-5.5 2.46-5.5 5.5 2.46 5.5 5.5 5.5zm0-11c1.93 0 3.5 1.57 3.5 3.5s-1.57 3.5-3.5 3.5-3.5-1.57-3.5-3.5 1.57-3.5 3.5-3.5z"/></svg>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
+                    </svg>
                     <span>JHS</span>
                 </button>
-                 <!-- Upload Tab Button -->
                 <button id="btn-upload" class="tab-button" onclick="showPage('upload')">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 9l5-5 5 5M12 4v12"/></svg>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 9l5-5 5 5M12 4v12"/>
+                    </svg>
                     <span>Upload</span>
                 </button>
             </div>
         </nav>
 
-        <!-- Designed By Footer -->
-        <footer style="padding: 0.5rem; text-align: center; font-size: 0.75rem; color: #6b7280; background: var(--white); border-top: 1px solid #eee; margin-top: auto;">
-            © 2025 PANIN SARFO — Designed with ❤️ for our team
+        <!-- Footer -->
+        <footer>
+            <div style="margin-bottom: 0.5rem;">
+                <strong style="color: var(--primary-green);">Wexford Edu Hub</strong> - Empowering Education Through Technology
+            </div>
+            <div style="font-size: 0.75rem;">
+                © 2025 PANIN SARFO — Designed with ❤️ for excellence in education
+            </div>
         </footer>
     </div>
 
     <script>
-        // === App Logic (Pure JavaScript) ===
-
+        // Tab Switching
         function switchTab(tabName) {
-            // 1. Hide all menu pages
-            document.querySelectorAll('.menu-page').forEach(page => page.style.display = 'none');
-
-            // 2. Hide all main content tabs
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.classList.remove('active');
-            });
-
-            // 3. Deactivate all navigation buttons
-            document.querySelectorAll('.tab-button').forEach(button => {
-                button.classList.remove('active');
-            });
-
-            // 4. Show the requested tab content
-            const activeContent = document.getElementById(tabName);
-            if (activeContent) {
-                activeContent.classList.add('active');
-            }
-
-            // 5. Activate the corresponding button
-            const activeButton = document.getElementById('btn-' + tabName);
-            if (activeButton) {
-                activeButton.classList.add('active');
-            }
-        }
-
-        function showPage(pageName) {
-            // Hide all tab contents
+            document.querySelectorAll('.menu-page').forEach(page => page.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-            // Hide all menu pages
-            document.querySelectorAll('.menu-page').forEach(page => page.style.display = 'none');
-            // Deactivate all navigation buttons (Important for showing the Upload button is active)
             document.querySelectorAll('.tab-button').forEach(button => button.classList.remove('active'));
 
+            const activeContent = document.getElementById(tabName);
+            if (activeContent) activeContent.classList.add('active');
 
-            // Show the requested menu page
+            const activeButton = document.getElementById('btn-' + tabName);
+            if (activeButton) activeButton.classList.add('active');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Show Menu Pages
+        function showPage(pageName) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.menu-page').forEach(page => page.classList.remove('active'));
+            document.querySelectorAll('.tab-button').forEach(button => button.classList.remove('active'));
+
             const activePage = document.getElementById(pageName);
-            if (activePage) {
-                activePage.style.display = 'block';
-            }
+            if (activePage) activePage.classList.add('active');
             
-            // If the page shown is one of the main navigation buttons, activate its style
             const activeButton = document.getElementById('btn-' + pageName);
-            if (activeButton) {
-                activeButton.classList.add('active');
+            if (activeButton) activeButton.classList.add('active');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Toggle Menu
+        function toggleMenu() {
+            document.getElementById('menu-overlay').classList.toggle('active');
+        }
+
+        // Close Menu on Overlay Click
+        function closeMenuOnOverlay(event) {
+            if (event.target.id === 'menu-overlay') toggleMenu();
+        }
+
+        // Toggle Search Modal
+        function toggleSearch() {
+            const modal = document.getElementById('search-modal');
+            modal.classList.toggle('active');
+            if (modal.classList.contains('active')) {
+                setTimeout(() => modal.querySelector('.search-input').focus(), 100);
             }
         }
 
-        function toggleMenu() {
-            const menu = document.getElementById('side-menu');
-            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+        // Close Search on Overlay Click
+        function closeSearchOnOverlay(event) {
+            if (event.target.id === 'search-modal') toggleSearch();
         }
 
-        // Initial setup on load
+        // Handle Search
+        function handleSearch(event) {
+            const query = event.target.value.toLowerCase();
+            if (event.key === 'Enter' && query) {
+                alert('🔍 Searching for: ' + query + '\n\nSearch functionality will be fully implemented in production!');
+            }
+        }
+
+        // Handle Upload Form
+        function handleUpload(event) {
+            event.preventDefault();
+            const button = event.target.querySelector('button');
+            const originalText = button.innerHTML;
+            button.innerHTML = '✅ Uploaded Successfully!';
+            button.style.background = 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)';
+            
+            setTimeout(() => {
+                button.innerHTML = originalText;
+                button.style.background = 'linear-gradient(135deg, #0B8F4A 0%, #05A854 100%)';
+                event.target.reset();
+                alert('🎉 Video uploaded successfully!\n\nIn production, this would save to the database.');
+            }, 2000);
+        }
+
+        // Initialize
         window.onload = () => {
-             // Ensure the app starts on the Lower Primary tab
             switchTab('lower-primary');
         };
     </script>
