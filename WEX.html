@@ -350,7 +350,7 @@
             background: var(--light-gray);
         }
 
-        /* Welcome Banner */
+        /* Welcome Banner with Slideshow */
         .welcome-banner {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             padding: 2rem 1.5rem;
@@ -361,6 +361,7 @@
             overflow: hidden;
             box-shadow: 0 10px 40px rgba(102, 126, 234, 0.4);
             animation: scaleIn 0.6s ease-out;
+            min-height: 200px;
         }
 
         @keyframes scaleIn {
@@ -393,20 +394,89 @@
             }
         }
 
-        .welcome-banner h2 {
+        .banner-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 2rem 1.5rem;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .banner-slide.active {
+            opacity: 1;
+            z-index: 1;
+        }
+
+        .banner-slide.text-slide {
+            background: transparent;
+        }
+
+        .banner-slide.image-slide {
+            background-size: cover;
+            background-position: center;
+        }
+
+        .banner-slide.image-slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.85) 0%, rgba(118, 75, 162, 0.85) 100%);
+            z-index: 0;
+        }
+
+        .banner-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .banner-slide h2 {
             font-size: 1.5rem;
             font-weight: 800;
             margin-bottom: 0.5rem;
             position: relative;
             z-index: 1;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
         }
 
-        .welcome-banner p {
+        .banner-slide p {
             font-size: 0.95rem;
             opacity: 0.95;
             line-height: 1.5;
             position: relative;
             z-index: 1;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .quote-author {
+            font-size: 0.85rem;
+            font-style: italic;
+            margin-top: 0.5rem;
+            opacity: 0.9;
+        }
+
+        /* Date/Time Display */
+        .datetime-display {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            z-index: 10;
         }
 
         /* Quick Actions */
@@ -1082,7 +1152,7 @@
                 </div>
                 <ul class="menu-list">
                     <li><a href="#" onclick="showPage('announcements'); toggleMenu()">
-                        🎉 Announcement
+                        📢 Announcements
                     </a></li>
                     <li><a href="https://stephen-daniels.github.io/PANIN.com/Staff.html" onclick="toggleMenu()">
                         👥 Staff Directory
@@ -1104,19 +1174,78 @@
                 <div class="menu-contact">
                     <h4>📞 Contact Us</h4>
                     <p>
-                        Email: communityschoolweford@gmail.com<br>
+                        Email: communityschoolwexford@gmail.com<br>
                         Phone: +233 241204078<br>
-                        Location: MANHYIA,ABUAKWA
+                        Location: Abuakwa, Manhyia
                     </p>
                 </div>
             </div>
         </div>
 
         <main>
-            <!-- Welcome Banner -->
+            <!-- Welcome Banner with Slideshow -->
             <div class="welcome-banner">
-                <h2>Welcome Back! 👋</h2>
-                <p>Continue your learning journey with our latest resources and interactive lessons</p>
+                <div class="datetime-display" id="datetime-display"></div>
+                
+                <!-- Slide 1: Welcome -->
+                <div class="banner-slide text-slide active" id="slide-1">
+                    <div class="banner-content">
+                        <h2>Welcome Back! 👋</h2>
+                        <p>Continue your learning journey with our latest resources and interactive lessons</p>
+                    </div>
+                </div>
+
+                <!-- Slide 2: Educational Image 1 - Students Learning -->
+                <div class="banner-slide image-slide" id="slide-2" style="background-image: url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&q=80');">
+                    <div class="banner-content">
+                        <h2>📚 Collaborative Learning</h2>
+                        <p>Join thousands of students in interactive study sessions and group discussions</p>
+                    </div>
+                </div>
+
+                <!-- Slide 3: Educational Image 2 - Technology in Education -->
+                <div class="banner-slide image-slide" id="slide-3" style="background-image: url('https://stephen-daniels.github.io/PANIN.com/WEXFORD.jpg');">
+                    <div class="banner-content">
+                        <h2>💻 Digital Learning</h2>
+                        <p>Access cutting-edge educational technology and resources anytime, anywhere</p>
+                    </div>
+                </div>
+
+                <!-- Slide 4: Quote 1 -->
+                <div class="banner-slide text-slide" id="slide-4">
+                    <div class="banner-content">
+                        <h2>💡 Words of Wisdom</h2>
+                        <p>"Education is the most powerful weapon which you can use to change the world."</p>
+                        <p class="quote-author">— Nelson Mandela</p>
+                    </div>
+                </div>
+
+                <!-- Slide 5: Quote 2 -->
+                <div class="banner-slide text-slide" id="slide-5">
+                    <div class="banner-content">
+                        <h2>🎯 Stay Motivated</h2>
+                        <p>"The only way to do great work is to love what you do. Keep learning, keep growing!"</p>
+                        <p class="quote-author">— Steve Jobs</p>
+                    </div>
+                </div>
+
+                <!-- Slide 6: Quote 3 -->
+                <div class="banner-slide text-slide" id="slide-6">
+                    <div class="banner-content">
+                        <h2>⭐ Success Through Effort</h2>
+                        <p>"Success is not final, failure is not fatal: it is the courage to continue that counts."</p>
+                        <p class="quote-author">— Winston Churchill</p>
+                    </div>
+                </div>
+
+                <!-- Slide 7: Quote 4 -->
+                <div class="banner-slide text-slide" id="slide-7">
+                    <div class="banner-content">
+                        <h2>🌟 Dream Big</h2>
+                        <p>"The future belongs to those who believe in the beauty of their dreams."</p>
+                        <p class="quote-author">— Eleanor Roosevelt</p>
+                    </div>
+                </div>
             </div>
 
             <!-- Quick Actions -->
@@ -1324,7 +1453,7 @@
                     <span class="coming-soon">📅 Lab experiments and theory videos coming!</span>
                 </section>
             </div>
-            
+
             <!-- Announcements Page -->
             <div id="announcements" class="menu-page">
                 <div class="grade-header" style="background: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);">📢 School Announcements</div>
@@ -1343,7 +1472,7 @@
                                 </div>
                             </div>
                             <p style="font-size: 0.9rem; line-height: 1.6; opacity: 0.95;">
-                             <b><br>Be reminded, rep your Jesey tomorrow, God willing.</br></b>  Here we come, Week 11 all the way. I know you are tired. Ourday is coming wae. <br>  We've just added 15 new educational videos across Mathematics, Science, and English subjects. Check them out in your respective grade sections!</br>
+                                We've just added 15 new educational videos across Mathematics, Science, and English subjects. Check them out in your respective grade sections!
                             </p>
                         </div>
 
@@ -1453,13 +1582,13 @@
                     <h3 class="subject-header">🎯 Our Mission</h3>
                     <p style="color: var(--text-medium); line-height: 1.8; margin-bottom: 1.5rem;">
                         Welcome to Wexford Edu Hub - a cutting-edge digital learning platform revolutionizing education through technology, innovation, and discipline. We serve as a central communication and information hub for students, parents, and staff.
-                    </p>
-                     <h4>📞 Contact Us</h4>
+                    <h4>📞 Contact Us</h4>
                     <p>
-                        Email: communityschoolweford@gmail.com<br>
+                        Email: communityschoolwexford@gmail.com<br>
                         Phone: +233 241204078<br>
-                        Location: MANHYIA,ABUAKWA
+                        Location: Abuakwa, Manhyia
                     </p>
+                </p>
                     
                     <h3 class="subject-header">✨ What We Offer</h3>
                     <div style="display: grid; gap: 1rem; margin-bottom: 1.5rem;">
@@ -1529,7 +1658,6 @@
                 </form>
             </div>
         </main>
-        
         <!-- Footer -->
         <footer>
             <div style="margin-bottom: 0.5rem;">
@@ -1540,7 +1668,6 @@
             </div>
         </footer>
     </div>
-
 
         <!-- Bottom Navigation -->
         <nav>
@@ -1584,6 +1711,77 @@
     </div>
 
     <script>
+        // Current Slide Index for Banner
+        let currentSlide = 0;
+        const totalSlides = 7; // Updated to 7 slides
+
+        // Update Date/Time Display
+        function updateDateTime() {
+            const now = new Date();
+            const options = { 
+                weekday: 'short', 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            const dateTimeString = now.toLocaleDateString('en-US', options);
+            const displayElement = document.getElementById('datetime-display');
+            if (displayElement) {
+                displayElement.textContent = dateTimeString;
+            }
+        }
+
+        // Calculate Time Ago
+        function getTimeAgo(dateString) {
+            const postDate = new Date(dateString);
+            const now = new Date();
+            const diffMs = now - postDate;
+            const diffMins = Math.floor(diffMs / 60000);
+            const diffHours = Math.floor(diffMs / 3600000);
+            const diffDays = Math.floor(diffMs / 86400000);
+            const diffWeeks = Math.floor(diffMs / 604800000);
+
+            if (diffMins < 1) return 'Just now';
+            if (diffMins < 60) return `${diffMins} minute${diffMins > 1 ? 's' : ''} ago`;
+            if (diffHours < 24) return `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`;
+            if (diffDays < 7) return `${diffDays} day${diffDays > 1 ? 's' : ''} ago`;
+            if (diffWeeks < 4) return `${diffWeeks} week${diffWeeks > 1 ? 's' : ''} ago`;
+            
+            return postDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        }
+
+        // Update All Announcement Times
+        function updateAnnouncementTimes() {
+            const announcementTimes = document.querySelectorAll('.announcement-time');
+            announcementTimes.forEach(element => {
+                const dateString = element.getAttribute('data-date');
+                if (dateString) {
+                    element.textContent = 'Posted ' + getTimeAgo(dateString);
+                }
+            });
+        }
+
+        // Banner Slideshow
+        function showSlide(index) {
+            const slides = document.querySelectorAll('.banner-slide');
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active');
+                if (i === index) {
+                    slide.classList.add('active');
+                }
+            });
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            showSlide(currentSlide);
+        }
+
+        // Auto-advance banner every 5 seconds
+        setInterval(nextSlide, 5000);
+
         // Tab Switching
         function switchTab(tabName) {
             document.querySelectorAll('.menu-page').forEach(page => page.classList.remove('active'));
@@ -1665,8 +1863,15 @@
         // Initialize
         window.onload = () => {
             switchTab('lower-primary');
+            updateDateTime();
+            updateAnnouncementTimes();
+            
+            // Update date/time every minute
+            setInterval(updateDateTime, 60000);
+            
+            // Update announcement times every minute
+            setInterval(updateAnnouncementTimes, 60000);
         };
     </script>
 </body>
 </html>
-      
