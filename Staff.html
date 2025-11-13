@@ -127,10 +127,10 @@
       letter-spacing: 1px;
     }
 
-    /* Tabs Navigation */
+    /* Tabs Navigation - Dropdown Style */
     .tabs-container {
       background: #f8fafc;
-      padding: 1.5rem 1rem;
+      padding: 1rem;
       border-bottom: 2px solid #e2e8f0;
       position: sticky;
       top: 0;
@@ -138,52 +138,148 @@
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
     }
 
-    .tabs {
-      display: flex;
-      gap: 1rem;
+    .tabs-wrapper {
       max-width: 1200px;
       margin: 0 auto;
-      overflow-x: auto;
-      padding-bottom: 0.5rem;
+      position: relative;
     }
 
-    .tab-button {
-      flex: 1;
-      min-width: 150px;
-      padding: 1rem 1.5rem;
+    .dropdown-button {
+      width: 100%;
+      padding: 1.25rem 1.5rem;
       background: white;
-      border: 2px solid #e2e8f0;
+      border: 2px solid #0B8F4A;
       border-radius: 12px;
       cursor: pointer;
       font-weight: 600;
-      font-size: 0.95rem;
-      color: #475569;
+      font-size: 1rem;
+      color: #1e293b;
       transition: all 0.3s ease;
       font-family: 'Poppins', sans-serif;
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      justify-content: space-between;
+      box-shadow: 0 2px 12px rgba(11, 143, 74, 0.15);
     }
 
-    .tab-button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-      border-color: #0B8F4A;
+    .dropdown-button:hover {
+      background: #f8fafc;
+      box-shadow: 0 4px 20px rgba(11, 143, 74, 0.25);
+    }
+
+    .dropdown-button-content {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .dropdown-icon {
+      font-size: 1.5rem;
+    }
+
+    .dropdown-arrow {
+      font-size: 1.2rem;
+      transition: transform 0.3s ease;
+    }
+
+    .dropdown-arrow.open {
+      transform: rotate(180deg);
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      top: calc(100% + 0.5rem);
+      left: 0;
+      right: 0;
+      background: white;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+      z-index: 1000;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    .dropdown-menu.open {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .dropdown-item {
+      padding: 1.25rem 1.5rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      border-bottom: 1px solid #f1f5f9;
+      font-weight: 500;
+      color: #475569;
+    }
+
+    .dropdown-item:last-child {
+      border-bottom: none;
+    }
+
+    .dropdown-item:hover {
+      background: #f8fafc;
+      color: #0B8F4A;
+      padding-left: 2rem;
+    }
+
+    .dropdown-item.active {
+      background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
+      color: white;
+    }
+
+    .dropdown-item.active:hover {
+      background: linear-gradient(135deg, #05A854 0%, #0B8F4A 100%);
+      padding-left: 2rem;
+    }
+
+    .dropdown-item-icon {
+      font-size: 1.5rem;
+      min-width: 30px;
+      text-align: center;
+    }
+
+    .dropdown-item-text {
+      flex: 1;
+    }
+
+    .dropdown-item-count {
+      font-size: 0.85rem;
+      background: rgba(11, 143, 74, 0.1);
+      padding: 0.25rem 0.75rem;
+      border-radius: 12px;
+      font-weight: 600;
       color: #0B8F4A;
     }
 
-    .tab-button.active {
-      background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
+    .dropdown-item.active .dropdown-item-count {
+      background: rgba(255, 255, 255, 0.3);
       color: white;
-      border-color: #0B8F4A;
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(11, 143, 74, 0.3);
     }
 
-    .tab-icon {
-      font-size: 1.3rem;
+    /* Overlay for closing dropdown */
+    .dropdown-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: transparent;
+      z-index: 99;
+      display: none;
+    }
+
+    .dropdown-overlay.active {
+      display: block;
     }
 
     /* Tab Content */
@@ -423,31 +519,49 @@
       </div>
     </header>
 
-    <!-- Tabs Navigation -->
+    <!-- Tabs Navigation - Dropdown Style -->
     <div class="tabs-container">
-      <div class="tabs">
-        <button class="tab-button active" onclick="switchTab('all')">
-          <span class="tab-icon">👥</span>
-          <span>All Staff</span>
+      <div class="tabs-wrapper">
+        <button class="dropdown-button" onclick="toggleDropdown()">
+          <div class="dropdown-button-content">
+            <span class="dropdown-icon" id="current-icon">👥</span>
+            <span id="current-tab-name">All Staff (9)</span>
+          </div>
+          <span class="dropdown-arrow" id="dropdown-arrow">▼</span>
         </button>
-        <button class="tab-button" onclick="switchTab('admin')">
-          <span class="tab-icon">💼</span>
-          <span>Administration</span>
-        </button>
-        <button class="tab-button" onclick="switchTab('lower')">
-          <span class="tab-icon">🎨</span>
-          <span>Lower Primary</span>
-        </button>
-        <button class="tab-button" onclick="switchTab('upper')">
-          <span class="tab-icon">📚</span>
-          <span>Upper Primary</span>
-        </button>
-        <button class="tab-button" onclick="switchTab('jhs')">
-          <span class="tab-icon">🎓</span>
-          <span>JHS</span>
-        </button>
+        
+        <div class="dropdown-menu" id="dropdown-menu">
+          <div class="dropdown-item active" onclick="selectTab('all', '👥', 'All Staff', 9)">
+            <span class="dropdown-item-icon">👥</span>
+            <span class="dropdown-item-text">All Staff</span>
+            <span class="dropdown-item-count">9</span>
+          </div>
+          <div class="dropdown-item" onclick="selectTab('admin', '💼', 'Administration', 0)">
+            <span class="dropdown-item-icon">💼</span>
+            <span class="dropdown-item-text">Administration</span>
+            <span class="dropdown-item-count">0</span>
+          </div>
+          <div class="dropdown-item" onclick="selectTab('lower', '🎨', 'Lower Primary', 5)">
+            <span class="dropdown-item-icon">🎨</span>
+            <span class="dropdown-item-text">Lower Primary</span>
+            <span class="dropdown-item-count">5</span>
+          </div>
+          <div class="dropdown-item" onclick="selectTab('upper', '📚', 'Upper Primary', 2)">
+            <span class="dropdown-item-icon">📚</span>
+            <span class="dropdown-item-text">Upper Primary</span>
+            <span class="dropdown-item-count">2</span>
+          </div>
+          <div class="dropdown-item" onclick="selectTab('jhs', '🎓', 'JHS', 2)">
+            <span class="dropdown-item-icon">🎓</span>
+            <span class="dropdown-item-text">JHS</span>
+            <span class="dropdown-item-count">2</span>
+          </div>
+        </div>
       </div>
     </div>
+
+    <!-- Overlay for closing dropdown -->
+    <div class="dropdown-overlay" id="dropdown-overlay" onclick="closeDropdown()"></div>
 
     <!-- All Staff Tab -->
     <div id="tab-all" class="tab-content active">
@@ -680,19 +794,47 @@
     <!-- Footer -->
     <footer>
       <strong>Wexford Community School</strong> - Empowering Education Through Innovation<br>
-      © 2025 Sir.Stephen Designed with ❤️ for our team
+      © 2025 Designed with ❤️ for our team by Sir.Stephen
     </footer>
   </div>
 
   <script>
-    function switchTab(tabName) {
+    // Toggle dropdown menu
+    function toggleDropdown() {
+      const menu = document.getElementById('dropdown-menu');
+      const arrow = document.getElementById('dropdown-arrow');
+      const overlay = document.getElementById('dropdown-overlay');
+      
+      menu.classList.toggle('open');
+      arrow.classList.toggle('open');
+      overlay.classList.toggle('active');
+    }
+
+    // Close dropdown
+    function closeDropdown() {
+      const menu = document.getElementById('dropdown-menu');
+      const arrow = document.getElementById('dropdown-arrow');
+      const overlay = document.getElementById('dropdown-overlay');
+      
+      menu.classList.remove('open');
+      arrow.classList.remove('open');
+      overlay.classList.remove('active');
+    }
+
+    // Select tab from dropdown
+    function selectTab(tabName, icon, displayName, count) {
+      // Update dropdown button
+      document.getElementById('current-icon').textContent = icon;
+      document.getElementById('current-tab-name').textContent = `${displayName} (${count})`;
+      
+      // Update active state in dropdown items
+      const dropdownItems = document.querySelectorAll('.dropdown-item');
+      dropdownItems.forEach(item => item.classList.remove('active'));
+      event.target.closest('.dropdown-item').classList.add('active');
+      
       // Hide all tab contents
       const tabContents = document.querySelectorAll('.tab-content');
       tabContents.forEach(content => content.classList.remove('active'));
-
-      // Remove active class from all buttons
-      const tabButtons = document.querySelectorAll('.tab-button');
-      tabButtons.forEach(button => button.classList.remove('active'));
 
       // Show selected tab
       const selectedTab = document.getElementById('tab-' + tabName);
@@ -700,12 +842,22 @@
         selectedTab.classList.add('active');
       }
 
-      // Add active class to clicked button
-      event.target.closest('.tab-button').classList.add('active');
+      // Close dropdown
+      closeDropdown();
 
       // Scroll to top
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(event) {
+      const dropdown = document.querySelector('.tabs-wrapper');
+      const menu = document.getElementById('dropdown-menu');
+      
+      if (menu.classList.contains('open') && !dropdown.contains(event.target)) {
+        closeDropdown();
+      }
+    });
   </script>
 </body>
 </html>
