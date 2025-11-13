@@ -3,382 +3,1102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wexford Edu Hub</title>
-    <!-- Load Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        // Tailwind Configuration for custom font (Inter) and custom school colors
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
-                    colors: {
-                        // School Green
-                        'primary': '#0B8F4A', 
-                        // Lighter Green for accents/secondary text
-                        'secondary': '#5EDC8D', 
-                        // General off-white background
-                        'background': '#F9FAFB', 
-                    }
-                }
-            }
-        }
-    </script>
+    <title>Wexford Edu Hub - Premium Learning Platform</title>
     <style>
-        /* Custom styles for the app container */
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #F3F4F6; /* Light gray for body background */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+        :root {
+            --primary-green: #0B8F4A;
+            --primary-dark: #076838;
+            --primary-light: #E8F5EE;
+            --accent-blue: #3B82F6;
+            --accent-purple: #8B5CF6;
+            --accent-orange: #F59E0B;
+            --accent-pink: #EC4899;
+            --white: #FFFFFF;
+            --light-gray: #F8FAFC;
+            --border-gray: #E2E8F0;
+            --text-dark: #1E293B;
+            --text-medium: #475569;
+            --text-light: #94A3B8;
+            --gradient-primary: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
+            --gradient-hero: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background Particles */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 20s infinite;
+        }
+
+        .particle:nth-child(1) { width: 80px; height: 80px; left: 10%; animation-delay: 0s; }
+        .particle:nth-child(2) { width: 60px; height: 60px; left: 30%; animation-delay: 2s; }
+        .particle:nth-child(3) { width: 100px; height: 100px; left: 50%; animation-delay: 4s; }
+        .particle:nth-child(4) { width: 70px; height: 70px; left: 70%; animation-delay: 6s; }
+        .particle:nth-child(5) { width: 90px; height: 90px; left: 85%; animation-delay: 8s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.3; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+
         .app-container {
-            max-width: 600px; /* Max width for large screens */
-            min-height: 100vh; /* Full height on mobile */
+            max-width: 480px;
             margin: 0 auto;
+            background: var(--white);
+            min-height: 100vh;
+            position: relative;
+            box-shadow: 0 0 80px rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
+
+        /* Premium Header with Animations */
+        header {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 255, 255, 0.95) 100%);
+            backdrop-filter: blur(20px);
+            padding: 1.5rem 1.25rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(11, 143, 74, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            animation: slideDown 0.6s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            animation: fadeInLeft 0.8s ease-out;
+        }
+
+        @keyframes fadeInLeft {
+            from { transform: translateX(-30px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .logo {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            object-fit: cover;
+            box-shadow: 0 8px 24px rgba(11, 143, 74, 0.3);
+            border: 3px solid var(--primary-light);
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: rotate(360deg) scale(1.1);
+        }
+
+        .title-section h1 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            font-size: 0.75rem;
+            color: var(--primary-green);
+            font-weight: 600;
+            margin-top: 3px;
+            letter-spacing: 0.5px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 0.75rem;
+            animation: fadeInRight 0.8s ease-out;
+        }
+
+        @keyframes fadeInRight {
+            from { transform: translateX(30px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .search-button, .menu-button {
+            background: var(--gradient-primary);
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(11, 143, 74, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .search-button::before, .menu-button::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: scale(0);
+            transition: transform 0.5s ease;
+        }
+
+        .search-button:hover::before, .menu-button:hover::before {
+            transform: scale(2);
+        }
+
+        .search-button:hover, .menu-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(11, 143, 74, 0.4);
+        }
+
+        .search-button svg, .menu-button svg {
+            width: 22px;
+            height: 22px;
+            fill: var(--white);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Search Modal */
+        .search-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            z-index: 300;
+            display: none;
+            align-items: flex-start;
+            justify-content: center;
+            padding-top: 2rem;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .search-modal.active {
+            display: flex;
+        }
+
+        .search-content {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 2rem;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.4s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            border: 2px solid var(--border-gray);
+            border-radius: 12px;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-green);
+            box-shadow: 0 0 0 4px var(--primary-light);
+        }
+
+        /* Stats Banner */
+        .stats-banner {
+            background: var(--gradient-primary);
+            padding: 1.5rem;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            animation: fadeIn 0.8s ease-out 0.3s backwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .stat-item {
+            text-align: center;
+            color: var(--white);
+        }
+
+        .stat-number {
+            font-size: 1.75rem;
+            font-weight: 800;
+            display: block;
+            margin-bottom: 0.25rem;
+            animation: countUp 2s ease-out;
+        }
+
+        @keyframes countUp {
+            from { transform: scale(0); }
+            to { transform: scale(1); }
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            opacity: 0.9;
+            font-weight: 500;
+        }
+
+        /* Main Content */
+        main {
+            padding: 1.5rem 1.25rem 100px;
+            background: var(--light-gray);
+        }
+
+        /* Welcome Banner with Animation */
+        .welcome-banner {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem 1.5rem;
+            border-radius: 20px;
+            color: var(--white);
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(102, 126, 234, 0.4);
+            animation: scaleIn 0.6s ease-out;
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .welcome-banner::before {
+            content: '🎓';
+            position: absolute;
+            font-size: 8rem;
+            right: -2rem;
+            top: -2rem;
+            opacity: 0.1;
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .welcome-banner h2 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .welcome-banner p {
+            font-size: 0.95rem;
+            opacity: 0.95;
+            line-height: 1.5;
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+            animation: fadeIn 0.8s ease-out 0.4s backwards;
+        }
+
+        .quick-action {
+            background: var(--white);
+            padding: 1.25rem 0.75rem;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quick-action:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+            border-color: var(--primary-green);
+        }
+
+        .quick-action-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            display: block;
+            animation: bounce 2s ease infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .quick-action-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        /* Grade Header with Premium Look */
+        .grade-header {
+            background: var(--gradient-primary);
+            color: var(--white);
+            padding: 1.5rem 1.75rem;
+            border-radius: 20px;
+            margin-bottom: 2rem;
+            font-size: 1.6rem;
+            font-weight: 800;
+            box-shadow: 0 10px 40px rgba(11, 143, 74, 0.3);
+            position: relative;
+            overflow: hidden;
+            animation: slideInRight 0.6s ease-out;
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .grade-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: pulse 3s ease infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.1; }
+            50% { transform: scale(1.2); opacity: 0.2; }
+        }
+
+        /* Enhanced Subject Sections */
+        .subject-section {
+            background: var(--white);
+            padding: 1.75rem;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            margin-bottom: 1.75rem;
+            border: 1px solid var(--border-gray);
+            transition: all 0.4s ease;
+            animation: fadeInUp 0.6s ease-out backwards;
+        }
+
+        .subject-section:nth-child(1) { animation-delay: 0.1s; }
+        .subject-section:nth-child(2) { animation-delay: 0.2s; }
+        .subject-section:nth-child(3) { animation-delay: 0.3s; }
+
+        @keyframes fadeInUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .subject-section:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.12);
+        }
+
+        .subject-header {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            position: relative;
+        }
+
+        .subject-header::before {
+            content: '';
+            width: 5px;
+            height: 32px;
+            background: var(--gradient-primary);
+            border-radius: 4px;
+            animation: expandHeight 0.6s ease-out;
+        }
+
+        @keyframes expandHeight {
+            from { height: 0; }
+            to { height: 32px; }
+        }
+
+        .subject-badge {
+            margin-left: auto;
+            background: var(--primary-light);
+            color: var(--primary-green);
+            padding: 0.375rem 0.875rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        /* Premium Video Grid */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.25rem;
+        }
+
+        .video-card {
+            background: var(--white);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            border: 2px solid var(--border-gray);
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .video-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--gradient-primary);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1;
+        }
+
+        .video-card:hover::before {
+            opacity: 0.1;
+        }
+
+        .video-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
+            border-color: var(--primary-green);
+        }
+
+        .video-thumbnail {
+            height: 120px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .video-thumbnail::after {
+            content: '▶';
+            position: absolute;
+            color: var(--white);
+            font-size: 2rem;
+            opacity: 0.9;
+            background: rgba(0, 0, 0, 0.3);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .video-card:hover .video-thumbnail::after {
+            transform: scale(1.2);
+            background: rgba(11, 143, 74, 0.8);
+        }
+
+        .video-info {
+            padding: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .video-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            line-height: 1.4;
+        }
+
+        .video-lesson {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+        }
+
+        .video-lesson::before {
+            content: '📚';
+            font-size: 1rem;
+        }
+
+        /* Video Player Enhancement */
+        video {
+            width: 100%;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+            margin-bottom: 1rem;
+        }
+
+        /* Progress Bar */
+        .progress-section {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+            animation: fadeIn 0.8s ease-out 0.5s backwards;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .progress-title {
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .progress-percentage {
+            font-weight: 800;
+            color: var(--primary-green);
+            font-size: 1.25rem;
+        }
+
+        .progress-bar-container {
+            height: 12px;
+            background: var(--border-gray);
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: var(--gradient-primary);
+            border-radius: 20px;
+            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Achievement Badges */
+        .achievements {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+        }
+
+        .achievement-badge {
+            min-width: 70px;
+            text-align: center;
+            animation: popIn 0.6s ease-out backwards;
+        }
+
+        .achievement-badge:nth-child(1) { animation-delay: 0.6s; }
+        .achievement-badge:nth-child(2) { animation-delay: 0.7s; }
+        .achievement-badge:nth-child(3) { animation-delay: 0.8s; }
+        .achievement-badge:nth-child(4) { animation-delay: 0.9s; }
+
+        @keyframes popIn {
+            from { transform: scale(0); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .achievement-icon {
+            font-size: 2.5rem;
+            display: block;
+            margin-bottom: 0.25rem;
+            filter: grayscale(0);
+            transition: all 0.3s ease;
+        }
+
+        .achievement-badge:hover .achievement-icon {
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        .achievement-label {
+            font-size: 0.7rem;
+            color: var(--text-medium);
+            font-weight: 600;
+        }
+
+        /* Premium Side Menu */
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            z-index: 200;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .side-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 85%;
+            max-width: 340px;
+            height: 100%;
+            background: var(--white);
+            box-shadow: 0 0 60px rgba(0, 0, 0, 0.3);
+            transform: translateX(-100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 201;
+            overflow-y: auto;
+        }
+
+        .menu-overlay.active .side-menu {
+            transform: translateX(0);
+        }
+
+        .menu-header {
+            padding: 2.5rem 2rem;
+            background: var(--gradient-primary);
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-header::before {
+            content: '📚';
+            position: absolute;
+            font-size: 10rem;
+            right: -3rem;
+            top: -3rem;
+            opacity: 0.1;
+        }
+
+        .menu-header h3 {
+            font-size: 1.75rem;
+            font-weight: 800;
+            position: relative;
+            z-index: 1;
+        }
+
+        .menu-close {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            color: var(--white);
+            font-size: 1.25rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 2;
+        }
+
+        .menu-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .menu-list {
+            list-style: none;
+            padding: 1.5rem 0;
+        }
+
+        .menu-list li {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-list li a {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.25rem 2rem;
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+            position: relative;
+        }
+
+        .menu-list li a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 0;
+            background: var(--primary-light);
+            transition: width 0.3s ease;
+            z-index: -1;
+        }
+
+        .menu-list li a:hover::before {
+            width: 100%;
+        }
+
+        .menu-list li a:hover {
+            color: var(--primary-green);
+            border-left-color: var(--primary-green);
+            padding-left: 2.5rem;
+        }
+
+        /* Bottom Navigation Premium */
+        nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 480px;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid var(--border-gray);
+            box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.12);
+            z-index: 100;
+            animation: slideUpNav 0.6s ease-out;
+        }
+
+        @keyframes slideUpNav {
+            from { transform: translateX(-50%) translateY(100%); }
+            to { transform: translateX(-50%) translateY(0); }
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-around;
+            padding: 0.75rem 0.5rem;
+        }
+
+        .tab-button {
+            flex: 1;
             display: flex;
             flex-direction: column;
-            background-color: var(--background);
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            padding-bottom: 70px; /* Space for fixed navigation */
-        }
-        /* Active Tab Styling */
-        .tab-button.active {
-            color: var(--primary);
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem;
+            border: none;
+            background: transparent;
+            color: var(--text-light);
+            cursor: pointer;
+            font-size: 0.7rem;
             font-weight: 700;
-            border-top: 3px solid var(--primary);
-            padding-top: 0px; 
-            background-color: #f7f7f7; /* Slight hover/active background */
+            border-radius: 14px;
+            transition: all 0.3s ease;
+            position: relative;
         }
-        .tab-button {
-            transition: all 0.15s;
+
+        .tab-button svg {
+            margin-bottom: 0.375rem;
+            transition: all 0.3s ease;
         }
-        /* Ensures the video card link takes up the full space */
-        .video-card-link {
+
+        .tab-button.active {
+            color: var(--primary-green);
+            background: var(--primary-light);
+        }
+
+        .tab-button.active svg {
+            transform: scale(1.15);
+        }
+
+        .tab-button:hover:not(.active) {
+            color: var(--text-medium);
+            background: var(--light-gray);
+            transform: translateY(-2px);
+        }
+
+        /* Coming Soon Badge */
+        .coming-soon {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--white);
+            border-radius: 30px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin: 1rem 0;
+            box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+            animation: pulse 2s ease infinite;
+        }
+
+        /* Upload Form Premium */
+        .upload-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            padding: 2rem;
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+        }
+
+        .upload-form input, .upload-form select {
+            padding: 1.125rem 1.25rem;
+            border: 2px solid var(--border-gray);
+            border-radius: 14px;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .upload-form input:focus, .upload-form select:focus {
+            outline: none;
+            border-color: var(--primary-green);
+            box-shadow: 0 0 0 4px var(--primary-light);
+            transform: translateY(-2px);
+        }
+
+        .upload-form button {
+            padding: 1.25rem;
+            background: var(--gradient-primary);
+            color: var(--white);
+            border: none;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 1.125rem;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 24px rgba(11, 143, 74, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .upload-form button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+
+        .upload-form button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .upload-form button:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 40px rgba(11, 143, 74, 0.4);
+        }
+
+        /* Footer Premium */
+        footer {
+            padding: 2rem 1.5rem;
+            text-align: center;
+            font-size: 0.875rem;
+            color: var(--text-light);
+            background: var(--white);
+            border-top: 1px solid var(--border-gray);
+            font-weight: 600;
+        }
+
+        /* Tab Content Transitions */
+        .tab-content, .menu-page {
+            display: none;
+        }
+
+        .tab-content.active, .menu-page.active {
             display: block;
-            text-decoration: none;
+            animation: fadeInContent 0.5s ease-out;
         }
-    </style>
-</head>
-<body>
 
-    <div class="app-container">
-        <!-- Header with Logo and Name -->
-        <header class="p-4 bg-white shadow-lg sticky top-0 z-10 text-center">
-            <!-- EMBEDDED LOGO (Base64 SVG for guaranteed loading) -->
-            <img id="WEX LOGO.jpg" 
-                 src="WEX LOGO.jpg" 
-                 alt="Wexford School Logo" 
-                 class="mx-auto h-12 w-12 mb-1"
-                 onerror="this.style.display='none'"> 
-            <h1 class="text-2xl font-extrabold text-gray-800">Wexford Edu Hub</h1>
-            <p class="text-sm text-primary font-medium">Video Resources by Grade Level</p>
-        </header>
+        @keyframes fadeInContent {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-        <!-- Main Content Area -->
-        <main class="flex-grow p-4 space-y-4">
+        /* Notification Badge */
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%);
+            color: var(--white);
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            font-size: 0.7rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(255, 107, 107, 0.5);
+            animation: pulse 2s ease infinite;
+        }
 
-            <!-- Tab Content Containers (All Grade Levels) -->
-            
-            <!-- === LOWER PRIMARY TAB === -->
-            <div id="lower-primary-tab" class="tab-content active space-y-8">
-                <!-- Highlighted Grade Header -->
-                <div class="bg-primary text-white p-3 rounded-xl shadow-lg">
-                    <h2 class="text-xl font-bold">Lower Primary (Grades 1-3)</h2>
-                </div>
+        /* Loading Animation */
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--border-gray);
+            border-top: 4px solid var(--primary-green);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 2rem auto;
+        }
 
-                <!-- === Maths Section - Lower Primary === -->
-                <section class="bg-white p-4 rounded-xl shadow-lg border-t-4 border-primary">
-                    <h3 class="text-xl font-semibold text-primary mb-4 border-b border-gray-200 pb-2">Maths Resources</h3>
-                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                        <!-- Video Card 1 (Linked) -->
-                        <a href="https://wexfordhub.com/lp/maths/counting100" target="_blank" class="video-card-link">
-                            <div class="video-card bg-gray-50 rounded-lg overflow-hidden shadow-md cursor-pointer hover:shadow-lg transition">
-                                <div class="h-24 bg-blue-100 relative flex items-center justify-center">
-                                    <span class="absolute bottom-1 right-2 text-xs bg-gray-900 bg-opacity-70 text-white px-2 py-0.5 rounded">03:45</span>
-                                </div>
-                                <div class="p-2">
-                                    <p class="font-medium text-gray-800 text-sm truncate">Counting to 100 with Shapes</p>
-                                    <p class="text-xs text-gray-500 mt-0.5">Lesson 1.2</p>
-                                </div>
-                            </div>
-                        </a>
-                        <!-- Video Card 2 (Linked) -->
-                        <a href="https://wexfordhub.com/lp/maths/addition-subtraction" target="_blank" class="video-card-link">
-                            <div class="video-card bg-gray-50 rounded-lg overflow-hidden shadow-md cursor-pointer hover:shadow-lg transition">
-                                <div class="h-24 bg-blue-100 relative flex items-center justify-center">
-                                    <span class="absolute bottom-1 right-2 text-xs bg-gray-900 bg-opacity-70 text-white px-2 py-0.5 rounded">05:10</span>
-                                </div>
-                                <div class="p-2">
-                                    <p class="font-medium text-gray-800 text-sm truncate">Basic Addition and Subtraction</p>
-                                    <p class="text-xs text-gray-500 mt-0.5">Lesson 2.1</p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </section>
-                
-                <!-- === English Section - Lower Primary === -->
-                <section class="bg-white p-4 rounded-xl shadow-lg border-t-4 border-primary">
-                    <h3 class="text-xl font-semibold text-primary mb-4 border-b border-gray-200 pb-2">English Resources</h3>
-                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                        <!-- Video Card 1 (Linked) -->
-                        <a href="https://wexfordhub.com/lp/english/phonics-sh" target="_blank" class="video-card-link">
-                            <div class="video-card bg-gray-50 rounded-lg overflow-hidden shadow-md cursor-pointer hover:shadow-lg transition">
-                                <div class="h-24 bg-red-100 relative flex items-center justify-center">
-                                    <span class="absolute bottom-1 right-2 text-xs bg-gray-900 bg-opacity-70 text-white px-2 py-0.5 rounded">04:00</span>
-                                </div>
-                                <div class="p-2">
-                                    <p class="font-medium text-gray-800 text-sm truncate">Phonics: The 'Sh' Sound</p>
-                                    <p class="text-xs text-gray-500 mt-0.5">Unit 3</p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </section>
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
 
-                 <!-- === Science Section - Lower Primary === -->
-                <section class="bg-white p-4 rounded-xl shadow-lg border-t-4 border-primary">
-                    <h3 class="text-xl font-semibold text-primary mb-4 border-b border-gray-200 pb-2">Science Resources</h3>
-                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                        <!-- Video Card 1 (Linked) -->
-                        <a href="https://wexfordhub.com/lp/science/water-cycle-song" target="_blank" class="video-card-link">
-                            <div class="video-card bg-gray-50 rounded-lg overflow-hidden shadow-md cursor-pointer hover:shadow-lg transition">
-                                <div class="h-24 bg-green-100 relative flex items-center justify-center">
-                                    <span class="absolute bottom-1 right-2 text-xs bg-gray-900 bg-opacity-70 text-white px-2 py-0.5 rounded">02:30</span>
-                                </div>
-                                <div class="p-2">
-                                    <p class="font-medium text-gray-800 text-sm truncate">The Water Cycle Song</p>
-                                    <p class="text-xs text-gray-500 mt-0.5">Module 4</p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </section>
-            </div>
+        /* Tooltip */
+        .tooltip {
+            position: relative;
+        }
 
-            <!-- === UPPER PRIMARY TAB (Updated with new link wrappers) === -->
-            <div id="upper-primary-tab" class="tab-content hidden space-y-8">
-                <!-- Highlighted Grade Header -->
-                <div class="bg-primary text-white p-3 rounded-xl shadow-lg">
-                    <h2 class="text-xl font-bold">Upper Primary (Grades 4-6)</h2>
-                </div>
+        .tooltip::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-5px);
+            background: var(--text-dark);
+            color: var(--white);
+            padding: 0.5rem 0.75rem;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
 
-                <!-- === Maths Section - Upper Primary === -->
-                <section class="bg-white p-4 rounded-xl shadow-lg border-t-4 border-primary">
-                    <h3 class="text-xl font-semibold text-primary mb-4 border-b border-gray-200 pb-2">Maths Resources</h3>
-                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                        <!-- Video Card 1 (Linked) -->
-                        <a href="https://wexfordhub.com/up/maths/decimals-intro" target="_blank" class="video-card-link">
-                            <div class="video-card bg-gray-50 rounded-lg overflow-hidden shadow-md cursor-pointer hover:shadow-lg transition">
-                                <div class="h-24 bg-blue-100 relative flex items-center justify-center">
-                                    <span class="absolute bottom-1 right-2 text-xs bg-gray-900 bg-opacity-70 text-white px-2 py-0.5 rounded">08:20</span>
-                                </div>
-                                <div class="p-2">
-                                    <p class="font-medium text-gray-800 text-sm truncate">Introduction to Decimals</p>
-                                    <p class="text-xs text-gray-500 mt-0.5">Chapter 5</p>
-                                </div>
-                            </div>
-                        </a>
-                        
-                        <!-- New Video Card Example (Linked) -->
-                        <a href="https://wexfordhub.com/up/maths/fractions-review" target="_blank" class="video-card-link">
-                            <div class="video-card bg-gray-50 rounded-lg overflow-hidden shadow-md cursor-pointer hover:shadow-lg transition">
-                                <div class="h-24 bg-blue-200 relative flex items-center justify-center">
-                                    <span class="absolute bottom-1 right-2 text-xs bg-gray-900 bg-opacity-70 text-white px-2 py-0.5 rounded">11:55</span>
-                                </div>
-                                <div class="p-2">
-                                    <p class="font-medium text-gray-800 text-sm truncate">Reviewing Fractions (NEW)</p>
-                                    <p class="text-xs text-gray-500 mt-0.5">Lesson 5.1</p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </section>
-                
-                <!-- === English Section - Upper Primary === -->
-                <section class="bg-white p-4 rounded-xl shadow-lg border-t-4 border-primary">
-                    <h3 class="text-xl font-semibold text-primary mb-4 border-b border-gray-200 pb-2">English Resources</h3>
-                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                        <!-- Video Card 1 (Linked) -->
-                        <a href="https://wexfordhub.com/up/english/compound-sentences" target="_blank" class="video-card-link">
-                            <div class="video-card bg-gray-50 rounded-lg overflow-hidden shadow-md cursor-pointer hover:shadow-lg transition">
-                                <div class="h-24 bg-red-100 relative flex items-center justify-center">
-                                    <span class="absolute bottom-1 right-2 text-xs bg-gray-900 bg-opacity-70 text-white px-2 py-0.5 rounded">10:05</span>
-                                </div>
-                                <div class="p-2">
-                                    <p class="font-medium text-gray-800 text-sm truncate">Writing Compound Sentences</p>
-                                    <p class="text-xs text-gray-500 mt-0.5">Unit 1.1</p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </section>
-                 
-                 <!-- === Science Section - Upper Primary === -->
-                <section class="bg-white p-4 rounded-xl shadow-lg border-t-4 border-primary">
-                    <h3 class="text-xl font-semibold text-primary mb-4 border-b border-gray-200 pb-2">Science Resources</h3>
-                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                        <!-- Video Card 1 (Linked) -->
-                        <a href="https://wexfordhub.com/up/science/states-of-matter" target="_blank" class="video-card-link">
-                            <div class="video-card bg-gray-50 rounded-lg overflow-hidden shadow-md cursor-pointer hover:shadow-lg transition">
-                                <div class="h-24 bg-green-100 relative flex items-center justify-center">
-                                    <span class="absolute bottom-1 right-2 text-xs bg-gray-900 bg-opacity-70 text-white px-2 py-0.5 rounded">07:40</span>
-                                </div>
-                                <div class="p-2">
-                                    <p class="font-medium text-gray-800 text-sm truncate">States of Matter Explained</p>
-                                    <p class="text-xs text-gray-500 mt-0.5">Chapter 3</p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </section>
-            </div>
+        .tooltip:hover::after {
+            opacity: 1;
+            transform: translateX(-50%) translateY(-10px);
+        }
 
-            <!-- === JHS TAB === -->
-            <div id="jhs-tab" class="tab-content hidden space-y-8">
-                <!-- Highlighted Grade Header -->
-                <div class="bg-primary text-white p-3 rounded-xl shadow-lg">
-                    <h2 class="text-xl font-bold">JHS (Junior High School)</h2>
-                </div>
-                
-                <!-- === Maths Section - JHS === -->
-                <section class="bg-white p-4 rounded-xl shadow-lg border-t-4 border-primary">
-                    <h3 class="text-xl font-semibold text-primary mb-4 border-b border-gray-200 pb-2">Maths Resources</h3>
-                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                        <!-- Video Card 1 (Linked) -->
-                        <a href="https://wexfordhub.com/jhs/maths/algebra-part1" target="_blank" class="video-card-link">
-                            <div class="video-card bg-gray-50 rounded-lg overflow-hidden shadow-md cursor-pointer hover:shadow-lg transition">
-                                <div class="h-24 bg-blue-100 relative flex items-center justify-center">
-                                    <span class="absolute bottom-1 right-2 text-xs bg-gray-900 bg-opacity-70 text-white px-2 py-0.5 rounded">12:15</span>
-                                </div>
-                                <div class="p-2">
-                                    <p class="font-medium text-gray-800 text-sm truncate">Algebraic Equations: Part I</p>
-                                    <p class="text-xs text-gray-500 mt-0.5">JHS 1</p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </section>
-                
-                <!-- === English Section - JHS === -->
-                <section class="bg-white p-4 rounded-xl shadow-lg border-t-4 border-primary">
-                    <h3 class="text-xl font-semibold text-primary mb-4 border-b border-gray-200 pb-2">English Resources</h3>
-                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                        <!-- Video Card 1 (Linked) -->
-                        <a href="https://wexfordhub.com/jhs/english/narrative-essay" target="_blank" class="video-card-link">
-                            <div class="video-card bg-gray-50 rounded-lg overflow-hidden shadow-md cursor-pointer hover:shadow-lg transition">
-                                <div class="h-24 bg-red-100 relative flex items-center justify-center">
-                                    <span class="absolute bottom-1 right-2 text-xs bg-gray-900 bg-opacity-70 text-white px-2 py-0.5 rounded">15:50</span>
-                                </div>
-                                <div class="p-2">
-                                    <p class="font-medium text-gray-800 text-sm truncate">Introduction to Narrative Essay Writing</p>
-                                    <p class="text-xs text-gray-500 mt-0.5">JHS 2</p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </section>
-                
-                 <!-- === Science Section - JHS === -->
-                <section class="bg-white p-4 rounded-xl shadow-lg border-t-4 border-primary">
-                    <h3 class="text-xl font-semibold text-primary mb-4 border-b border-gray-200 pb-2">Science Resources</h3>
-                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                        <!-- Video Card 1 (Linked) -->
-                        <a href="https://wexfordhub.com/jhs/science/circulatory-system" target="_blank" class="video-card-link">
-                            <div class="video-card bg-gray-50 rounded-lg overflow-hidden shadow-md cursor-pointer hover:shadow-lg transition">
-                                <div class="h-24 bg-green-100 relative flex items-center justify-center">
-                                    <span class="absolute bottom-1 right-2 text-xs bg-gray-900 bg-opacity-70 text-white px-2 py-0.5 rounded">11:00</span>
-                                </div>
-                                <div class="p-2">
-                                    <p class="font-medium text-gray-800 text-sm truncate">The Human Circulatory System</p>
-                                    <p class="text-xs text-gray-500 mt-0.5">JHS 3</p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </section>
-            </div>
-            
-            <!-- Designer Upload Area (Simplified for content insertion) -->
-            <div id="designer-upload-tab" class="tab-content hidden">
-                <h2 class="text-2xl font-bold text-gray-700">Designer Upload Area</h2>
-                <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-200 text-center space-y-4">
-                    <svg class="w-12 h-12 mx-auto text-primary mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
-                    <p class="text-gray-600 font-medium">This is where you can manually add new video card HTML into the respective grade sections.</p>
-                    <p class="text-sm text-gray-400">Example Video Card HTML structure is available in the other tabs.</p>
-                </div>
-            </div>
-
-        </main>
-
-        <!-- Fixed Bottom Navigation (Tabs) -->
-        <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-xl z-20">
-            <div class="max-w-600 mx-auto flex justify-around items-center h-16">
-                <!-- Lower Primary Tab Button -->
-                <button id="btn-lower-primary" class="tab-button flex flex-col items-center justify-center w-1/4 active" onclick="switchTab('lower-primary')">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M12 20a9 9 0 100-18 9 9 0 000 18z"></path></svg>
-                    <span class="text-xs mt-1">Lwr Primary</span>
-                </button>
-
-                <!-- Upper Primary Tab Button -->
-                <button id="btn-upper-primary" class="tab-button flex flex-col items-center justify-center w-1/4" onclick="switchTab('upper-primary')">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.45-1.071M17 20v-2.111a1.98 1.98 0 00.99 1.716l.162.083c.489.248.692.748.514 1.25-.177.498-.69.794-1.218.756-.098-.007-.196-.017-.294-.031m-4.5-9L17 5m-11 0l7 7m0 0l-7 7m7-7h14"></path></svg>
-                    <span class="text-xs mt-1">Upr Primary</span>
-                </button>
-
-                <!-- JHS Tab Button -->
-                <button id="btn-jhs" class="tab-button flex flex-col items-center justify-center w-1/4" onclick="switchTab('jhs')">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18.75c3.04 0 5.5-2.46 5.5-5.5s-2.46-5.5-5.5-5.5-5.5 2.46-5.5 5.5 2.46 5.5 5.5 5.5zm0-11c1.93 0 3.5 1.57 3.5 3.5s-1.57 3.5-3.5 3.5-3.5-1.57-3.5-3.5 1.57-3.5 3.5-3.5z"></path></svg>
-                    <span class="text-xs mt-1">JHS</span>
-                </button>
-                
-                <!-- Upload/Design Tab Button -->
-                <button id="btn-designer-upload" class="tab-button flex flex-col items-center justify-center w-1/4" onclick="switchTab('designer-upload')">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
-                    <span class="text-xs mt-1">Upload</span>
-                </button>
-            </div>
-        </nav>
-
-        <!-- Designed By Footer -->
-        <footer class="p-2 text-center text-xs text-gray-600 bg-white border-t border-gray-100 mt-auto">
-            Designed by *Sir Stephen*
-        </footer>
-    </div>
-
-    <script>
-        // === App Logic ===
-
-        function switchTab(tabName) {
-            // 1. Hide all content tabs
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.classList.add('hidden');
-            });
-
-            // 2. Deactivate all navigation buttons
-            document.querySelectorAll('.tab-button').forEach(button => {
-                button.classList.remove('active');
-            });
-
-            // 3. Show the requested tab content
-            const activeContent = document.getElementById(tabName + '-tab');
-            if (activeContent) {
-                activeContent.classList.remove('hidden');
+        /* Responsive Adjustments */
+        @media (max-width: 380px) {
+            .video-grid {
+                grid-template-columns: 1fr;
             }
-
-            // 4. Activate the corresponding button
-            const activeButton = document.getElementById('btn-' + tabName);
-            if (activeButton) {
-                activeButton.classList.add('active');
+            .quick-actions {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .tab-button span {
+                font-size: 0.65rem;
+            }
+            .stat-number {
+                font-size: 1.5rem;
             }
         }
 
-        // Initial setup on load
-        window.onload = () => {
-             // Ensure the app starts on the Lower Primary tab
-            switchTab('lower-primary');
-        };
-    </script>
-</body>
-</html>
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--light-gray);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-green);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-dark);
+        }
