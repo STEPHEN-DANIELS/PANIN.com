@@ -1,171 +1,711 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Welcome to Wexford</title>
+  <title>Staff Directory - Wexford Community School</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background: linear-gradient(135deg, #d9f99d, #a7f3d0, #93c5fd);
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+      overflow-x: hidden;
     }
 
-    .title-box {
+    /* Animated Background Particles */
+    .bg-animation {
+      position: fixed;
+      top: 0;
+      left: 0;
       width: 100%;
-      background: #1f2937;
-      color: #10b981;
-      padding: 20px;
-      text-align: center;
-      border-bottom: 5px solid #10b981;
+      height: 100%;
+      overflow: hidden;
+      z-index: 0;
+      pointer-events: none;
     }
 
-    .title-box h1 {
-      margin: 0;
-      font-size: clamp(1.8rem, 4vw, 2.5rem);
+    .particle {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 50%;
+      animation: float 20s infinite ease-in-out;
+    }
+
+    .particle:nth-child(1) { width: 80px; height: 80px; left: 10%; animation-delay: 0s; }
+    .particle:nth-child(2) { width: 60px; height: 60px; left: 30%; animation-delay: 2s; }
+    .particle:nth-child(3) { width: 100px; height: 100px; left: 50%; animation-delay: 4s; }
+    .particle:nth-child(4) { width: 70px; height: 70px; left: 70%; animation-delay: 6s; }
+    .particle:nth-child(5) { width: 90px; height: 90px; left: 85%; animation-delay: 8s; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      10% { opacity: 0.5; }
+      90% { opacity: 0.5; }
+      100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      background: #ffffff;
+      min-height: 100vh;
+      position: relative;
+      box-shadow: 0 0 80px rgba(0, 0, 0, 0.4);
+      z-index: 1;
+    }
+
+    /* Header */
+    header {
+      background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
+      color: white;
+      padding: 2rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -10%;
+      width: 300px;
+      height: 300px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      animation: pulse 3s ease infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.1; }
+      50% { transform: scale(1.2); opacity: 0.2; }
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
+    }
+
+    .logo {
+      width: 100px;
+      height: 100px;
+      border-radius: 20px;
+      border: 4px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+      transition: transform 0.5s ease;
+    }
+
+    .logo:hover {
+      transform: rotate(360deg) scale(1.1);
+    }
+
+    .header-text h1 {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .header-text p {
+      font-size: clamp(1rem, 2vw, 1.3rem);
+      font-weight: 600;
+      opacity: 0.95;
       letter-spacing: 1px;
     }
 
-    .staff-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 30px;
-      padding: 40px 20px;
+    /* Tabs Navigation */
+    .tabs-container {
+      background: #f8fafc;
+      padding: 1.5rem 1rem;
+      border-bottom: 2px solid #e2e8f0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .tabs {
+      display: flex;
+      gap: 1rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+    }
+
+    .tab-button {
       flex: 1;
-    }
-
-    .staff-member {
+      min-width: 150px;
+      padding: 1rem 1.5rem;
       background: white;
-      border-radius: 15px;
-      padding: 20px;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: #475569;
+      transition: all 0.3s ease;
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .tab-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      border-color: #0B8F4A;
+      color: #0B8F4A;
+    }
+
+    .tab-button.active {
+      background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
+      color: white;
+      border-color: #0B8F4A;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(11, 143, 74, 0.3);
+    }
+
+    .tab-icon {
+      font-size: 1.3rem;
+    }
+
+    /* Tab Content */
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Staff Grid */
+    .staff-section {
+      padding: 3rem 2rem;
+      background: linear-gradient(to bottom, #f8fafc, #ffffff);
+    }
+
+    .section-header {
       text-align: center;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      margin-bottom: 3rem;
     }
 
-    .staff-member:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 12px 24px rgba(0,0,0,0.2);
+    .section-header h2 {
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      font-weight: 800;
+      color: #1e293b;
+      margin-bottom: 0.5rem;
+      position: relative;
+      display: inline-block;
     }
 
-    .staff-member img {
+    .section-header h2::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
+      border-radius: 2px;
+    }
+
+    .section-header p {
+      color: #64748b;
+      font-size: 1.1rem;
+      margin-top: 1.5rem;
+    }
+
+    .staff-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .staff-card {
+      background: white;
+      border-radius: 20px;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      border: 2px solid #e2e8f0;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .staff-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .staff-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+      border-color: #0B8F4A;
+    }
+
+    .staff-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .staff-image-wrapper {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 1.5rem;
+    }
+
+    .staff-card img {
       width: 140px;
       height: 140px;
       border-radius: 50%;
       object-fit: cover;
-      border: 4px solid #10b981;
-      margin-bottom: 15px;
+      border: 4px solid #0B8F4A;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 16px rgba(11, 143, 74, 0.3);
     }
 
-    .staff-member h2 {
-      margin: 10px 0 5px;
+    .staff-card:hover img {
+      transform: scale(1.05);
+      border-color: #05A854;
+      box-shadow: 0 8px 24px rgba(11, 143, 74, 0.4);
+    }
+
+    .staff-card h3 {
       font-size: 1.2rem;
-      color: #111827;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 0.5rem;
+      line-height: 1.3;
     }
 
-    .staff-member p {
-      margin: 0;
+    .staff-role {
+      color: #0B8F4A;
       font-size: 0.95rem;
-      color: #4b5563;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      padding: 0.5rem 1rem;
+      background: rgba(11, 143, 74, 0.1);
+      border-radius: 20px;
+      display: inline-block;
     }
 
+    .staff-department {
+      color: #64748b;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: #64748b;
+    }
+
+    .empty-state-icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      opacity: 0.5;
+    }
+
+    .empty-state h3 {
+      font-size: 1.5rem;
+      color: #475569;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Footer */
     footer {
       background: #1f2937;
       color: #e5e7eb;
-      padding: 15px;
+      padding: 2rem;
       text-align: center;
-      margin-top: auto;
-      width: 100%;
+      font-size: 0.95rem;
+      font-weight: 500;
     }
 
-    /* Responsive adjustments */
-    @media (max-width: 600px) {
-      .staff-member img {
-        width: 120px;
-        height: 120px;
+    footer strong {
+      color: #0B8F4A;
+    }
+
+    /* Scrollbar */
+    .tabs::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .tabs::-webkit-scrollbar-track {
+      background: #f1f5f9;
+      border-radius: 10px;
+    }
+
+    .tabs::-webkit-scrollbar-thumb {
+      background: #0B8F4A;
+      border-radius: 10px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .tabs {
+        flex-direction: column;
       }
-      .staff-member h2 {
-        font-size: 1rem;
+
+      .tab-button {
+        min-width: 100%;
       }
-      .staff-member p {
-        font-size: 0.9rem;
+
+      .staff-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 1.5rem;
+      }
+
+      .staff-section {
+        padding: 2rem 1rem;
+      }
+
+      .header-content {
+        flex-direction: column;
       }
     }
   </style>
 </head>
 <body>
-  <div class="title-box">
- <h1>Welcome to <br>Wexford Community School</br></h1>
-    <br><h1>STAFF</br></h1>
-    <img src="WEX LOGO.jpg"
-alt="LOGO" width="80" height="80" style="position:absolute; width:100px; height: 54px; top:4px; margin-left:100px;"></br></h1>
-</left>
+  <!-- Animated Background -->
+  <div class="bg-animation">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
   </div>
 
-  <div class="staff-container">
-    <!-- Staff Member 1 -->
-    <div class="staff-member">
-      <img src="Panin.jpg" alt="Steve">
-      <h2>STEPHEN DANIELS SARFO</h2>
-      <p>UPPER PRIMARY(MATHS TUTOR)</p>
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <div class="header-content">
+        <img src="WEX LOGO.jpg" alt="Wexford Logo" class="logo">
+        <div class="header-text">
+          <h1>Wexford Community School</h1>
+          <p>Meet Our Dedicated Staff</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Tabs Navigation -->
+    <div class="tabs-container">
+      <div class="tabs">
+        <button class="tab-button active" onclick="switchTab('all')">
+          <span class="tab-icon">👥</span>
+          <span>All Staff</span>
+        </button>
+        <button class="tab-button" onclick="switchTab('admin')">
+          <span class="tab-icon">💼</span>
+          <span>Administration</span>
+        </button>
+        <button class="tab-button" onclick="switchTab('lower')">
+          <span class="tab-icon">🎨</span>
+          <span>Lower Primary</span>
+        </button>
+        <button class="tab-button" onclick="switchTab('upper')">
+          <span class="tab-icon">📚</span>
+          <span>Upper Primary</span>
+        </button>
+        <button class="tab-button" onclick="switchTab('jhs')">
+          <span class="tab-icon">🎓</span>
+          <span>JHS</span>
+        </button>
+      </div>
     </div>
 
-    <!-- Staff Member 2 -->
-    <div class="staff-member">
-      <img src="inno.jpg" alt="Innocent">
-      <h2>INNOCENT AKPAGE</h2>
-      <p>JHS MATHS TUTOR</p>
+    <!-- All Staff Tab -->
+    <div id="tab-all" class="tab-content active">
+      <div class="staff-section">
+        <div class="section-header">
+          <h2>All Staff Members</h2>
+          <p>Our complete team of educators and administrators</p>
+        </div>
+        <div class="staff-grid">
+          <!-- Staff Member 1 -->
+          <div class="staff-card">
+            <div class="staff-image-wrapper">
+              <img src="Panin.jpg" alt="Stephen Daniels Sarfo">
+            </div>
+            <h3>Stephen Daniels Sarfo</h3>
+            <div class="staff-role">Maths Tutor</div>
+            <div class="staff-department">Upper Primary</div>
+          </div>
+
+          <!-- Staff Member 2 -->
+          <div class="staff-card">
+            <div class="staff-image-wrapper">
+              <img src="inno.jpg" alt="Innocent Akpage">
+            </div>
+            <h3>Innocent Akpage</h3>
+            <div class="staff-role">Maths Tutor</div>
+            <div class="staff-department">JHS</div>
+          </div>
+
+          <!-- Staff Member 3 -->
+          <div class="staff-card">
+            <div class="staff-image-wrapper">
+              <img src="OWUSUWAA.jpg" alt="Owusuwaa Priscilla">
+            </div>
+            <h3>Miss Owusuwaa Priscilla</h3>
+            <div class="staff-role">Class Teacher</div>
+            <div class="staff-department">Lower Primary</div>
+          </div>
+
+          <!-- Staff Member 4 -->
+          <div class="staff-card">
+            <div class="staff-image-wrapper">
+              <img src="JOYCE.jpg" alt="Joyce Annor">
+            </div>
+            <h3>Mrs. Joyce Annor</h3>
+            <div class="staff-role">Class Teacher</div>
+            <div class="staff-department">Lower Primary</div>
+          </div>
+
+          <!-- Staff Member 5 -->
+          <div class="staff-card">
+            <div class="staff-image-wrapper">
+              <img src="DESMOND ASARE.jpg" alt="Desmond Asare">
+            </div>
+            <h3>Desmond Asare</h3>
+            <div class="staff-role">English Tutor</div>
+            <div class="staff-department">Lower Primary</div>
+          </div>
+
+          <!-- Staff Member 6 -->
+          <div class="staff-card">
+            <div class="staff-image-wrapper">
+              <img src="ENOCK ASUMADU.jpg" alt="Enock Asumadu">
+            </div>
+            <h3>Enock Asumadu</h3>
+            <div class="staff-role">English Tutor</div>
+            <div class="staff-department">JHS</div>
+          </div>
+
+          <!-- Staff Member 7 -->
+          <div class="staff-card">
+            <div class="staff-image-wrapper">
+              <img src="JESSICA BEKA ANANE.jpg" alt="Jessica Beka Anane">
+            </div>
+            <h3>Jessica Beka Anane</h3>
+            <div class="staff-role">Class Teacher</div>
+            <div class="staff-department">Lower Primary</div>
+          </div>
+
+          <!-- Staff Member 8 -->
+          <div class="staff-card">
+            <div class="staff-image-wrapper">
+              <img src="VIDA ANNIM.jpg" alt="Vida Annim">
+            </div>
+            <h3>Vida Annim</h3>
+            <div class="staff-role">Class Teacher</div>
+            <div class="staff-department">Lower Primary</div>
+          </div>
+
+          <!-- Staff Member 9 -->
+          <div class="staff-card">
+            <div class="staff-image-wrapper">
+              <img src="RICHMOND OWUSU.jpg" alt="Richmond Owusu">
+            </div>
+            <h3>Richmond Owusu</h3>
+            <div class="staff-role">Class Teacher</div>
+            <div class="staff-department">Upper Primary</div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <!-- Staff Member 3 -->
-    <div class="staff-member">
-      <img src="OWUSUWAA.jpg" alt="Owusuwaa">
-      <h2>Miss OWUSUWAA PRISCILLA</h2>
-      <p>LOWER PRIMARY</p>
+    <!-- Administration Tab -->
+    <div id="tab-admin" class="tab-content">
+      <div class="staff-section">
+        <div class="section-header">
+          <h2>Administration</h2>
+          <p>Our leadership and administrative team</p>
+        </div>
+        <div class="empty-state">
+          <div class="empty-state-icon">💼</div>
+          <h3>Administration Staff</h3>
+          <p>Administrative staff information will be added soon.</p>
+        </div>
+      </div>
     </div>
-    <!-- Staff Member 3 -->
-    <div class="staff-member">
-      <img src="JOYCE.jpg" alt="JOYCE">
-      <h2>Mrs.Joyce Annor</h2>
-      <p>LOWER PRIMARY</p>
+
+    <!-- Lower Primary Tab -->
+    <div id="tab-lower" class="tab-content">
+      <div class="staff-section">
+        <div class="section-header">
+          <h2>Lower Primary Staff</h2>
+          <p>Grades 1-3 Teaching Team</p>
+        </div>
+        <div class="staff-grid">
+          <div class="staff-card">
+            <div class="staff-image-wrapper">
+              <img src="OWUSUWAA.jpg" alt="Owusuwaa Priscilla">
+            </div>
+            <h3>Miss Owusuwaa Priscilla</h3>
+            <div class="staff-role">Class Teacher</div>
+            <div class="staff-department">Lower Primary</div>
+          </div>
+
+          <div class="staff-card">
+            <div class="staff-image-wrapper">
+              <img src="JOYCE.jpg" alt="Joyce Annor">
+            </div>
+            <h3>Mrs. Joyce Annor</h3>
+            <div class="staff-role">Class Teacher</div>
+            <div class="staff-department">Lower Primary</div>
+          </div>
+
+          <div class="staff-card">
+            <div class="staff-image-wrapper">
+              <img src="JESSICA BEKA ANANE.jpg" alt="Jessica Beka Anane">
+            </div>
+            <h3>Jessica Beka Anane</h3>
+            <div class="staff-role">Class Teacher</div>
+            <div class="staff-department">Lower Primary</div>
+          </div>
+
+          <div class="staff-card">
+            <div class="staff-image-wrapper">
+              <img src="VIDA ANNIM.jpg" alt="Vida Annim">
+            </div>
+            <h3>Vida Annim</h3>
+            <div class="staff-role">Class Teacher</div>
+            <div class="staff-department">Lower Primary</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Upper Primary Tab -->
+    <div id="tab-upper" class="tab-content">
+      <div class="staff-section">
+        <div class="section-header">
+          <h2>Upper Primary Staff</h2>
+          <p>Grades 4-6 Teaching Team</p>
+        </div>
+        <div class="staff-grid">
+          <div class="staff-card">
+            <div class="staff-image-wrapper">
+              <img src="Panin.jpg" alt="Stephen Daniels Sarfo">
+            </div>
+            <h3>Stephen Daniels Sarfo</h3>
+            <div class="staff-role">Maths Tutor</div>
+            <div class="staff-department">Upper Primary</div>
+          </div>
+  <div class="staff-card">
+            <div class="staff-image-wrapper">
+              <img src="DESMOND ASARE.jpg" alt="Desmond Asare">
+            </div>
+            <h3>Desmond Asare</h3>
+            <div class="staff-role">English Tutor</div>
+            <div class="staff-department">Lower Primary</div>
+          </div>
+          <div class="staff-card">
+            <div class="staff-image-wrapper">
+              <img src="RICHMOND OWUSU.jpg" alt="Richmond Owusu">
+            </div>
+            <h3>Richmond Owusu</h3>
+            <div class="staff-role">Class Teacher</div>
+            <div class="staff-department">Upper Primary</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- JHS Tab -->
+    <div id="tab-jhs" class="tab-content">
+      <div class="staff-section">
+        <div class="section-header">
+          <h2>JHS Staff</h2>
+          <p>Junior High School Teaching Team</p>
+        </div>
+        <div class="staff-grid">
+          <div class="staff-card">
+            <div class="staff-image-wrapper">
+              <img src="inno.jpg" alt="Innocent Akpage">
+            </div>
+            <h3>Innocent Akpage</h3>
+            <div class="staff-role">Maths Tutor</div>
+            <div class="staff-department">JHS</div>
+          </div>
+
+          <div class="staff-card">
+            <div class="staff-image-wrapper">
+              <img src="ENOCK ASUMADU.jpg" alt="Enock Asumadu">
+            </div>
+            <h3>Enock Asumadu</h3>
+            <div class="staff-role">English Tutor</div>
+            <div class="staff-department">JHS</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <strong>Wexford Community School</strong> - Empowering Education Through Innovation<br>
+      © 2025 Sir.Stephen Designed with ❤️ for our team
+    </footer>
   </div>
-    <!-- Staff Member 3 -->
-    <div class="staff-member">
-      <img src="DESMOND ASARE.jpg" alt="DESMOND">
-      <h2>DESMOND ASARE</h2>
-      <p>LOWER PRIMARY ENGLISH TUTOR</p>
-  </div>
-    <!-- Staff Member 3 -->
-    <div class="staff-member">
-      <img src="ENOCK ASUMADU.jpg" alt="ENOCK">
-      <h2>ENOCK ASUMADU</h2>
-      <p>JHS ENGLISH TUTOR</p>
-  </div>
-     <!-- Staff Member 3 -->
-    <div class="staff-member">
-      <img src="JESSICA BEKA ANANE.jpg" alt="ENOCK">
-      <h2>JESSICA BEKA ANANE</h2>
-      <p>LOWER PRIMARY</p>
-  </div>
-        <!-- Staff Member 3 -->
-    <div class="staff-member">
-      <img src="VIDA ANNIM.jpg" alt="ENOCK">
-      <h2>VIDA ANNIM</h2>
-      <p>LOWER PRIMARY</p>
-  </div>
-      <!-- Staff Member 3 -->
-    <div class="staff-member">
-      <img src="RICHMOND OWUSU.jpg" alt="ENOCK">
-      <h2>RICHMOND OWUSU</h2>
-      <p>UPPER PRIMARY</p>
-  </div>
-    
-  <footer>
-    © 2025 Wexford Community School — Designed with ❤️ for our team
-  </footer>
+
+  <script>
+    function switchTab(tabName) {
+      // Hide all tab contents
+      const tabContents = document.querySelectorAll('.tab-content');
+      tabContents.forEach(content => content.classList.remove('active'));
+
+      // Remove active class from all buttons
+      const tabButtons = document.querySelectorAll('.tab-button');
+      tabButtons.forEach(button => button.classList.remove('active'));
+
+      // Show selected tab
+      const selectedTab = document.getElementById('tab-' + tabName);
+      if (selectedTab) {
+        selectedTab.classList.add('active');
+      }
+
+      // Add active class to clicked button
+      event.target.closest('.tab-button').classList.add('active');
+
+      // Scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
 </body>
 </html>
