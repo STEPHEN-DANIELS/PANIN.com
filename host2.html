@@ -3,554 +3,1810 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Essential Professional Skills (EPS) Quiz - 40 Questions</title>
+    <title>Student Profiles - Wexford Community School</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+        :root {
+            --primary-green: #0B8F4A;
+            --primary-dark: #076838;
+            --primary-light: #E8F5EE;
+            --white: #FFFFFF;
+            --light-gray: #F8FAFC;
+            --border-gray: #E2E8F0;
+            --text-dark: #1E293B;
+            --text-medium: #475569;
+            --text-light: #94A3B8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #f4f4f9;
-            line-height: 1.6;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
         }
-        h1 {
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .particle:nth-child(1) { width: 80px; height: 80px; left: 10%; animation-delay: 0s; }
+        .particle:nth-child(2) { width: 60px; height: 60px; left: 30%; animation-delay: 2s; }
+        .particle:nth-child(3) { width: 100px; height: 100px; left: 50%; animation-delay: 4s; }
+        .particle:nth-child(4) { width: 70px; height: 70px; left: 70%; animation-delay: 6s; }
+        .particle:nth-child(5) { width: 90px; height: 90px; left: 85%; animation-delay: 8s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.5; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: var(--white);
+            min-height: 100vh;
+            position: relative;
+            box-shadow: 0 0 80px rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
+            color: white;
+            padding: 2.5rem 2rem;
             text-align: center;
-            color: #333;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
         }
-        h2 {
-            color: #005566;
-            margin-top: 20px;
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: pulse 3s ease infinite;
         }
-        .question {
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 15px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.1; }
+            50% { transform: scale(1.2); opacity: 0.2; }
         }
-        .question p {
-            margin: 0 0 10px;
-            font-weight: bold;
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
         }
-        .options label {
+
+        .logo {
+            width: 100px;
+            height: 100px;
+            border-radius: 20px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            transition: transform 0.5s ease;
+        }
+
+        .logo:hover {
+            transform: rotate(360deg) scale(1.1);
+        }
+
+        .header-text h1 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .header-text p {
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            font-weight: 600;
+            opacity: 0.95;
+            letter-spacing: 1px;
+        }
+
+        /* Dropdown Navigation */
+        .nav-container {
+            background: var(--light-gray);
+            padding: 1.5rem;
+            border-bottom: 2px solid var(--border-gray);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .dropdown-button {
+            width: 100%;
+            padding: 1.25rem 1.5rem;
+            background: white;
+            border: 2px solid var(--primary-green);
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--text-dark);
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 12px rgba(11, 143, 74, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-button:hover {
+            background: var(--light-gray);
+            box-shadow: 0 4px 20px rgba(11, 143, 74, 0.25);
+        }
+
+        .dropdown-content {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .dropdown-icon {
+            font-size: 1.5rem;
+        }
+
+        .dropdown-arrow {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .dropdown-arrow.open {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: calc(100% + 0.5rem);
+            left: 0;
+            right: 0;
+            background: white;
+            border: 2px solid var(--border-gray);
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            max-height: 450px;
+            overflow-y: auto;
+        }
+
+        .dropdown-menu.open {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            padding: 1.25rem 1.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border-bottom: 1px solid var(--light-gray);
+            font-weight: 500;
+            color: var(--text-medium);
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-item:hover {
+            background: var(--light-gray);
+            color: var(--primary-green);
+            padding-left: 2rem;
+        }
+
+        .dropdown-item.active {
+            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
+            color: white;
+        }
+
+        .dropdown-item.active:hover {
+            background: linear-gradient(135deg, #05A854 0%, #0B8F4A 100%);
+        }
+
+        .dropdown-item-icon {
+            font-size: 1.5rem;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        .dropdown-item-count {
+            margin-left: auto;
+            background: rgba(11, 143, 74, 0.1);
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--primary-green);
+        }
+
+        .dropdown-item.active .dropdown-item-count {
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+        }
+
+        .dropdown-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: transparent;
+            z-index: 99;
+            display: none;
+        }
+
+        .dropdown-overlay.active {
             display: block;
-            margin: 5px 0;
+        }
+
+        /* Main Content */
+        main {
+            padding: 3rem 2rem;
+            background: var(--light-gray);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-header h2 {
+            font-size: clamp(2rem, 3vw, 2.5rem);
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
+            border-radius: 2px;
+        }
+
+        .section-description {
+            color: var(--text-medium);
+            font-size: 1.1rem;
+            margin-top: 1.5rem;
+        }
+
+        /* Upload Section */
+        .upload-section {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            margin-bottom: 3rem;
+            border: 2px solid var(--border-gray);
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .upload-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .upload-header h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .upload-form {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 0.95rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 1rem 1.25rem;
+            border: 2px solid var(--border-gray);
+            border-radius: 12px;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-green);
+            box-shadow: 0 0 0 4px var(--primary-light);
+        }
+
+        .file-upload {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            border: 2px dashed var(--border-gray);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: var(--light-gray);
+        }
+
+        .file-upload:hover {
+            border-color: var(--primary-green);
+            background: var(--primary-light);
+        }
+
+        .file-upload input[type="file"] {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
             cursor: pointer;
         }
-        .feedback {
+
+        .file-upload-content {
+            text-align: center;
+        }
+
+        .file-upload-icon {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .submit-button {
+            padding: 1.25rem;
+            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1.125rem;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 24px rgba(11, 143, 74, 0.3);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .submit-button:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 40px rgba(11, 143, 74, 0.4);
+        }
+
+        /* Students Grid */
+        .students-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            animation: fadeIn 0.8s ease-out 0.2s backwards;
+        }
+
+        .student-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border: 2px solid var(--border-gray);
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .student-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .student-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
+            border-color: var(--primary-green);
+        }
+
+        .student-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .student-photo {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .student-info {
+            padding: 1.5rem;
+        }
+
+        .student-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .student-class {
+            display: inline-block;
+            background: var(--primary-light);
+            color: var(--primary-green);
+            padding: 0.375rem 0.875rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .student-details {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--text-medium);
+        }
+
+        .student-detail {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .detail-icon {
+            color: var(--primary-green);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-medium);
+        }
+
+        .empty-icon {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+            opacity: 0.3;
+        }
+
+        .empty-state h3 {
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Tab Content */
+        .tab-content {
             display: none;
-            margin-top: 10px;
-            padding: 10px;
-            border-radius: 5px;
         }
-        .correct {
-            background-color: #d4edda;
-            color: #155724;
+
+        .tab-content.active {
+            display: block;
+            animation: fadeInContent 0.5s ease-out;
         }
-        .incorrect {
-            background-color: #f8d7da;
-            color: #721c24;
+
+        @keyframes fadeInContent {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Footer */
+        footer {
+            background: var(--text-dark);
+            color: #e5e7eb;
+            padding: 2rem;
+            text-align: center;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        footer strong {
+            color: var(--primary-green);
+        }
+
+        /* Pin Code Modal */
+        .pin-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .pin-modal.hidden {
+            display: none;
+        }
+
+        .pin-content {
+            background: white;
+            border-radius: 24px;
+            padding: 3rem 2.5rem;
+            max-width: 450px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.4s ease-out;
+            text-align: center;
+        }
+
+        .pin-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: bounce 1s ease infinite;
+        }
+
+        .pin-content h2 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .pin-content p {
+            color: var(--text-medium);
+            margin-bottom: 2rem;
+            font-size: 1rem;
+        }
+
+        .pin-input-wrapper {
+            margin-bottom: 1.5rem;
+        }
+
+        .pin-input {
+            width: 100%;
+            padding: 1.25rem 1.5rem;
+            border: 2px solid var(--border-gray);
+            border-radius: 12px;
+            font-size: 1.5rem;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            text-align: center;
+            letter-spacing: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .pin-input:focus {
+            outline: none;
+            border-color: var(--primary-green);
+            box-shadow: 0 0 0 4px var(--primary-light);
+        }
+
+        .pin-input.error {
+            border-color: #ef4444;
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .pin-error {
+            color: #ef4444;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        .pin-error.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .pin-button {
+            width: 100%;
+            padding: 1.25rem;
+            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1.125rem;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 24px rgba(11, 143, 74, 0.3);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .pin-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(11, 143, 74, 0.4);
+        }
+
+        .pin-button:disabled {
+            background: var(--border-gray);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .pin-hint {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: var(--light-gray);
+            border-radius: 12px;
+            font-size: 0.85rem;
+            color: var(--text-medium);
+        }
+
+        /* Lock Overlay on Forms */
+        .form-locked {
+            position: relative;
+        }
+
+        .form-locked::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(248, 250, 252, 0.95);
+            border-radius: 20px;
+            z-index: 10;
+        }
+
+        .lock-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 11;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .lock-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: pulse 2s ease infinite;
+        }
+
+        .unlock-button {
+            margin-top: 1rem;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 16px rgba(11, 143, 74, 0.3);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .unlock-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(11, 143, 74, 0.4);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .students-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 1.5rem;
+            }
+
+            .upload-section {
+                padding: 1.5rem;
+            }
+
+            main {
+                padding: 2rem 1rem;
+            }
         }
     </style>
 </head>
-    
 <body>
-    <h1>Essential Professional Skills (EPS) Quiz - 40 Questions</h1>
-    
-    <!-- Level 1: Knowledge and Comprehension -->
-    <h2>Level 1: Knowledge and Comprehension</h2>
-    <div class="question" id="q1">
-        <p>1. What is the fundamental purpose of "reflective practice" for a teacher's professional development?</p>
-        <div class="options">
-            <label><input type="radio" name="q1" value="A"> (A) To strictly adhere to a predetermined curriculum.</label>
-            <label><input type="radio" name="q1" value="B"> (B) To engage in self-assessment and improvement of teaching methods.</label>
-            <label><input type="radio" name="q1" value="C"> (C) To compare student performance with national averages.</label>
-            <label><input type="radio" name="q1" value="D"> (D) To delegate teaching responsibilities to support staff.</label>
-        </div>
-        <div class="feedback" id="feedback1"></div>
-    </div>
-    <div class="question" id="q2">
-        <p>2. Which concept best describes the collaborative environment where teachers share experiences, mentor peers, and uphold ethical standards?</p>
-        <div class="options">
-            <label><input type="radio" name="q2" value="A"> (A) Professional isolation</label>
-            <label><input type="radio" name="q2" value="B"> (B) Community of practice</label>
-            <label><input type="radio" name="q2" value="C"> (C) Administrative oversight</label>
-            <label><input type="radio" name="q2" value="D"> (D) Individualized learning plan</label>
-        </div>
-        <div class="feedback" id="feedback2"></div>
-         </div>
-    <div class="question" id="q3">
-        <p>3. Beyond subject matter expertise, what key area of "Professional Knowledge" enables teachers to adapt to diverse student needs and support educational reforms?</p>
-        <div class="options">
-            <label><input type="radio" name="q3" value="A"> (A) Mastery of local administrative procedures.</label>
-            <label><input type="radio" name="q3" value="B"> (B) Deep understanding of learning theories and child development.</label>
-            <label><input type="radio" name="q3" value="C"> (C) Proficiency in extracurricular activity management.</label>
-            <label><input type="radio" name="q3" value="D"> (D) Ability to recall historical dates and events.</label>
-        </div>
-        <div class="feedback" id="feedback3"></div>
-    </div>
-    <div class="question" id="q4">
-        <p>4. What is the primary role of the National Teaching Council (NTC) in Ghana?</p>
-        <div class="options">
-            <label><input type="radio" name="q4" value="A"> (A) To develop the national curriculum.</label>
-            <label><input type="radio" name="q4" value="B"> (B) To license and regulate the teaching profession.</label>
-            <label><input type="radio" name="q4" value="C"> (C) To directly manage schools and appoint headteachers.</label>
-            <label><input type="radio" name="q4" value="D"> (D) To fund educational research and development.</label>
-        </div>
-        <div class="feedback" id="feedback4"></div>
-    </div>
-    <div class="question" id="q5">
-        <p>5. A "safe and supportive classroom environment" primarily aims to:</p>
-        <div class="options">
-            <label><input type="radio" name="q5" value="A"> (A) Ensure physical safety only, regardless of emotional or academic needs.</label>
-            <label><input type="radio" name="q5" value="B"> (B) Foster emotional well-being and academic growth for all students.</label>
-            <label><input type="radio" name="q5" value="C"> (C) Focus solely on academic achievement without regard for student well-being.</label>
-            <label><input type="radio" name="q5" value="D"> (D) Prioritize teacher convenience over student needs.</label>
-        </div>
-        <div class="feedback" id="feedback5"></div>
-    </div>
-    <div class="question" id="q6">
-        <p>6. Which of the following is a core aspect of "Professional Values and Attitudes"?</p>
-        <div class="options">
-            <label><input type="radio" name="q6" value="A"> (A) Prioritizing personal convenience over student needs.</label>
-            <label><input type="radio" name="q6" value="B"> (B) Upholding ethical conduct in all professional interactions.</label>
-            <label><input type="radio" name="q6" value="C"> (C) Focusing solely on academic outcomes without collaboration.</label>
-            <label><input type="radio" name="q6" value="D"> (D) Avoiding professional development opportunities.</label>
-        </div>
-        <div class="feedback" id="feedback6"></div>
-    </div>
-    <div class="question" id="q7">
-        <p>7. Effective management of the learning environment involves:</p>
-        <div class="options">
-            <label><input type="radio" name="q7" value="A"> (A) Strict adherence to outdated teaching methods.</label>
-            <label><input type="radio" name="q7" value="B"> (B) Creating a safe, inclusive, and supportive space for learning.</label>
-            <label><input type="radio" name="q7" value="C"> (C) Focusing only on high-achieving students.</label>
-            <label><input type="radio" name="q7" value="D"> (D) Limiting student interaction to maintain discipline.</label>
-        </div>
-        <div class="feedback" id="feedback7"></div>
-    </div>
-    <div class="question" id="q9">
-        <p>9. A teacher who mentors a new colleague is contributing to:</p>
-        <div class="options">
-            <label><input type="radio" name="q9" value="A"> (A) Administrative efficiency.</label>
-            <label><input type="radio" name="q9" value="B"> (B) A community of practice.</label>
-            <label><input type="radio" name="q9" value="C"> (C) Individualized student assessments.</label>
-            <label><input type="radio" name="q9" value="D"> (D) Curriculum development.</label>
-        </div>
-        <div class="feedback" id="feedback9"></div>
-    </div>
-    <div class="question" id="q11">
-        <p>11. Professional practice involves using appropriate teaching materials. What does "appropriate" imply in this context?</p>
-        <div class="options">
-            <label><input type="radio" name="q11" value="A"> (A) Materials that are easily accessible, regardless of relevance.</label>
-            <label><input type="radio" name="q11" value="B"> (B) Materials that are suited to the learning objectives and student needs.</label>
-            <label><input type="radio" name="q11" value="C"> (C) Materials that are expensive and technologically advanced.</label>
-            <label><input type="radio" name="q11" value="D"> (D) Materials that are only available online.</label>
-        </div>
-        <div class="feedback" id="feedback11"></div>
-    </div>
-    <div class="question" id="q12">
-        <p>12. Which of the following best represents "ethical conduct" in teaching?</p>
-        <div class="options">
-            <label><input type="radio" name="q12" value="A"> (A) Prioritizing high-performing students for personal recognition.</label>
-            <label><input type="radio" name="q12" value="B"> (B) Maintaining fairness, integrity, and transparency in all interactions.</label>
-            <label><input type="radio" name="q12" value="C"> (C) Avoiding professional development to focus on classroom duties.</label>
-            <label><input type="radio" name="q12" value="D"> (D) Sharing confidential student information with colleagues.</label>
-        </div>
-        <div class="feedback" id="feedback12"></div>
+    <div class="bg-animation">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
     </div>
 
-    <!-- Level 2: Application -->
-    <h2>Level 2: Application</h2>
-    <div class="question" id="q15">
-        <p>15. A teacher ensures that a visually impaired student's desk is positioned close to the whiteboard. This action demonstrates which principle?</p>
-        <div class="options">
-            <label><input type="radio" name="q15" value="A"> (A) Segregation</label>
-            <label><input type="radio" name="q15" value="B"> (B) Inclusion</label>
-            <label><input type="radio" name="q15" value="C"> (C) Streaming</label>
-            <label><input type="radio" name="q15" value="D"> (D) Team teaching</label>
+    <!-- Pin Code Modal -->
+    <div class="pin-modal" id="pin-modal">
+        <div class="pin-content">
+            <div class="pin-icon">🔐</div>
+            <h2>Staff Authentication</h2>
+            <p>Enter your PIN code to access student profile management</p>
+            <div class="pin-input-wrapper">
+                <input type="password" class="pin-input" id="pin-input" placeholder="••••••" maxlength="6" autocomplete="off">
+                <div class="pin-error" id="pin-error">❌ Incorrect PIN. Please try again.</div>
+            </div>
+            <button class="pin-button" onclick="verifyPin()">🔓 Unlock Access</button>
+            <div class="pin-hint">
+                <strong>For Staff Only</strong><br>
+                Contact administration if you need access
+            </div>
         </div>
-        <div class="feedback" id="feedback15"></div>
-    </div>
-    <div class="question" id="q16">
-        <p>16. A teacher collaborates with parents to support a struggling student's learning needs. This is an example of:</p>
-        <div class="options">
-            <label><input type="radio" name="q16" value="A"> (A) Professional isolation</label>
-            <label><input type="radio" name="q16" value="B"> (B) Community of practice</label>
-            <label><input type="radio" name="q16" value="C"> (C) Administrative oversight</label>
-            <label><input type="radio" name="q16" value="D"> (D) Curriculum development</label>
-        </div>
-        <div class="feedback" id="feedback16"></div>
-    </div>
-    <div class="question" id="q17">
-        <p>17. A teacher uses a short quiz during instruction to identify student struggles. This is an example of:</p>
-        <div class="options">
-            <label><input type="radio" name="q17" value="A"> (A) Summative assessment</label>
-            <label><input type="radio" name="q17" value="B"> (B) Formative assessment</label>
-            <label><input type="radio" name="q17" value="C"> (C) Standardized testing</label>
-            <label><input type="radio" name="q17" value="D"> (D) Behavioral evaluation</label>
-        </div>
-        <div class="feedback" id="feedback17"></div>
-    </div>
-    <div class="question" id="q18">
-        <p>18. A teacher shares examination questions with students before the actual test. This is an example of:</p>
-        <div class="options">
-            <label><input type="radio" name="q18" value="A"> (A) Arriving early</label>
-            <label><input type="radio" name="q18" value="B"> (B) Ethical misconduct</label>
-            <label><input type="radio" name="q18" value="C"> (C) Encouraging teamwork</label>
-            <label><input type="radio" name="q18" value="D"> (D) Using group work effectively</label>
-        </div>
-        <div class="feedback" id="feedback18"></div>
-    </div>
-    <div class="question" id="q19">
-        <p>19. A teacher implements new teaching strategies learned from a workshop to enhance student engagement. This action best demonstrates:</p>
-        <div class="options">
-            <label><input type="radio" name="q19" value="A"> (A) Adherence to school rules</label>
-            <label><input type="radio" name="q19" value="B"> (B) Professional development in action</label>
-            <label><input type="radio" name="q19" value="C"> (C) Completion of administrative duties</label>
-            <label><input type="radio" name="q19" value="D"> (D) Personal interest in a subject</label>
-        </div>
-        <div class="feedback" id="feedback19"></div>
-    </div>
-    <div class="question" id="q20">
-        <p>20. A teacher designs lessons to accommodate various learning styles. This demonstrates the application of:</p>
-        <div class="options">
-            <label><input type="radio" name="q20" value="A"> (A) Administrative policies</label>
-            <label><input type="radio" name="q20" value="B"> (B) Knowledge of child development</label>
-            <label><input type="radio" name="q20" value="C"> (C) Budget management skills</label>
-            <label><input type="radio" name="q20" value="D"> (D) Extracurricular planning</label>
-        </div>
-        <div class="feedback" id="feedback20"></div>
-    </div>
-    <div class="question" id="q22">
-        <p>22. A teacher creates a classroom environment where students feel safe to express their opinions. This demonstrates the application of:</p>
-        <div class="options">
-            <label><input type="radio" name="q22" value="A"> (A) Strict disciplinary measures</label>
-            <label><input type="radio" name="q22" value="B"> (B) Principles of managing learning environments</label>
-            <label><input type="radio" name="q22" value="C"> (C) Administrative paperwork skills</label>
-            <label><input type="radio" name="q22" value="D"> (D) Subject-specific expertise</label>
-        </div>
-        <div class="feedback" id="feedback22"></div>
-    </div>
-    <div class="question" id="q23">
-        <p>23. A teacher encourages students to work in groups to solve a complex problem. This approach is an example of:</p>
-        <div class="options">
-            <label><input type="radio" name="q23" value="A"> (A) Individualized instruction</label>
-            <label><input type="radio" name="q23" value="B"> (B) Traditional lecturing</label>
-            <label><input type="radio" name="q23" value="C"> (C) Collaborative learning</label>
-            <label><input type="radio" name="q23" value="D"> (D) Competitive assessment</label>
-        </div>
-        <div class="feedback" id="feedback23"></div>
-    </div>
-    <div class="question" id="q25">
-        <p>25. A teacher creates a personal growth plan to improve their classroom management skills. This is an example of:</p>
-        <div class="options">
-            <label><input type="radio" name="q25" value="A"> (A) Administrative compliance</label>
-            <label><input type="radio" name="q25" value="B"> (B) Reflective practice</label>
-            <label><input type="radio" name="q25" value="C"> (C) Curriculum development</label>
-            <label><input type="radio" name="q25" value="D"> (D) Standardized testing</label>
-        </div>
-        <div class="feedback" id="feedback25"></div>
-    </div>
-    <div class="question" id="q28">
-        <p>28. A teacher ensures transparency in grading by sharing rubrics with students. This demonstrates:</p>
-        <div class="options">
-            <label><input type="radio" name="q28" value="A"> (A) Subjective grading practices</label>
-            <label><input type="radio" name="q28" value="B"> (B) Ethical conduct in assessment</label>
-            <label><input type="radio" name="q28" value="C"> (C) Avoidance of student feedback</label>
-            <label><input type="radio" name="q28" value="D"> (D) Focus on extracurricular activities</label>
-        </div>
-        <div class="feedback" id="feedback28"></div>
     </div>
 
-    <!-- Level 3: Analysis and Synthesis -->
-    <h2>Level 3: Analysis and Synthesis</h2>
-    <div class="question" id="q35">
-        <p>35. Analyze the relationship between "Professional Knowledge" and "Professional Practice."</p>
-        <div class="options">
-            <label><input type="radio" name="q35" value="A"> (A) Professional Knowledge is theoretical and has no direct bearing on Professional Practice.</label>
-            <label><input type="radio" name="q35" value="B"> (B) Professional Practice is solely about classroom management, independent of Professional Knowledge.</label>
-            <label><input type="radio" name="q35" value="C"> (C) Professional Knowledge provides the theoretical foundation and understanding necessary to inform and improve Professional Practice.</label>
-            <label><input type="radio" name="q35" value="D"> (D) Professional Practice dictates what Professional Knowledge is relevant.</label>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <img src="WEX LOGO.jpg" alt="Wexford Logo" class="logo">
+                <div class="header-text">
+                    <h1>Student Profiles</h1>
+                    <p>Wexford Community School</p>
+                </div>
+            </div>
+        </header>
+
+        <div class="nav-container">
+            <div class="nav-wrapper">
+                <button class="dropdown-button" onclick="toggleDropdown()">
+                    <div class="dropdown-content">
+                        <span class="dropdown-icon" id="current-icon">👥</span>
+                        <span id="current-grade">Select Grade Level</span>
+                    </div>
+                    <span class="dropdown-arrow" id="dropdown-arrow">▼</span>
+                </button>
+
+                <div class="dropdown-menu" id="dropdown-menu">
+                    <!-- Lower Primary -->
+                    <div class="dropdown-item active" onclick="selectGrade('lower-1', '🎨', 'Lower Primary 1')">
+                        <span class="dropdown-item-icon">🎨</span>
+                        <span>Lower Primary 1</span>
+                        <span class="dropdown-item-count">0</span>
+                    </div>
+                    <div class="dropdown-item" onclick="selectGrade('lower-2', '🎨', 'Lower Primary 2')">
+                        <span class="dropdown-item-icon">🎨</span>
+                        <span>Lower Primary 2</span>
+                        <span class="dropdown-item-count">0</span>
+                    </div>
+                    <div class="dropdown-item" onclick="selectGrade('lower-3', '🎨', 'Lower Primary 3')">
+                        <span class="dropdown-item-icon">🎨</span>
+                        <span>Lower Primary 3</span>
+                        <span class="dropdown-item-count">0</span>
+                    </div>
+                    
+                    <!-- Upper Primary -->
+                    <div class="dropdown-item" onclick="selectGrade('upper-4', '📚', 'Upper Primary 4')">
+                        <span class="dropdown-item-icon">📚</span>
+                        <span>Upper Primary 4</span>
+                        <span class="dropdown-item-count">0</span>
+                    </div>
+                    <div class="dropdown-item" onclick="selectGrade('upper-5', '📚', 'Upper Primary 5')">
+                        <span class="dropdown-item-icon">📚</span>
+                        <span>Upper Primary 5</span>
+                        <span class="dropdown-item-count">0</span>
+                    </div>
+                    <div class="dropdown-item" onclick="selectGrade('upper-6', '📚', 'Upper Primary 6')">
+                        <span class="dropdown-item-icon">📚</span>
+                        <span>Upper Primary 6</span>
+                        <span class="dropdown-item-count">0</span>
+                    </div>
+                    
+                    <!-- JHS -->
+                    <div class="dropdown-item" onclick="selectGrade('jhs-1', '🎓', 'JHS 1')">
+                        <span class="dropdown-item-icon">🎓</span>
+                        <span>JHS 1</span>
+                        <span class="dropdown-item-count">0</span>
+                    </div>
+                    <div class="dropdown-item" onclick="selectGrade('jhs-2', '🎓', 'JHS 2')">
+                        <span class="dropdown-item-icon">🎓</span>
+                        <span>JHS 2</span>
+                        <span class="dropdown-item-count">0</span>
+                    </div>
+                    <div class="dropdown-item" onclick="selectGrade('jhs-3', '🎓', 'JHS 3')">
+                        <span class="dropdown-item-icon">🎓</span>
+                        <span>JHS 3</span>
+                        <span class="dropdown-item-count">0</span>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="feedback" id="feedback35"></div>
-    </div>
-    <div class="question" id="q36">
-        <p>36. Evaluate the ethical implications of a teacher neglecting to update their knowledge on current educational policies and curriculum frameworks.</p>
-        <div class="options">
-            <label><input type="radio" name="q36" value="A"> (A) There are no ethical implications as long as the teacher maintains classroom order.</label>
-            <label><input type="radio" name="q36" value="B"> (B) It could lead to a misalignment between teaching and national educational goals, potentially disadvantaging students.</label>
-            <label><input type="radio" name="q36" value="C"> (C) It only impacts the teacher's personal professional growth, not student outcomes.</label>
-            <label><input type="radio" name="q36" value="D"> (D) This is a minor administrative oversight with no significant consequences.</label>
-        </div>
-        <div class="feedback" id="feedback36"></div>
-    </div>
-    <div class="question" id="q37">
-        <p>37. Analyze how a "community of practice" can mitigate high teacher turnover in schools.</p>
-        <div class="options">
-            <label><input type="radio" name="q37" value="A"> (A) It increases administrative oversight, reducing teacher autonomy.</label>
-            <label><input type="radio" name="q37" value="B"> (B) It fosters collaboration, support, and professional growth, encouraging teacher retention.</label>
-            <label><input type="radio" name="q37" value="C"> (C) It focuses solely on student performance, ignoring teacher needs.</label>
-            <label><input type="radio" name="q37" value="D"> (D) It promotes competition among teachers, increasing turnover.</label>
-        </div>
-        <div class="feedback" id="feedback37"></div>
-    </div>
-    <div class="question" id="q38">
-        <p>38. Compare the roles of a teacher as a "leader" versus an "authority figure" in the classroom.</p>
-        <div class="options">
-            <label><input type="radio" name="q38" value="A"> (A) A leader enforces rules, while an authority figure inspires students.</label>
-            <label><input type="radio" name="q38" value="B"> (B) A leader guides and inspires, while an authority figure enforces rules and compliance.</label>
-            <label><input type="radio" name="q38" value="C"> (C) Both roles are identical in classroom management.</label>
-            <label><input type="radio" name="q38" value="D"> (D) Neither role involves classroom management.</label>
-        </div>
-        <div class="feedback" id="feedback38"></div>
-    </div>
-    <div class="question" id="q39">
-        <p>39. Analyze how "Professional Values and Attitudes" influence a school's culture.</p>
-        <div class="options">
-            <label><input type="radio" name="q39" value="A"> (A) They have no significant impact on school culture.</label>
-            <label><input type="radio" name="q39" value="B"> (B) They set a positive example, fostering respect and collaboration.</label>
-            <label><input type="radio" name="q39" value="C"> (C) They focus solely on academic outcomes.</label>
-            <label><input type="radio" name="q39" value="D"> (D) They prioritize administrative efficiency over student well-being.</label>
-        </div>
-        <div class="feedback" id="feedback39"></div>
-    </div>
-    <div class="question" id="q40">
-        <p>40. Evaluate the impact of a teacher’s knowledge of child development on creating an inclusive classroom.</p>
-        <div class="options">
-            <label><input type="radio" name="q40" value="A"> (A) It has no impact, as inclusion depends on administrative policies.</label>
-            <label><input type="radio" name="q40" value="B"> (B) It enables teachers to tailor practices to diverse learner needs, fostering inclusion.</label>
-            <label><input type="radio" name="q40" value="C"> (C) It focuses only on high-performing students.</label>
-            <label><input type="radio" name="q40" value="D"> (D) It limits teacher flexibility in lesson planning.</label>
-        </div>
-        <div class="feedback" id="feedback40"></div>
-    </div>
-    <div class="question" id="q41">
-        <p>41. Analyze the challenges a teacher might face when adopting inquiry-based learning as part of educational reforms.</p>
-        <div class="options">
-            <label><input type="radio" name="q41" value="A"> (A) It requires less preparation and student engagement.</label>
-            <label><input type="radio" name="q41" value="B"> (B) It demands new teaching skills but fosters critical thinking and engagement.</label>
-            <label><input type="radio" name="q41" value="C"> (C) It eliminates the need for classroom management.</label>
-            <label><input type="radio" name="q41" value="D"> (D) It focuses solely on rote memorization.</label>
-        </div>
-        <div class="feedback" id="feedback41"></div>
-    </div>
-    <div class="question" id="q43">
-        <p>43. Analyze how a community of practice can support a struggling teacher.</p>
-        <div class="options">
-            <label><input type="radio" name="q43" value="A"> (A) It isolates the teacher to focus on personal improvement.</label>
-            <label><input type="radio" name="q43" value="B"> (B) It provides peer observation, feedback, and mentorship for growth.</label>
-            <label><input type="radio" name="q43" value="C"> (C) It focuses solely on administrative compliance.</label>
-            <label><input type="radio" name="q43" value="D"> (D) It limits professional development opportunities.</label>
-        </div>
-        <div class="feedback" id="feedback43"></div>
-    </div>
-    <div class="question" id="q44">
-        <p>44. Evaluate the role of fair assessment practices in upholding professional values.</p>
-        <div class="options">
-            <label><input type="radio" name="q44" value="A"> (A) Fair assessments are irrelevant to professional values.</label>
-            <label><input type="radio" name="q44" value="B"> (B) Fair assessments ensure transparency and accountability, supporting student learning.</label>
-            <label><input type="radio" name="q44" value="C"> (C) Fair assessments focus only on high-performing students.</label>
-            <label><input type="radio" name="q44" value="D"> (D) Fair assessments increase administrative workload without benefit.</label>
-        </div>
-        <div class="feedback" id="feedback44"></div>
-    </div>
-    <div class="question" id="q46">
-        <p>46. Evaluate the long-term benefits of creating an inclusive classroom environment.</p>
-        <div class="options">
-            <label><input type="radio" name="q46" value="A"> (A) It benefits only students with special needs.</label>
-            <label><input type="radio" name="q46" value="B"> (B) It fosters tolerance, equity, and academic success for all students.</label>
-            <label><input type="radio" name="q46" value="C"> (C) It increases teacher workload without benefits.</label>
-            <label><input type="radio" name="q46" value="D"> (D) It focuses solely on academic outcomes.</label>
-        </div>
-        <div class="feedback" id="feedback46"></div>
+
+        <div class="dropdown-overlay" id="dropdown-overlay" onclick="closeDropdown()"></div>
+
+        <main>
+            <!-- Lower Primary 1 -->
+            <div id="grade-lower-1" class="tab-content active">
+                <div class="section-header">
+                    <h2>🎨 Lower Primary 1</h2>
+                    <p class="section-description">Student profiles for Grade 1</p>
+                </div>
+
+                <div class="upload-section">
+                    <div class="upload-header">
+                        <span style="font-size: 2rem;">➕</span>
+                        <h3>Add New Student</h3>
+                    </div>
+                    <form class="upload-form" onsubmit="handleStudentUpload(event, 'lower-1')">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Full Name</label>
+                                <input type="text" placeholder="Enter student's full name" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Age</label>
+                                <input type="number" placeholder="Enter age" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Gender</label>
+                                <select required>
+                                    <option value="">Select gender</option>
+                                    <option>Male</option>
+                                    <option>Female</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Guardian Name</label>
+                                <input type="text" placeholder="Enter guardian's name" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Contact Number</label>
+                                <input type="tel" placeholder="Enter contact number" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Student ID</label>
+                                <input type="text" placeholder="Enter student ID" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Student Photo</label>
+                            <div class="file-upload">
+                                <input type="file" accept="image/*" required>
+                                <div class="file-upload-content">
+                                    <div class="file-upload-icon">📸</div>
+                                    <p style="font-weight: 600; color: var(--text-dark);">Click to upload photo</p>
+                                    <p style="font-size: 0.85rem; color: var(--text-medium); margin-top: 0.25rem;">PNG, JPG up to 5MB</p>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="submit-button">✅ Add Student Profile</button>
+                    </form>
+                </div>
+
+                <div class="students-grid">
+                    <!-- Sample student cards will appear here after upload -->
+                    <div class="empty-state">
+                        <div class="empty-icon">👨‍🎓</div>
+                        <h3>No Students Yet</h3>
+                        <p>Add your first student profile using the form above</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Other grade levels follow same structure -->
+            <div id="grade-lower-2" class="tab-content">
+                <div class="section-header">
+                    <h2>🎨 Lower Primary 2</h2>
+                    <p class="section-description">Student profiles for Grade 2</p>
+                </div>
+                <div class="upload-section">
+                    <div class="upload-header">
+                        <span style="font-size: 2rem;">➕</span>
+                        <h3>Add New Student</h3>
+                    </div>
+                    <form class="upload-form" onsubmit="handleStudentUpload(event, 'lower-2')">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Full Name</label>
+                                <input type="text" placeholder="Enter student's full name" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Age</label>
+                                <input type="number" placeholder="Enter age" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Gender</label>
+                                <select required>
+                                    <option value="">Select gender</option>
+                                    <option>Male</option>
+                                    <option>Female</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Guardian Name</label>
+                                <input type="text" placeholder="Enter guardian's name" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Contact Number</label>
+                                <input type="tel" placeholder="Enter contact number" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Student ID</label>
+                                <input type="text" placeholder="Enter student ID" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Student Photo</label>
+                            <div class="file-upload">
+                                <input type="file" accept="image/*" required>
+                                <div class="file-upload-content">
+                                    <div class="file-upload-icon">📸</div>
+                                    <p style="font-weight: 600; color: var(--text-dark);">Click to upload photo</p>
+                                    <p style="font-size: 0.85rem; color: var(--text-medium); margin-top: 0.25rem;">PNG, JPG up to 5MB</p>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="submit-button">✅ Add Student Profile</button>
+                    </form>
+                </div>
+                <div class="students-grid">
+                    <div class="empty-state">
+                        <div class="empty-icon">👨‍🎓</div>
+                        <h3>No Students Yet</h3>
+                        <p>Add your first student profile using the form above</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Similar sections for lower-3, upper-4, upper-5, upper-6, jhs-1, jhs-2, jhs-3 -->
+            <!-- Lower Primary 3 -->
+            <div id="grade-lower-3" class="tab-content">
+                <div class="section-header">
+                    <h2>🎨 Lower Primary 3</h2>
+                    <p class="section-description">Student profiles for Grade 3</p>
+                </div>
+                <div class="upload-section">
+                    <div class="upload-header">
+                        <span style="font-size: 2rem;">➕</span>
+                        <h3>Add New Student</h3>
+                    </div>
+                    <form class="upload-form" onsubmit="handleStudentUpload(event, 'lower-3')">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Full Name</label>
+                                <input type="text" placeholder="Enter student's full name" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Age</label>
+                                <input type="number" placeholder="Enter age" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Gender</label>
+                                <select required>
+                                    <option value="">Select gender</option>
+                                    <option>Male</option>
+                                    <option>Female</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Guardian Name</label>
+                                <input type="text" placeholder="Enter guardian's name" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Contact Number</label>
+                                <input type="tel" placeholder="Enter contact number" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Student ID</label>
+                                <input type="text" placeholder="Enter student ID" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Student Photo</label>
+                            <div class="file-upload">
+                                <input type="file" accept="image/*" required>
+                                <div class="file-upload-content">
+                                    <div class="file-upload-icon">📸</div>
+                                    <p style="font-weight: 600; color: var(--text-dark);">Click to upload photo</p>
+                                    <p style="font-size: 0.85rem; color: var(--text-medium); margin-top: 0.25rem;">PNG, JPG up to 5MB</p>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="submit-button">✅ Add Student Profile</button>
+                    </form>
+                </div>
+                <div class="students-grid">
+                    <div class="empty-state">
+                        <div class="empty-icon">👨‍🎓</div>
+                        <h3>No Students Yet</h3>
+                        <p>Add your first student profile using the form above</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Upper Primary 4 -->
+            <div id="grade-upper-4" class="tab-content">
+                <div class="section-header">
+                    <h2>📚 Upper Primary 4</h2>
+                    <p class="section-description">Student profiles for Grade 4</p>
+                </div>
+                <div class="upload-section">
+                    <div class="upload-header">
+                        <span style="font-size: 2rem;">➕</span>
+                        <h3>Add New Student</h3>
+                    </div>
+                    <form class="upload-form" onsubmit="handleStudentUpload(event, 'upper-4')">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Full Name</label>
+                                <input type="text" placeholder="Enter student's full name" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Age</label>
+                                <input type="number" placeholder="Enter age" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Gender</label>
+                                <select required>
+                                    <option value="">Select gender</option>
+                                    <option>Male</option>
+                                    <option>Female</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Guardian Name</label>
+                                <input type="text" placeholder="Enter guardian's name" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Contact Number</label>
+                                <input type="tel" placeholder="Enter contact number" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Student ID</label>
+                                <input type="text" placeholder="Enter student ID" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Student Photo</label>
+                            <div class="file-upload">
+                                <input type="file" accept="image/*" required>
+                                <div class="file-upload-content">
+                                    <div class="file-upload-icon">📸</div>
+                                    <p style="font-weight: 600; color: var(--text-dark);">Click to upload photo</p>
+                                    <p style="font-size: 0.85rem; color: var(--text-medium); margin-top: 0.25rem;">PNG, JPG up to 5MB</p>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="submit-button">✅ Add Student Profile</button>
+                    </form>
+                </div>
+                <div class="students-grid">
+                    <div class="empty-state">
+                        <div class="empty-icon">👨‍🎓</div>
+                        <h3>No Students Yet</h3>
+                        <p>Add your first student profile using the form above</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Upper Primary 5 -->
+            <div id="grade-upper-5" class="tab-content">
+                <div class="section-header">
+                    <h2>📚 Upper Primary 5</h2>
+                    <p class="section-description">Student profiles for Grade 5</p>
+                </div>
+                <div class="upload-section">
+                    <div class="upload-header">
+                        <span style="font-size: 2rem;">➕</span>
+                        <h3>Add New Student</h3>
+                    </div>
+                    <form class="upload-form" onsubmit="handleStudentUpload(event, 'upper-5')">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Full Name</label>
+                                <input type="text" placeholder="Enter student's full name" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Age</label>
+                                <input type="number" placeholder="Enter age" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Gender</label>
+                                <select required>
+                                    <option value="">Select gender</option>
+                                    <option>Male</option>
+                                    <option>Female</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Guardian Name</label>
+                                <input type="text" placeholder="Enter guardian's name" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Contact Number</label>
+                                <input type="tel" placeholder="Enter contact number" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Student ID</label>
+                                <input type="text" placeholder="Enter student ID" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Student Photo</label>
+                            <div class="file-upload">
+                                <input type="file" accept="image/*" required>
+                                <div class="file-upload-content">
+                                    <div class="file-upload-icon">📸</div>
+                                    <p style="font-weight: 600; color: var(--text-dark);">Click to upload photo</p>
+                                    <p style="font-size: 0.85rem; color: var(--text-medium); margin-top: 0.25rem;">PNG, JPG up to 5MB</p>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="submit-button">✅ Add Student Profile</button>
+                    </form>
+                </div>
+                <div class="students-grid">
+                    <div class="empty-state">
+                        <div class="empty-icon">👨‍🎓</div>
+                        <h3>No Students Yet</h3>
+                        <p>Add your first student profile using the form above</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Upper Primary 6 -->
+            <div id="grade-upper-6" class="tab-content">
+                <div class="section-header">
+                    <h2>📚 Upper Primary 6</h2>
+                    <p class="section-description">Student profiles for Grade 6</p>
+                </div>
+                <div class="upload-section">
+                    <div class="upload-header">
+                        <span style="font-size: 2rem;">➕</span>
+                        <h3>Add New Student</h3>
+                    </div>
+                    <form class="upload-form" onsubmit="handleStudentUpload(event, 'upper-6')">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Full Name</label>
+                                <input type="text" placeholder="Enter student's full name" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Age</label>
+                                <input type="number" placeholder="Enter age" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Gender</label>
+                                <select required>
+                                    <option value="">Select gender</option>
+                                    <option>Male</option>
+                                    <option>Female</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Guardian Name</label>
+                                <input type="text" placeholder="Enter guardian's name" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Contact Number</label>
+                                <input type="tel" placeholder="Enter contact number" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Student ID</label>
+                                <input type="text" placeholder="Enter student ID" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Student Photo</label>
+                            <div class="file-upload">
+                                <input type="file" accept="image/*" required>
+                                <div class="file-upload-content">
+                                    <div class="file-upload-icon">📸</div>
+                                    <p style="font-weight: 600; color: var(--text-dark);">Click to upload photo</p>
+                                    <p style="font-size: 0.85rem; color: var(--text-medium); margin-top: 0.25rem;">PNG, JPG up to 5MB</p>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="submit-button">✅ Add Student Profile</button>
+                    </form>
+                </div>
+                <div class="students-grid">
+                    <div class="empty-state">
+                        <div class="empty-icon">👨‍🎓</div>
+                        <h3>No Students Yet</h3>
+                        <p>Add your first student profile using the form above</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- JHS 1 -->
+            <div id="grade-jhs-1" class="tab-content">
+                <div class="section-header">
+                    <h2>🎓 JHS 1</h2>
+                    <p class="section-description">Student profiles for JHS 1</p>
+                </div>
+                <div class="upload-section">
+                    <div class="upload-header">
+                        <span style="font-size: 2rem;">➕</span>
+                        <h3>Add New Student</h3>
+                    </div>
+                    <form class="upload-form" onsubmit="handleStudentUpload(event, 'jhs-1')">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Full Name</label>
+                                <input type="text" placeholder="Enter student's full name" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Age</label>
+                                <input type="number" placeholder="Enter age" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Gender</label>
+                                <select required>
+                                    <option value="">Select gender</option>
+                                    <option>Male</option>
+                                    <option>Female</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Guardian Name</label>
+                                <input type="text" placeholder="Enter guardian's name" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Contact Number</label>
+                                <input type="tel" placeholder="Enter contact number" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Student ID</label>
+                                <input type="text" placeholder="Enter student ID" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Student Photo</label>
+                            <div class="file-upload">
+                                <input type="file" accept="image/*" required>
+                                <div class="file-upload-content">
+                                    <div class="file-upload-icon">📸</div>
+                                    <p style="font-weight: 600; color: var(--text-dark);">Click to upload photo</p>
+                                    <p style="font-size: 0.85rem; color: var(--text-medium); margin-top: 0.25rem;">PNG, JPG up to 5MB</p>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="submit-button">✅ Add Student Profile</button>
+                    </form>
+                </div>
+                <div class="students-grid">
+                    <div class="empty-state">
+                        <div class="empty-icon">👨‍🎓</div>
+                        <h3>No Students Yet</h3>
+                        <p>Add your first student profile using the form above</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- JHS 2 -->
+            <div id="grade-jhs-2" class="tab-content">
+                <div class="section-header">
+                    <h2>🎓 JHS 2</h2>
+                    <p class="section-description">Student profiles for JHS 2</p>
+                </div>
+                <div class="upload-section">
+                    <div class="upload-header">
+                        <span style="font-size: 2rem;">➕</span>
+                        <h3>Add New Student</h3>
+                    </div>
+                    <form class="upload-form" onsubmit="handleStudentUpload(event, 'jhs-2')">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Full Name</label>
+                                <input type="text" placeholder="Enter student's full name" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Age</label>
+                                <input type="number" placeholder="Enter age" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Gender</label>
+                                <select required>
+                                    <option value="">Select gender</option>
+                                    <option>Male</option>
+                                    <option>Female</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Guardian Name</label>
+                                <input type="text" placeholder="Enter guardian's name" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Contact Number</label>
+                                <input type="tel" placeholder="Enter contact number" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Student ID</label>
+                                <input type="text" placeholder="Enter student ID" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Student Photo</label>
+                            <div class="file-upload">
+                                <input type="file" accept="image/*" required>
+                                <div class="file-upload-content">
+                                    <div class="file-upload-icon">📸</div>
+                                    <p style="font-weight: 600; color: var(--text-dark);">Click to upload photo</p>
+                                    <p style="font-size: 0.85rem; color: var(--text-medium); margin-top: 0.25rem;">PNG, JPG up to 5MB</p>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="submit-button">✅ Add Student Profile</button>
+                    </form>
+                </div>
+                <div class="students-grid">
+                    <div class="empty-state">
+                        <div class="empty-icon">👨‍🎓</div>
+                        <h3>No Students Yet</h3>
+                        <p>Add your first student profile using the form above</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- JHS 3 -->
+            <div id="grade-jhs-3" class="tab-content">
+                <div class="section-header">
+                    <h2>🎓 JHS 3</h2>
+                    <p class="section-description">Student profiles for JHS 3</p>
+                </div>
+                <div class="upload-section">
+                    <div class="upload-header">
+                        <span style="font-size: 2rem;">➕</span>
+                        <h3>Add New Student</h3>
+                    </div>
+                    <form class="upload-form" onsubmit="handleStudentUpload(event, 'jhs-3')">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Full Name</label>
+                                <input type="text" placeholder="Enter student's full name" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Age</label>
+                                <input type="number" placeholder="Enter age" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Gender</label>
+                                <select required>
+                                    <option value="">Select gender</option>
+                                    <option>Male</option>
+                                    <option>Female</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Guardian Name</label>
+                                <input type="text" placeholder="Enter guardian's name" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Contact Number</label>
+                                <input type="tel" placeholder="Enter contact number" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Student ID</label>
+                                <input type="text" placeholder="Enter student ID" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Student Photo</label>
+                            <div class="file-upload">
+                                <input type="file" accept="image/*" required>
+                                <div class="file-upload-content">
+                                    <div class="file-upload-icon">📸</div>
+                                    <p style="font-weight: 600; color: var(--text-dark);">Click to upload photo</p>
+                                    <p style="font-size: 0.85rem; color: var(--text-medium); margin-top: 0.25rem;">PNG, JPG up to 5MB</p>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="submit-button">✅ Add Student Profile</button>
+                    </form>
+                </div>
+                <div class="students-grid">
+                    <div class="empty-state">
+                        <div class="empty-icon">👨‍🎓</div>
+                        <h3>No Students Yet</h3>
+                        <p>Add your first student profile using the form above</p>
+                    </div>
+                </div>
+            </div>
+            
+        </main>
+
+        <footer>
+            <strong>Wexford Community School</strong> - Student Profiles & Management<br>
+            © 2025 Designed with ❤️ for our students
+        </footer>
     </div>
 
-    <!-- Level 4: Evaluation and Creation -->
-    <h2>Level 4: Evaluation and Creation</h2>
-    <div class="question" id="q50">
-        <p>50. Design a brief scenario where a teacher demonstrates exceptional "professional practice" in responding to an unexpected classroom disruption, justifying your choice based on the principles of managing learning environments.</p>
-        <div class="options">
-            <label><input type="radio" name="q50" value="A"> (A) The teacher ignores the disruption, hoping it resolves itself.</label>
-            <label><input type="radio" name="q50" value="B"> (B) The teacher immediately sends the disruptive student out of the classroom without explanation.</label>
-            <label><input type="radio" name="q50" value="C"> (C) The teacher calmly intervenes, addresses the behavior directly and privately, and refocuses the class, demonstrating effective classroom management.</label>
-            <label><input type="radio" name="q50" value="D"> (D) The teacher punishes the entire class for the disruption.</label>
-        </div>
-        <div class="feedback" id="feedback50"></div>
-    </div>
-    <div class="question" id="q51">
-        <p>51. Propose a new professional development initiative for teachers that effectively integrates "Professional Knowledge," "Professional Practice," and "Professional Values and Attitudes."</p>
-        <div class="options">
-            <label><input type="radio" name="q51" value="A"> (A) A workshop on historical educational reforms with no practical application.</label>
-            <label><input type="radio" name="q51" value="B"> (B) A seminar focusing solely on personal financial management for teachers.</label>
-            <label><input type="radio" name="q51" value="C"> (C) A collaborative inquiry group where teachers research effective teaching strategies (Knowledge), implement them in their classrooms (Practice), and reflect ethically on their impact (Values/Attitudes).</label>
-            <label><input type="radio" name="q51" value="D"> (D) A mandatory session on administrative paperwork completion.</label>
-        </div>
-        <div class="feedback" id="feedback51"></div>
-    </div>
-    <div class="question" id="q52">
-        <p>52. Evaluate the role of assessment in professional practice from a student-centered perspective.</p>
-        <div class="options">
-            <label><input type="radio" name="q52" value="A"> (A) Assessment is only for grading and has no impact on learning.</label>
-            <label><input type="radio" name="q52" value="B"> (B) Assessment supports student learning and informs instructional adjustments.</label>
-            <label><input type="radio" name="q52" value="C"> (C) Assessment focuses solely on teacher performance.</label>
-            <label><input type="radio" name="q52" value="D"> (D) Assessment is irrelevant to professional practice.</label>
-        </div>
-        <div class="feedback" id="feedback52"></div>
-    </div>
-    <div class="question" id="q53">
-        <p>53. Design a professional development plan to support teachers in catering to diverse learners.</p>
-        <div class="options">
-            <label><input type="radio" name="q53" value="A"> (A) A plan focusing only on subject-specific content.</label>
-            <label><input type="radio" name="q53" value="B"> (B) A plan involving research on learning theories and experimenting with differentiation.</label>
-            <label><input type="radio" name="q53" value="C"> (C) A plan centered on administrative compliance.</label>
-            <label><input type="radio" name="q53" value="D"> (D) A plan avoiding collaboration with colleagues.</label>
-        </div>
-        <div class="feedback" id="feedback53"></div>
-    </div>
-    <div class="question" id="q54">
-        <p>54. Create a strategy for a teacher to demonstrate continuous learning in their professional practice.</p>
-        <div class="options">
-            <label><input type="radio" name="q54" value="A"> (A) Sticking to traditional teaching methods.</label>
-            <label><input type="radio" name="q54" value="B"> (B) Regularly attending workshops and integrating new strategies.</label>
-            <label><input type="radio" name="q54" value="C"> (C) Focusing only on administrative tasks.</label>
-            <label><input type="radio" name="q54" value="D"> (D) Avoiding professional development opportunities.</label>
-        </div>
-        <div class="feedback" id="feedback54"></div>
-    </div>
-    <div class="question" id="q55">
-        <p>55. Propose a school policy that promotes "Professional Values and Attitudes" among teachers.</p>
-        <div class="options">
-            <label><input type="radio" name="q55" value="A"> (A) A policy encouraging competition among teachers.</label>
-            <label><input type="radio" name="q55" value="B"> (B) A policy promoting honesty, respect, and collaboration.</label>
-            <label><input type="radio" name="q55" value="C"> (C) A policy focusing only on academic outcomes.</label>
-            <label><input type="radio" name="q55" value="D"> (D) A policy limiting teacher autonomy.</label>
-        </div>
-        <div class="feedback" id="feedback55"></div>
-    </div>
-    <div class="question" id="q56">
-        <p>56. Design a classroom strategy to address student misbehavior while maintaining a positive learning environment.</p>
-        <div class="options">
-            <label><input type="radio" name="q56" value="A"> (A) Punishing the entire class for one student’s behavior.</label>
-            <label><input type="radio" name="q56" value="B"> (B) Setting clear expectations and using positive reinforcement.</label>
-            <label><input type="radio" name="q56" value="C"> (C) Ignoring misbehavior to avoid conflict.</label>
-            <label><input type="radio" name="q56" value="D"> (D) Focusing only on high-performing students.</label>
-        </div>
-        <div class="feedback" id="feedback56"></div>
-    </div>
-    <div class="question" id="q58">
-        <p>58. Propose a method for fostering a "community of practice" in a school.</p>
-        <div class="options">
-            <label><input type="radio" name="q58" value="A"> (A) Encouraging teacher isolation.</label>
-            <label><input type="radio" name="q58" value="B"> (B) Organizing regular peer mentoring and collaborative sessions.</label>
-            <label><input type="radio" name="q58" value="C"> (C) Focusing only on administrative compliance.</label>
-            <label><input type="radio" name="q58" value="D"> (D) Limiting professional development opportunities.</label>
-        </div>
-        <div class="feedback" id="feedback58"></div>
-    </div>
-    <div class="question" id="q59">
-        <p>59. Design a response strategy for a teacher addressing parental concerns about their child’s progress.</p>
-        <div class="options">
-            <label><input type="radio" name="q59" value="A"> (A) Dismissing parental concerns as irrelevant.</label>
-            <label><input type="radio" name="q59" value="B"> (B) Listening actively and explaining strategies to support the child.</label>
-            <label><input type="radio" name="q59" value="C"> (C) Focusing only on administrative procedures.</label>
-            <label><input type="radio" name="q59" value="D"> (D) Avoiding communication with parents.</label>
-        </div>
-        <div class="feedback" id="feedback59"></div>
-    </div>
-    <div class="question" id="q61">
-        <p>61. Propose a practical formative assessment strategy for a teacher to monitor student understanding.</p>
-        <div class="options">
-            <label><input type="radio" name="q61" value="A"> (A) Relying only on final exams.</label>
-            <label><input type="radio" name="q61" value="B"> (B) Using exit tickets to gauge understanding at the end of a lesson.</label>
-            <label><input type="radio" name="q61" value="C"> (C) Focusing only on high-performing students.</label>
-            <label><input type="radio" name="q61" value="D"> (D) Avoiding student feedback.</label>
-        </div>
-        <div class="feedback" id="feedback61"></div>
-    </div>
+    <script>
+        // PIN Code Management
+        const CORRECT_PIN = '2025@';
+        let isAuthenticated = false;
 
-<script>
-    const answers = {
-        q1: { correct: "B", explanation: "Reflective practice involves self-assessment and improvement of teaching methods." },
-        q2: { correct: "B", explanation: "A community of practice is a collaborative environment for educators." },
-        q3: { correct: "B", explanation: "Understanding learning theories and child development enables adaptability." },
-        q4: { correct: "B", explanation: "The NTC licenses and regulates the teaching profession in Ghana." },
-        q5: { correct: "B", explanation: "A safe and supportive classroom supports well-being and growth." },
-        q6: { correct: "B", explanation: "Ethical conduct is central to professional values." },
-        q7: { correct: "B", explanation: "Effective management involves inclusivity and safety." },
-        q9: { correct: "B", explanation: "Mentoring supports a community of practice." },
-        q11: { correct: "B", explanation: "Materials should align with objectives and student needs." },
-        q12: { correct: "B", explanation: "Fairness and transparency define ethical teaching." },
-        q15: { correct: "B", explanation: "This reflects inclusive teaching practice." },
-        q16: { correct: "B", explanation: "Collaboration with parents shows a community approach." },
-        q17: { correct: "B", explanation: "Formative assessment identifies learning gaps." },
-        q18: { correct: "B", explanation: "Sharing exam questions before testing is unethical." },
-        q19: { correct: "B", explanation: "Implementing new strategies shows development." },
-        q20: { correct: "B", explanation: "Child development knowledge shapes lessons." },
-        q22: { correct: "B", explanation: "Creating a safe space is key to effective classrooms." },
-        q23: { correct: "C", explanation: "Collaborative learning supports engagement." },
-        q25: { correct: "B", explanation: "Reflective practice drives growth." },
-        q28: { correct: "B", explanation: "Transparent grading upholds ethics." },
-        q35: { correct: "C", explanation: "Professional knowledge informs and enhances practice." },
-        q36: { correct: "B", explanation: "Outdated knowledge can disadvantage students." },
-        q37: { correct: "B", explanation: "Support and mentorship improve retention." },
-        q38: { correct: "B", explanation: "Leaders guide, authority figures enforce." },
-        q39: { correct: "B", explanation: "Professional values foster school culture." },
-        q40: { correct: "B", explanation: "Child development supports inclusive practices." },
-        q41: { correct: "B", explanation: "Inquiry-based learning builds critical thinking." },
-        q43: { correct: "B", explanation: "Peer observation and mentorship aid teachers." },
-        q44: { correct: "B", explanation: "Fair assessment ensures accountability." },
-        q46: { correct: "B", explanation: "Inclusive classrooms benefit all learners." },
-        q50: { correct: "C", explanation: "Constructive response shows best practice." },
-        q51: { correct: "C", explanation: "Collaborative inquiry blends all domains." },
-        q52: { correct: "B", explanation: "Assessment supports learning and instruction." },
-        q53: { correct: "B", explanation: "Differentiation is key for diverse learners." },
-        q54: { correct: "B", explanation: "Continuous learning keeps teaching effective." },
-        q55: { correct: "B", explanation: "Values like honesty build professionalism." },
-        q56: { correct: "B", explanation: "Clear expectations and reinforcement are best." },
-        q58: { correct: "B", explanation: "Peer mentoring cultivates growth." },
-        q59: { correct: "B", explanation: "Listening and explaining builds trust." },
-        q61: { correct: "B", explanation: "Exit tickets check understanding effectively." }
-    };
-
-    let score = 0;
-    const answeredQuestions = new Set();
-    const totalQuestions = Object.keys(answers).length;
-    document.getElementById("totalQuestions").textContent = totalQuestions;
-
-    document.querySelectorAll('input[type="radio"]').forEach(radio => {
-        radio.addEventListener('change', function () {
-            const questionId = this.name;
-            const feedbackId = "feedback" + questionId.substring(1);
-            const feedbackDiv = document.getElementById(feedbackId);
-            const correctAnswer = answers[questionId]?.correct;
-
-            if (!correctAnswer || answeredQuestions.has(questionId)) return;
-
-            feedbackDiv.style.display = 'block';
-
-            if (this.value === correctAnswer) {
-                feedbackDiv.className = 'feedback correct';
-                feedbackDiv.textContent = "Correct! " + answers[questionId].explanation;
-                score++;
+        // Check authentication on load
+        window.onload = () => {
+            const savedAuth = sessionStorage.getItem('staffAuthenticated');
+            if (savedAuth === 'true') {
+                isAuthenticated = true;
+                document.getElementById('pin-modal').classList.add('hidden');
+                unlockAllForms();
             } else {
-                feedbackDiv.className = 'feedback incorrect';
-                feedbackDiv.textContent = "Incorrect. The correct answer is " + correctAnswer + ". " + answers[questionId].explanation;
+                lockAllForms();
+                // Focus on PIN input
+                setTimeout(() => {
+                    document.getElementById('pin-input').focus();
+                }, 500);
             }
+            
+            // Set initial grade
+            selectGrade('lower-1', '🎨', 'Lower Primary 1');
+        };
 
-            answeredQuestions.add(questionId);
+        // Verify PIN
+        function verifyPin() {
+            const pinInput = document.getElementById('pin-input');
+            const pinError = document.getElementById('pin-error');
+            const enteredPin = pinInput.value;
 
-            if (answeredQuestions.size === totalQuestions) {
-                document.getElementById("finalScoreValue").textContent = score;
-                document.getElementById("finalScore").style.display = "block";
-                window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+            if (enteredPin === CORRECT_PIN) {
+                // Correct PIN
+                isAuthenticated = true;
+                sessionStorage.setItem('staffAuthenticated', 'true');
+                
+                // Success feedback
+                pinInput.style.borderColor = '#10b981';
+                pinInput.style.background = '#d1fae5';
+                
+                // Hide modal with delay
+                setTimeout(() => {
+                    document.getElementById('pin-modal').classList.add('hidden');
+                    unlockAllForms();
+                }, 500);
+            } else {
+                // Incorrect PIN
+                pinError.classList.add('show');
+                pinInput.classList.add('error');
+                pinInput.value = '';
+                
+                // Remove error state after animation
+                setTimeout(() => {
+                    pinInput.classList.remove('error');
+                }, 500);
+                
+                setTimeout(() => {
+                    pinError.classList.remove('show');
+                }, 3000);
+            }
+        }
+
+        // Allow Enter key to submit
+        document.addEventListener('DOMContentLoaded', () => {
+            const pinInput = document.getElementById('pin-input');
+            if (pinInput) {
+                pinInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        verifyPin();
+                    }
+                });
             }
         });
-    });
-</script>
 
+        // Lock all forms
+        function lockAllForms() {
+            const uploadSections = document.querySelectorAll('.upload-section');
+            uploadSections.forEach(section => {
+                section.classList.add('form-locked');
+                
+                // Add lock message
+                const lockMessage = document.createElement('div');
+                lockMessage.className = 'lock-message';
+                lockMessage.innerHTML = `
+                    <div class="lock-icon">🔒</div>
+                    <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--text-dark); margin-bottom: 0.5rem;">Staff Access Required</h3>
+                    <p style="color: var(--text-medium); margin-bottom: 1rem;">Enter PIN code to add student profiles</p>
+                    <button class="unlock-button" onclick="showPinModal()">🔓 Enter PIN Code</button>
+                `;
+                section.appendChild(lockMessage);
+            });
+        }
 
+        // Unlock all forms
+        function unlockAllForms() {
+            const uploadSections = document.querySelectorAll('.upload-section');
+            uploadSections.forEach(section => {
+                section.classList.remove('form-locked');
+                const lockMessage = section.querySelector('.lock-message');
+                if (lockMessage) {
+                    lockMessage.remove();
+                }
+            });
+        }
 
+        // Show PIN modal
+        function showPinModal() {
+            document.getElementById('pin-modal').classList.remove('hidden');
+            setTimeout(() => {
+                document.getElementById('pin-input').focus();
+            }, 300);
+        }
+
+        // Dropdown functionality
+        function toggleDropdown() {
+            const menu = document.getElementById('dropdown-menu');
+            const arrow = document.getElementById('dropdown-arrow');
+            const overlay = document.getElementById('dropdown-overlay');
+            
+            menu.classList.toggle('open');
+            arrow.classList.toggle('open');
+            overlay.classList.toggle('active');
+        }
+
+        function closeDropdown() {
+            const menu = document.getElementById('dropdown-menu');
+            const arrow = document.getElementById('dropdown-arrow');
+            const overlay = document.getElementById('dropdown-overlay');
+            
+            menu.classList.remove('open');
+            arrow.classList.remove('open');
+            overlay.classList.remove('active');
+        }
+
+        // Grade selection
+        function selectGrade(gradeId, icon, gradeName) {
+            // Update dropdown button
+            document.getElementById('current-icon').textContent = icon;
+            document.getElementById('current-grade').textContent = gradeName;
+            
+            // Update active state
+            const items = document.querySelectorAll('.dropdown-item');
+            items.forEach(item => item.classList.remove('active'));
+            event.target.closest('.dropdown-item').classList.add('active');
+            
+            // Show selected tab
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            const selectedTab = document.getElementById('grade-' + gradeId);
+            if (selectedTab) {
+                selectedTab.classList.add('active');
+            }
+            
+            closeDropdown();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Handle student upload
+        function handleStudentUpload(event, gradeId) {
+            event.preventDefault();
+            
+            // Check authentication
+            if (!isAuthenticated) {
+                showPinModal();
+                return;
+            }
+            
+            const form = event.target;
+            const formData = new FormData(form);
+            
+            // Get form values
+            const name = form.querySelector('input[type="text"]').value;
+            const age = form.querySelector('input[type="number"]').value;
+            const gender = form.querySelector('select').value;
+            const guardian = form.querySelectorAll('input[type="text"]')[1].value;
+            const contact = form.querySelector('input[type="tel"]').value;
+            const studentId = form.querySelectorAll('input[type="text"]')[2].value;
+            const photoFile = form.querySelector('input[type="file"]').files[0];
+            
+            // Create student card
+            const studentCard = document.createElement('div');
+            studentCard.className = 'student-card';
+            studentCard.style.animation = 'fadeIn 0.5s ease-out';
+            
+            // Create image element
+            const img = document.createElement('img');
+            img.className = 'student-photo';
+            img.alt = name;
+            
+            // Read and display uploaded photo
+            if (photoFile) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(photoFile);
+            }
+            
+            studentCard.innerHTML = `
+                <img src="" alt="${name}" class="student-photo">
+                <div class="student-info">
+                    <h3 class="student-name">${name}</h3>
+                    <span class="student-class">ID: ${studentId}</span>
+                    <div class="student-details">
+                        <div class="student-detail">
+                            <span class="detail-icon">👤</span>
+                            <span>${gender}, ${age} years old</span>
+                        </div>
+                        <div class="student-detail">
+                            <span class="detail-icon">👨‍👩‍👦</span>
+                            <span>Guardian: ${guardian}</span>
+                        </div>
+                        <div class="student-detail">
+                            <span class="detail-icon">📞</span>
+                            <span>${contact}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Add image to card
+            studentCard.querySelector('.student-photo').src = img.src || 'https://via.placeholder.com/280x280?text=Student+Photo';
+            
+            // Get or create grid
+            const currentTab = document.getElementById('grade-' + gradeId);
+            let grid = currentTab.querySelector('.students-grid');
+            
+            // Remove empty state if exists
+            const emptyState = grid.querySelector('.empty-state');
+            if (emptyState) {
+                emptyState.remove();
+            }
+            
+            // Add new student card
+            grid.appendChild(studentCard);
+            
+            // Update student count
+            updateStudentCount(gradeId);
+            
+            // Reset form
+            form.reset();
+            
+            // Show success message
+            const button = form.querySelector('.submit-button');
+            const originalText = button.innerHTML;
+            button.innerHTML = '✅ Student Added Successfully!';
+            button.style.background = 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)';
+            
+            setTimeout(() => {
+                button.innerHTML = originalText;
+                button.style.background = 'linear-gradient(135deg, #0B8F4A 0%, #05A854 100%)';
+            }, 2000);
+        }
+
+        // Update student count in dropdown
+        function updateStudentCount(gradeId) {
+            const tab = document.getElementById('grade-' + gradeId);
+            const studentCards = tab.querySelectorAll('.student-card');
+            const count = studentCards.length;
+            
+            // Find corresponding dropdown item and update count
+            const dropdownItems = document.querySelectorAll('.dropdown-item');
+            dropdownItems.forEach(item => {
+                const itemText = item.textContent.toLowerCase().replace(/\s+/g, '-');
+                if (itemText.includes(gradeId)) {
+                    const countBadge = item.querySelector('.dropdown-item-count');
+                    if (countBadge) {
+                        countBadge.textContent = count;
+                    }
+                }
+            });
+        }
+    </script>
 </body>
 </html>
