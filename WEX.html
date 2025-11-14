@@ -350,6 +350,130 @@
             background: var(--light-gray);
         }
 
+        /* School Gallery Slideshow */
+        .school-gallery {
+            margin-bottom: 2rem;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            position: relative;
+            height: 300px;
+            animation: fadeInGallery 0.8s ease-out;
+        }
+
+        @keyframes fadeInGallery {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .gallery-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+
+        .gallery-slide.active {
+            opacity: 1;
+            z-index: 1;
+        }
+
+        .gallery-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            padding: 1.5rem;
+            z-index: 2;
+        }
+
+        .gallery-caption {
+            color: white;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .gallery-description {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.9rem;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+        }
+
+        .gallery-indicators {
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            display: flex;
+            gap: 0.5rem;
+            z-index: 3;
+        }
+
+        .gallery-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .gallery-indicator.active {
+            background: white;
+            width: 30px;
+            border-radius: 5px;
+        }
+
+        .gallery-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gallery-nav:hover {
+            background: rgba(255, 255, 255, 0.5);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .gallery-nav.prev {
+            left: 1rem;
+        }
+
+        .gallery-nav.next {
+            right: 1rem;
+        }
+
         /* Welcome Banner with Slideshow */
         .welcome-banner {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -1174,15 +1298,76 @@
                 <div class="menu-contact">
                     <h4>📞 Contact Us</h4>
                     <p>
-                        Email: communityschoolwexford@gmail.com<br>
-                        Phone: +233 241204078<br>
-                        Location: Abuakwa, Manhyia
+                        Email: info@wexfordedu.com<br>
+                        Phone: +233 XX XXX XXXX<br>
+                        Location: Accra, Ghana
                     </p>
                 </div>
             </div>
         </div>
 
         <main>
+            <!-- School Gallery Slideshow -->
+            <div class="school-gallery">
+                <!-- Gallery Slide 1 -->
+                <div class="gallery-slide active" id="gallery-1">
+                    <img src="https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=1200&q=80" alt="School Campus">
+                    <div class="gallery-overlay">
+                        <div class="gallery-caption">🏫 Our Beautiful Campus</div>
+                        <div class="gallery-description">Modern facilities for quality education</div>
+                    </div>
+                </div>
+
+                <!-- Gallery Slide 2 -->
+                <div class="gallery-slide" id="gallery-2">
+                    <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1200&q=80" alt="Students Learning">
+                    <div class="gallery-overlay">
+                        <div class="gallery-caption">📚 Interactive Classrooms</div>
+                        <div class="gallery-description">Engaging learning experiences for all students</div>
+                    </div>
+                </div>
+
+                <!-- Gallery Slide 3 -->
+                <div class="gallery-slide" id="gallery-3">
+                    <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=1200&q=80" alt="Computer Lab">
+                    <div class="gallery-overlay">
+                        <div class="gallery-caption">💻 ICT Laboratory</div>
+                        <div class="gallery-description">State-of-the-art technology for digital learning</div>
+                    </div>
+                </div>
+
+                <!-- Gallery Slide 4 -->
+                <div class="gallery-slide" id="gallery-4">
+                    <img src="https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=1200&q=80" alt="Library">
+                    <div class="gallery-overlay">
+                        <div class="gallery-caption">📖 School Library</div>
+                        <div class="gallery-description">Extensive collection of books and resources</div>
+                    </div>
+                </div>
+
+                <!-- Gallery Slide 5 -->
+                <div class="gallery-slide" id="gallery-5">
+                    <img src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&q=80" alt="Sports Field">
+                    <div class="gallery-overlay">
+                        <div class="gallery-caption">⚽ Sports Facilities</div>
+                        <div class="gallery-description">Promoting physical fitness and teamwork</div>
+                    </div>
+                </div>
+
+                <!-- Navigation Buttons -->
+                <button class="gallery-nav prev" onclick="changeGallerySlide(-1)">‹</button>
+                <button class="gallery-nav next" onclick="changeGallerySlide(1)">›</button>
+
+                <!-- Indicators -->
+                <div class="gallery-indicators">
+                    <span class="gallery-indicator active" onclick="setGallerySlide(0)"></span>
+                    <span class="gallery-indicator" onclick="setGallerySlide(1)"></span>
+                    <span class="gallery-indicator" onclick="setGallerySlide(2)"></span>
+                    <span class="gallery-indicator" onclick="setGallerySlide(3)"></span>
+                    <span class="gallery-indicator" onclick="setGallerySlide(4)"></span>
+                </div>
+            </div>
+
             <!-- Welcome Banner with Slideshow -->
             <div class="welcome-banner">
                 <div class="datetime-display" id="datetime-display"></div>
@@ -1204,7 +1389,7 @@
                 </div>
 
                 <!-- Slide 3: Educational Image 2 - Technology in Education -->
-                <div class="banner-slide image-slide" id="slide-3" style="background-image: url('https://stephen-daniels.github.io/PANIN.com/WEXFORD.jpg');">
+                <div class="banner-slide image-slide" id="slide-3" style="background-image: url('https://images.unsplash.com/photo-1509062522246-3755977927d7?w=800&q=80');">
                     <div class="banner-content">
                         <h2>💻 Digital Learning</h2>
                         <p>Access cutting-edge educational technology and resources anytime, anywhere</p>
@@ -1582,13 +1767,13 @@
                     <h3 class="subject-header">🎯 Our Mission</h3>
                     <p style="color: var(--text-medium); line-height: 1.8; margin-bottom: 1.5rem;">
                         Welcome to Wexford Edu Hub - a cutting-edge digital learning platform revolutionizing education through technology, innovation, and discipline. We serve as a central communication and information hub for students, parents, and staff.
-                    <h4>📞 Contact Us</h4>
+                      <h4>📞 Contact Us</h4>
                     <p>
                         Email: communityschoolwexford@gmail.com<br>
                         Phone: +233 241204078<br>
                         Location: Abuakwa, Manhyia
-                    </p>
-                </p>
+                    </p>  
+                    </p><br>
                     
                     <h3 class="subject-header">✨ What We Offer</h3>
                     <div style="display: grid; gap: 1rem; margin-bottom: 1.5rem;">
@@ -1658,7 +1843,7 @@
                 </form>
             </div>
         </main>
-        <!-- Footer -->
+            <!-- Footer -->
         <footer>
             <div style="margin-bottom: 0.5rem;">
                 <strong style="color: var(--primary-green);">Wexford Edu Hub</strong> - Empowering Education Through Technology
@@ -1711,9 +1896,56 @@
     </div>
 
     <script>
+        // Gallery Slideshow Variables
+        let currentGallerySlide = 0;
+        const totalGallerySlides = 5;
+
+        // Gallery Slideshow Functions
+        function showGallerySlide(index) {
+            const slides = document.querySelectorAll('.gallery-slide');
+            const indicators = document.querySelectorAll('.gallery-indicator');
+            
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active');
+                if (i === index) {
+                    slide.classList.add('active');
+                }
+            });
+
+            indicators.forEach((indicator, i) => {
+                indicator.classList.remove('active');
+                if (i === index) {
+                    indicator.classList.add('active');
+                }
+            });
+        }
+
+        function changeGallerySlide(direction) {
+            currentGallerySlide += direction;
+            if (currentGallerySlide < 0) {
+                currentGallerySlide = totalGallerySlides - 1;
+            } else if (currentGallerySlide >= totalGallerySlides) {
+                currentGallerySlide = 0;
+            }
+            showGallerySlide(currentGallerySlide);
+        }
+
+        function setGallerySlide(index) {
+            currentGallerySlide = index;
+            showGallerySlide(currentGallerySlide);
+        }
+
+        function autoAdvanceGallery() {
+            currentGallerySlide = (currentGallerySlide + 1) % totalGallerySlides;
+            showGallerySlide(currentGallerySlide);
+        }
+
+        // Auto-advance gallery every 4 seconds
+        setInterval(autoAdvanceGallery, 4000);
+
         // Current Slide Index for Banner
         let currentSlide = 0;
-        const totalSlides = 7; // Updated to 7 slides
+        const totalSlides = 7;
 
         // Update Date/Time Display
         function updateDateTime() {
