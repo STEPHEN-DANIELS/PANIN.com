@@ -1373,7 +1373,7 @@
                 </div>
 
                 <!-- Navigation Buttons -->
-                <button class="gallery-nav prev" onclick="changeGallerySlide(-8)">‹</button>
+                <button class="gallery-nav prev" onclick="changeGallerySlide(-1)">‹</button>
                 <button class="gallery-nav next" onclick="changeGallerySlide(1)">›</button>
 
                 <!-- Indicators -->
@@ -1912,7 +1912,7 @@
     <script>
         // Gallery Slideshow Variables
         let currentGallerySlide = 0;
-        const totalGallerySlides = 5;
+        const totalGallerySlides = 20;
 
         // Gallery Slideshow Functions
         function showGallerySlide(index) {
@@ -2025,7 +2025,7 @@
             showSlide(currentSlide);
         }
 
-        // Auto-advance banner every 5 seconds
+        // Auto-advance banner every 10 seconds
         setInterval(nextSlide, 5000);
 
         // Tab Switching
