@@ -1,0 +1,1434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wexford Admin Panel</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
+            min-height: 100vh;
+            padding: 20px;
+            user-select: none;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 90vh;
+        }
+
+        .login-box {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            width: 100%;
+            max-width: 450px;
+        }
+
+        .login-box h2 {
+            text-align: center;
+            color: #667eea;
+            margin-bottom: 30px;
+            font-size: 32px;
+        }
+
+        .login-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+        }
+
+        header {
+            background: white;
+            padding: 20px 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 28px;
+        }
+
+        .admin-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .admin-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .logout-btn {
+            padding: 8px 20px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: #c0392b;
+            transform: scale(1.05);
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-card h3 {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .stat-value {
+            font-size: 36px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .panel {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .panel h2 {
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 600;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="email"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border 0.3s;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-danger {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .btn-warning {
+            background: #f39c12;
+            color: white;
+        }
+
+        .btn-success {
+            background: #27ae60;
+            color: white;
+        }
+
+        .member-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .member-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            transition: background 0.3s;
+        }
+
+        .member-item:hover {
+            background: #f8f9fa;
+        }
+
+        .member-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .member-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .member-status {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-muted {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .member-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .announcement-item {
+            padding: 15px;
+            border-left: 4px solid #667eea;
+            background: #f8f9fa;
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
+
+        .announcement-date {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 5px;
+        }
+
+        .announcement-text {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .monitoring-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .monitor-item {
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .monitor-label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .monitor-value {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            animation: slideIn 0.3s;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-10px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .admin-role {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            background: #667eea;
+            color: white;
+            margin-left: 8px;
+        }
+
+        .admin-list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+
+            .member-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-container">
+        <div class="login-box">
+            <div class="login-icon">🛡️</div>
+            <h2>Admin Login</h2>
+            <div id="loginAlert"></div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" id="loginUsername" placeholder="Enter username" required autocomplete="username">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="loginPassword" placeholder="Enter password" required autocomplete="current-password">
+                </div>
+                <button type="submit" class="btn btn-primary" id="loginBtn">
+                    Login
+                </button>
+            </form>
+            <p style="text-align: center; margin-top: 20px; font-size: 12px; color: #999;">
+                Demo: admin / admin123 or superadmin / super123
+            </p>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="adminDashboard" class="container hidden">
+        <header>
+            <h1>🛡️ Admin Control Panel</h1>
+            <div class="admin-info">
+                <div class="admin-avatar" id="headerAvatar">A</div>
+                <div>
+                    <div style="font-weight: 600;" id="headerUsername">Admin User</div>
+                    <div style="font-size: 12px; color: #999;" id="headerRole">Administrator</div>
+                </div>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+        </header>
+
+        <div class="dashboard">
+            <div class="stat-card">
+                <h3>Total Members</h3>
+                <div class="stat-value" id="totalMembers">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Active Members</h3>
+                <div class="stat-value" id="activeMembers">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Muted Members</h3>
+                <div class="stat-value" id="mutedMembers">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Announcements</h3>
+                <div class="stat-value" id="totalAnnouncements">0</div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <!-- Announcements Panel -->
+            <div class="panel">
+                <h2>📢 Post Announcement</h2>
+                <div id="announcementAlert"></div>
+                <form id="announcementForm">
+                    <div class="form-group">
+                        <label>Announcement Title</label>
+                        <input type="text" id="announcementTitle" placeholder="Enter title" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Message</label>
+                        <textarea id="announcementMessage" placeholder="Enter your announcement message" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Priority</label>
+                        <select id="announcementPriority">
+                            <option value="normal">Normal</option>
+                            <option value="important">Important</option>
+                            <option value="urgent">Urgent</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Post Announcement</button>
+                </form>
+
+                <h3 style="margin-top: 30px; margin-bottom: 15px;">Recent Announcements</h3>
+                <div id="announcementsList"></div>
+            </div>
+
+            <!-- Member Management Panel -->
+            <div class="panel">
+                <h2>👥 Member Management</h2>
+                <div class="form-group">
+                    <input type="text" id="memberSearch" placeholder="Search members...">
+                </div>
+                <div class="member-list" id="memberList"></div>
+            </div>
+
+            <!-- Admin Management Panel (Super Admin Only) -->
+            <div class="panel hidden" id="adminManagementPanel">
+                <h2>👑 Admin Management</h2>
+                <div id="adminAlert"></div>
+                <form id="addAdminForm">
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" id="newAdminUsername" placeholder="Enter username" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="newAdminEmail" placeholder="Enter email" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="newAdminPassword" placeholder="Enter password" required minlength="6">
+                    </div>
+                    <div class="form-group">
+                        <label>Role</label>
+                        <select id="newAdminRole">
+                            <option value="admin">Admin</option>
+                            <option value="moderator">Moderator</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Admin</button>
+                </form>
+
+                <h3 style="margin-top: 30px; margin-bottom: 15px;">Current Admins</h3>
+                <div id="adminList"></div>
+            </div>
+
+            <!-- Website Monitoring Panel -->
+            <div class="panel full-width">
+                <h2>📊 Website Monitoring</h2>
+                <div class="monitoring-grid">
+                    <div class="monitor-item">
+                        <div class="monitor-label">Server Status</div>
+                        <div class="monitor-value" id="serverStatus" style="color: #27ae60;">● Online</div>
+                    </div>
+                    <div class="monitor-item">
+                        <div class="monitor-label">Response Time</div>
+                        <div class="monitor-value" id="responseTime">--ms</div>
+                    </div>
+                    <div class="monitor-item">
+                        <div class="monitor-label">Active Sessions</div>
+                        <div class="monitor-value" id="activeSessions">--</div>
+                    </div>
+                    <div class="monitor-item">
+                        <div class="monitor-label">CPU Usage</div>
+                        <div class="monitor-value" id="cpuUsage">--%</div>
+                    </div>
+                    <div class="monitor-item">
+                        <div class="monitor-label">Memory Usage</div>
+                        <div class="monitor-value" id="memoryUsage">--%</div>
+                    </div>
+                    <div class="monitor-item">
+                        <div class="monitor-label">Storage Used</div>
+                        <div class="monitor-value" id="storageUsage">--GB</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  // Frontend JavaScript - Connects to Backend API
+(function() {
+    'use strict';
+
+    const API_URL = window.location.origin;
+    let currentAdmin = null;
+    let members = [];
+    let announcements = [];
+
+    // Disable right-click
+    document.addEventListener('contextmenu', e => e.preventDefault());
+
+    // Disable F12 and inspect shortcuts
+    document.addEventListener('keydown', e => {
+        if (e.keyCode === 123 || 
+            (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74)) ||
+            (e.ctrlKey && e.keyCode === 85)) {
+            e.preventDefault();
+        }
+    });
+
+    // ============== API CALLS ==============
+
+    async function apiCall(endpoint, options = {}) {
+        try {
+            const response = await fetch(`${API_URL}${endpoint}`, {
+                ...options,
+                headers: {
+                    'Content-Type': 'application/json',
+                    ...options.headers
+                },
+                credentials: 'include'
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || 'Request failed');
+            }
+
+            return data;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    // ============== AUTHENTICATION ==============
+
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const username = document.getElementById('loginUsername').value;
+        const password = document.getElementById('loginPassword').value;
+        const loginBtn = document.getElementById('loginBtn');
+
+        try {
+            loginBtn.disabled = true;
+            loginBtn.innerHTML = '<span class="loading"></span> Logging in...';
+
+            const data = await apiCall('/api/auth/login', {
+                method: 'POST',
+                body: JSON.stringify({ username, password })
+            });
+
+            currentAdmin = data.admin;
+            showAlert('loginAlert', 'Login successful!', 'success');
+
+            setTimeout(() => {
+                document.getElementById('loginScreen').classList.add('hidden');
+                document.getElementById('adminDashboard').classList.remove('hidden');
+                initializeDashboard();
+            }, 500);
+
+        } catch (error) {
+            showAlert('loginAlert', error.message, 'error');
+        } finally {
+            loginBtn.disabled = false;
+            loginBtn.textContent = 'Login';
+        }
+    });
+
+    window.logout = async function() {
+        if (confirm('Are you sure you want to logout?')) {
+            try {
+                await apiCall('/api/auth/logout', { method: 'POST' });
+                currentAdmin = null;
+                document.getElementById('loginScreen').classList.remove('hidden');
+                document.getElementById('adminDashboard').classList.add('hidden');
+                document.getElementById('loginForm').reset();
+            } catch (error) {
+                alert('Logout failed: ' + error.message);
+            }
+        }
+    };
+
+    // ============== DASHBOARD INITIALIZATION ==============
+
+    async function initializeDashboard() {
+        // Update header
+        document.getElementById('headerAvatar').textContent = currentAdmin.username.charAt(0).toUpperCase();
+        document.getElementById('headerUsername').textContent = currentAdmin.username;
+        document.getElementById('headerRole').textContent = 
+            currentAdmin.role === 'superadmin' ? 'Super Administrator' : 
+            currentAdmin.role === 'admin' ? 'Administrator' : 'Moderator';
+
+        // Show/hide admin management based on role
+        if (currentAdmin.role === 'superadmin') {
+            document.getElementById('adminManagementPanel').classList.remove('hidden');
+            loadAdmins();
+        }
+
+        // Load all data
+        await Promise.all([
+            loadStats(),
+            loadMembers(),
+            loadAnnouncements(),
+            loadMonitoring()
+        ]);
+
+        // Start monitoring updates
+        startMonitoringInterval();
+    }
+
+    // ============== STATISTICS ==============
+
+    async function loadStats() {
+        try {
+            const stats = await apiCall('/api/stats');
+            document.getElementById('totalMembers').textContent = stats.totalMembers;
+            document.getElementById('activeMembers').textContent = stats.activeMembers;
+            document.getElementById('mutedMembers').textContent = stats.mutedMembers;
+            document.getElementById('totalAnnouncements').textContent = stats.totalAnnouncements;
+        } catch (error) {
+            console.error('Failed to load stats:', error);
+        }
+    }
+
+    // ============== MEMBER MANAGEMENT ==============
+
+    async function loadMembers() {
+        try {
+            const data = await apiCall('/api/members');
+            members = data.members;
+            renderMembers();
+        } catch (error) {
+            console.error('Failed to load members:', error);
+        }
+    }
+
+    function renderMembers(filter = '') {
+        const memberList = document.getElementById('memberList');
+        const filteredMembers = members.filter(m => 
+            m.name.toLowerCase().includes(filter.toLowerCase()) ||
+            m.email.toLowerCase().includes(filter.toLowerCase())
+        );
+
+        memberList.innerHTML = filteredMembers.map(member => `
+            <div class="member-item">
+                <div class="member-info">
+                    <div class="member-avatar">${member.name.charAt(0)}</div>
+                    <div>
+                        <div style="font-weight: 600;">${member.name}</div>
+                        <div style="font-size: 12px; color: #999;">${member.email}</div>
+                    </div>
+                </div>
+                <div class="member-actions">
+                    <span class="member-status ${member.status === 'active' ? 'status-active' : 'status-muted'}">
+                        ${member.status === 'active' ? 'Active' : 'Muted'}
+                    </span>
+                    <button class="btn ${member.status === 'active' ? 'btn-warning' : 'btn-success'}" 
+                            onclick="toggleMute(${member.id})" 
+                            style="padding: 6px 15px; font-size: 12px;">
+                        ${member.status === 'active' ? '🔇 Mute' : '🔊 Unmute'}
+                    </button>
+                    ${currentAdmin.role !== 'moderator' ? `
+                    <button class="btn btn-danger" 
+                            onclick="removeMember(${member.id})" 
+                            style="padding: 6px 15px; font-size: 12px;">
+                        ✕
+                    </button>
+                    ` : ''}
+                </div>
+            </div>
+        `).join('');
+    }
+
+    window.toggleMute = async function(id) {
+        try {
+            const data = await apiCall(`/api/members/${id}/toggle-mute`, {
+                method: 'PATCH'
+            });
+
+            const member = members.find(m => m.id === id);
+            if (member) {
+                member.status = data.member.status;
+                renderMembers();
+                loadStats();
+            }
+        } catch (error) {
+            alert('Failed to toggle mute: ' + error.message);
+        }
+    };
+
+    window.removeMember = async function(id) {
+        if (confirm('Are you sure you want to remove this member?')) {
+            try {
+                await apiCall(`/api/members/${id}`, {
+                    method: 'DELETE'
+                });
+
+                members = members.filter(m => m.id !== id);
+                renderMembers();
+                loadStats();
+            } catch (error) {
+                alert('Failed to remove member: ' + error.message);
+            }
+        }
+    };
+
+    document.getElementById('memberSearch').addEventListener('input', (e) => {
+        renderMembers(e.target.value);
+    });
+
+    // ============== ANNOUNCEMENTS ==============
+
+    async function loadAnnouncements() {
+        try {
+            const data = await apiCall('/api/announcements');
+            announcements = data.announcements;
+            renderAnnouncements();
+        } catch (error) {
+            console.error('Failed to load announcements:', error);
+        }
+    }
+
+    document.getElementById('announcementForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const title = document.getElementById('announcementTitle').value;
+        const message = document.getElementById('announcementMessage').value;
+        const priority = document.getElementById('announcementPriority').value;
+
+        try {
+            const data = await apiCall('/api/announcements', {
+                method: 'POST',
+                body: JSON.stringify({ title, message, priority })
+            });
+
+            announcements.unshift(data.announcement);
+            showAlert('announcementAlert', 'Announcement posted successfully!', 'success');
+            e.target.reset();
+            renderAnnouncements();
+            loadStats();
+        } catch (error) {
+            showAlert('announcementAlert', error.message, 'error');
+        }
+    });
+
+    function renderAnnouncements() {
+        const list = document.getElementById('announcementsList');
+        list.innerHTML = announcements.slice(0, 5).map(ann => {
+            const date = new Date(ann.createdAt).toLocaleString();
+            return `
+                <div class="announcement-item">
+                    <div class="announcement-date">${date} • ${ann.priority.toUpperCase()} • by ${ann.author}</div>
+                    <div style="font-weight: 600; margin-bottom: 5px;">${ann.title}</div>
+                    <div class="announcement-text">${ann.message}</div>
+                    <button class="btn btn-danger" onclick="deleteAnnouncement(${ann.id})" 
+                            style="padding: 4px 12px; font-size: 11px;">Delete</button>
+                </div>
+            `;
+        }).join('') || '<p style="color: #999;">No announcements yet.</p>';
+    }
+
+    window.deleteAnnouncement = async function(id) {
+        if (confirm('Are you sure you want to delete this announcement?')) {
+            try {
+                await apiCall(`/api/announcements/${id}`, {
+                    method: 'DELETE'
+                });
+
+                announcements = announcements.filter(a => a.id !== id);
+                renderAnnouncements();
+                loadStats();
+            } catch (error) {
+                alert('Failed to delete announcement: ' + error.message);
+            }
+        }
+    };
+
+    // ============== ADMIN MANAGEMENT ==============
+
+    async function loadAdmins() {
+        try {
+            const data = await apiCall('/api/admins');
+            renderAdminList(data.admins);
+        } catch (error) {
+            console.error('Failed to load admins:', error);
+        }
+    }
+
+    document.getElementById('addAdminForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const username = document.getElementById('newAdminUsername').value;
+        const email = document.getElementById('newAdminEmail').value;
+        const password = document.getElementById('newAdminPassword').value;
+        const role = document.getElementById('newAdminRole').value;
+
+        try {
+            await apiCall('/api/admins', {
+                method: 'POST',
+                body: JSON.stringify({ username, email, password, role })
+            });
+
+            showAlert('adminAlert', 'Admin added successfully!', 'success');
+            e.target.reset();
+            loadAdmins();
+        } catch (error) {
+            showAlert('adminAlert', error.message, 'error');
+        }
+    });
+
+    function renderAdminList(admins) {
+        const list = document.getElementById('adminList');
+        list.innerHTML = admins.map(admin => `
+            <div class="admin-list-item">
+                <div>
+                    <div style="font-weight: 600;">${admin.username}<span class="admin-role">${admin.role.toUpperCase()}</span></div>
+                    <div style="font-size: 12px; color: #999;">${admin.email}</div>
+                </div>
+                ${admin.role !== 'superadmin' && currentAdmin.role === 'superadmin' ? `
+                <button class="btn btn-danger" onclick="removeAdmin(${admin.id})" 
+                        style="padding: 6px 15px; font-size: 12px;">Remove</button>
+                ` : '<span style="color: #999; font-size: 12px;">Protected</span>'}
+            </div>
+        `).join('');
+    }
+
+    window.removeAdmin = async function(id) {
+        if (confirm('Are you sure you want to remove this admin?')) {
+            try {
+                await apiCall(`/api/admins/${id}`, {
+                    method: 'DELETE'
+                });
+
+                loadAdmins();
+            } catch (error) {
+                alert('Failed to remove admin: ' + error.message);
+            }
+        }
+    };
+
+    // ============== MONITORING ==============
+
+    async function loadMonitoring() {
+        try {
+            const data = await apiCall('/api/monitoring');
+            
+            document.getElementById('responseTime').textContent = data.responseTime + 'ms';
+            document.getElementById('activeSessions').textContent = data.activeSessions;
+            document.getElementById('cpuUsage').textContent = data.cpuUsage + '%';
+            document.getElementById('memoryUsage').textContent = data.memoryUsage + '%';
+            document.getElementById('storageUsage').textContent = data.storageUsage + 'GB';
+        } catch (error) {
+            console.error('Failed to load monitoring:', error);
+        }
+    }
+
+    function startMonitoringInterval() {
+        setInterval(loadMonitoring, 5000);
+    }
+
+    // ============== UTILITY FUNCTIONS ==============
+
+    function showAlert(elementId, message, type) {
+        const alert = document.getElementById(elementId);
+        alert.innerHTML = `<div class="alert alert-${type}">${type === 'success' ? '✓' : '✕'} ${message}</div>`;
+        setTimeout(() => alert.innerHTML = '', 3000);
+    }
+
+    // Check if already authenticated on page load
+    async function checkAuth() {
+        try {
+            const data = await apiCall('/api/auth/check');
+            if (data.authenticated) {
+                currentAdmin = data.admin;
+                document.getElementById('loginScreen').classList.add('hidden');
+                document.getElementById('adminDashboard').classList.remove('hidden');
+                initializeDashboard();
+            }
+        } catch (error) {
+            // Not authenticated, stay on login screen
+        }
+    }
+
+    // Initialize
+    checkAuth();
+
+})();
+  // Frontend JavaScript - Connects to Backend API
+(function() {
+    'use strict';
+
+    const API_URL = window.location.origin;
+    let currentAdmin = null;
+    let members = [];
+    let announcements = [];
+
+    // Disable right-click
+    document.addEventListener('contextmenu', e => e.preventDefault());
+
+    // Disable F12 and inspect shortcuts
+    document.addEventListener('keydown', e => {
+        if (e.keyCode === 123 || 
+            (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74)) ||
+            (e.ctrlKey && e.keyCode === 85)) {
+            e.preventDefault();
+        }
+    });
+
+    // ============== API CALLS ==============
+
+    async function apiCall(endpoint, options = {}) {
+        try {
+            const response = await fetch(`${API_URL}${endpoint}`, {
+                ...options,
+                headers: {
+                    'Content-Type': 'application/json',
+                    ...options.headers
+                },
+                credentials: 'include'
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || 'Request failed');
+            }
+
+            return data;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    // ============== AUTHENTICATION ==============
+
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const username = document.getElementById('loginUsername').value;
+        const password = document.getElementById('loginPassword').value;
+        const loginBtn = document.getElementById('loginBtn');
+
+        try {
+            loginBtn.disabled = true;
+            loginBtn.innerHTML = '<span class="loading"></span> Logging in...';
+
+            const data = await apiCall('/api/auth/login', {
+                method: 'POST',
+                body: JSON.stringify({ username, password })
+            });
+
+            currentAdmin = data.admin;
+            showAlert('loginAlert', 'Login successful!', 'success');
+
+            setTimeout(() => {
+                document.getElementById('loginScreen').classList.add('hidden');
+                document.getElementById('adminDashboard').classList.remove('hidden');
+                initializeDashboard();
+            }, 500);
+
+        } catch (error) {
+            showAlert('loginAlert', error.message, 'error');
+        } finally {
+            loginBtn.disabled = false;
+            loginBtn.textContent = 'Login';
+        }
+    });
+
+    window.logout = async function() {
+        if (confirm('Are you sure you want to logout?')) {
+            try {
+                await apiCall('/api/auth/logout', { method: 'POST' });
+                currentAdmin = null;
+                document.getElementById('loginScreen').classList.remove('hidden');
+                document.getElementById('adminDashboard').classList.add('hidden');
+                document.getElementById('loginForm').reset();
+            } catch (error) {
+                alert('Logout failed: ' + error.message);
+            }
+        }
+    };
+
+    // ============== DASHBOARD INITIALIZATION ==============
+
+    async function initializeDashboard() {
+        // Update header
+        document.getElementById('headerAvatar').textContent = currentAdmin.username.charAt(0).toUpperCase();
+        document.getElementById('headerUsername').textContent = currentAdmin.username;
+        document.getElementById('headerRole').textContent = 
+            currentAdmin.role === 'superadmin' ? 'Super Administrator' : 
+            currentAdmin.role === 'admin' ? 'Administrator' : 'Moderator';
+
+        // Show/hide admin management based on role
+        if (currentAdmin.role === 'superadmin') {
+            document.getElementById('adminManagementPanel').classList.remove('hidden');
+            loadAdmins();
+        }
+
+        // Load all data
+        await Promise.all([
+            loadStats(),
+            loadMembers(),
+            loadAnnouncements(),
+            loadMonitoring()
+        ]);
+
+        // Start monitoring updates
+        startMonitoringInterval();
+    }
+
+    // ============== STATISTICS ==============
+
+    async function loadStats() {
+        try {
+            const stats = await apiCall('/api/stats');
+            document.getElementById('totalMembers').textContent = stats.totalMembers;
+            document.getElementById('activeMembers').textContent = stats.activeMembers;
+            document.getElementById('mutedMembers').textContent = stats.mutedMembers;
+            document.getElementById('totalAnnouncements').textContent = stats.totalAnnouncements;
+        } catch (error) {
+            console.error('Failed to load stats:', error);
+        }
+    }
+
+    // ============== MEMBER MANAGEMENT ==============
+
+    async function loadMembers() {
+        try {
+            const data = await apiCall('/api/members');
+            members = data.members;
+            renderMembers();
+        } catch (error) {
+            console.error('Failed to load members:', error);
+        }
+    }
+
+    function renderMembers(filter = '') {
+        const memberList = document.getElementById('memberList');
+        const filteredMembers = members.filter(m => 
+            m.name.toLowerCase().includes(filter.toLowerCase()) ||
+            m.email.toLowerCase().includes(filter.toLowerCase())
+        );
+
+        memberList.innerHTML = filteredMembers.map(member => `
+            <div class="member-item">
+                <div class="member-info">
+                    <div class="member-avatar">${member.name.charAt(0)}</div>
+                    <div>
+                        <div style="font-weight: 600;">${member.name}</div>
+                        <div style="font-size: 12px; color: #999;">${member.email}</div>
+                    </div>
+                </div>
+                <div class="member-actions">
+                    <span class="member-status ${member.status === 'active' ? 'status-active' : 'status-muted'}">
+                        ${member.status === 'active' ? 'Active' : 'Muted'}
+                    </span>
+                    <button class="btn ${member.status === 'active' ? 'btn-warning' : 'btn-success'}" 
+                            onclick="toggleMute(${member.id})" 
+                            style="padding: 6px 15px; font-size: 12px;">
+                        ${member.status === 'active' ? '🔇 Mute' : '🔊 Unmute'}
+                    </button>
+                    ${currentAdmin.role !== 'moderator' ? `
+                    <button class="btn btn-danger" 
+                            onclick="removeMember(${member.id})" 
+                            style="padding: 6px 15px; font-size: 12px;">
+                        ✕
+                    </button>
+                    ` : ''}
+                </div>
+            </div>
+        `).join('');
+    }
+
+    window.toggleMute = async function(id) {
+        try {
+            const data = await apiCall(`/api/members/${id}/toggle-mute`, {
+                method: 'PATCH'
+            });
+
+            const member = members.find(m => m.id === id);
+            if (member) {
+                member.status = data.member.status;
+                renderMembers();
+                loadStats();
+            }
+        } catch (error) {
+            alert('Failed to toggle mute: ' + error.message);
+        }
+    };
+
+    window.removeMember = async function(id) {
+        if (confirm('Are you sure you want to remove this member?')) {
+            try {
+                await apiCall(`/api/members/${id}`, {
+                    method: 'DELETE'
+                });
+
+                members = members.filter(m => m.id !== id);
+                renderMembers();
+                loadStats();
+            } catch (error) {
+                alert('Failed to remove member: ' + error.message);
+            }
+        }
+    };
+
+    document.getElementById('memberSearch').addEventListener('input', (e) => {
+        renderMembers(e.target.value);
+    });
+
+    // ============== ANNOUNCEMENTS ==============
+
+    async function loadAnnouncements() {
+        try {
+            const data = await apiCall('/api/announcements');
+            announcements = data.announcements;
+            renderAnnouncements();
+        } catch (error) {
+            console.error('Failed to load announcements:', error);
+        }
+    }
+
+    document.getElementById('announcementForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const title = document.getElementById('announcementTitle').value;
+        const message = document.getElementById('announcementMessage').value;
+        const priority = document.getElementById('announcementPriority').value;
+
+        try {
+            const data = await apiCall('/api/announcements', {
+                method: 'POST',
+                body: JSON.stringify({ title, message, priority })
+            });
+
+            announcements.unshift(data.announcement);
+            showAlert('announcementAlert', 'Announcement posted successfully!', 'success');
+            e.target.reset();
+            renderAnnouncements();
+            loadStats();
+        } catch (error) {
+            showAlert('announcementAlert', error.message, 'error');
+        }
+    });
+
+    function renderAnnouncements() {
+        const list = document.getElementById('announcementsList');
+        list.innerHTML = announcements.slice(0, 5).map(ann => {
+            const date = new Date(ann.createdAt).toLocaleString();
+            return `
+                <div class="announcement-item">
+                    <div class="announcement-date">${date} • ${ann.priority.toUpperCase()} • by ${ann.author}</div>
+                    <div style="font-weight: 600; margin-bottom: 5px;">${ann.title}</div>
+                    <div class="announcement-text">${ann.message}</div>
+                    <button class="btn btn-danger" onclick="deleteAnnouncement(${ann.id})" 
+                            style="padding: 4px 12px; font-size: 11px;">Delete</button>
+                </div>
+            `;
+        }).join('') || '<p style="color: #999;">No announcements yet.</p>';
+    }
+
+    window.deleteAnnouncement = async function(id) {
+        if (confirm('Are you sure you want to delete this announcement?')) {
+            try {
+                await apiCall(`/api/announcements/${id}`, {
+                    method: 'DELETE'
+                });
+
+                announcements = announcements.filter(a => a.id !== id);
+                renderAnnouncements();
+                loadStats();
+            } catch (error) {
+                alert('Failed to delete announcement: ' + error.message);
+            }
+        }
+    };
+
+    // ============== ADMIN MANAGEMENT ==============
+
+    async function loadAdmins() {
+        try {
+            const data = await apiCall('/api/admins');
+            renderAdminList(data.admins);
+        } catch (error) {
+            console.error('Failed to load admins:', error);
+        }
+    }
+
+    document.getElementById('addAdminForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const username = document.getElementById('newAdminUsername').value;
+        const email = document.getElementById('newAdminEmail').value;
+        const password = document.getElementById('newAdminPassword').value;
+        const role = document.getElementById('newAdminRole').value;
+
+        try {
+            await apiCall('/api/admins', {
+                method: 'POST',
+                body: JSON.stringify({ username, email, password, role })
+            });
+
+            showAlert('adminAlert', 'Admin added successfully!', 'success');
+            e.target.reset();
+            loadAdmins();
+        } catch (error) {
+            showAlert('adminAlert', error.message, 'error');
+        }
+    });
+
+    function renderAdminList(admins) {
+        const list = document.getElementById('adminList');
+        list.innerHTML = admins.map(admin => `
+            <div class="admin-list-item">
+                <div>
+                    <div style="font-weight: 600;">${admin.username}<span class="admin-role">${admin.role.toUpperCase()}</span></div>
+                    <div style="font-size: 12px; color: #999;">${admin.email}</div>
+                </div>
+                ${admin.role !== 'superadmin' && currentAdmin.role === 'superadmin' ? `
+                <button class="btn btn-danger" onclick="removeAdmin(${admin.id})" 
+                        style="padding: 6px 15px; font-size: 12px;">Remove</button>
+                ` : '<span style="color: #999; font-size: 12px;">Protected</span>'}
+            </div>
+        `).join('');
+    }
+
+    window.removeAdmin = async function(id) {
+        if (confirm('Are you sure you want to remove this admin?')) {
+            try {
+                await apiCall(`/api/admins/${id}`, {
+                    method: 'DELETE'
+                });
+
+                loadAdmins();
+            } catch (error) {
+                alert('Failed to remove admin: ' + error.message);
+            }
+        }
+    };
+
+    // ============== MONITORING ==============
+
+    async function loadMonitoring() {
+        try {
+            const data = await apiCall('/api/monitoring');
+            
+            document.getElementById('responseTime').textContent = data.responseTime + 'ms';
+            document.getElementById('activeSessions').textContent = data.activeSessions;
+            document.getElementById('cpuUsage').textContent = data.cpuUsage + '%';
+            document.getElementById('memoryUsage').textContent = data.memoryUsage + '%';
+            document.getElementById('storageUsage').textContent = data.storageUsage + 'GB';
+        } catch (error) {
+            console.error('Failed to load monitoring:', error);
+        }
+    }
+
+    function startMonitoringInterval() {
+        setInterval(loadMonitoring, 5000);
+    }
+
+    // ============== UTILITY FUNCTIONS ==============
+
+    function showAlert(elementId, message, type) {
+        const alert = document.getElementById(elementId);
+        alert.innerHTML = `<div class="alert alert-${type}">${type === 'success' ? '✓' : '✕'} ${message}</div>`;
+        setTimeout(() => alert.innerHTML = '', 3000);
+    }
+
+    // Check if already authenticated on page load
+    async function checkAuth() {
+        try {
+            const data = await apiCall('/api/auth/check');
+            if (data.authenticated) {
+                currentAdmin = data.admin;
+                document.getElementById('loginScreen').classList.add('hidden');
+                document.getElementById('adminDashboard').classList.remove('hidden');
+                initializeDashboard();
+            }
+        } catch (error) {
+            // Not authenticated, stay on login screen
+        }
+    }
+
+    // Initialize
+    checkAuth();
+
+})();
+  // Script to generate hashed passwords for admin accounts
+const bcrypt = require('bcrypt');
+const readline = require('readline');
+
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+console.log('\n🔐 Password Hash Generator for Wexford Admin Panel\n');
+
+rl.question('Enter password to hash: ', async (password) => {
+    if (!password || password.length < 6) {
+        console.log('❌ Password must be at least 6 characters long');
+        rl.close();
+        return;
+    }
+
+    try {
+        const hash = await bcrypt.hash(password, 10);
+        
+        console.log('\n✅ Password hashed successfully!\n');
+        console.log('Original password:', password);
+        console.log('Hashed password:', hash);
+        console.log('\nCopy the hashed password above and use it in your adminAccounts array in server.js\n');
+        
+    } catch (error) {
+        console.error('❌ Error hashing password:', error);
+    }
+    
+    rl.close();
+});
+
+    <script src="app.js"></script>
+</body>
+</html>
