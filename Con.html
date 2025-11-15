@@ -217,7 +217,16 @@
         const CORRECT_PASSWORD = 'STAFF';
         
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+        
+        let firebaseConfig = {};
+        try {
+            // Attempt to parse the config provided by the environment
+            const configString = typeof __firebase_config !== 'undefined' ? __firebase_config : '{}';
+            firebaseConfig = JSON.parse(configString);
+        } catch (e) {
+            console.error("CRITICAL: Failed to parse Firebase config string.", e);
+        }
+        
         const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
 
         let app, db, auth;
@@ -240,7 +249,6 @@
         
         // --- UTILITY FUNCTIONS ---
         
-        // Custom non-blocking message box (replacing alert/confirm)
         function showMessage(text, isError = false) {
             messageBox.textContent = text;
             messageBox.className = `fixed top-4 right-4 z-[10000] p-4 rounded-lg shadow-xl font-medium transition-all duration-300 transform ${isError ? 'bg-red-600' : 'bg-green-600'} translate-x-0`;
@@ -307,11 +315,11 @@
                 initializeAppAndAuth();
             } else {
                 error.classList.remove('hidden');
-                input.classList.add('border-red-500', 'animate-shake');
+                input.classList.add('border-red-500');
                 input.value = '';
                 
                 setTimeout(() => {
-                    input.classList.remove('border-red-500', 'animate-shake');
+                    input.classList.remove('border-red-500');
                 }, 500);
                 
                 setTimeout(() => {
@@ -328,43 +336,56 @@
 
             try {
                 showLoading(true);
-                
-                // 1. Initialize App
+
+                // --- 1. CONFIG CHECK ---
+                if (!firebaseConfig || !firebaseConfig.projectId) {
+                    console.error("AUTH ERROR: Firebase configuration is missing or incomplete.");
+                    showMessage("Configuration error: Cannot initialize Firebase.", true);
+                    showLoading(false);
+                    return;
+                }
+                console.log("Initialization Step 1: Configuration is valid. Starting Firebase App.");
+
+                // --- 2. INITIALIZE APP ---
                 app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
                 auth = getAuth(app);
                 
                 await setPersistence(auth, browserLocalPersistence);
 
-                // 2. Sign In (using custom token if available, otherwise anonymously)
+                console.log("Initialization Step 2: Firebase services initialized. Attempting Sign-in.");
+
+                // --- 3. SIGN IN ---
                 if (initialAuthToken) {
+                    console.log("Initialization Step 3: Signing in with custom token.");
                     await signInWithCustomToken(auth, initialAuthToken);
                 } else {
-                    console.warn("No initial auth token found, signing in anonymously.");
+                    console.log("Initialization Step 3: No custom token found, signing in anonymously.");
                     await signInAnonymously(auth);
                 }
 
-                // 3. Set up Auth Listener
+                // --- 4. AUTH LISTENER ---
+                // The main flow continues ONLY after Firebase confirms a user is signed in
                 onAuthStateChanged(auth, (user) => {
                     if (user) {
                         isAuthReady = true;
-                        console.log("Authentication successful. User UID:", user.uid);
+                        console.log("Initialization Step 4: Authentication successful. UID:", user.uid);
+                        // Only proceed to profile check once auth state is confirmed
                         checkStaffProfile(user.uid);
                     } else {
                         isAuthReady = false;
-                        console.log("Authentication state changed to signed out.");
+                        console.log("Auth State Changed: User signed out.");
                         showChatUI(false);
                         showLoading(false);
                     }
                 });
             } catch (error) {
-                // *** IMPROVED ERROR LOGGING ***
+                // *** CRITICAL FAILURE LOGGING ***
                 console.error("--- CRITICAL FIREBASE INIT/AUTH FAILURE ---");
-                console.error("Specific Error:", error.code, error.message);
-                console.error("Configuration Check (sensitive fields redacted):", 
-                    { appId: appId, apiKey: firebaseConfig.apiKey ? 'PRESENT' : 'MISSING', authDomain: firebaseConfig.authDomain });
+                console.error("Specific Error Code:", error.code);
+                console.error("Specific Error Message:", error.message);
                 
-                showMessage(`Authentication failed (${error.code || 'UNKNOWN'}). Check console for details.`, true);
+                showMessage(`Authentication failed (${error.code || 'UNKNOWN'}). Check console for debug logs.`, true);
                 showLoading(false);
                 sessionStorage.removeItem('staffAuthenticated');
                 passwordModal.style.display = 'flex';
@@ -373,6 +394,7 @@
 
         // --- PROFILE MANAGEMENT (ONE-TIME LOGIN) ---
         async function checkStaffProfile(uid) {
+            console.log("Profile Step 5: Checking for existing staff profile.");
             const profileRef = doc(db, getProfilePath(uid));
             try {
                 const profileSnap = await getDoc(profileRef);
@@ -381,8 +403,10 @@
                     currentStaff = profileSnap.data();
                     currentStaff.uid = uid;
                     await setDoc(profileRef, { lastLogin: serverTimestamp() }, { merge: true });
+                    console.log("Profile Step 6: Profile found. Starting chat session.");
                     startChatSession();
                 } else {
+                    console.log("Profile Step 6: No profile found. Redirecting to registration.");
                     showLoading(false);
                     loginContainer.classList.remove('hidden');
                     chatContainer.classList.add('hidden');
@@ -397,6 +421,12 @@
         window.handleLogin = async function(event) {
             event.preventDefault();
             
+            // Check if auth is available before proceeding
+            if (!auth || !auth.currentUser) {
+                showMessage("Error: Authentication not ready. Please refresh.", true);
+                return;
+            }
+
             const uid = auth.currentUser.uid;
             const name = document.getElementById('staff-name').value.trim();
             const department = document.getElementById('staff-department').value;
@@ -448,7 +478,11 @@
 
         // --- CHAT MESSAGES LOGIC (2-WEEK HISTORY) ---
         function loadMessages() {
-            if (!db || !currentStaff.uid) return;
+            // Guard clause to ensure db is ready
+            if (!db || !currentStaff || !currentStaff.uid) {
+                console.warn("Attempted to load messages before DB/Profile was ready.");
+                return;
+            }
             
             if (unsubscribeMessages) {
                 unsubscribeMessages(); 
@@ -460,6 +494,8 @@
             const messagesRef = collection(db, getMessagesCollectionPath());
             
             // Query: messages in last 14 days, ordered by timestamp
+            // NOTE: Firestore requires the first orderBy field to match the field used in where() 
+            // when using range operators (<, >, <=, >=).
             const q = query(
                 messagesRef,
                 where('timestamp', '>=', twoWeeksAgo),
