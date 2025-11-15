@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wexford Admin Panel</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: white;
+            padding: 20px 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 28px;
+        }
+
+        .admin-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .admin-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-card h3 {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .stat-value {
+            font-size: 36px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .panel {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .panel h2 {
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 600;
+        }
+
+        input[type="text"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border 0.3s;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-danger {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .btn-warning {
+            background: #f39c12;
+            color: white;
+        }
+
+        .btn-success {
+            background: #27ae60;
+            color: white;
+        }
+
+        .member-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .member-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            transition: background 0.3s;
+        }
+
+        .member-item:hover {
+            background: #f8f9fa;
+        }
+
+        .member-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .member-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .member-status {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-muted {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .member-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .announcement-item {
+            padding: 15px;
+            border-left: 4px solid #667eea;
+            background: #f8f9fa;
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
+
+        .announcement-date {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 5px;
+        }
+
+        .announcement-text {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .monitoring-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .monitor-item {
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .monitor-label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .monitor-value {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🛡️ Admin Control Panel</h1>
+            <div class="admin-info">
+                <div class="admin-avatar">A</div>
+                <div>
+                    <div style="font-weight: 600;">Admin User</div>
+                    <div style="font-size: 12px; color: #999;">Super Administrator</div>
+                </div>
+            </div>
+        </header>
+
+        <div class="dashboard">
+            <div class="stat-card">
+                <h3>Total Members</h3>
+                <div class="stat-value" id="totalMembers">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Active Members</h3>
+                <div class="stat-value" id="activeMembers">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Muted Members</h3>
+                <div class="stat-value" id="mutedMembers">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Announcements</h3>
+                <div class="stat-value" id="totalAnnouncements">0</div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <!-- Announcements Panel -->
+            <div class="panel">
+                <h2>📢 Post Announcement</h2>
+                <div id="announcementAlert"></div>
+                <form id="announcementForm">
+                    <div class="form-group">
+                        <label>Announcement Title</label>
+                        <input type="text" id="announcementTitle" placeholder="Enter title" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Message</label>
+                        <textarea id="announcementMessage" placeholder="Enter your announcement message" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Priority</label>
+                        <select id="announcementPriority">
+                            <option value="normal">Normal</option>
+                            <option value="important">Important</option>
+                            <option value="urgent">Urgent</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Post Announcement</button>
+                </form>
+
+                <h3 style="margin-top: 30px; margin-bottom: 15px;">Recent Announcements</h3>
+                <div id="announcementsList"></div>
+            </div>
+
+            <!-- Member Management Panel -->
+            <div class="panel">
+                <h2>👥 Member Management</h2>
+                <div class="form-group">
+                    <input type="text" id="memberSearch" placeholder="Search members...">
+                </div>
+                <div class="member-list" id="memberList"></div>
+            </div>
+
+            <!-- Website Monitoring Panel -->
+            <div class="panel full-width">
+                <h2>📊 Website Monitoring</h2>
+                <div class="monitoring-grid">
+                    <div class="monitor-item">
+                        <div class="monitor-label">Server Status</div>
+                        <div class="monitor-value" style="color: #27ae60;">● Online</div>
+                    </div>
+                    <div class="monitor-item">
+                        <div class="monitor-label">Response Time</div>
+                        <div class="monitor-value" id="responseTime">125ms</div>
+                    </div>
+                    <div class="monitor-item">
+                        <div class="monitor-label">Active Sessions</div>
+                        <div class="monitor-value" id="activeSessions">0</div>
+                    </div>
+                    <div class="monitor-item">
+                        <div class="monitor-label">CPU Usage</div>
+                        <div class="monitor-value" id="cpuUsage">0%</div>
+                    </div>
+                    <div class="monitor-item">
+                        <div class="monitor-label">Memory Usage</div>
+                        <div class="monitor-value" id="memoryUsage">0%</div>
+                    </div>
+                    <div class="monitor-item">
+                        <div class="monitor-label">Storage Used</div>
+                        <div class="monitor-value" id="storageUsage">0GB</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data Storage
+        let members = [
+            { id: 1, name: 'John Doe', email: 'john@example.com', status: 'active' },
+            { id: 2, name: 'Jane Smith', email: 'jane@example.com', status: 'active' },
+            { id: 3, name: 'Bob Johnson', email: 'bob@example.com', status: 'active' },
+            { id: 4, name: 'Alice Williams', email: 'alice@example.com', status: 'active' },
+            { id: 5, name: 'Charlie Brown', email: 'charlie@example.com', status: 'active' }
+        ];
+
+        let announcements = [];
+
+        // Initialize
+        function init() {
+            updateStats();
+            renderMembers();
+            renderAnnouncements();
+            simulateMonitoring();
+        }
+
+        // Update Statistics
+        function updateStats() {
+            const active = members.filter(m => m.status === 'active').length;
+            const muted = members.filter(m => m.status === 'muted').length;
+            
+            document.getElementById('totalMembers').textContent = members.length;
+            document.getElementById('activeMembers').textContent = active;
+            document.getElementById('mutedMembers').textContent = muted;
+            document.getElementById('totalAnnouncements').textContent = announcements.length;
+        }
+
+        // Render Members
+        function renderMembers(filter = '') {
+            const memberList = document.getElementById('memberList');
+            const filteredMembers = members.filter(m => 
+                m.name.toLowerCase().includes(filter.toLowerCase()) ||
+                m.email.toLowerCase().includes(filter.toLowerCase())
+            );
+
+            memberList.innerHTML = filteredMembers.map(member => `
+                <div class="member-item">
+                    <div class="member-info">
+                        <div class="member-avatar">${member.name.charAt(0)}</div>
+                        <div>
+                            <div style="font-weight: 600;">${member.name}</div>
+                            <div style="font-size: 12px; color: #999;">${member.email}</div>
+                        </div>
+                    </div>
+                    <div class="member-actions">
+                        <span class="member-status ${member.status === 'active' ? 'status-active' : 'status-muted'}">
+                            ${member.status === 'active' ? 'Active' : 'Muted'}
+                        </span>
+                        <button class="btn ${member.status === 'active' ? 'btn-warning' : 'btn-success'}" 
+                                onclick="toggleMute(${member.id})" 
+                                style="padding: 6px 15px; font-size: 12px;">
+                            ${member.status === 'active' ? '🔇 Mute' : '🔊 Unmute'}
+                        </button>
+                        <button class="btn btn-danger" 
+                                onclick="removeMember(${member.id})" 
+                                style="padding: 6px 15px; font-size: 12px;">
+                            ✕
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Toggle Mute Member
+        function toggleMute(id) {
+            const member = members.find(m => m.id === id);
+            if (member) {
+                member.status = member.status === 'active' ? 'muted' : 'active';
+                updateStats();
+                renderMembers();
+            }
+        }
+
+        // Remove Member
+        function removeMember(id) {
+            if (confirm('Are you sure you want to remove this member?')) {
+                members = members.filter(m => m.id !== id);
+                updateStats();
+                renderMembers();
+            }
+        }
+
+        // Post Announcement
+        document.getElementById('announcementForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const title = document.getElementById('announcementTitle').value;
+            const message = document.getElementById('announcementMessage').value;
+            const priority = document.getElementById('announcementPriority').value;
+            
+            const announcement = {
+                id: Date.now(),
+                title,
+                message,
+                priority,
+                date: new Date().toLocaleString()
+            };
+            
+            announcements.unshift(announcement);
+            
+            // Show success alert
+            const alert = document.getElementById('announcementAlert');
+            alert.innerHTML = '<div class="alert alert-success">✓ Announcement posted successfully!</div>';
+            setTimeout(() => alert.innerHTML = '', 3000);
+            
+            // Reset form
+            e.target.reset();
+            
+            updateStats();
+            renderAnnouncements();
+        });
+
+        // Render Announcements
+        function renderAnnouncements() {
+            const list = document.getElementById('announcementsList');
+            list.innerHTML = announcements.slice(0, 5).map(ann => `
+                <div class="announcement-item">
+                    <div class="announcement-date">${ann.date} • ${ann.priority.toUpperCase()}</div>
+                    <div style="font-weight: 600; margin-bottom: 5px;">${ann.title}</div>
+                    <div class="announcement-text">${ann.message}</div>
+                    <button class="btn btn-danger" onclick="deleteAnnouncement(${ann.id})" 
+                            style="padding: 4px 12px; font-size: 11px;">Delete</button>
+                </div>
+            `).join('') || '<p style="color: #999;">No announcements yet.</p>';
+        }
+
+        // Delete Announcement
+        function deleteAnnouncement(id) {
+            announcements = announcements.filter(a => a.id !== id);
+            updateStats();
+            renderAnnouncements();
+        }
+
+        // Member Search
+        document.getElementById('memberSearch').addEventListener('input', (e) => {
+            renderMembers(e.target.value);
+        });
+
+        // Simulate Monitoring Data
+        function simulateMonitoring() {
+            function updateValues() {
+                document.getElementById('activeSessions').textContent = Math.floor(Math.random() * 50) + 20;
+                document.getElementById('cpuUsage').textContent = (Math.random() * 30 + 10).toFixed(1) + '%';
+                document.getElementById('memoryUsage').textContent = (Math.random() * 40 + 30).toFixed(1) + '%';
+                document.getElementById('storageUsage').textContent = (Math.random() * 5 + 2).toFixed(2) + 'GB';
+                document.getElementById('responseTime').textContent = Math.floor(Math.random() * 100 + 50) + 'ms';
+            }
+            
+            updateValues();
+            setInterval(updateValues, 5000);
+        }
+
+        // Initialize on load
+        init();
+      <script>
+        // Authentication Configuration
+        const ADMIN_CREDENTIALS = {
+            username: 'admin',
+            password: 'WexfordAdmin2024!' // Change this to your secure password
+        };
+
+        // Session Management
+        let isAuthenticated = false;
+        let sessionTimeout = null;
+        const SESSION_DURATION = 30 * 60 * 1000; // 30 minutes
+
+        // Check authentication on page load
+        function checkAuth() {
+            const authToken = sessionStorage.getItem('adminAuth');
+            const authTime = sessionStorage.getItem('authTime');
+            
+            if (authToken === 'authenticated' && authTime) {
+                const elapsed = Date.now() - parseInt(authTime);
+                if (elapsed < SESSION_DURATION) {
+                    isAuthenticated = true;
+                    showAdminPanel();
+                    startSessionTimeout();
+                    return;
+                }
+            }
+            
+            showLoginScreen();
+        }
+
+        // Show Login Screen
+        function showLoginScreen() {
+            document.body.innerHTML = `
+                <style>
+                    .login-container {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        min-height: 100vh;
+                        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    }
+                    .login-box {
+                        background: white;
+                        padding: 40px;
+                        border-radius: 20px;
+                        box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+                        width: 100%;
+                        max-width: 400px;
+                    }
+                    .login-header {
+                        text-align: center;
+                        margin-bottom: 30px;
+                    }
+                    .login-header h1 {
+                        color: #667eea;
+                        font-size: 32px;
+                        margin-bottom: 10px;
+                    }
+                    .login-header p {
+                        color: #999;
+                        font-size: 14px;
+                    }
+                    .login-form .form-group {
+                        margin-bottom: 20px;
+                    }
+                    .login-form label {
+                        display: block;
+                        margin-bottom: 8px;
+                        color: #555;
+                        font-weight: 600;
+                    }
+                    .login-form input {
+                        width: 100%;
+                        padding: 12px;
+                        border: 2px solid #e0e0e0;
+                        border-radius: 8px;
+                        font-size: 14px;
+                        transition: border 0.3s;
+                    }
+                    .login-form input:focus {
+                        outline: none;
+                        border-color: #667eea;
+                    }
+                    .login-error {
+                        background: #f8d7da;
+                        color: #721c24;
+                        padding: 12px;
+                        border-radius: 8px;
+                        margin-bottom: 20px;
+                        display: none;
+                        font-size: 14px;
+                    }
+                    .login-btn {
+                        width: 100%;
+                        padding: 14px;
+                        background: linear-gradient(135deg, #667eea, #764ba2);
+                        color: white;
+                        border: none;
+                        border-radius: 8px;
+                        font-size: 16px;
+                        font-weight: 600;
+                        cursor: pointer;
+                        transition: transform 0.3s;
+                    }
+                    .login-btn:hover {
+                        transform: scale(1.02);
+                    }
+                    .security-note {
+                        margin-top: 20px;
+                        padding: 15px;
+                        background: #e7f3ff;
+                        border-left: 4px solid #667eea;
+                        border-radius: 5px;
+                        font-size: 12px;
+                        color: #555;
+                    }
+                </style>
+                <div class="login-container">
+                    <div class="login-box">
+                        <div class="login-header">
+                            <h1>🛡️ Admin Login</h1>
+                            <p>Wexford Control Panel</p>
+                        </div>
+                        <div id="loginError" class="login-error"></div>
+                        <form class="login-form" id="loginForm">
+                            <div class="form-group">
+                                <label>Username</label>
+                                <input type="text" id="username" required autocomplete="username">
+                            </div>
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input type="password" id="password" required autocomplete="current-password">
+                            </div>
+                            <button type="submit" class="login-btn">Login</button>
+                        </form>
+                        <div class="security-note">
+                            🔒 This is a secure admin area. All access attempts are logged.
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('loginForm').addEventListener('submit', handleLogin);
+        }
+
+        // Handle Login
+        function handleLogin(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorDiv = document.getElementById('loginError');
+            
+            if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
+                isAuthenticated = true;
+                sessionStorage.setItem('adminAuth', 'authenticated');
+                sessionStorage.setItem('authTime', Date.now().toString());
+                location.reload();
+            } else {
+                errorDiv.textContent = '❌ Invalid username or password. Access denied.';
+                errorDiv.style.display = 'block';
+                document.getElementById('password').value = '';
+                
+                setTimeout(() => {
+                    errorDiv.style.display = 'none';
+                }, 3000);
+            }
+        }
+
+        // Show Admin Panel
+        function showAdminPanel() {
+            // Original admin panel code will run here
+            init();
+        }
+
+        // Start Session Timeout
+        function startSessionTimeout() {
+            clearTimeout(sessionTimeout);
+            sessionTimeout = setTimeout(() => {
+                logout();
+            }, SESSION_DURATION);
+        }
+
+        // Logout Function
+        function logout() {
+            isAuthenticated = false;
+            sessionStorage.removeItem('adminAuth');
+            sessionStorage.removeItem('authTime');
+            clearTimeout(sessionTimeout);
+            location.reload();
+        }
+
+        // Add logout button to header (will be called after init)
+        function addLogoutButton() {
+            const header = document.querySelector('header');
+            const logoutBtn = document.createElement('button');
+            logoutBtn.className = 'btn btn-danger';
+            logoutBtn.textContent = '🚪 Logout';
+            logoutBtn.style.marginLeft = '15px';
+            logoutBtn.onclick = logout;
+            header.querySelector('.admin-info').appendChild(logoutBtn);
+        }
+
+        // Data Storage
+        let members = [
+    </script>
+  
+</body>
+</html>
