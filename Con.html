@@ -15,7 +15,6 @@
         :root {
             --primary: #0B8F4A; /* Wexford Green */
             --primary-dark: #076d38;
-            --secondary-bg: #E8F5EE;
         }
 
         body {
@@ -24,7 +23,6 @@
             min-height: 100vh;
         }
 
-        /* Animated Background Particles (Simplified) */
         .bg-animation {
             position: fixed;
             top: 0;
@@ -41,50 +39,24 @@
             border-radius: 50%;
             animation: float 20s infinite ease-in-out;
         }
-
-        .particle:nth-child(1) { width: 80px; height: 80px; left: 10%; animation-delay: 0s; }
-        .particle:nth-child(2) { width: 60px; height: 60px; left: 30%; animation-delay: 2s; }
-        .particle:nth-child(3) { width: 100px; height: 100px; left: 50%; animation-delay: 4s; }
-        .particle:nth-child(4) { width: 70px; height: 70px; left: 70%; animation-delay: 6s; }
-        .particle:nth-child(5) { width: 90px; height: 90px; left: 90%; animation-delay: 8s; }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(100vh); opacity: 0; }
-            10% { opacity: 0.5; }
-            90% { opacity: 0.5; }
-            100% { transform: translateY(-100vh); opacity: 0; }
-        }
-
-        /* Message Bubble Custom Styles */
         .message-bubble {
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
             line-height: 1.6;
             word-wrap: break-word;
             max-width: 100%;
         }
-
         .message.own .message-bubble {
             background: var(--primary);
             color: white;
             box-shadow: 0 4px 12px rgba(11, 143, 74, 0.3);
         }
-
         .message:not(.own) .message-bubble {
             background: white;
             color: #1f2937;
         }
-
-        /* Scrollbar Styling */
-        .chat-messages::-webkit-scrollbar {
-            width: 8px;
-        }
-        .chat-messages::-webkit-scrollbar-track {
-            background: #f1f5f9;
-        }
-        .chat-messages::-webkit-scrollbar-thumb {
-            background: var(--primary);
-            border-radius: 10px;
-        }
+        .chat-messages::-webkit-scrollbar { width: 8px; }
+        .chat-messages::-webkit-scrollbar-track { background: #f1f5f9; }
+        .chat-messages::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
     </style>
 </head>
 <body class="antialiased">
@@ -99,20 +71,22 @@
     <!-- Global Message Box (used for errors/confirmation) -->
     <div id="message-box" class="fixed top-4 right-4 z-[10000] p-4 rounded-lg shadow-xl text-white font-medium transition-all duration-300 transform translate-x-full" style="display: none;"></div>
 
+    <!-- CONNECTION STATUS / PASSWORD MODAL -->
+    <div id="status-modal" class="fixed inset-0 bg-gray-900 bg-opacity-95 backdrop-blur-md z-[9999] flex items-center justify-center transition-opacity duration-300">
+        <div class="bg-white rounded-3xl p-8 max-w-sm w-11/12 shadow-2xl text-center transition-all duration-500 transform scale-100">
+            <h2 class="text-3xl font-extrabold text-gray-800 mb-6 border-b pb-3">Initial Connection Dashboard</h2>
+            
+            <div id="status-dashboard" class="space-y-4 text-left">
+                <!-- Status checks injected here -->
+            </div>
 
-    <!-- Password Modal -->
-    <div id="password-modal" class="fixed inset-0 bg-gray-900 bg-opacity-95 backdrop-blur-md z-[9999] flex items-center justify-center transition-opacity duration-300">
-        <div class="bg-white rounded-3xl p-8 max-w-sm w-11/12 shadow-2xl text-center transition-all duration-500 transform scale-100" id="password-content">
-            <div class="text-6xl mb-4 text-indigo-600 animate-pulse"><i class="fas fa-lock"></i></div>
-            <h2 class="text-3xl font-extrabold text-gray-800 mb-2">Staff Access</h2>
-            <p class="text-gray-500 mb-6">Enter the access code to authenticate.</p>
-            <input type="password" id="password-input" placeholder="••••••" maxlength="10" autocomplete="off" class="w-full p-4 border-2 border-gray-200 rounded-xl text-center text-2xl font-semibold tracking-widest transition duration-300 focus:ring-4 focus:ring-green-100 focus:border-primary-dark">
-            <div id="password-error" class="text-red-500 font-medium mt-3 hidden">❌ Incorrect code. Try again.</div>
-            <button onclick="verifyPassword()" class="mt-6 w-full py-4 text-lg font-bold text-white rounded-xl transition duration-300 bg-gradient-to-r from-primary to-green-600 hover:from-green-600 hover:to-primary shadow-lg shadow-green-500/50">
-                <i class="fas fa-sign-in-alt mr-2"></i> Enter Channel
-            </button>
-            <div class="mt-6 p-3 bg-yellow-50 text-yellow-800 rounded-xl text-sm border border-yellow-200">
-                <strong>Private Channel:</strong> This is a secure communication area.
+            <div class="mt-8 pt-4 border-t">
+                <p class="text-gray-600 mb-4 font-semibold">🔑 Enter Staff Access Code</p>
+                <input type="password" id="password-input" placeholder="••••••" maxlength="10" autocomplete="off" class="w-full p-4 border-2 border-gray-200 rounded-xl text-center text-2xl font-semibold tracking-widest focus:ring-4 focus:ring-green-100 focus:border-primary-dark">
+                <div id="password-error" class="text-red-500 font-medium mt-3 hidden">❌ Incorrect code. Try again.</div>
+                <button onclick="verifyPassword()" id="access-button" class="mt-6 w-full py-4 text-lg font-bold text-white rounded-xl transition duration-300 bg-gradient-to-r from-primary to-green-600 hover:from-green-600 hover:to-primary shadow-lg shadow-green-500/50 disabled:opacity-50" disabled>
+                    <i class="fas fa-sign-in-alt mr-2"></i> Access Channel
+                </button>
             </div>
         </div>
     </div>
@@ -121,35 +95,28 @@
     <div id="login-container" class="fixed inset-0 bg-gray-900 bg-opacity-80 backdrop-blur-sm z-[9998] flex items-center justify-center hidden">
         <div class="bg-white rounded-3xl p-8 max-w-lg w-11/12 shadow-2xl transition-all duration-500 transform scale-100">
             <div class="text-center mb-6">
-                <div class="mx-auto w-16 h-16 bg-primary rounded-xl text-3xl text-white flex items-center justify-center mb-3">WEX</div>
                 <h2 class="text-2xl font-extrabold text-gray-800">Complete Your Staff Profile</h2>
-                <p class="text-gray-500 mt-1">This is a **one-time** registration for persistent login.</p>
             </div>
-
             <form onsubmit="handleLogin(event)">
                 <div class="grid md:grid-cols-2 gap-4">
                     <div class="mb-4 md:col-span-2">
                         <label class="block text-gray-700 font-semibold mb-1">👤 Full Name</label>
-                        <input type="text" id="staff-name" placeholder="E.g., Dr. Jane Doe" required class="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition">
+                        <input type="text" id="staff-name" required class="w-full p-3 border border-gray-300 rounded-xl">
                     </div>
                     <div class="mb-4">
                         <label class="block text-gray-700 font-semibold mb-1">💼 Department</label>
-                        <select id="staff-department" required class="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition">
+                        <select id="staff-department" required class="w-full p-3 border border-gray-300 rounded-xl">
                             <option value="">Select Department...</option>
                             <option value="Administration">Administration</option>
                             <option value="Lower Primary">Lower Primary</option>
                             <option value="Upper Primary">Upper Primary</option>
                             <option value="JHS">JHS</option>
-                            <option value="Mathematics">Mathematics</option>
-                            <option value="English">English</option>
-                            <option value="Science">Science</option>
-                            <option value="ICT">ICT</option>
                             <option value="Other">Other</option>
                         </select>
                     </div>
                     <div class="mb-4">
                         <label class="block text-gray-700 font-semibold mb-1">📞 Staff ID / Phone</label>
-                        <input type="text" id="staff-id" placeholder="Staff ID or Contact" required class="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition">
+                        <input type="text" id="staff-id" required class="w-full p-3 border border-gray-300 rounded-xl">
                     </div>
                 </div>
                 
@@ -159,7 +126,6 @@
             </form>
         </div>
     </div>
-
 
     <!-- Chat Container -->
     <div id="chat-container" class="max-w-4xl mx-auto h-screen relative flex flex-col bg-white shadow-2xl rounded-xl md:my-6 md:h-[calc(100vh-3rem)] overflow-hidden hidden">
@@ -189,7 +155,6 @@
 
         <!-- Messages Area -->
         <div id="chat-messages" class="chat-messages flex-grow overflow-y-auto p-4 md:p-6 bg-gray-50 space-y-4">
-            <!-- Messages are injected here -->
             <div id="empty-state" class="text-center pt-16 text-gray-400">
                 <i class="fas fa-inbox text-6xl mb-4"></i>
                 <h3 class="text-xl font-semibold text-gray-600">Start the Conversation</h3>
@@ -219,12 +184,21 @@
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
         
         let firebaseConfig = {};
+        let configError = null;
         try {
-            // Attempt to parse the config provided by the environment
             const configString = typeof __firebase_config !== 'undefined' ? __firebase_config : '{}';
-            firebaseConfig = JSON.parse(configString);
+            const parsedConfig = JSON.parse(configString);
+            
+            // Basic validation
+            if (parsedConfig && parsedConfig.projectId && parsedConfig.apiKey) {
+                firebaseConfig = parsedConfig;
+            } else {
+                 configError = "Missing projectId or apiKey in configuration.";
+                 console.error("Config Check: ", configError);
+            }
         } catch (e) {
-            console.error("CRITICAL: Failed to parse Firebase config string.", e);
+            configError = "Failed to parse Firebase configuration string.";
+            console.error("Config Check: ", configError, e);
         }
         
         const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
@@ -232,24 +206,85 @@
         let app, db, auth;
         let currentStaff = null;
         let unsubscribeMessages = null;
-        let isAuthReady = false;
-
+        
         // --- DOM Elements ---
         const chatContainer = document.getElementById('chat-container');
         const loginContainer = document.getElementById('login-container');
-        const passwordModal = document.getElementById('password-modal');
+        const statusModal = document.getElementById('status-modal');
+        const statusDashboard = document.getElementById('status-dashboard');
         const userDisplay = document.getElementById('user-display');
         const chatMessagesEl = document.getElementById('chat-messages');
         const loadingOverlay = document.getElementById('loading-overlay');
         const chatInput = document.getElementById('chat-input');
         const messageBox = document.getElementById('message-box');
+        const accessButton = document.getElementById('access-button');
         
         // Enable Firebase debugging logs for troubleshooting
         setLogLevel('debug');
+
+        // --- STATUS DASHBOARD RENDER ---
+        function renderStatusDashboard() {
+            let configReady = configError === null;
+
+            const dashItems = [
+                {
+                    label: "Firebase Project ID",
+                    value: firebaseConfig.projectId || 'N/A',
+                    status: firebaseConfig.projectId ? 'OK' : 'MISSING'
+                },
+                {
+                    label: "API Key Status",
+                    value: firebaseConfig.apiKey ? 'Present' : 'Missing',
+                    status: firebaseConfig.apiKey ? 'OK' : 'MISSING'
+                },
+                {
+                    label: "Auth Token Supplied",
+                    value: initialAuthToken ? 'Present' : 'Missing',
+                    status: initialAuthToken ? 'OK' : 'ANON'
+                },
+                {
+                    label: "Configuration Parsing",
+                    value: configReady ? 'Success' : 'FAILURE',
+                    status: configReady ? 'OK' : 'ERROR'
+                }
+            ];
+            
+            statusDashboard.innerHTML = '';
+            let overallStatus = true;
+
+            dashItems.forEach(item => {
+                const isOk = item.status === 'OK';
+                if (item.status === 'MISSING' || item.status === 'ERROR') {
+                    overallStatus = false;
+                }
+                
+                const statusIcon = isOk ? '<i class="fas fa-check-circle text-green-500"></i>' : (item.status === 'ANON' ? '<i class="fas fa-exclamation-triangle text-yellow-500"></i>' : '<i class="fas fa-times-circle text-red-500"></i>');
+                const valueClass = isOk ? 'text-gray-800' : (item.status === 'ANON' ? 'text-yellow-700' : 'text-red-700 font-bold');
+
+                statusDashboard.innerHTML += `
+                    <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg border">
+                        <span class="text-sm text-gray-600 font-medium">${item.label}</span>
+                        <div class="flex items-center gap-2">
+                            ${statusIcon}
+                            <span class="text-sm ${valueClass}">${item.value}</span>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            // Enable button only if configuration is ready
+            accessButton.disabled = !overallStatus;
+            if (!overallStatus) {
+                accessButton.textContent = "Configuration Error - Check Console";
+                showMessage("Critical configuration data is missing. Check the console and contact support.", true);
+            } else {
+                accessButton.textContent = "Access Channel";
+            }
+        }
         
         // --- UTILITY FUNCTIONS ---
-        
         function showMessage(text, isError = false) {
+            // Implementation remains the same
             messageBox.textContent = text;
             messageBox.className = `fixed top-4 right-4 z-[10000] p-4 rounded-lg shadow-xl font-medium transition-all duration-300 transform ${isError ? 'bg-red-600' : 'bg-green-600'} translate-x-0`;
             messageBox.style.display = 'block';
@@ -276,9 +311,8 @@
         }
 
         function formatTimestamp(timestamp) {
-            if (!timestamp) return 'N/A';
+             if (!timestamp) return 'N/A';
             const date = timestamp instanceof Date ? timestamp : timestamp.toDate();
-            // Format time (e.g., 03:05 PM) and date (e.g., 11/15)
             const time = date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
             const dateStr = date.toLocaleDateString('en-US', { month: 'numeric', day: 'numeric' });
             return `${time} (${dateStr})`;
@@ -303,14 +337,15 @@
 
         // --- PASSWORD VERIFICATION ---
         window.verifyPassword = function() {
+            if (accessButton.disabled) return;
+
             const input = document.getElementById('password-input');
             const error = document.getElementById('password-error');
             
             if (input.value.toUpperCase() === CORRECT_PASSWORD) {
                 sessionStorage.setItem('staffAuthenticated', 'true');
-                passwordModal.classList.add('opacity-0');
-                passwordModal.classList.add('pointer-events-none');
-                setTimeout(() => { passwordModal.style.display = 'none'; }, 500);
+                statusModal.classList.add('opacity-0', 'pointer-events-none');
+                setTimeout(() => { statusModal.style.display = 'none'; }, 500);
                 
                 initializeAppAndAuth();
             } else {
@@ -318,13 +353,8 @@
                 input.classList.add('border-red-500');
                 input.value = '';
                 
-                setTimeout(() => {
-                    input.classList.remove('border-red-500');
-                }, 500);
-                
-                setTimeout(() => {
-                    error.classList.add('hidden');
-                }, 3000);
+                setTimeout(() => { input.classList.remove('border-red-500'); }, 500);
+                setTimeout(() => { error.classList.add('hidden'); }, 3000);
             }
         }
 
@@ -337,43 +367,33 @@
             try {
                 showLoading(true);
 
-                // --- 1. CONFIG CHECK ---
+                // Check again to be safe
                 if (!firebaseConfig || !firebaseConfig.projectId) {
-                    console.error("AUTH ERROR: Firebase configuration is missing or incomplete.");
-                    showMessage("Configuration error: Cannot initialize Firebase.", true);
-                    showLoading(false);
-                    return;
+                    throw new Error("Initialization failed due to invalid configuration data.");
                 }
-                console.log("Initialization Step 1: Configuration is valid. Starting Firebase App.");
 
-                // --- 2. INITIALIZE APP ---
+                // --- 1. INITIALIZE APP ---
+                console.log("Initialization Step 1: Initializing Firebase App...");
                 app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
                 auth = getAuth(app);
                 
                 await setPersistence(auth, browserLocalPersistence);
 
-                console.log("Initialization Step 2: Firebase services initialized. Attempting Sign-in.");
-
-                // --- 3. SIGN IN ---
+                // --- 2. SIGN IN ---
+                console.log("Initialization Step 2: Attempting Sign-in...");
                 if (initialAuthToken) {
-                    console.log("Initialization Step 3: Signing in with custom token.");
                     await signInWithCustomToken(auth, initialAuthToken);
                 } else {
-                    console.log("Initialization Step 3: No custom token found, signing in anonymously.");
                     await signInAnonymously(auth);
                 }
 
-                // --- 4. AUTH LISTENER ---
-                // The main flow continues ONLY after Firebase confirms a user is signed in
+                // --- 3. AUTH LISTENER ---
                 onAuthStateChanged(auth, (user) => {
                     if (user) {
-                        isAuthReady = true;
-                        console.log("Initialization Step 4: Authentication successful. UID:", user.uid);
-                        // Only proceed to profile check once auth state is confirmed
+                        console.log("Initialization Step 3: Auth state confirmed. UID:", user.uid);
                         checkStaffProfile(user.uid);
                     } else {
-                        isAuthReady = false;
                         console.log("Auth State Changed: User signed out.");
                         showChatUI(false);
                         showLoading(false);
@@ -388,13 +408,14 @@
                 showMessage(`Authentication failed (${error.code || 'UNKNOWN'}). Check console for debug logs.`, true);
                 showLoading(false);
                 sessionStorage.removeItem('staffAuthenticated');
-                passwordModal.style.display = 'flex';
+                statusModal.style.display = 'flex';
+                renderStatusDashboard(); // Re-render dashboard on failure
             }
         }
 
         // --- PROFILE MANAGEMENT (ONE-TIME LOGIN) ---
         async function checkStaffProfile(uid) {
-            console.log("Profile Step 5: Checking for existing staff profile.");
+            console.log("Profile Step 4: Checking for existing staff profile.");
             const profileRef = doc(db, getProfilePath(uid));
             try {
                 const profileSnap = await getDoc(profileRef);
@@ -403,10 +424,10 @@
                     currentStaff = profileSnap.data();
                     currentStaff.uid = uid;
                     await setDoc(profileRef, { lastLogin: serverTimestamp() }, { merge: true });
-                    console.log("Profile Step 6: Profile found. Starting chat session.");
+                    console.log("Profile Step 5: Profile found. Starting chat session.");
                     startChatSession();
                 } else {
-                    console.log("Profile Step 6: No profile found. Redirecting to registration.");
+                    console.log("Profile Step 5: No profile found. Redirecting to registration.");
                     showLoading(false);
                     loginContainer.classList.remove('hidden');
                     chatContainer.classList.add('hidden');
@@ -421,7 +442,6 @@
         window.handleLogin = async function(event) {
             event.preventDefault();
             
-            // Check if auth is available before proceeding
             if (!auth || !auth.currentUser) {
                 showMessage("Error: Authentication not ready. Please refresh.", true);
                 return;
@@ -461,7 +481,7 @@
         function startChatSession() {
             showLoading(false);
             loginContainer.classList.add('hidden');
-            showChatUI(true);
+            chatContainer.classList.remove('hidden');
             
             const staffIdShort = currentStaff.uid.substring(0, 6);
             userDisplay.innerHTML = `${currentStaff.name} <span class="text-xs opacity-70 ml-1">#${staffIdShort}</span>`;
@@ -469,40 +489,23 @@
             loadMessages();
         }
         
-        function showChatUI(show) {
-             chatContainer.classList.toggle('hidden', !show);
-             if (show) {
-                 setTimeout(() => chatInput.focus(), 100);
-             }
-        }
-
-        // --- CHAT MESSAGES LOGIC (2-WEEK HISTORY) ---
+        // --- CHAT MESSAGES LOGIC ---
         function loadMessages() {
-            // Guard clause to ensure db is ready
-            if (!db || !currentStaff || !currentStaff.uid) {
-                console.warn("Attempted to load messages before DB/Profile was ready.");
-                return;
-            }
+            if (!db || !currentStaff || !currentStaff.uid) return;
             
             if (unsubscribeMessages) {
                 unsubscribeMessages(); 
             }
 
-            // Calculate timestamp for 14 days ago 
             const twoWeeksAgo = Date.now() - (14 * 24 * 60 * 60 * 1000);
-            
             const messagesRef = collection(db, getMessagesCollectionPath());
             
-            // Query: messages in last 14 days, ordered by timestamp
-            // NOTE: Firestore requires the first orderBy field to match the field used in where() 
-            // when using range operators (<, >, <=, >=).
             const q = query(
                 messagesRef,
                 where('timestamp', '>=', twoWeeksAgo),
                 orderBy('timestamp', 'asc')
             );
 
-            // Real-time listener
             unsubscribeMessages = onSnapshot(q, (snapshot) => {
                 const messages = [];
                 snapshot.forEach(doc => messages.push({ id: doc.id, ...doc.data() }));
@@ -518,23 +521,17 @@
             
             chatMessagesEl.innerHTML = '';
             
-            if (messages.length === 0) {
-                document.getElementById('empty-state').style.display = 'block';
-                return;
-            } else {
-                 document.getElementById('empty-state').style.display = 'none';
-            }
+            const emptyStateEl = document.getElementById('empty-state');
+            emptyStateEl.style.display = messages.length === 0 ? 'block' : 'none';
             
             let lastDate = null;
 
             messages.forEach(msg => {
-                // Add date divider
                 const currentDateKey = getFormattedDate(msg.timestamp);
                 if (currentDateKey !== lastDate) {
                     const divider = document.createElement('div');
                     divider.className = 'text-center my-6 relative';
                     divider.innerHTML = `<span class="bg-gray-50 px-3 py-1 text-xs font-medium text-gray-500 rounded-full border border-gray-200 z-10 relative">${currentDateKey}</span>`;
-                    divider.style.setProperty('--primary-dark', '#E5E7EB');
                     chatMessagesEl.appendChild(divider);
                     lastDate = currentDateKey;
                 }
@@ -544,7 +541,6 @@
                 chatMessagesEl.appendChild(messageEl);
             });
             
-            // Auto-scroll only if already near the bottom
             if (shouldScroll) {
                 chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
             }
@@ -594,7 +590,7 @@
             };
             
             chatInput.value = '';
-            chatInput.style.height = '48px'; // Reset height
+            chatInput.style.height = '48px'; 
             
             try {
                 const messagesRef = collection(db, getMessagesCollectionPath());
@@ -612,9 +608,8 @@
             }
         }
 
-        // Auto-resize textarea
         chatInput.addEventListener('input', function() {
-            this.style.height = '48px'; /* Min height */
+            this.style.height = '48px'; 
             this.style.height = (this.scrollHeight) + 'px';
         });
         
@@ -623,19 +618,9 @@
             if (!window.confirm('Are you sure you want to log out?')) return; 
 
             showLoading(true);
-            
-            // Clean up listener
-            if (unsubscribeMessages) {
-                unsubscribeMessages();
-                unsubscribeMessages = null;
-            }
-            
-            // Sign out
-            if (auth) {
-                await signOut(auth).catch(e => console.error("Sign out error:", e));
-            }
+            if (unsubscribeMessages) { unsubscribeMessages(); unsubscribeMessages = null; }
+            if (auth) { await signOut(auth).catch(e => console.error("Sign out error:", e)); }
 
-            // Clean up state and UI
             currentStaff = null;
             sessionStorage.removeItem('staffAuthenticated');
             chatMessagesEl.innerHTML = '';
@@ -644,19 +629,24 @@
             chatContainer.classList.add('hidden');
             loginContainer.classList.add('hidden');
             
-            // Show password gate again
-            passwordModal.style.display = 'flex';
-            passwordModal.classList.remove('opacity-0', 'pointer-events-none');
+            statusModal.style.display = 'flex';
+            statusModal.classList.remove('opacity-0', 'pointer-events-none');
+            renderStatusDashboard();
         }
 
         // --- INITIALIZE ON LOAD ---
         window.onload = () => {
-             // Initial check for password gate
+             renderStatusDashboard(); // Render config status immediately
+
              if (sessionStorage.getItem('staffAuthenticated') === 'true') {
-                passwordModal.style.display = 'none';
-                initializeAppAndAuth();
+                // If previously authenticated, try to bypass password gate if config is OK
+                if (configError === null) {
+                    statusModal.style.display = 'none';
+                    initializeAppAndAuth();
+                }
             } else {
-                passwordModal.style.display = 'flex';
+                // Not authenticated, show the status/password modal
+                statusModal.style.display = 'flex';
                 document.getElementById('password-input').focus();
             }
         };
