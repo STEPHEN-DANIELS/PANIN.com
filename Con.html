@@ -211,7 +211,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged, signOut, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, setDoc, onSnapshot, collection, query, where, addDoc, serverTimestamp, orderBy, limit } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, setDoc, onSnapshot, collection, query, where, addDoc, serverTimestamp, orderBy, limit, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
         
         // --- GLOBAL CONFIGURATION ---
         const CORRECT_PASSWORD = 'STAFF';
@@ -234,6 +234,9 @@
         const loadingOverlay = document.getElementById('loading-overlay');
         const chatInput = document.getElementById('chat-input');
         const messageBox = document.getElementById('message-box');
+        
+        // Enable Firebase debugging logs for troubleshooting
+        setLogLevel('debug');
         
         // --- UTILITY FUNCTIONS ---
         
@@ -325,31 +328,43 @@
 
             try {
                 showLoading(true);
+                
+                // 1. Initialize App
                 app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
                 auth = getAuth(app);
                 
                 await setPersistence(auth, browserLocalPersistence);
 
+                // 2. Sign In (using custom token if available, otherwise anonymously)
                 if (initialAuthToken) {
                     await signInWithCustomToken(auth, initialAuthToken);
                 } else {
+                    console.warn("No initial auth token found, signing in anonymously.");
                     await signInAnonymously(auth);
                 }
 
+                // 3. Set up Auth Listener
                 onAuthStateChanged(auth, (user) => {
                     if (user) {
                         isAuthReady = true;
+                        console.log("Authentication successful. User UID:", user.uid);
                         checkStaffProfile(user.uid);
                     } else {
                         isAuthReady = false;
+                        console.log("Authentication state changed to signed out.");
                         showChatUI(false);
                         showLoading(false);
                     }
                 });
             } catch (error) {
-                console.error("Firebase initialization or auth error:", error);
-                showMessage("Authentication failed. Please check console.", true);
+                // *** IMPROVED ERROR LOGGING ***
+                console.error("--- CRITICAL FIREBASE INIT/AUTH FAILURE ---");
+                console.error("Specific Error:", error.code, error.message);
+                console.error("Configuration Check (sensitive fields redacted):", 
+                    { appId: appId, apiKey: firebaseConfig.apiKey ? 'PRESENT' : 'MISSING', authDomain: firebaseConfig.authDomain });
+                
+                showMessage(`Authentication failed (${error.code || 'UNKNOWN'}). Check console for details.`, true);
                 showLoading(false);
                 sessionStorage.removeItem('staffAuthenticated');
                 passwordModal.style.display = 'flex';
@@ -569,7 +584,7 @@
         
         // --- LOGOUT ---
         window.logout = async function() {
-            if (!confirm('Are you sure you want to log out?')) return; // Using native confirm due to environment constraints
+            if (!window.confirm('Are you sure you want to log out?')) return; 
 
             showLoading(true);
             
