@@ -292,6 +292,18 @@
             box-shadow: 0 12px 32px rgba(11, 143, 74, 0.4);
         }
 
+        .onetime-notice {
+            background: #E8F5EE;
+            border: 2px solid #0B8F4A;
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            font-size: 0.85rem;
+            color: #0B8F4A;
+            font-weight: 600;
+            text-align: center;
+        }
+
         /* Chat Container */
         .chat-container {
             max-width: 1400px;
@@ -364,20 +376,12 @@
             font-weight: 600;
         }
 
-        .logout-btn {
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 10px;
-            color: white;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .logout-btn:hover {
+        .history-badge {
             background: rgba(255, 255, 255, 0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
         }
 
         /* Chat Messages Area */
@@ -528,33 +532,6 @@
             transform: scale(0.95);
         }
 
-        /* Typing Indicator */
-        .typing-indicator {
-            display: none;
-            padding: 1rem 2rem;
-            color: #64748b;
-            font-size: 0.85rem;
-            font-style: italic;
-        }
-
-        .typing-indicator.show {
-            display: block;
-        }
-
-        /* Scrollbar */
-        .chat-messages::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .chat-messages::-webkit-scrollbar-track {
-            background: #f1f5f9;
-        }
-
-        .chat-messages::-webkit-scrollbar-thumb {
-            background: #0B8F4A;
-            border-radius: 10px;
-        }
-
         /* Empty State */
         .empty-state {
             text-align: center;
@@ -572,6 +549,20 @@
             font-size: 1.5rem;
             color: #475569;
             margin-bottom: 0.5rem;
+        }
+
+        /* Scrollbar */
+        .chat-messages::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .chat-messages::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: #0B8F4A;
+            border-radius: 10px;
         }
 
         /* Responsive */
@@ -637,6 +628,10 @@
                 <p style="color: #64748b;">Please provide your details to continue</p>
             </div>
 
+            <div class="onetime-notice">
+                ⏰ One-Time Login - Your session will remain active for 2 weeks
+            </div>
+
             <form onsubmit="handleLogin(event)">
                 <div class="form-group">
                     <label>👤 Full Name</label>
@@ -661,7 +656,7 @@
                     <label>📞 Staff ID / Phone</label>
                     <input type="text" id="staff-id" placeholder="Enter your staff ID or phone number" required>
                 </div>
-                <button type="submit" class="login-button">✅ Enter Staff Chat</button>
+                <button type="submit" class="login-button">✅ Enter Staff Chat (Valid for 2 Weeks)</button>
             </form>
         </div>
     </div>
@@ -679,7 +674,7 @@
             <div class="user-info">
                 <div class="online-count" id="online-count">👥 Staff Online</div>
                 <div class="user-badge" id="user-display"></div>
-                <button class="logout-btn" onclick="logout()">🚪 Logout</button>
+                <div class="history-badge" id="session-expiry"></div>
             </div>
         </div>
 
@@ -689,10 +684,6 @@
                 <h3>Welcome to Staff Communication</h3>
                 <p>Start collaborating with your colleagues by sending a message below</p>
             </div>
-        </div>
-
-        <div class="typing-indicator" id="typing-indicator">
-            Someone is typing...
         </div>
 
         <div class="chat-input-container">
@@ -705,6 +696,9 @@
 
     <script>
         const CORRECT_PASSWORD = 'STAFF';
+        const TWO_WEEKS_MS = 14 * 24 * 60 * 60 * 1000; // 2 weeks in milliseconds
+        const MESSAGE_RETENTION_DAYS = 14; // Keep messages for 2 weeks
+        
         let currentStaff = null;
         let messages = [];
 
@@ -714,7 +708,8 @@
             const error = document.getElementById('password-error');
             
             if (input.value === CORRECT_PASSWORD) {
-                sessionStorage.setItem('staffAuthenticated', 'true');
+                localStorage.setItem('staffAuthenticated', 'true');
+                localStorage.setItem('authTimestamp', Date.now());
                 document.getElementById('password-modal').classList.add('hidden');
             } else {
                 error.classList.add('show');
@@ -736,6 +731,15 @@
             if (e.key === 'Enter') verifyPassword();
         });
 
+        // Check if authentication is still valid (within 2 weeks)
+        function isAuthValid() {
+            const authTimestamp = localStorage.getItem('authTimestamp');
+            if (!authTimestamp) return false;
+            
+            const timeElapsed = Date.now() - parseInt(authTimestamp);
+            return timeElapsed < TWO_WEEKS_MS;
+        }
+
         // Handle login
         function handleLogin(event) {
             event.preventDefault();
@@ -748,10 +752,16 @@
                 name: name,
                 department: department,
                 staffId: staffId,
-                joinedAt: new Date().toISOString()
+                joinedAt: new Date().toISOString(),
+                loginTimestamp: Date.now()
             };
             
-            sessionStorage.setItem('currentStaff', JSON.stringify(currentStaff));
+            // Save to localStorage for persistent login
+            localStorage.setItem('currentStaff', JSON.stringify(currentStaff));
+            localStorage.setItem('loginTimestamp', Date.now());
+            
+            // Capture and log client details
+            captureClientDetails(currentStaff);
             
             document.getElementById('login-container').classList.add('hidden');
             document.getElementById('chat-container').style.display = 'flex';
@@ -759,15 +769,56 @@
             const badge = document.getElementById('user-display');
             badge.textContent = `${name} (${department})`;
             
+            updateSessionExpiry();
             loadMessages();
             updateOnlineCount();
         }
 
-        // Load messages
+        // Capture client details
+        function captureClientDetails(staff) {
+            const clientDetails = {
+                staff: staff,
+                browser: navigator.userAgent,
+                platform: navigator.platform,
+                language: navigator.language,
+                screenSize: `${screen.width}x${screen.height}`,
+                timestamp: new Date().toISOString(),
+                ipAddress: 'Client-Side (Use backend for actual IP)'
+            };
+            
+            // Store client details
+            let clientLog = JSON.parse(localStorage.getItem('clientLog') || '[]');
+            clientLog.push(clientDetails);
+            localStorage.setItem('clientLog', JSON.stringify(clientLog));
+            
+            console.log('Client Login Details Captured:', clientDetails);
+        }
+
+        // Update session expiry display
+        function updateSessionExpiry() {
+            const loginTimestamp = localStorage.getItem('loginTimestamp');
+            if (!loginTimestamp) return;
+            
+            const expiryDate = new Date(parseInt(loginTimestamp) + TWO_WEEKS_MS);
+            const daysLeft = Math.ceil((expiryDate - Date.now()) / (1000 * 60 * 60 * 24));
+            
+            const expiryBadge = document.getElementById('session-expiry');
+            expiryBadge.textContent = `⏰ ${daysLeft} days left`;
+        }
+
+        // Clean old messages (older than 2 weeks)
+        function cleanOldMessages() {
+            const cutoffTime = Date.now() - (MESSAGE_RETENTION_DAYS * 24 * 60 * 60 * 1000);
+            messages = messages.filter(msg => msg.timestamp > cutoffTime);
+            localStorage.setItem('staffMessages', JSON.stringify(messages));
+        }
+
+        // Load messages from last 2 weeks
         function loadMessages() {
             const savedMessages = localStorage.getItem('staffMessages');
             if (savedMessages) {
                 messages = JSON.parse(savedMessages);
+                cleanOldMessages(); // Remove messages older than 2 weeks
                 renderMessages();
             }
         }
@@ -789,6 +840,7 @@
                         <div class="empty-icon">💬</div>
                         <h3>Welcome to Staff Communication</h3>
                         <p>Start collaborating with your colleagues by sending a message below</p>
+                        <p style="margin-top: 1rem; font-size: 0.85rem;">Messages are kept for 2 weeks</p>
                     </div>
                 `;
                 return;
@@ -806,17 +858,13 @@
         // Create message element
         function createMessageElement(msg, isOwn) {
             const div = document.createElement('div');
-            div.className = `message ${isOwn ? 'own' : ''}`;
-            
-            const initial = msg.staffName.charAt(0).toUpperCase();
-            
             div.innerHTML = `
                 <div class="message-avatar">${initial}</div>
                 <div class="message-content">
                     <div class="message-header">
                         <span class="message-name">${msg.staffName}</span>
                         <span class="message-role">${msg.department}</span>
-                        <span class="message-time">${msg.time}</span>
+                        <span class="message-time">${dateStr}</span>
                     </div>
                     <div class="message-bubble">${msg.text}</div>
                 </div>
@@ -865,36 +913,83 @@
 
         // Update online count
         function updateOnlineCount() {
-            const savedStaff = sessionStorage.getItem('currentStaff');
+            const savedStaff = localStorage.getItem('currentStaff');
             const count = savedStaff ? 1 : 0;
             document.getElementById('online-count').textContent = `👥 ${count} Staff Online`;
         }
 
-        // Logout
-        function logout() {
-            if (confirm('Are you sure you want to logout?')) {
-                sessionStorage.removeItem('currentStaff');
-                currentStaff = null;
-                document.getElementById('chat-container').style.display = 'none';
-                document.getElementById('login-container').classList.remove('hidden');
-                document.getElementById('staff-name').value = '';
-                document.getElementById('staff-department').value = '';
-                document.getElementById('staff-id').value = '';
+        // Check session validity periodically
+        function checkSessionValidity() {
+            if (!isAuthValid()) {
+                // Session expired
+                alert('Your 2-week session has expired. Please log in again.');
+                localStorage.removeItem('staffAuthenticated');
+                localStorage.removeItem('authTimestamp');
+                localStorage.removeItem('currentStaff');
+                localStorage.removeItem('loginTimestamp');
+                window.location.reload();
             }
+            
+            if (!isLoginValid()) {
+                // Login expired
+                alert('Your 2-week login has expired. Please log in again.');
+                localStorage.removeItem('currentStaff');
+                localStorage.removeItem('loginTimestamp');
+                window.location.reload();
+            }
+        }
+
+        // Check if login is still valid (within 2 weeks)
+        function isLoginValid() {
+            const loginTimestamp = localStorage.getItem('loginTimestamp');
+            if (!loginTimestamp) return false;
+            
+            const timeElapsed = Date.now() - parseInt(loginTimestamp);
+            return timeElapsed < TWO_WEEKS_MS;
+        }
+
+        // Get all stored client details (for admin review)
+        function getClientLog() {
+            const clientLog = JSON.parse(localStorage.getItem('clientLog') || '[]');
+            console.table(clientLog);
+            return clientLog;
+        }
+
+        // Export client log (for admin purposes)
+        function exportClientLog() {
+            const clientLog = getClientLog();
+            const dataStr = JSON.stringify(clientLog, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'staff-login-log.json';
+            link.click();
         }
 
         // Initialize
         window.onload = () => {
-            const authenticated = sessionStorage.getItem('staffAuthenticated');
-            const savedStaff = sessionStorage.getItem('currentStaff');
+            // Check authentication validity
+            const authenticated = localStorage.getItem('staffAuthenticated');
+            const authValid = isAuthValid();
             
-            if (authenticated !== 'true') {
-                // Show password modal
+            if (authenticated !== 'true' || !authValid) {
+                // Need to authenticate
+                if (authenticated === 'true' && !authValid) {
+                    localStorage.removeItem('staffAuthenticated');
+                    localStorage.removeItem('authTimestamp');
+                }
                 document.getElementById('password-input').focus();
             } else {
+                // Already authenticated
                 document.getElementById('password-modal').classList.add('hidden');
                 
-                if (savedStaff) {
+                // Check if user is logged in
+                const savedStaff = localStorage.getItem('currentStaff');
+                const loginValid = isLoginValid();
+                
+                if (savedStaff && loginValid) {
+                    // Auto-login with saved credentials
                     currentStaff = JSON.parse(savedStaff);
                     document.getElementById('login-container').classList.add('hidden');
                     document.getElementById('chat-container').style.display = 'flex';
@@ -902,10 +997,62 @@
                     const badge = document.getElementById('user-display');
                     badge.textContent = `${currentStaff.name} (${currentStaff.department})`;
                     
+                    updateSessionExpiry();
                     loadMessages();
                     updateOnlineCount();
+                    
+                    // Log returning user
+                    console.log('Returning user:', currentStaff.name);
+                } else {
+                    // Login expired, clear and show login form
+                    if (savedStaff && !loginValid) {
+                        localStorage.removeItem('currentStaff');
+                        localStorage.removeItem('loginTimestamp');
+                    }
+                    // Login form is already visible
                 }
             }
+            
+            // Check session validity every hour
+            setInterval(checkSessionValidity, 60 * 60 * 1000);
+            
+            // Update session expiry display every minute
+            setInterval(updateSessionExpiry, 60 * 1000);
         };
+
+        // Admin functions (accessible via console)
+        window.getClientLog = getClientLog;
+        window.exportClientLog = exportClientLog;
+        window.clearAllData = function() {
+            if (confirm('Are you sure you want to clear all data? This cannot be undone.')) {
+                localStorage.clear();
+                window.location.reload();
+            }
+        };
+
+        // Display info on console
+        console.log('%c🔐 Staff Communication System', 'color: #0B8F4A; font-size: 16px; font-weight: bold;');
+        console.log('%cOne-Time Login: Active for 2 weeks', 'color: #667eea; font-size: 12px;');
+        console.log('%cMessage History: Last 2 weeks displayed', 'color: #667eea; font-size: 12px;');
+        console.log('%c\nAdmin Commands:', 'color: #e74c3c; font-size: 14px; font-weight: bold;');
+        console.log('%cgetClientLog() - View all login details', 'color: #64748b; font-size: 12px;');
+        console.log('%cexportClientLog() - Export login log as JSON', 'color: #64748b; font-size: 12px;');
+        console.log('%cclearAllData() - Clear all stored data', 'color: #64748b; font-size: 12px;');
+        className = `message ${isOwn ? 'own' : ''}`;
+            
+            const initial = msg.staffName.charAt(0).toUpperCase();
+            
+            // Format date
+            const messageDate = new Date(msg.timestamp);
+            const today = new Date();
+            const isToday = messageDate.toDateString() === today.toDateString();
+            
+            const dateStr = isToday ? 
+                messageDate.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }) :
+                messageDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) + ' ' + 
+                messageDate.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+            
+            div.
     </script>
 </body>
+</html>
