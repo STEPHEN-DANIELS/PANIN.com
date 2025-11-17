@@ -3,20 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Profiles - Wexford Community School</title>
+    <title>Student & Alumni Profiles - Wexford Community School</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
 
         :root {
             --primary-green: #0B8F4A;
-            --primary-dark: #076838;
+            --primary-dark: #05A854;
             --primary-light: #E8F5EE;
-            --white: #FFFFFF;
-            --light-gray: #F8FAFC;
-            --border-gray: #E2E8F0;
-            --text-dark: #1E293B;
-            --text-medium: #475569;
-            --text-light: #94A3B8;
+            --text-dark: #2d3748;
+            --text-medium: #4a5568;
+            --text-light: #718096;
+            --border-light: #e2e8f0;
         }
 
         * {
@@ -26,80 +24,170 @@
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Inter', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--text-dark);
+            line-height: 1.6;
             min-height: 100vh;
-            overflow-x: hidden;
         }
 
-        /* Animated Background */
-        .bg-animation {
+        /* Passcode Modal */
+        .passcode-modal {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            z-index: 0;
-            pointer-events: none;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .particle {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.15);
+        .passcode-modal.hidden {
+            display: none;
+        }
+
+        .passcode-content {
+            background: white;
+            border-radius: 24px;
+            padding: 3rem 2.5rem;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            animation: slideUp 0.4s ease-out;
+            text-align: center;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .passcode-logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 1.5rem;
             border-radius: 50%;
-            animation: float 20s infinite ease-in-out;
+            border: 4px solid var(--primary-green);
+            box-shadow: 0 8px 24px rgba(11, 143, 74, 0.3);
         }
 
-        .particle:nth-child(1) { width: 80px; height: 80px; left: 10%; animation-delay: 0s; }
-        .particle:nth-child(2) { width: 60px; height: 60px; left: 30%; animation-delay: 2s; }
-        .particle:nth-child(3) { width: 100px; height: 100px; left: 50%; animation-delay: 4s; }
-        .particle:nth-child(4) { width: 70px; height: 70px; left: 70%; animation-delay: 6s; }
-        .particle:nth-child(5) { width: 90px; height: 90px; left: 85%; animation-delay: 8s; }
+        .passcode-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: bounce 1s ease infinite;
+        }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.5; }
-            90% { opacity: 0.5; }
-            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .passcode-content h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .passcode-content p {
+            color: var(--text-medium);
+            margin-bottom: 2rem;
+        }
+
+        .passcode-input {
+            width: 100%;
+            padding: 1.25rem 1.5rem;
+            border: 2px solid var(--border-light);
+            border-radius: 12px;
+            font-size: 1.5rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            text-align: center;
+            letter-spacing: 0.3rem;
+            transition: all 0.3s ease;
+            margin-bottom: 0.5rem;
+        }
+
+        .passcode-input:focus {
+            outline: none;
+            border-color: var(--primary-green);
+            box-shadow: 0 0 0 4px rgba(11, 143, 74, 0.1);
+        }
+
+        .passcode-input.error {
+            border-color: #ef4444;
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .passcode-error {
+            color: #ef4444;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .passcode-error.show {
+            display: block;
+        }
+
+        .passcode-button {
+            width: 100%;
+            padding: 1.25rem;
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1.125rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 24px rgba(11, 143, 74, 0.3);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .passcode-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(11, 143, 74, 0.4);
+        }
+
+        .passcode-hint {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: #FEF3C7;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            color: #92400E;
+            border: 2px solid #FDE68A;
         }
 
         .container {
             max-width: 1400px;
             margin: 0 auto;
-            background: var(--white);
-            min-height: 100vh;
+            background: white;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
             position: relative;
-            box-shadow: 0 0 80px rgba(0, 0, 0, 0.4);
-            z-index: 1;
         }
 
         /* Header */
         header {
-            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-dark) 100%);
             color: white;
             padding: 2.5rem 2rem;
             text-align: center;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -10%;
-            width: 300px;
-            height: 300px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            animation: pulse 3s ease infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 0.1; }
-            50% { transform: scale(1.2); opacity: 0.2; }
+            border-bottom: 6px solid #FFD700;
         }
 
         .header-content {
@@ -115,190 +203,100 @@
         .logo {
             width: 100px;
             height: 100px;
-            border-radius: 20px;
-            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border: 4px solid #FFD700;
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-            transition: transform 0.5s ease;
-        }
-
-        .logo:hover {
-            transform: rotate(360deg) scale(1.1);
         }
 
         .header-text h1 {
+            font-family: 'Playfair Display', serif;
             font-size: clamp(2rem, 4vw, 3rem);
-            font-weight: 800;
+            font-weight: 700;
             margin-bottom: 0.5rem;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            letter-spacing: 1px;
         }
 
         .header-text p {
             font-size: clamp(1rem, 2vw, 1.3rem);
-            font-weight: 600;
-            opacity: 0.95;
-            letter-spacing: 1px;
+            font-weight: 400;
+            opacity: 0.9;
         }
 
-        /* Dropdown Navigation */
+        /* Navigation */
         .nav-container {
-            background: var(--light-gray);
-            padding: 1.5rem;
-            border-bottom: 2px solid var(--border-gray);
+            background: var(--primary-green);
+            padding: 1rem;
+            border-bottom: 2px solid #FFD700;
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
         .nav-wrapper {
             max-width: 1200px;
             margin: 0 auto;
-            position: relative;
-        }
-
-        .dropdown-button {
-            width: 100%;
-            padding: 1.25rem 1.5rem;
-            background: white;
-            border: 2px solid var(--primary-green);
-            border-radius: 12px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 1rem;
-            color: var(--text-dark);
-            font-family: 'Poppins', sans-serif;
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            box-shadow: 0 2px 12px rgba(11, 143, 74, 0.15);
-            transition: all 0.3s ease;
-        }
-
-        .dropdown-button:hover {
-            background: var(--light-gray);
-            box-shadow: 0 4px 20px rgba(11, 143, 74, 0.25);
-        }
-
-        .dropdown-content {
-            display: flex;
             align-items: center;
-            gap: 0.75rem;
-        }
-
-        .dropdown-icon {
-            font-size: 1.5rem;
-        }
-
-        .dropdown-arrow {
-            font-size: 1.2rem;
-            transition: transform 0.3s ease;
-        }
-
-        .dropdown-arrow.open {
-            transform: rotate(180deg);
-        }
-
-        .dropdown-menu {
-            position: absolute;
-            top: calc(100% + 0.5rem);
-            left: 0;
-            right: 0;
-            background: white;
-            border: 2px solid var(--border-gray);
-            border-radius: 12px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-10px);
-            transition: all 0.3s ease;
-            z-index: 1000;
-            max-height: 450px;
-            overflow-y: auto;
-        }
-
-        .dropdown-menu.open {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .dropdown-item {
-            padding: 1.25rem 1.5rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
+            flex-wrap: wrap;
             gap: 1rem;
-            border-bottom: 1px solid var(--light-gray);
-            font-weight: 500;
-            color: var(--text-medium);
         }
 
-        .dropdown-item:last-child {
-            border-bottom: none;
+        .nav-tabs {
+            display: flex;
+            gap: 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
-        .dropdown-item:hover {
-            background: var(--light-gray);
-            color: var(--primary-green);
-            padding-left: 2rem;
-        }
-
-        .dropdown-item.active {
-            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
-            color: white;
-        }
-
-        .dropdown-item.active:hover {
-            background: linear-gradient(135deg, #05A854 0%, #0B8F4A 100%);
-        }
-
-        .dropdown-item-icon {
-            font-size: 1.5rem;
-            min-width: 30px;
-            text-align: center;
-        }
-
-        .dropdown-item-count {
-            margin-left: auto;
-            background: rgba(11, 143, 74, 0.1);
-            padding: 0.25rem 0.75rem;
-            border-radius: 12px;
-            font-size: 0.85rem;
+        .nav-tab {
+            padding: 0.75rem 1.5rem;
+            background: white;
+            border: none;
+            cursor: pointer;
             font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--text-medium);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-right: 1px solid var(--border-light);
+        }
+
+        .nav-tab:last-child {
+            border-right: none;
+        }
+
+        .nav-tab:hover {
+            background: var(--primary-light);
             color: var(--primary-green);
         }
 
-        .dropdown-item.active .dropdown-item-count {
-            background: rgba(255, 255, 255, 0.3);
+        .nav-tab.active {
+            background: var(--primary-green);
             color: white;
-        }
-
-        .dropdown-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: transparent;
-            z-index: 99;
-            display: none;
-        }
-
-        .dropdown-overlay.active {
-            display: block;
         }
 
         /* Main Content */
         main {
-            padding: 3rem 2rem;
-            background: var(--light-gray);
+            padding: 2rem;
+            background: #f8f9fa;
+            min-height: 70vh;
         }
 
-        .section-header {
-            text-align: center;
-            margin-bottom: 3rem;
-            animation: fadeIn 0.6s ease-out;
+        .content-section {
+            display: none;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
         }
 
         @keyframes fadeIn {
@@ -306,204 +304,111 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .section-header h2 {
-            font-size: clamp(2rem, 3vw, 2.5rem);
-            font-weight: 800;
-            color: var(--text-dark);
-            margin-bottom: 0.5rem;
-            position: relative;
-            display: inline-block;
+        .section-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-light);
         }
 
-        .section-header h2::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 4px;
-            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
-            border-radius: 2px;
+        .section-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--primary-green);
+            margin-bottom: 0.5rem;
         }
 
         .section-description {
             color: var(--text-medium);
             font-size: 1.1rem;
-            margin-top: 1.5rem;
+            max-width: 700px;
+            margin: 0 auto;
         }
 
-        /* Upload Section */
-        .upload-section {
+        /* Grade Selection */
+        .grade-selection {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .grade-card {
             background: white;
-            padding: 2.5rem;
-            border-radius: 20px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-            margin-bottom: 3rem;
-            border: 2px solid var(--border-gray);
-            animation: slideUp 0.6s ease-out;
-        }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .upload-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        .upload-header h3 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-dark);
-        }
-
-        .upload-form {
-            display: grid;
-            gap: 1.5rem;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .form-group label {
-            font-weight: 600;
-            color: var(--text-dark);
-            font-size: 0.95rem;
-        }
-
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            padding: 1rem 1.25rem;
-            border: 2px solid var(--border-gray);
             border-radius: 12px;
-            font-size: 1rem;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--primary-green);
-            box-shadow: 0 0 0 4px var(--primary-light);
-        }
-
-        .file-upload {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-            border: 2px dashed var(--border-gray);
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            background: var(--light-gray);
-        }
-
-        .file-upload:hover {
-            border-color: var(--primary-green);
-            background: var(--primary-light);
-        }
-
-        .file-upload input[type="file"] {
-            position: absolute;
-            opacity: 0;
-            width: 100%;
-            height: 100%;
-            cursor: pointer;
-        }
-
-        .file-upload-content {
+            padding: 1.5rem;
             text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border: 2px solid transparent;
         }
 
-        .file-upload-icon {
-            font-size: 3rem;
+        .grade-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            border-color: #FFD700;
+        }
+
+        .grade-card.active {
+            border-color: var(--primary-green);
+            background: var(--primary-green);
+            color: white;
+        }
+
+        .grade-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .grade-name {
+            font-size: 1.2rem;
+            font-weight: 600;
             margin-bottom: 0.5rem;
         }
 
-        .submit-button {
-            padding: 1.25rem;
-            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-weight: 700;
-            font-size: 1.125rem;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            box-shadow: 0 8px 24px rgba(11, 143, 74, 0.3);
-            font-family: 'Poppins', sans-serif;
+        .grade-count {
+            font-size: 0.9rem;
+            color: var(--text-light);
         }
 
-        .submit-button:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 16px 40px rgba(11, 143, 74, 0.4);
+        .grade-card.active .grade-count {
+            color: rgba(255, 255, 255, 0.8);
         }
 
-        /* Students Grid */
+        /* Student Grid */
         .students-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 2rem;
-            animation: fadeIn 0.8s ease-out 0.2s backwards;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
         }
 
         .student-card {
             background: white;
-            border-radius: 20px;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            border: 2px solid var(--border-gray);
-            transition: all 0.4s ease;
-            position: relative;
-        }
-
-        .student-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 5px;
-            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
-            transform: scaleX(0);
-            transition: transform 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-light);
         }
 
         .student-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
-            border-color: var(--primary-green);
-        }
-
-        .student-card:hover::before {
-            transform: scaleX(1);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
         }
 
         .student-photo {
             width: 100%;
-            height: 280px;
+            height: 200px;
             object-fit: cover;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-dark) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
         }
 
         .student-info {
@@ -511,17 +416,17 @@
         }
 
         .student-name {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--text-dark);
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--primary-green);
             margin-bottom: 0.5rem;
         }
 
-        .student-class {
+        .student-id {
             display: inline-block;
             background: var(--primary-light);
             color: var(--primary-green);
-            padding: 0.375rem 0.875rem;
+            padding: 0.25rem 0.75rem;
             border-radius: 20px;
             font-size: 0.85rem;
             font-weight: 600;
@@ -543,18 +448,284 @@
         }
 
         .detail-icon {
+            color: #FFD700;
+            width: 20px;
+        }
+
+        .student-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 0.5rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.25rem;
+        }
+
+        .edit-btn {
+            background: var(--primary-light);
             color: var(--primary-green);
         }
 
-        /* Empty State */
-        .empty-state {
-            text-align: center;
-            padding: 4rem 2rem;
+        .edit-btn:hover {
+            background: #d4eadf;
+        }
+
+        .graduate-btn {
+            background: #FFD700;
+            color: var(--primary-green);
+        }
+
+        .graduate-btn:hover {
+            background: #ffed4e;
+        }
+
+        .remove-btn {
+            background: #fee;
+            color: #dc2626;
+        }
+
+        .remove-btn:hover {
+            background: #fdd;
+        }
+
+        /* Alumni Grid */
+        .alumni-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .alumni-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-light);
+            position: relative;
+        }
+
+        .alumni-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: #FFD700;
+        }
+
+        .alumni-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .alumni-photo {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-dark) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+
+        .alumni-info {
+            padding: 1.5rem;
+        }
+
+        .alumni-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-green);
+            margin-bottom: 0.5rem;
+        }
+
+        .alumni-year {
+            display: inline-block;
+            background: var(--primary-green);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .alumni-details {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            font-size: 0.9rem;
             color: var(--text-medium);
         }
 
+        /* Forms */
+        .form-section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-light);
+        }
+
+        .form-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .form-header h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-green);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 0.95rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-green);
+            box-shadow: 0 0 0 3px rgba(11, 143, 74, 0.1);
+        }
+
+        .file-upload {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            border: 2px dashed var(--border-light);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: var(--primary-light);
+        }
+
+        .file-upload:hover {
+            border-color: var(--primary-green);
+            background: #d4eadf;
+        }
+
+        .file-upload input[type="file"] {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .file-upload-content {
+            text-align: center;
+        }
+
+        .file-upload-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-green);
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .submit-btn {
+            padding: 0.75rem 1.5rem;
+            background: var(--primary-green);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .submit-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .cancel-btn {
+            padding: 0.75rem 1.5rem;
+            background: var(--primary-light);
+            color: var(--text-dark);
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .cancel-btn:hover {
+            background: #d4eadf;
+        }
+
+        /* Empty States */
+        .empty-state {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: var(--text-medium);
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
         .empty-icon {
-            font-size: 5rem;
+            font-size: 4rem;
             margin-bottom: 1rem;
             opacity: 0.3;
         }
@@ -565,394 +736,304 @@
             margin-bottom: 0.5rem;
         }
 
-        /* Tab Content */
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-            animation: fadeInContent 0.5s ease-out;
-        }
-
-        @keyframes fadeInContent {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
         /* Footer */
         footer {
-            background: var(--text-dark);
-            color: #e5e7eb;
+            background: var(--primary-green);
+            color: white;
             padding: 2rem;
             text-align: center;
-            font-size: 0.95rem;
-            font-weight: 500;
+            border-top: 4px solid #FFD700;
         }
 
-        footer strong {
-            color: var(--primary-green);
+        footer p {
+            margin-bottom: 0.5rem;
         }
 
-        /* Pin Code Modal */
-        .pin-modal {
+        .footer-logo {
+            font-weight: 700;
+            color: #FFD700;
+        }
+
+        /* Modal */
+        .modal {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(10px);
-            z-index: 9999;
+            background: rgba(0, 0, 0, 0.7);
             display: flex;
             align-items: center;
             justify-content: center;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .pin-modal.hidden {
-            display: none;
-        }
-
-        .pin-content {
-            background: white;
-            border-radius: 24px;
-            padding: 3rem 2.5rem;
-            max-width: 450px;
-            width: 90%;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            animation: slideUp 0.4s ease-out;
-            text-align: center;
-        }
-
-        .pin-icon {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            animation: bounce 1s ease infinite;
-        }
-
-        .pin-content h2 {
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: var(--text-dark);
-            margin-bottom: 0.5rem;
-        }
-
-        .pin-content p {
-            color: var(--text-medium);
-            margin-bottom: 2rem;
-            font-size: 1rem;
-        }
-
-        .pin-input-wrapper {
-            margin-bottom: 1.5rem;
-        }
-
-        .pin-input {
-            width: 100%;
-            padding: 1.25rem 1.5rem;
-            border: 2px solid var(--border-gray);
-            border-radius: 12px;
-            font-size: 1.5rem;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            text-align: center;
-            letter-spacing: 0.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .pin-input:focus {
-            outline: none;
-            border-color: var(--primary-green);
-            box-shadow: 0 0 0 4px var(--primary-light);
-        }
-
-        .pin-input.error {
-            border-color: #ef4444;
-            animation: shake 0.5s ease;
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            75% { transform: translateX(10px); }
-        }
-
-        .pin-error {
-            color: #ef4444;
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-top: 0.5rem;
-            display: none;
-        }
-
-        .pin-error.show {
-            display: block;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .pin-button {
-            width: 100%;
-            padding: 1.25rem;
-            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-weight: 700;
-            font-size: 1.125rem;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            box-shadow: 0 8px 24px rgba(11, 143, 74, 0.3);
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .pin-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 32px rgba(11, 143, 74, 0.4);
-        }
-
-        .pin-button:disabled {
-            background: var(--border-gray);
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .pin-hint {
-            margin-top: 1.5rem;
+            z-index: 1000;
             padding: 1rem;
-            background: var(--light-gray);
-            border-radius: 12px;
-            font-size: 0.85rem;
-            color: var(--text-medium);
-        }
-
-        /* Lock Overlay on Forms */
-        .form-locked {
-            position: relative;
-        }
-
-        .form-locked::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(248, 250, 252, 0.95);
-            border-radius: 20px;
-            z-index: 10;
-        }
-
-        .lock-message {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 11;
-            text-align: center;
-            padding: 2rem;
-        }
-
-        .lock-icon {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            animation: pulse 2s ease infinite;
-        }
-
-        .unlock-button {
-            margin-top: 1rem;
-            padding: 1rem 2rem;
-            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 16px rgba(11, 143, 74, 0.3);
-            font-family: 'Poppins', sans-serif;
         }
 
-        .unlock-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(11, 143, 74, 0.4);
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .modal-header h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-green);
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-light);
+            transition: color 0.3s ease;
+        }
+
+        .close-btn:hover {
+            color: var(--text-dark);
         }
 
         /* Responsive */
         @media (max-width: 768px) {
-            .students-grid {
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-                gap: 1.5rem;
+            .nav-wrapper {
+                flex-direction: column;
+                gap: 1rem;
             }
 
-            .upload-section {
-                padding: 1.5rem;
+            .nav-tabs {
+                width: 100%;
+                overflow-x: auto;
             }
 
-            main {
-                padding: 2rem 1rem;
+            .nav-tab {
+                padding: 0.75rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .grade-selection {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+
+            .students-grid,
+            .alumni-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <div class="bg-animation">
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-    </div>
-
-    <!-- Pin Code Modal -->
-    <div class="pin-modal" id="pin-modal">
-        <div class="pin-content">
-            <div class="pin-icon">🔐</div>
-            <h2>Staff Authentication</h2>
-            <p>Enter your PIN code to access student profile management</p>
-            <div class="pin-input-wrapper">
-                <input type="password" class="pin-input" id="pin-input" placeholder="••••••" maxlength="6" autocomplete="off">
-                <div class="pin-error" id="pin-error">❌ Incorrect PIN. Please try again.</div>
-            </div>
-            <button class="pin-button" onclick="verifyPin()">🔓 Unlock Access</button>
-            <div class="pin-hint">
-                <strong>For Staff Only</strong><br>
-                Contact administration if you need access
+    <!-- Passcode Modal -->
+    <div class="passcode-modal" id="passcode-modal">
+        <div class="passcode-content">
+            <img src="WEX LOGO.jpg" alt="Wexford Logo" class="passcode-logo">
+            <div class="passcode-icon">🔐</div>
+            <h2>Secure Access Required</h2>
+            <p>Enter passcode to access Student & Alumni Profiles</p>
+            <input type="password" class="passcode-input" id="passcode-input" placeholder="Enter passcode" maxlength="10" autocomplete="off">
+            <div class="passcode-error" id="passcode-error">❌ Incorrect passcode. Please try again.</div>
+            <button class="passcode-button" onclick="verifyPasscode()">🔓 Access Profiles</button>
+            <div class="passcode-hint">
+                <strong>⚠️ Authorized Personnel Only</strong><br>
+                This system contains sensitive student information
             </div>
         </div>
     </div>
 
-    <div class="container">
+    <div class="container" id="main-container" style="display: none;">
         <header>
             <div class="header-content">
                 <img src="WEX LOGO.jpg" alt="Wexford Logo" class="logo">
                 <div class="header-text">
-                    <h1>Student Profiles</h1>
-                    <p>Wexford Community School</p>
+                    <h1>Wexford Community School</h1>
+                    <p>Student & Alumni Profiles</p>
                 </div>
             </div>
         </header>
 
         <div class="nav-container">
             <div class="nav-wrapper">
-                <button class="dropdown-button" onclick="toggleDropdown()">
-                    <div class="dropdown-content">
-                        <span class="dropdown-icon" id="current-icon">👥</span>
-                        <span id="current-grade">Select Grade Level</span>
-                    </div>
-                    <span class="dropdown-arrow" id="dropdown-arrow">▼</span>
-                </button>
-
-                <div class="dropdown-menu" id="dropdown-menu">
-                    <!-- Lower Primary -->
-                    <div class="dropdown-item active" onclick="selectGrade('lower-1', '🎨', 'Lower Primary 1')">
-                        <span class="dropdown-item-icon">🎨</span>
-                        <span>Lower Primary 1</span>
-                        <span class="dropdown-item-count">0</span>
-                    </div>
-                    <div class="dropdown-item" onclick="selectGrade('lower-2', '🎨', 'Lower Primary 2')">
-                        <span class="dropdown-item-icon">🎨</span>
-                        <span>Lower Primary 2</span>
-                        <span class="dropdown-item-count">0</span>
-                    </div>
-                    <div class="dropdown-item" onclick="selectGrade('lower-3', '🎨', 'Lower Primary 3')">
-                        <span class="dropdown-item-icon">🎨</span>
-                        <span>Lower Primary 3</span>
-                        <span class="dropdown-item-count">0</span>
-                    </div>
-                    
-                    <!-- Upper Primary -->
-                    <div class="dropdown-item" onclick="selectGrade('upper-4', '📚', 'Upper Primary 4')">
-                        <span class="dropdown-item-icon">📚</span>
-                        <span>Upper Primary 4</span>
-                        <span class="dropdown-item-count">0</span>
-                    </div>
-                    <div class="dropdown-item" onclick="selectGrade('upper-5', '📚', 'Upper Primary 5')">
-                        <span class="dropdown-item-icon">📚</span>
-                        <span>Upper Primary 5</span>
-                        <span class="dropdown-item-count">0</span>
-                    </div>
-                    <div class="dropdown-item" onclick="selectGrade('upper-6', '📚', 'Upper Primary 6')">
-                        <span class="dropdown-item-icon">📚</span>
-                        <span>Upper Primary 6</span>
-                        <span class="dropdown-item-count">0</span>
-                    </div>
-                    
-                    <!-- JHS -->
-                    <div class="dropdown-item" onclick="selectGrade('jhs-1', '🎓', 'JHS 1')">
-                        <span class="dropdown-item-icon">🎓</span>
-                        <span>JHS 1</span>
-                        <span class="dropdown-item-count">0</span>
-                    </div>
-                    <div class="dropdown-item" onclick="selectGrade('jhs-2', '🎓', 'JHS 2')">
-                        <span class="dropdown-item-icon">🎓</span>
-                        <span>JHS 2</span>
-                        <span class="dropdown-item-count">0</span>
-                    </div>
-                    <div class="dropdown-item" onclick="selectGrade('jhs-3', '🎓', 'JHS 3')">
-                        <span class="dropdown-item-icon">🎓</span>
-                        <span>JHS 3</span>
-                        <span class="dropdown-item-count">0</span>
-                    </div>
+                <div class="nav-tabs">
+                    <button class="nav-tab active" data-tab="students">
+                        <span>👥</span> Current Students
+                    </button>
+                    <button class="nav-tab" data-tab="alumni">
+                        <span>🎓</span> Alumni
+                    </button>
+                    <button class="nav-tab" data-tab="add-student">
+                        <span>➕</span> Add Student
+                    </button>
                 </div>
             </div>
         </div>
 
-        <div class="dropdown-overlay" id="dropdown-overlay" onclick="closeDropdown()"></div>
-
         <main>
-            <!-- Lower Primary 1 -->
-            <div id="grade-lower-1" class="tab-content active">
+            <!-- Current Students Section -->
+            <section id="students" class="content-section active">
                 <div class="section-header">
-                    <h2>🎨 Lower Primary 1</h2>
-                    <p class="section-description">Student profiles for Grade 1</p>
+                    <h2>Current Students</h2>
+                    <p class="section-description">Browse and manage student profiles by grade level</p>
                 </div>
 
-                <div class="upload-section">
-                    <div class="upload-header">
-                        <span style="font-size: 2rem;">➕</span>
-                        <h3>Add New Student</h3>
+                <div class="grade-selection">
+                    <div class="grade-card active" data-grade="lower-1">
+                        <div class="grade-icon">🎨</div>
+                        <div class="grade-name">Lower Primary 1</div>
+                        <div class="grade-count" id="count-lower-1">0 students</div>
                     </div>
-                    <form class="upload-form" onsubmit="handleStudentUpload(event, 'lower-1')">
-                        <div class="form-row">
+                    <div class="grade-card" data-grade="lower-2">
+                        <div class="grade-icon">🎨</div>
+                        <div class="grade-name">Lower Primary 2</div>
+                        <div class="grade-count" id="count-lower-2">0 students</div>
+                    </div>
+                    <div class="grade-card" data-grade="lower-3">
+                        <div class="grade-icon">🎨</div>
+                        <div class="grade-name">Lower Primary 3</div>
+                        <div class="grade-count" id="count-lower-3">0 students</div>
+                    </div>
+                    <div class="grade-card" data-grade="upper-4">
+                        <div class="grade-icon">📚</div>
+                        <div class="grade-name">Upper Primary 4</div>
+                        <div class="grade-count" id="count-upper-4">0 students</div>
+                    </div>
+                    <div class="grade-card" data-grade="upper-5">
+                        <div class="grade-icon">📚</div>
+                        <div class="grade-name">Upper Primary 5</div>
+                        <div class="grade-count" id="count-upper-5">0 students</div>
+                    </div>
+                    <div class="grade-card" data-grade="upper-6">
+                        <div class="grade-icon">📚</div>
+                        <div class="grade-name">Upper Primary 6</div>
+                        <div class="grade-count" id="count-upper-6">0 students</div>
+                    </div>
+                    <div class="grade-card" data-grade="jhs-1">
+                        <div class="grade-icon">🎓</div>
+                        <div class="grade-name">JHS 1</div>
+                        <div class="grade-count" id="count-jhs-1">0 students</div>
+                    </div>
+                    <div class="grade-card" data-grade="jhs-2">
+                        <div class="grade-icon">🎓</div>
+                        <div class="grade-name">JHS 2</div>
+                        <div class="grade-count" id="count-jhs-2">0 students</div>
+                    </div>
+                    <div class="grade-card" data-grade="jhs-3">
+                        <div class="grade-icon">🎓</div>
+                        <div class="grade-name">JHS 3</div>
+                        <div class="grade-count" id="count-jhs-3">0 students</div>
+                    </div>
+                </div>
+
+                <div class="students-grid" id="students-container"></div>
+            </section>
+
+            <!-- Alumni Section -->
+            <section id="alumni" class="content-section">
+                <div class="section-header">
+                    <h2>Alumni</h2>
+                    <p class="section-description">Celebrating our graduates and their achievements</p>
+                </div>
+
+                <div class="alumni-grid" id="alumni-container"></div>
+            </section>
+
+            <!-- Add Student Section -->
+            <section id="add-student" class="content-section">
+                <div class="section-header">
+                    <h2>Add New Student</h2>
+                    <p class="section-description">Create a new student profile for the school records</p>
+                </div>
+
+                <div class="form-section">
+                    <div class="form-header">
+                        <span style="font-size: 2rem;">➕</span>
+                        <h3>Student Information</h3>
+                    </div>
+                    <form id="student-form">
+                        <div class="form-grid">
                             <div class="form-group">
-                                <label>Full Name</label>
-                                <input type="text" placeholder="Enter student's full name" required>
+                                <label for="full-name">Full Name</label>
+                                <input type="text" id="full-name" placeholder="Enter student's full name" required>
                             </div>
                             <div class="form-group">
-                                <label>Age</label>
-                                <input type="number" placeholder="Enter age" required>
+                                <label for="age">Age</label>
+                                <input type="number" id="age" placeholder="Enter age" min="5" max="18" required>
                             </div>
-                        </div>
-                        <div class="form-row">
                             <div class="form-group">
-                                <label>Gender</label>
-                                <select required>
+                                <label for="gender">Gender</label>
+                                <select id="gender" required>
                                     <option value="">Select gender</option>
                                     <option>Male</option>
                                     <option>Female</option>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>Guardian Name</label>
-                                <input type="text" placeholder="Enter guardian's name" required>
+                                <label for="grade">Grade</label>
+                                <select id="grade" required>
+                                    <option value="">Select grade</option>
+                                    <option>Lower Primary 1</option>
+                                    <option>Lower Primary 2</option>
+                                    <option>Lower Primary 3</option>
+                                    <option>Upper Primary 4</option>
+                                    <option>Upper Primary 5</option>
+                                    <option>Upper Primary 6</option>
+                                    <option>JHS 1</option>
+                                    <option>JHS 2</option>
+                                    <option>JHS 3</option>
+                                </select>
                             </div>
-                        </div>
-                        <div class="form-row">
                             <div class="form-group">
-                                <label>Contact Number</label>
-                                <input type="tel" placeholder="Enter contact number" required>
+                                <label for="guardian">Guardian Name</label>
+                                <input type="text" id="guardian" placeholder="Enter guardian's name" required>
                             </div>
                             <div class="form-group">
-                                <label>Student ID</label>
-                                <input type="text" placeholder="Enter student ID" required>
+                                <label for="contact">Contact Number</label>
+                                <input type="tel" id="contact" placeholder="Enter contact number" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="student-id">Student ID</label>
+                                <input type="text" id="student-id" placeholder="Auto-generated or enter manually" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="address">Address</label>
+                                <input type="text" id="address" placeholder="Enter student's address">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label>Student Photo</label>
+                            <label>Student Photo (Optional)</label>
                             <div class="file-upload">
-                                <input type="file" accept="image/*" required>
+                                <input type="file" id="photo" accept="image/*">
                                 <div class="file-upload-content">
                                     <div class="file-upload-icon">📸</div>
                                     <p style="font-weight: 600; color: var(--text-dark);">Click to upload photo</p>
@@ -960,853 +1041,548 @@
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" class="submit-button">✅ Add Student Profile</button>
+                        <div class="form-actions">
+                            <button type="submit" class="submit-btn">
+                                <span>✅</span> Add Student Profile
+                            </button>
+                            <button type="reset" class="cancel-btn">Clear Form</button>
+                        </div>
                     </form>
                 </div>
-
-                <div class="students-grid">
-                    <!-- Sample student cards will appear here after upload -->
-                    <div class="empty-state">
-                        <div class="empty-icon">👨‍🎓</div>
-                        <h3>No Students Yet</h3>
-                        <p>Add your first student profile using the form above</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Other grade levels follow same structure -->
-            <div id="grade-lower-2" class="tab-content">
-                <div class="section-header">
-                    <h2>🎨 Lower Primary 2</h2>
-                    <p class="section-description">Student profiles for Grade 2</p>
-                </div>
-                <div class="upload-section">
-                    <div class="upload-header">
-                        <span style="font-size: 2rem;">➕</span>
-                        <h3>Add New Student</h3>
-                    </div>
-                    <form class="upload-form" onsubmit="handleStudentUpload(event, 'lower-2')">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Full Name</label>
-                                <input type="text" placeholder="Enter student's full name" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Age</label>
-                                <input type="number" placeholder="Enter age" required>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Gender</label>
-                                <select required>
-                                    <option value="">Select gender</option>
-                                    <option>Male</option>
-                                    <option>Female</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Guardian Name</label>
-                                <input type="text" placeholder="Enter guardian's name" required>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Contact Number</label>
-                                <input type="tel" placeholder="Enter contact number" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Student ID</label>
-                                <input type="text" placeholder="Enter student ID" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Student Photo</label>
-                            <div class="file-upload">
-                                <input type="file" accept="image/*" required>
-                                <div class="file-upload-content">
-                                    <div class="file-upload-icon">📸</div>
-                                    <p style="font-weight: 600; color: var(--text-dark);">Click to upload photo</p>
-                                    <p style="font-size: 0.85rem; color: var(--text-medium); margin-top: 0.25rem;">PNG, JPG up to 5MB</p>
-                                </div>
-                            </div>
-                        </div>
-                        <button type="submit" class="submit-button">✅ Add Student Profile</button>
-                    </form>
-                </div>
-                <div class="students-grid">
-                    <div class="empty-state">
-                        <div class="empty-icon">👨‍🎓</div>
-                        <h3>No Students Yet</h3>
-                        <p>Add your first student profile using the form above</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Similar sections for lower-3, upper-4, upper-5, upper-6, jhs-1, jhs-2, jhs-3 -->
-            <!-- Lower Primary 3 -->
-            <div id="grade-lower-3" class="tab-content">
-                <div class="section-header">
-                    <h2>🎨 Lower Primary 3</h2>
-                    <p class="section-description">Student profiles for Grade 3</p>
-                </div>
-                <div class="upload-section">
-                    <div class="upload-header">
-                        <span style="font-size: 2rem;">➕</span>
-                        <h3>Add New Student</h3>
-                    </div>
-                    <form class="upload-form" onsubmit="handleStudentUpload(event, 'lower-3')">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Full Name</label>
-                                <input type="text" placeholder="Enter student's full name" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Age</label>
-                                <input type="number" placeholder="Enter age" required>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Gender</label>
-                                <select required>
-                                    <option value="">Select gender</option>
-                                    <option>Male</option>
-                                    <option>Female</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Guardian Name</label>
-                                <input type="text" placeholder="Enter guardian's name" required>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Contact Number</label>
-                                <input type="tel" placeholder="Enter contact number" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Student ID</label>
-                                <input type="text" placeholder="Enter student ID" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Student Photo</label>
-                            <div class="file-upload">
-                                <input type="file" accept="image/*" required>
-                                <div class="file-upload-content">
-                                    <div class="file-upload-icon">📸</div>
-                                    <p style="font-weight: 600; color: var(--text-dark);">Click to upload photo</p>
-                                    <p style="font-size: 0.85rem; color: var(--text-medium); margin-top: 0.25rem;">PNG, JPG up to 5MB</p>
-                                </div>
-                            </div>
-                        </div>
-                        <button type="submit" class="submit-button">✅ Add Student Profile</button>
-                    </form>
-                </div>
-                <div class="students-grid">
-                    <div class="empty-state">
-                        <div class="empty-icon">👨‍🎓</div>
-                        <h3>No Students Yet</h3>
-                        <p>Add your first student profile using the form above</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Upper Primary 4 -->
-            <div id="grade-upper-4" class="tab-content">
-                <div class="section-header">
-                    <h2>📚 Upper Primary 4</h2>
-                    <p class="section-description">Student profiles for Grade 4</p>
-                </div>
-                <div class="upload-section">
-                    <div class="upload-header">
-                        <span style="font-size: 2rem;">➕</span>
-                        <h3>Add New Student</h3>
-                    </div>
-                    <form class="upload-form" onsubmit="handleStudentUpload(event, 'upper-4')">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Full Name</label>
-                                <input type="text" placeholder="Enter student's full name" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Age</label>
-                                <input type="number" placeholder="Enter age" required>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Gender</label>
-                                <select required>
-                                    <option value="">Select gender</option>
-                                    <option>Male</option>
-                                    <option>Female</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Guardian Name</label>
-                                <input type="text" placeholder="Enter guardian's name" required>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Contact Number</label>
-                                <input type="tel" placeholder="Enter contact number" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Student ID</label>
-                                <input type="text" placeholder="Enter student ID" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Student Photo</label>
-                            <div class="file-upload">
-                                <input type="file" accept="image/*" required>
-                                <div class="file-upload-content">
-                                    <div class="file-upload-icon">📸</div>
-                                    <p style="font-weight: 600; color: var(--text-dark);">Click to upload photo</p>
-                                    <p style="font-size: 0.85rem; color: var(--text-medium); margin-top: 0.25rem;">PNG, JPG up to 5MB</p>
-                                </div>
-                            </div>
-                        </div>
-                        <button type="submit" class="submit-button">✅ Add Student Profile</button>
-                    </form>
-                </div>
-                <div class="students-grid">
-                    <div class="empty-state">
-                        <div class="empty-icon">👨‍🎓</div>
-                        <h3>No Students Yet</h3>
-                        <p>Add your first student profile using the form above</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Upper Primary 5 -->
-            <div id="grade-upper-5" class="tab-content">
-                <div class="section-header">
-                    <h2>📚 Upper Primary 5</h2>
-                    <p class="section-description">Student profiles for Grade 5</p>
-                </div>
-                <div class="upload-section">
-                    <div class="upload-header">
-                        <span style="font-size: 2rem;">➕</span>
-                        <h3>Add New Student</h3>
-                    </div>
-                    <form class="upload-form" onsubmit="handleStudentUpload(event, 'upper-5')">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Full Name</label>
-                                <input type="text" placeholder="Enter student's full name" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Age</label>
-                                <input type="number" placeholder="Enter age" required>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Gender</label>
-                                <select required>
-                                    <option value="">Select gender</option>
-                                    <option>Male</option>
-                                    <option>Female</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Guardian Name</label>
-                                <input type="text" placeholder="Enter guardian's name" required>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Contact Number</label>
-                                <input type="tel" placeholder="Enter contact number" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Student ID</label>
-                                <input type="text" placeholder="Enter student ID" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Student Photo</label>
-                            <div class="file-upload">
-                                <input type="file" accept="image/*" required>
-                                <div class="file-upload-content">
-                                    <div class="file-upload-icon">📸</div>
-                                    <p style="font-weight: 600; color: var(--text-dark);">Click to upload photo</p>
-                                    <p style="font-size: 0.85rem; color: var(--text-medium); margin-top: 0.25rem;">PNG, JPG up to 5MB</p>
-                                </div>
-                            </div>
-                        </div>
-                        <button type="submit" class="submit-button">✅ Add Student Profile</button>
-                    </form>
-                </div>
-                <div class="students-grid">
-                    <div class="empty-state">
-                        <div class="empty-icon">👨‍🎓</div>
-                        <h3>No Students Yet</h3>
-                        <p>Add your first student profile using the form above</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Upper Primary 6 -->
-            <div id="grade-upper-6" class="tab-content">
-                <div class="section-header">
-                    <h2>📚 Upper Primary 6</h2>
-                    <p class="section-description">Student profiles for Grade 6</p>
-                </div>
-                <div class="upload-section">
-                    <div class="upload-header">
-                        <span style="font-size: 2rem;">➕</span>
-                        <h3>Add New Student</h3>
-                    </div>
-                    <form class="upload-form" onsubmit="handleStudentUpload(event, 'upper-6')">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Full Name</label>
-                                <input type="text" placeholder="Enter student's full name" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Age</label>
-                                <input type="number" placeholder="Enter age" required>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Gender</label>
-                                <select required>
-                                    <option value="">Select gender</option>
-                                    <option>Male</option>
-                                    <option>Female</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Guardian Name</label>
-                                <input type="text" placeholder="Enter guardian's name" required>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Contact Number</label>
-                                <input type="tel" placeholder="Enter contact number" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Student ID</label>
-                                <input type="text" placeholder="Enter student ID" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Student Photo</label>
-                            <div class="file-upload">
-                                <input type="file" accept="image/*" required>
-                                <div class="file-upload-content">
-                                    <div class="file-upload-icon">📸</div>
-                                    <p style="font-weight: 600; color: var(--text-dark);">Click to upload photo</p>
-                                    <p style="font-size: 0.85rem; color: var(--text-medium); margin-top: 0.25rem;">PNG, JPG up to 5MB</p>
-                                </div>
-                            </div>
-                        </div>
-                        <button type="submit" class="submit-button">✅ Add Student Profile</button>
-                    </form>
-                </div>
-                <div class="students-grid">
-                    <div class="empty-state">
-                        <div class="empty-icon">👨‍🎓</div>
-                        <h3>No Students Yet</h3>
-                        <p>Add your first student profile using the form above</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- JHS 1 -->
-            <div id="grade-jhs-1" class="tab-content">
-                <div class="section-header">
-                    <h2>🎓 JHS 1</h2>
-                    <p class="section-description">Student profiles for JHS 1</p>
-                </div>
-                <div class="upload-section">
-                    <div class="upload-header">
-                        <span style="font-size: 2rem;">➕</span>
-                        <h3>Add New Student</h3>
-                    </div>
-                    <form class="upload-form" onsubmit="handleStudentUpload(event, 'jhs-1')">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Full Name</label>
-                                <input type="text" placeholder="Enter student's full name" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Age</label>
-                                <input type="number" placeholder="Enter age" required>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Gender</label>
-                                <select required>
-                                    <option value="">Select gender</option>
-                                    <option>Male</option>
-                                    <option>Female</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Guardian Name</label>
-                                <input type="text" placeholder="Enter guardian's name" required>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Contact Number</label>
-                                <input type="tel" placeholder="Enter contact number" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Student ID</label>
-                                <input type="text" placeholder="Enter student ID" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Student Photo</label>
-                            <div class="file-upload">
-                                <input type="file" accept="image/*" required>
-                                <div class="file-upload-content">
-                                    <div class="file-upload-icon">📸</div>
-                                    <p style="font-weight: 600; color: var(--text-dark);">Click to upload photo</p>
-                                    <p style="font-size: 0.85rem; color: var(--text-medium); margin-top: 0.25rem;">PNG, JPG up to 5MB</p>
-                                </div>
-                            </div>
-                        </div>
-                        <button type="submit" class="submit-button">✅ Add Student Profile</button>
-                    </form>
-                </div>
-                <div class="students-grid">
-                    <div class="empty-state">
-                        <div class="empty-icon">👨‍🎓</div>
-                        <h3>No Students Yet</h3>
-                        <p>Add your first student profile using the form above</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- JHS 2 -->
-            <div id="grade-jhs-2" class="tab-content">
-                <div class="section-header">
-                    <h2>🎓 JHS 2</h2>
-                    <p class="section-description">Student profiles for JHS 2</p>
-                </div>
-                <div class="upload-section">
-                    <div class="upload-header">
-                        <span style="font-size: 2rem;">➕</span>
-                        <h3>Add New Student</h3>
-                    </div>
-                    <form class="upload-form" onsubmit="handleStudentUpload(event, 'jhs-2')">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Full Name</label>
-                                <input type="text" placeholder="Enter student's full name" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Age</label>
-                                <input type="number" placeholder="Enter age" required>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Gender</label>
-                                <select required>
-                                    <option value="">Select gender</option>
-                                    <option>Male</option>
-                                    <option>Female</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Guardian Name</label>
-                                <input type="text" placeholder="Enter guardian's name" required>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Contact Number</label>
-                                <input type="tel" placeholder="Enter contact number" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Student ID</label>
-                                <input type="text" placeholder="Enter student ID" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Student Photo</label>
-                            <div class="file-upload">
-                                <input type="file" accept="image/*" required>
-                                <div class="file-upload-content">
-                                    <div class="file-upload-icon">📸</div>
-                                    <p style="font-weight: 600; color: var(--text-dark);">Click to upload photo</p>
-                                    <p style="font-size: 0.85rem; color: var(--text-medium); margin-top: 0.25rem;">PNG, JPG up to 5MB</p>
-                                </div>
-                            </div>
-                        </div>
-                        <button type="submit" class="submit-button">✅ Add Student Profile</button>
-                    </form>
-                </div>
-                <div class="students-grid">
-                    <div class="empty-state">
-                        <div class="empty-icon">👨‍🎓</div>
-                        <h3>No Students Yet</h3>
-                        <p>Add your first student profile using the form above</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- JHS 3 -->
-            <div id="grade-jhs-3" class="tab-content">
-                <div class="section-header">
-                    <h2>🎓 JHS 3</h2>
-                    <p class="section-description">Student profiles for JHS 3</p>
-                </div>
-                <div class="upload-section">
-                    <div class="upload-header">
-                        <span style="font-size: 2rem;">➕</span>
-                        <h3>Add New Student</h3>
-                    </div>
-                    <form class="upload-form" onsubmit="handleStudentUpload(event, 'jhs-3')">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Full Name</label>
-                                <input type="text" placeholder="Enter student's full name" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Age</label>
-                                <input type="number" placeholder="Enter age" required>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Gender</label>
-                                <select required>
-                                    <option value="">Select gender</option>
-                                    <option>Male</option>
-                                    <option>Female</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Guardian Name</label>
-                                <input type="text" placeholder="Enter guardian's name" required>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Contact Number</label>
-                                <input type="tel" placeholder="Enter contact number" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Student ID</label>
-                                <input type="text" placeholder="Enter student ID" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Student Photo</label>
-                            <div class="file-upload">
-                                <input type="file" accept="image/*" required>
-                                <div class="file-upload-content">
-                                    <div class="file-upload-icon">📸</div>
-                                    <p style="font-weight: 600; color: var(--text-dark);">Click to upload photo</p>
-                                    <p style="font-size: 0.85rem; color: var(--text-medium); margin-top: 0.25rem;">PNG, JPG up to 5MB</p>
-                                </div>
-                            </div>
-                        </div>
-                        <button type="submit" class="submit-button">✅ Add Student Profile</button>
-                    </form>
-                </div>
-                <div class="students-grid">
-                    <div class="empty-state">
-                        <div class="empty-icon">👨‍🎓</div>
-                        <h3>No Students Yet</h3>
-                        <p>Add your first student profile using the form above</p>
-                    </div>
-                </div>
-            </div>
-            
+            </section>
         </main>
 
         <footer>
-            <strong>Wexford Community School</strong> - Student Profiles & Management<br>
-            © 2025 Designed with ❤️ for our students
+            <p><span class="footer-logo">Wexford Community School</span> - Student & Alumni Profiles</p>
+            <p>© 2025 | Established 1982</p>
         </footer>
     </div>
 
+    <!-- Edit Student Modal -->
+    <div class="modal" id="edit-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Edit Student Profile</h3>
+                <button class="close-btn" id="close-edit-modal">&times;</button>
+            </div>
+            <form id="edit-student-form">
+                <input type="hidden" id="edit-id">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="edit-full-name">Full Name</label>
+                        <input type="text" id="edit-full-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-age">Age</label>
+                        <input type="number" id="edit-age" min="5" max="18" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-gender">Gender</label>
+                        <select id="edit-gender" required>
+                            <option value="">Select gender</option>
+                            <option>Male</option>
+                            <option>Female</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-grade">Grade</label>
+                        <select id="edit-grade" required>
+                            <option value="">Select grade</option>
+                            <option>Lower Primary 1</option>
+                            <option>Lower Primary 2</option>
+                            <option>Lower Primary 3</option>
+                            <option>Upper Primary 4</option>
+                            <option>Upper Primary 5</option>
+                            <option>Upper Primary 6</option>
+                            <option>JHS 1</option>
+                            <option>JHS 2</option>
+                            <option>JHS 3</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-guardian">Guardian Name</label>
+                        <input type="text" id="edit-guardian" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-contact">Contact Number</label>
+                        <input type="tel" id="edit-contact" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-student-id">Student ID</label>
+                        <input type="text" id="edit-student-id" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-address">Address</label>
+                        <input type="text" id="edit-address">
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="submit-btn">
+                        <span>💾</span> Save Changes
+                    </button>
+                    <button type="button" class="cancel-btn" id="cancel-edit">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
-        // PIN Code Management
-        const CORRECT_PIN = '2025@';
-        let isAuthenticated = false;
-
-        // Check authentication on load
-        window.onload = () => {
-            const savedAuth = sessionStorage.getItem('staffAuthenticated');
-            if (savedAuth === 'true') {
-                isAuthenticated = true;
-                document.getElementById('pin-modal').classList.add('hidden');
-                unlockAllForms();
-            } else {
-                lockAllForms();
-                // Focus on PIN input
-                setTimeout(() => {
-                    document.getElementById('pin-input').focus();
-                }, 500);
+        const CORRECT_PASSCODE = '2025@';
+        
+        // Sample data
+        let students = [
+            {
+                id: 1,
+                name: "Michael Johnson",
+                age: 8,
+                gender: "Male",
+                grade: "Lower Primary 1",
+                guardian: "Robert Johnson",
+                contact: "+233 24 123 4567",
+                studentId: "STU-2025-001",
+                address: "East Legon, Accra",
+                photo: "👦"
+            },
+            {
+                id: 2,
+                name: "Emily Mensah",
+                age: 9,
+                gender: "Female",
+                grade: "Lower Primary 2",
+                guardian: "Grace Mensah",
+                contact: "+233 24 234 5678",
+                studentId: "STU-2025-002",
+                address: "Tema, Greater Accra",
+                photo: "👧"
             }
+        ];
+
+        let alumni = [];
+
+        // Passcode verification
+        function verifyPasscode() {
+            const input = document.getElementById('passcode-input');
+            const error = document.getElementById('passcode-error');
             
-            // Set initial grade
-            selectGrade('lower-1', '🎨', 'Lower Primary 1');
-        };
-
-        // Verify PIN
-        function verifyPin() {
-            const pinInput = document.getElementById('pin-input');
-            const pinError = document.getElementById('pin-error');
-            const enteredPin = pinInput.value;
-
-            if (enteredPin === CORRECT_PIN) {
-                // Correct PIN
-                isAuthenticated = true;
-                sessionStorage.setItem('staffAuthenticated', 'true');
-                
-                // Success feedback
-                pinInput.style.borderColor = '#10b981';
-                pinInput.style.background = '#d1fae5';
-                
-                // Hide modal with delay
-                setTimeout(() => {
-                    document.getElementById('pin-modal').classList.add('hidden');
-                    unlockAllForms();
-                }, 500);
+            if (input.value === CORRECT_PASSCODE) {
+                document.getElementById('passcode-modal').classList.add('hidden');
+                document.getElementById('main-container').style.display = 'block';
+                initializePage();
             } else {
-                // Incorrect PIN
-                pinError.classList.add('show');
-                pinInput.classList.add('error');
-                pinInput.value = '';
+                error.classList.add('show');
+                input.classList.add('error');
+                input.value = '';
                 
-                // Remove error state after animation
                 setTimeout(() => {
-                    pinInput.classList.remove('error');
+                    input.classList.remove('error');
                 }, 500);
                 
                 setTimeout(() => {
-                    pinError.classList.remove('show');
+                    error.classList.remove('show');
                 }, 3000);
             }
         }
 
-        // Allow Enter key to submit
-        document.addEventListener('DOMContentLoaded', () => {
-            const pinInput = document.getElementById('pin-input');
-            if (pinInput) {
-                pinInput.addEventListener('keypress', (e) => {
-                    if (e.key === 'Enter') {
-                        verifyPin();
-                    }
-                });
-            }
+        // Enter key for passcode
+        document.getElementById('passcode-input').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') verifyPasscode();
         });
 
-        // Lock all forms
-        function lockAllForms() {
-            const uploadSections = document.querySelectorAll('.upload-section');
-            uploadSections.forEach(section => {
-                section.classList.add('form-locked');
+        // DOM Elements
+        const navTabs = document.querySelectorAll('.nav-tab');
+        const contentSections = document.querySelectorAll('.content-section');
+        const gradeCards = document.querySelectorAll('.grade-card');
+        const studentsContainer = document.getElementById('students-container');
+        const alumniContainer = document.getElementById('alumni-container');
+        const studentForm = document.getElementById('student-form');
+        const editModal = document.getElementById('edit-modal');
+        const closeEditModal = document.getElementById('close-edit-modal');
+        const cancelEdit = document.getElementById('cancel-edit');
+        const editStudentForm = document.getElementById('edit-student-form');
+
+        // Navigation Tabs
+        navTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const targetTab = tab.getAttribute('data-tab');
                 
-                // Add lock message
-                const lockMessage = document.createElement('div');
-                lockMessage.className = 'lock-message';
-                lockMessage.innerHTML = `
-                    <div class="lock-icon">🔒</div>
-                    <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--text-dark); margin-bottom: 0.5rem;">Staff Access Required</h3>
-                    <p style="color: var(--text-medium); margin-bottom: 1rem;">Enter PIN code to add student profiles</p>
-                    <button class="unlock-button" onclick="showPinModal()">🔓 Enter PIN Code</button>
-                `;
-                section.appendChild(lockMessage);
+                navTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                contentSections.forEach(section => {
+                    section.classList.remove('active');
+                    if (section.id === targetTab) {
+                        section.classList.add('active');
+                    }
+                });
             });
+        });
+
+        // Grade Selection
+        gradeCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const grade = card.getAttribute('data-grade');
+                
+                gradeCards.forEach(c => c.classList.remove('active'));
+                card.classList.add('active');
+                
+                filterStudentsByGrade(grade);
+            });
+        });
+
+        // Filter students by grade
+        function filterStudentsByGrade(grade) {
+            studentsContainer.innerHTML = '';
+            
+            const gradeName = getGradeName(grade);
+            const gradeStudents = students.filter(student => student.grade === gradeName);
+            
+            if (gradeStudents.length > 0) {
+                gradeStudents.forEach(student => {
+                    studentsContainer.appendChild(createStudentCard(student));
+                });
+            } else {
+                studentsContainer.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">👨‍🎓</div>
+                        <h3>No Students in This Grade</h3>
+                        <p>Add students using the "Add Student" tab</p>
+                    </div>
+                `;
+            }
         }
 
-        // Unlock all forms
-        function unlockAllForms() {
-            const uploadSections = document.querySelectorAll('.upload-section');
-            uploadSections.forEach(section => {
-                section.classList.remove('form-locked');
-                const lockMessage = section.querySelector('.lock-message');
-                if (lockMessage) {
-                    lockMessage.remove();
+        // Convert grade ID to grade name
+        function getGradeName(gradeId) {
+            const gradeMap = {
+                'lower-1': 'Lower Primary 1',
+                'lower-2': 'Lower Primary 2',
+                'lower-3': 'Lower Primary 3',
+                'upper-4': 'Upper Primary 4',
+                'upper-5': 'Upper Primary 5',
+                'upper-6': 'Upper Primary 6',
+                'jhs-1': 'JHS 1',
+                'jhs-2': 'JHS 2',
+                'jhs-3': 'JHS 3'
+            };
+            
+            return gradeMap[gradeId] || 'Unknown Grade';
+        }
+
+        // Get grade ID from name
+        function getGradeId(gradeName) {
+            const gradeMap = {
+                'Lower Primary 1': 'lower-1',
+                'Lower Primary 2': 'lower-2',
+                'Lower Primary 3': 'lower-3',
+                'Upper Primary 4': 'upper-4',
+                'Upper Primary 5': 'upper-5',
+                'Upper Primary 6': 'upper-6',
+                'JHS 1': 'jhs-1',
+                'JHS 2': 'jhs-2',
+                'JHS 3': 'jhs-3'
+            };
+            
+            return gradeMap[gradeName] || '';
+        }
+
+        // Update grade counts
+        function updateGradeCounts() {
+            const grades = ['lower-1', 'lower-2', 'lower-3', 'upper-4', 'upper-5', 'upper-6', 'jhs-1', 'jhs-2', 'jhs-3'];
+            
+            grades.forEach(gradeId => {
+                const gradeName = getGradeName(gradeId);
+                const count = students.filter(s => s.grade === gradeName).length;
+                const countEl = document.getElementById(`count-${gradeId}`);
+                if (countEl) {
+                    countEl.textContent = `${count} student${count !== 1 ? 's' : ''}`;
                 }
             });
         }
 
-        // Show PIN modal
-        function showPinModal() {
-            document.getElementById('pin-modal').classList.remove('hidden');
-            setTimeout(() => {
-                document.getElementById('pin-input').focus();
-            }, 300);
-        }
-
-        // Dropdown functionality
-        function toggleDropdown() {
-            const menu = document.getElementById('dropdown-menu');
-            const arrow = document.getElementById('dropdown-arrow');
-            const overlay = document.getElementById('dropdown-overlay');
-            
-            menu.classList.toggle('open');
-            arrow.classList.toggle('open');
-            overlay.classList.toggle('active');
-        }
-
-        function closeDropdown() {
-            const menu = document.getElementById('dropdown-menu');
-            const arrow = document.getElementById('dropdown-arrow');
-            const overlay = document.getElementById('dropdown-overlay');
-            
-            menu.classList.remove('open');
-            arrow.classList.remove('open');
-            overlay.classList.remove('active');
-        }
-
-        // Grade selection
-        function selectGrade(gradeId, icon, gradeName) {
-            // Update dropdown button
-            document.getElementById('current-icon').textContent = icon;
-            document.getElementById('current-grade').textContent = gradeName;
-            
-            // Update active state
-            const items = document.querySelectorAll('.dropdown-item');
-            items.forEach(item => item.classList.remove('active'));
-            event.target.closest('.dropdown-item').classList.add('active');
-            
-            // Show selected tab
-            const tabs = document.querySelectorAll('.tab-content');
-            tabs.forEach(tab => tab.classList.remove('active'));
-            
-            const selectedTab = document.getElementById('grade-' + gradeId);
-            if (selectedTab) {
-                selectedTab.classList.add('active');
-            }
-            
-            closeDropdown();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // Handle student upload
-        function handleStudentUpload(event, gradeId) {
-            event.preventDefault();
-            
-            // Check authentication
-            if (!isAuthenticated) {
-                showPinModal();
-                return;
-            }
-            
-            const form = event.target;
-            const formData = new FormData(form);
-            
-            // Get form values
-            const name = form.querySelector('input[type="text"]').value;
-            const age = form.querySelector('input[type="number"]').value;
-            const gender = form.querySelector('select').value;
-            const guardian = form.querySelectorAll('input[type="text"]')[1].value;
-            const contact = form.querySelector('input[type="tel"]').value;
-            const studentId = form.querySelectorAll('input[type="text"]')[2].value;
-            const photoFile = form.querySelector('input[type="file"]').files[0];
-            
-            // Create student card
-            const studentCard = document.createElement('div');
-            studentCard.className = 'student-card';
-            studentCard.style.animation = 'fadeIn 0.5s ease-out';
-            
-            // Create image element
-            const img = document.createElement('img');
-            img.className = 'student-photo';
-            img.alt = name;
-            
-            // Read and display uploaded photo
-            if (photoFile) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    img.src = e.target.result;
-                };
-                reader.readAsDataURL(photoFile);
-            }
-            
-            studentCard.innerHTML = `
-                <img src="" alt="${name}" class="student-photo">
+        // Create student card element
+        function createStudentCard(student) {
+            const card = document.createElement('div');
+            card.className = 'student-card';
+            card.innerHTML = `
+                <div class="student-photo">${student.photo}</div>
                 <div class="student-info">
-                    <h3 class="student-name">${name}</h3>
-                    <span class="student-class">ID: ${studentId}</span>
+                    <h3 class="student-name">${student.name}</h3>
+                    <span class="student-id">ID: ${student.studentId}</span>
                     <div class="student-details">
                         <div class="student-detail">
                             <span class="detail-icon">👤</span>
-                            <span>${gender}, ${age} years old</span>
+                            <span>${student.gender}, ${student.age} years old</span>
                         </div>
                         <div class="student-detail">
                             <span class="detail-icon">👨‍👩‍👦</span>
-                            <span>Guardian: ${guardian}</span>
+                            <span>Guardian: ${student.guardian}</span>
                         </div>
                         <div class="student-detail">
                             <span class="detail-icon">📞</span>
-                            <span>${contact}</span>
+                            <span>${student.contact}</span>
                         </div>
+                    </div>
+                    <div class="student-actions">
+                        <button class="action-btn edit-btn" data-id="${student.id}">
+                            <span>✏️</span> Edit
+                        </button>
+                        <button class="action-btn graduate-btn" data-id="${student.id}">
+                            <span>🎓</span> Graduate
+                        </button>
                     </div>
                 </div>
             `;
             
-            // Add image to card
-            studentCard.querySelector('.student-photo').src = img.src || 'https://via.placeholder.com/280x280?text=Student+Photo';
+            const editBtn = card.querySelector('.edit-btn');
+            const graduateBtn = card.querySelector('.graduate-btn');
             
-            // Get or create grid
-            const currentTab = document.getElementById('grade-' + gradeId);
-            let grid = currentTab.querySelector('.students-grid');
+            editBtn.addEventListener('click', () => openEditModal(student.id));
+            graduateBtn.addEventListener('click', () => graduateStudent(student.id));
             
-            // Remove empty state if exists
-            const emptyState = grid.querySelector('.empty-state');
-            if (emptyState) {
-                emptyState.remove();
-            }
-            
-            // Add new student card
-            grid.appendChild(studentCard);
-            
-            // Update student count
-            updateStudentCount(gradeId);
-            
-            // Reset form
-            form.reset();
-            
-            // Show success message
-            const button = form.querySelector('.submit-button');
-            const originalText = button.innerHTML;
-            button.innerHTML = '✅ Student Added Successfully!';
-            button.style.background = 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)';
-            
-            setTimeout(() => {
-                button.innerHTML = originalText;
-                button.style.background = 'linear-gradient(135deg, #0B8F4A 0%, #05A854 100%)';
-            }, 2000);
+            return card;
         }
 
-        // Update student count in dropdown
-        function updateStudentCount(gradeId) {
-            const tab = document.getElementById('grade-' + gradeId);
-            const studentCards = tab.querySelectorAll('.student-card');
-            const count = studentCards.length;
+        // Create alumni card element
+        function createAlumniCard(alumnus) {
+            const card = document.createElement('div');
+            card.className = 'alumni-card';
+            card.innerHTML = `
+                <div class="alumni-photo">${alumnus.photo}</div>
+                <div class="alumni-info">
+                    <h3 class="alumni-name">${alumnus.name}</h3>
+                    <span class="alumni-year">Class of ${alumnus.graduationYear}</span>
+                    <div class="alumni-details">
+                        <div class="student-detail">
+                            <span class="detail-icon">🎓</span>
+                            <span>Graduated from ${alumnus.formerGrade}</span>
+                        </div>
+                        <div class="student-detail">
+                            <span class="detail-icon">📚</span>
+                            <span>Now at: ${alumnus.currentSchool}</span>
+                        </div>
+                        <div class="student-detail">
+                            <span class="detail-icon">⭐</span>
+                            <span>${alumnus.achievements}</span>
+                        </div>
+                    </div>
+                    <div class="student-actions">
+                        <button class="action-btn remove-btn" data-id="${alumnus.id}">
+                            <span>🔙</span> Remove from Alumni
+                        </button>
+                    </div>
+                </div>
+            `;
             
-            // Find corresponding dropdown item and update count
-            const dropdownItems = document.querySelectorAll('.dropdown-item');
-            dropdownItems.forEach(item => {
-                const itemText = item.textContent.toLowerCase().replace(/\s+/g, '-');
-                if (itemText.includes(gradeId)) {
-                    const countBadge = item.querySelector('.dropdown-item-count');
-                    if (countBadge) {
-                        countBadge.textContent = count;
-                    }
-                }
-            });
+            const removeBtn = card.querySelector('.remove-btn');
+            removeBtn.addEventListener('click', () => removeFromAlumni(alumnus.id));
+            
+            return card;
         }
+
+        // Open edit modal
+        function openEditModal(studentId) {
+            const student = students.find(s => s.id === studentId);
+            if (!student) return;
+            
+            document.getElementById('edit-id').value = student.id;
+            document.getElementById('edit-full-name').value = student.name;
+            document.getElementById('edit-age').value = student.age;
+            document.getElementById('edit-gender').value = student.gender;
+            document.getElementById('edit-grade').value = student.grade;
+            document.getElementById('edit-guardian').value = student.guardian;
+            document.getElementById('edit-contact').value = student.contact;
+            document.getElementById('edit-student-id').value = student.studentId;
+            document.getElementById('edit-address').value = student.address || '';
+            
+            editModal.classList.add('active');
+        }
+
+        // Close edit modal
+        function closeEditModalFunc() {
+            editModal.classList.remove('active');
+        }
+
+        // Graduate student
+        function graduateStudent(studentId) {
+            const student = students.find(s => s.id === studentId);
+            if (!student) return;
+            
+            if (confirm(`Are you sure you want to graduate ${student.name} and move them to the Alumni section?`)) {
+                students = students.filter(s => s.id !== studentId);
+                
+                const currentYear = new Date().getFullYear();
+                alumni.push({
+                    id: studentId,
+                    name: student.name,
+                    graduationYear: currentYear.toString(),
+                    formerGrade: student.grade,
+                    currentSchool: "To be determined",
+                    achievements: "Graduated with honors",
+                    photo: student.photo,
+                    originalData: student
+                });
+                
+                updateGradeCounts();
+                const activeGradeCard = document.querySelector('.grade-card.active');
+                if (activeGradeCard) {
+                    filterStudentsByGrade(activeGradeCard.getAttribute('data-grade'));
+                }
+                renderAlumni();
+                
+                alert(`✅ ${student.name} has been graduated and moved to alumni!`);
+            }
+        }
+
+        // Remove from alumni
+        function removeFromAlumni(alumnusId) {
+            const alumnus = alumni.find(a => a.id === alumnusId);
+            if (!alumnus) return;
+            
+            if (confirm(`Are you sure you want to remove ${alumnus.name} from the Alumni section and restore them as a current student?`)) {
+                alumni = alumni.filter(a => a.id !== alumnusId);
+                
+                if (alumnus.originalData) {
+                    students.push(alumnus.originalData);
+                } else {
+                    students.push({
+                        id: alumnusId,
+                        name: alumnus.name,
+                        age: 15,
+                        gender: "Male",
+                        grade: alumnus.formerGrade,
+                        guardian: "Guardian Name",
+                        contact: "+233 24 000 0000",
+                        studentId: `STU-2025-${String(alumnusId).padStart(3, '0')}`,
+                        address: "Address not available",
+                        photo: alumnus.photo
+                    });
+                }
+                
+                updateGradeCounts();
+                renderAlumni();
+                
+                alert(`✅ ${alumnus.name} has been removed from alumni and restored as a current student!`);
+            }
+        }
+
+        // Render alumni
+        function renderAlumni() {
+            alumniContainer.innerHTML = '';
+            
+            if (alumni.length > 0) {
+                alumni.forEach(alumnus => {
+                    alumniContainer.appendChild(createAlumniCard(alumnus));
+                });
+            } else {
+                alumniContainer.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">🎓</div>
+                        <h3>No Alumni Yet</h3>
+                        <p>Graduate students to add them to the alumni section</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Add new student
+        studentForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('full-name').value;
+            const age = document.getElementById('age').value;
+            const gender = document.getElementById('gender').value;
+            const grade = document.getElementById('grade').value;
+            const guardian = document.getElementById('guardian').value;
+            const contact = document.getElementById('contact').value;
+            const studentId = document.getElementById('student-id').value;
+            const address = document.getElementById('address').value;
+            
+            const newStudent = {
+                id: students.length > 0 ? Math.max(...students.map(s => s.id)) + 1 : 1,
+                name,
+                age: parseInt(age),
+                gender,
+                grade,
+                guardian,
+                contact,
+                studentId,
+                address,
+                photo: gender === 'Male' ? '👦' : '👧'
+            };
+            
+            students.push(newStudent);
+            studentForm.reset();
+            updateGradeCounts();
+            
+            alert(`✅ ${name} has been added successfully!`);
+            
+            const activeGradeCard = document.querySelector('.grade-card.active');
+            if (activeGradeCard) {
+                filterStudentsByGrade(activeGradeCard.getAttribute('data-grade'));
+            }
+        });
+
+        // Edit student
+        editStudentForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const id = parseInt(document.getElementById('edit-id').value);
+            const name = document.getElementById('edit-full-name').value;
+            const age = document.getElementById('edit-age').value;
+            const gender = document.getElementById('edit-gender').value;
+            const grade = document.getElementById('edit-grade').value;
+            const guardian = document.getElementById('edit-guardian').value;
+            const contact = document.getElementById('edit-contact').value;
+            const studentId = document.getElementById('edit-student-id').value;
+            const address = document.getElementById('edit-address').value;
+            
+            const studentIndex = students.findIndex(s => s.id === id);
+            if (studentIndex !== -1) {
+                students[studentIndex] = {
+                    ...students[studentIndex],
+                    name,
+                    age: parseInt(age),
+                    gender,
+                    grade,
+                    guardian,
+                    contact,
+                    studentId,
+                    address
+                };
+                
+                closeEditModalFunc();
+                updateGradeCounts();
+                
+                const activeGradeCard = document.querySelector('.grade-card.active');
+                if (activeGradeCard) {
+                    filterStudentsByGrade(activeGradeCard.getAttribute('data-grade'));
+                }
+                
+                alert(`✅ ${name}'s profile has been updated!`);
+            }
+        });
+
+        // Event listeners
+        closeEditModal.addEventListener('click', closeEditModalFunc);
+        cancelEdit.addEventListener('click', closeEditModalFunc);
+
+        editModal.addEventListener('click', (e) => {
+            if (e.target === editModal) {
+                closeEditModalFunc();
+            }
+        });
+
+        // Initialize page
+        function initializePage() {
+            updateGradeCounts();
+            filterStudentsByGrade('lower-1');
+            renderAlumni();
+        }
+
+        // Auto-focus passcode input
+        window.onload = () => {
+            document.getElementById('passcode-input').focus();
+        };
     </script>
 </body>
 </html>
