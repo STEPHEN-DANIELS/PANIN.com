@@ -785,6 +785,19 @@
             updateSessionExpiry();
             loadMessages();
             updateOnlineCount();
+            
+            // Add scroll event listener to track if user is manually scrolling
+            const chatMessages = document.getElementById('chat-messages');
+            chatMessages.addEventListener('scroll', handleScroll);
+        }
+
+        // Handle scroll events to determine if we should auto-scroll
+        function handleScroll() {
+            const container = document.getElementById('chat-messages');
+            const scrollThreshold = 100; // pixels from bottom
+            
+            // Check if user is near the bottom
+            autoScroll = (container.scrollHeight - container.scrollTop - container.clientHeight) <= scrollThreshold;
         }
 
         // Capture client details
@@ -1044,6 +1057,10 @@
                     loadMessages();
                     updateOnlineCount();
                     
+                    // Add scroll event listener
+                    const chatMessages = document.getElementById('chat-messages');
+                    chatMessages.addEventListener('scroll', handleScroll);
+                    
                     // Log returning user
                     console.log('Returning user:', currentStaff.name);
                 } else {
@@ -1056,6 +1073,31 @@
                 }
             }
             
-            // Add scroll event listener to track if user is manually scrolling
-            const chatMessages = document.getElementById('chat-messages
-                
+            // Check session validity every hour
+            setInterval(checkSessionValidity, 60 * 60 * 1000);
+            
+            // Update session expiry display every minute
+            setInterval(updateSessionExpiry, 60 * 1000);
+        };
+
+        // Admin functions (accessible via console)
+        window.getClientLog = getClientLog;
+        window.exportClientLog = exportClientLog;
+        window.clearAllData = function() {
+            if (confirm('Are you sure you want to clear all data? This cannot be undone.')) {
+                localStorage.clear();
+                window.location.reload();
+            }
+        };
+
+        // Display info on console
+        console.log('%c🔐 Staff Communication System', 'color: #0B8F4A; font-size: 16px; font-weight: bold;');
+        console.log('%cOne-Time Login: Active for 2 weeks', 'color: #667eea; font-size: 12px;');
+        console.log('%cMessage History: Last 2 weeks displayed', 'color: #667eea; font-size: 12px;');
+        console.log('%c\nAdmin Commands:', 'color: #e74c3c; font-size: 14px; font-weight: bold;');
+        console.log('%cgetClientLog() - View all login details', 'color: #64748b; font-size: 12px;');
+        console.log('%cexportClientLog() - Export login log as JSON', 'color: #64748b; font-size: 12px;');
+        console.log('%cclearAllData() - Clear all stored data', 'color: #64748b; font-size: 12px;');
+    </script>
+</body>
+</html>
