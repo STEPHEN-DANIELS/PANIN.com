@@ -328,6 +328,7 @@
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             flex-wrap: wrap;
             gap: 1rem;
+            flex-shrink: 0;
         }
 
         .header-left {
@@ -390,6 +391,9 @@
             overflow-y: auto;
             padding: 2rem;
             background: #F8FAFC;
+            display: flex;
+            flex-direction: column;
+            min-height: 0; /* Important for flex child scrolling */
         }
 
         .message {
@@ -397,6 +401,7 @@
             gap: 1rem;
             margin-bottom: 1.5rem;
             animation: fadeIn 0.3s ease;
+            flex-shrink: 0;
         }
 
         @keyframes fadeIn {
@@ -429,6 +434,7 @@
 
         .message-content {
             max-width: 65%;
+            flex: 0 1 auto;
         }
 
         .message-header {
@@ -480,6 +486,7 @@
             background: white;
             border-top: 1px solid #E2E8F0;
             box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.05);
+            flex-shrink: 0;
         }
 
         .chat-input-wrapper {
@@ -537,6 +544,11 @@
             text-align: center;
             padding: 4rem 2rem;
             color: #64748b;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
         .empty-icon {
@@ -701,6 +713,7 @@
         
         let currentStaff = null;
         let messages = [];
+        let autoScroll = true; // Track if we should auto-scroll to bottom
 
         // Password verification
         function verifyPassword() {
@@ -772,6 +785,19 @@
             updateSessionExpiry();
             loadMessages();
             updateOnlineCount();
+            
+            // Add scroll event listener to track if user is manually scrolling
+            const chatMessages = document.getElementById('chat-messages');
+            chatMessages.addEventListener('scroll', handleScroll);
+        }
+
+        // Handle scroll events to determine if we should auto-scroll
+        function handleScroll() {
+            const container = document.getElementById('chat-messages');
+            const scrollThreshold = 100; // pixels from bottom
+            
+            // Check if user is near the bottom
+            autoScroll = (container.scrollHeight - container.scrollTop - container.clientHeight) <= scrollThreshold;
         }
 
         // Capture client details
@@ -828,6 +854,10 @@
             const container = document.getElementById('chat-messages');
             const emptyState = container.querySelector('.empty-state');
             
+            // Clear container but preserve scroll position
+            const scrollPosition = container.scrollTop;
+            const scrollHeight = container.scrollHeight;
+            
             if (messages.length > 0 && emptyState) {
                 emptyState.remove();
             }
@@ -846,18 +876,42 @@
                 return;
             }
             
+            // Add all messages
             messages.forEach(msg => {
                 const isOwn = msg.staffId === currentStaff.staffId;
                 const messageEl = createMessageElement(msg, isOwn);
                 container.appendChild(messageEl);
             });
             
-            container.scrollTop = container.scrollHeight;
+            // Only auto-scroll if we were at the bottom before
+            if (autoScroll) {
+                container.scrollTop = container.scrollHeight;
+            } else {
+                // Try to maintain the relative scroll position
+                const newScrollHeight = container.scrollHeight;
+                if (scrollHeight > 0) {
+                    container.scrollTop = scrollPosition + (newScrollHeight - scrollHeight);
+                }
+            }
         }
 
         // Create message element
         function createMessageElement(msg, isOwn) {
             const div = document.createElement('div');
+            div.className = `message ${isOwn ? 'own' : ''}`;
+            
+            const initial = msg.staffName.charAt(0).toUpperCase();
+            
+            // Format date
+            const messageDate = new Date(msg.timestamp);
+            const today = new Date();
+            const isToday = messageDate.toDateString() === today.toDateString();
+            
+            const dateStr = isToday ? 
+                messageDate.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }) :
+                messageDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) + ' ' + 
+                messageDate.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+            
             div.innerHTML = `
                 <div class="message-avatar">${initial}</div>
                 <div class="message-content">
@@ -892,6 +946,8 @@
             messages.push(message);
             localStorage.setItem('staffMessages', JSON.stringify(messages));
             
+            // Force auto-scroll when sending a new message
+            autoScroll = true;
             renderMessages();
             input.value = '';
             input.style.height = 'auto';
@@ -1001,6 +1057,10 @@
                     loadMessages();
                     updateOnlineCount();
                     
+                    // Add scroll event listener
+                    const chatMessages = document.getElementById('chat-messages');
+                    chatMessages.addEventListener('scroll', handleScroll);
+                    
                     // Log returning user
                     console.log('Returning user:', currentStaff.name);
                 } else {
@@ -1039,39 +1099,5 @@
         console.log('%cexportClientLog() - Export login log as JSON', 'color: #64748b; font-size: 12px;');
         console.log('%cclearAllData() - Clear all stored data', 'color: #64748b; font-size: 12px;');
     </script>
-    <script>
-        // Create message element
-        function createMessageElement(msg, isOwn) {
-            const div = document.createElement('div');
-            div.className = `message ${isOwn ? 'own' : ''}`;
-            
-            const initial = msg.staffName.charAt(0).toUpperCase();
-            
-            // Format date
-            const messageDate = new Date(msg.timestamp);
-            const today = new Date();
-            const isToday = messageDate.toDateString() === today.toDateString();
-            
-            const dateStr = isToday ? 
-                messageDate.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }) :
-                messageDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) + ' ' + 
-                messageDate.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
-            
-            div.innerHTML = `
-                <div class="message-avatar">${initial}</div>
-                <div class="message-content">
-                    <div class="message-header">
-                        <span class="message-name">${msg.staffName}</span>
-                        <span class="message-role">${msg.department}</span>
-                        <span class="message-time">${dateStr}</span>
-                    </div>
-                    <div class="message-bubble">${msg.text}</div>
-                </div>
-            `;
-            
-            return div;
-        }
-    </script>
 </body>
 </html>
-
