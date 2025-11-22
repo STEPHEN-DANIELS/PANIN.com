@@ -3,19 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student & Alumni Profiles - Wexford Community School</title>
+    <title>Staff Communication - Wexford</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
-
-        :root {
-            --primary-green: #0B8F4A;
-            --primary-dark: #05A854;
-            --primary-light: #E8F5EE;
-            --text-dark: #2d3748;
-            --text-medium: #4a5568;
-            --text-light: #718096;
-            --border-light: #e2e8f0;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
 
         * {
             margin: 0;
@@ -24,21 +14,51 @@
         }
 
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Poppins', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: var(--text-dark);
-            line-height: 1.6;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        /* Passcode Modal */
-        .passcode-modal {
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .particle:nth-child(1) { width: 80px; height: 80px; left: 10%; animation-delay: 0s; }
+        .particle:nth-child(2) { width: 60px; height: 60px; left: 30%; animation-delay: 2s; }
+        .particle:nth-child(3) { width: 100px; height: 100px; left: 50%; animation-delay: 4s; }
+        .particle:nth-child(4) { width: 70px; height: 70px; left: 70%; animation-delay: 6s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(100vh); opacity: 0; }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.5; }
+            100% { transform: translateY(-100vh); opacity: 0; }
+        }
+
+        /* Password Modal */
+        .password-modal {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.95);
+            background: rgba(0, 0, 0, 0.9);
             backdrop-filter: blur(10px);
             z-index: 10000;
             display: flex;
@@ -46,15 +66,15 @@
             justify-content: center;
         }
 
-        .passcode-modal.hidden {
+        .password-modal.hidden {
             display: none;
         }
 
-        .passcode-content {
+        .password-content {
             background: white;
             border-radius: 24px;
             padding: 3rem 2.5rem;
-            max-width: 500px;
+            max-width: 450px;
             width: 90%;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
             animation: slideUp 0.4s ease-out;
@@ -66,17 +86,8 @@
             to { transform: translateY(0); opacity: 1; }
         }
 
-        .passcode-logo {
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 1.5rem;
-            border-radius: 50%;
-            border: 4px solid var(--primary-green);
-            box-shadow: 0 8px 24px rgba(11, 143, 74, 0.3);
-        }
-
-        .passcode-icon {
-            font-size: 4rem;
+        .password-icon {
+            font-size: 5rem;
             margin-bottom: 1rem;
             animation: bounce 1s ease infinite;
         }
@@ -86,25 +97,25 @@
             50% { transform: translateY(-10px); }
         }
 
-        .passcode-content h2 {
+        .password-content h2 {
             font-size: 2rem;
             font-weight: 800;
-            color: var(--text-dark);
+            color: #1E293B;
             margin-bottom: 0.5rem;
         }
 
-        .passcode-content p {
-            color: var(--text-medium);
+        .password-content p {
+            color: #64748b;
             margin-bottom: 2rem;
         }
 
-        .passcode-input {
+        .password-input {
             width: 100%;
             padding: 1.25rem 1.5rem;
-            border: 2px solid var(--border-light);
+            border: 2px solid #E2E8F0;
             border-radius: 12px;
             font-size: 1.5rem;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Poppins', sans-serif;
             font-weight: 600;
             text-align: center;
             letter-spacing: 0.3rem;
@@ -112,13 +123,13 @@
             margin-bottom: 0.5rem;
         }
 
-        .passcode-input:focus {
+        .password-input:focus {
             outline: none;
-            border-color: var(--primary-green);
+            border-color: #0B8F4A;
             box-shadow: 0 0 0 4px rgba(11, 143, 74, 0.1);
         }
 
-        .passcode-input.error {
+        .password-input.error {
             border-color: #ef4444;
             animation: shake 0.5s ease;
         }
@@ -129,7 +140,7 @@
             75% { transform: translateX(10px); }
         }
 
-        .passcode-error {
+        .password-error {
             color: #ef4444;
             font-size: 0.9rem;
             font-weight: 600;
@@ -137,14 +148,14 @@
             display: none;
         }
 
-        .passcode-error.show {
+        .password-error.show {
             display: block;
         }
 
-        .passcode-button {
+        .password-button {
             width: 100%;
             padding: 1.25rem;
-            background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-dark) 100%);
+            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
             color: white;
             border: none;
             border-radius: 12px;
@@ -153,15 +164,15 @@
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 8px 24px rgba(11, 143, 74, 0.3);
-            font-family: 'Inter', sans-serif;
+            font-family: 'Poppins', sans-serif;
         }
 
-        .passcode-button:hover {
+        .password-button:hover {
             transform: translateY(-2px);
             box-shadow: 0 12px 32px rgba(11, 143, 74, 0.4);
         }
 
-        .passcode-hint {
+        .password-hint {
             margin-top: 1.5rem;
             padding: 1rem;
             background: #FEF3C7;
@@ -171,1003 +182,548 @@
             border: 2px solid #FDE68A;
         }
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            background: white;
-            box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
-            position: relative;
-        }
-
-        /* Header */
-        header {
-            background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-dark) 100%);
-            color: white;
-            padding: 2.5rem 2rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            border-bottom: 6px solid #FFD700;
-        }
-
-        .header-content {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-            position: relative;
-            z-index: 1;
-        }
-
-        .logo {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            border: 4px solid #FFD700;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-        }
-
-        .header-text h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2rem, 4vw, 3rem);
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            letter-spacing: 1px;
-        }
-
-        .header-text p {
-            font-size: clamp(1rem, 2vw, 1.3rem);
-            font-weight: 400;
-            opacity: 0.9;
-        }
-
-        /* Navigation */
-        .nav-container {
-            background: var(--primary-green);
-            padding: 1rem;
-            border-bottom: 2px solid #FFD700;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .nav-wrapper {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .nav-tabs {
-            display: flex;
-            gap: 0;
-            background: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .nav-tab {
-            padding: 0.75rem 1.5rem;
-            background: white;
-            border: none;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 0.95rem;
-            color: var(--text-medium);
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            border-right: 1px solid var(--border-light);
-        }
-
-        .nav-tab:last-child {
-            border-right: none;
-        }
-
-        .nav-tab:hover {
-            background: var(--primary-light);
-            color: var(--primary-green);
-        }
-
-        .nav-tab.active {
-            background: var(--primary-green);
-            color: white;
-        }
-
-        /* Main Content */
-        main {
-            padding: 2rem;
-            background: #f8f9fa;
-            min-height: 70vh;
-        }
-
-        .content-section {
-            display: none;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .content-section.active {
-            display: block;
-            animation: fadeIn 0.5s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 2.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 2px solid var(--border-light);
-        }
-
-        .section-header h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: var(--primary-green);
-            margin-bottom: 0.5rem;
-        }
-
-        .section-description {
-            color: var(--text-medium);
-            font-size: 1.1rem;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        /* Grade Selection */
-        .grade-selection {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2.5rem;
-        }
-
-        .grade-card {
-            background: white;
-            border-radius: 12px;
-            padding: 1.5rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            border: 2px solid transparent;
-        }
-
-        .grade-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-            border-color: #FFD700;
-        }
-
-        .grade-card.active {
-            border-color: var(--primary-green);
-            background: var(--primary-green);
-            color: white;
-        }
-
-        .grade-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .grade-name {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .grade-count {
-            font-size: 0.9rem;
-            color: var(--text-light);
-        }
-
-        .grade-card.active .grade-count {
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        /* Student Grid */
-        .students-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .student-card {
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;
-            border: 1px solid var(--border-light);
-        }
-
-        .student-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .student-photo {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-dark) 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 3rem;
-        }
-
-        .student-info {
-            padding: 1.5rem;
-        }
-
-        .student-name {
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: var(--primary-green);
-            margin-bottom: 0.5rem;
-        }
-
-        .student-id {
-            display: inline-block;
-            background: var(--primary-light);
-            color: var(--primary-green);
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-
-        .student-details {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            font-size: 0.9rem;
-            color: var(--text-medium);
-        }
-
-        .student-detail {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .detail-icon {
-            color: #FFD700;
-            width: 20px;
-        }
-
-        .student-actions {
-            display: flex;
-            gap: 0.5rem;
-            margin-top: 1rem;
-        }
-
-        .action-btn {
-            flex: 1;
-            padding: 0.5rem;
-            border: none;
-            border-radius: 6px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.25rem;
-        }
-
-        .edit-btn {
-            background: var(--primary-light);
-            color: var(--primary-green);
-        }
-
-        .edit-btn:hover {
-            background: #d4eadf;
-        }
-
-        .graduate-btn {
-            background: #FFD700;
-            color: var(--primary-green);
-        }
-
-        .graduate-btn:hover {
-            background: #ffed4e;
-        }
-
-        .remove-btn {
-            background: #fee;
-            color: #dc2626;
-        }
-
-        .remove-btn:hover {
-            background: #fdd;
-        }
-
-        /* Alumni Grid */
-        .alumni-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .alumni-card {
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;
-            border: 1px solid var(--border-light);
-            position: relative;
-        }
-
-        .alumni-card::before {
-            content: '';
-            position: absolute;
+        /* Login Form */
+        .login-container {
+            position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            height: 4px;
-            background: #FFD700;
-        }
-
-        .alumni-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .alumni-photo {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-            background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-dark) 100%);
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 9999;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-size: 3rem;
         }
 
-        .alumni-info {
-            padding: 1.5rem;
+        .login-container.hidden {
+            display: none;
         }
 
-        .alumni-name {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--primary-green);
+        .login-box {
+            background: white;
+            border-radius: 24px;
+            padding: 3rem 2.5rem;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.4s ease-out;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .login-header img {
+            width: 80px;
+            height: 80px;
+            border-radius: 16px;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 16px rgba(11, 143, 74, 0.3);
+        }
+
+        .login-header h2 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #1E293B;
             margin-bottom: 0.5rem;
         }
 
-        .alumni-year {
+        .staff-badge {
             display: inline-block;
-            background: var(--primary-green);
+            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
             color: white;
-            padding: 0.25rem 0.75rem;
+            padding: 0.5rem 1.5rem;
             border-radius: 20px;
-            font-size: 0.85rem;
             font-weight: 600;
+            font-size: 0.9rem;
             margin-bottom: 1rem;
         }
 
-        .alumni-details {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            font-size: 0.9rem;
-            color: var(--text-medium);
-        }
-
-        /* Forms */
-        .form-section {
-            background: white;
-            border-radius: 12px;
-            padding: 2rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            margin-bottom: 2rem;
-            border: 1px solid var(--border-light);
-        }
-
-        .form-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid var(--border-light);
-        }
-
-        .form-header h3 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--primary-green);
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-        }
-
         .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
+            margin-bottom: 1.5rem;
         }
 
         .form-group label {
+            display: block;
             font-weight: 600;
-            color: var(--text-dark);
+            color: #1E293B;
+            margin-bottom: 0.5rem;
             font-size: 0.95rem;
         }
 
         .form-group input,
-        .form-group select,
-        .form-group textarea {
-            padding: 0.75rem 1rem;
-            border: 1px solid var(--border-light);
-            border-radius: 8px;
+        .form-group select {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            border: 2px solid #E2E8F0;
+            border-radius: 12px;
             font-size: 1rem;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Poppins', sans-serif;
             transition: all 0.3s ease;
         }
 
         .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
+        .form-group select:focus {
             outline: none;
-            border-color: var(--primary-green);
-            box-shadow: 0 0 0 3px rgba(11, 143, 74, 0.1);
+            border-color: #0B8F4A;
+            box-shadow: 0 0 0 4px rgba(11, 143, 74, 0.1);
         }
 
-        .file-upload {
+        .login-button {
+            width: 100%;
+            padding: 1.25rem;
+            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1.125rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 24px rgba(11, 143, 74, 0.3);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .login-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(11, 143, 74, 0.4);
+        }
+
+        .onetime-notice {
+            background: #E8F5EE;
+            border: 2px solid #0B8F4A;
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            font-size: 0.85rem;
+            color: #0B8F4A;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        /* Chat Container */
+        .chat-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            height: 100vh;
             position: relative;
+            box-shadow: 0 0 80px rgba(0, 0, 0, 0.4);
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Chat Header */
+        .chat-header {
+            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
+            color: white;
+            padding: 1.5rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            flex-wrap: wrap;
+            gap: 1rem;
+            flex-shrink: 0;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .header-logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .header-info h1 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .header-info p {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+        .online-count {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .history-badge {
+            background: rgba(255, 255, 255, 0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        /* Chat Messages Area */
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 2rem;
+            background: #F8FAFC;
+            display: flex;
+            flex-direction: column;
+            min-height: 0; /* Important for flex child scrolling */
+        }
+
+        .message {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            animation: fadeIn 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.own {
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 2rem;
-            border: 2px dashed var(--border-light);
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            background: var(--primary-light);
-        }
-
-        .file-upload:hover {
-            border-color: var(--primary-green);
-            background: #d4eadf;
-        }
-
-        .file-upload input[type="file"] {
-            position: absolute;
-            opacity: 0;
-            width: 100%;
-            height: 100%;
-            cursor: pointer;
-        }
-
-        .file-upload-content {
-            text-align: center;
-        }
-
-        .file-upload-icon {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-            color: var(--primary-green);
-        }
-
-        .form-actions {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-
-        .submit-btn {
-            padding: 0.75rem 1.5rem;
-            background: var(--primary-green);
             color: white;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            font-weight: 700;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .message.own .message-avatar {
+            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
+        }
+
+        .message-content {
+            max-width: 65%;
+            flex: 0 1 auto;
+        }
+
+        .message-header {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
         }
 
-        .submit-btn:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
+        .message-name {
+            font-weight: 700;
+            color: #1E293B;
+            font-size: 0.95rem;
         }
 
-        .cancel-btn {
-            padding: 0.75rem 1.5rem;
-            background: var(--primary-light);
-            color: var(--text-dark);
-            border: 1px solid var(--border-light);
-            border-radius: 8px;
+        .message-role {
+            background: #E8F5EE;
+            color: #0B8F4A;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
             font-weight: 600;
+        }
+
+        .message-time {
+            color: #94A3B8;
+            font-size: 0.75rem;
+        }
+
+        .message-bubble {
+            background: white;
+            padding: 1rem 1.25rem;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            color: #1E293B;
+            line-height: 1.6;
+            word-wrap: break-word;
+        }
+
+        .message.own .message-bubble {
+            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
+            color: white;
+        }
+
+        /* Chat Input */
+        .chat-input-container {
+            padding: 1.5rem 2rem;
+            background: white;
+            border-top: 1px solid #E2E8F0;
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.05);
+            flex-shrink: 0;
+        }
+
+        .chat-input-wrapper {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-end;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: 2px solid #E2E8F0;
+            border-radius: 24px;
             font-size: 1rem;
-            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            resize: none;
+            max-height: 120px;
             transition: all 0.3s ease;
         }
 
-        .cancel-btn:hover {
-            background: #d4eadf;
+        .chat-input:focus {
+            outline: none;
+            border-color: #0B8F4A;
+            box-shadow: 0 0 0 4px rgba(11, 143, 74, 0.1);
         }
 
-        /* Empty States */
+        .send-button {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 16px rgba(11, 143, 74, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .send-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 24px rgba(11, 143, 74, 0.4);
+        }
+
+        .send-button:active {
+            transform: scale(0.95);
+        }
+
+        /* Empty State */
         .empty-state {
             text-align: center;
-            padding: 3rem 2rem;
-            color: var(--text-medium);
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            padding: 4rem 2rem;
+            color: #64748b;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
         .empty-icon {
-            font-size: 4rem;
+            font-size: 5rem;
             margin-bottom: 1rem;
             opacity: 0.3;
         }
 
         .empty-state h3 {
             font-size: 1.5rem;
-            color: var(--text-dark);
+            color: #475569;
             margin-bottom: 0.5rem;
         }
 
-        /* Footer */
-        footer {
-            background: var(--primary-green);
-            color: white;
-            padding: 2rem;
-            text-align: center;
-            border-top: 4px solid #FFD700;
+        /* Scrollbar */
+        .chat-messages::-webkit-scrollbar {
+            width: 8px;
         }
 
-        footer p {
-            margin-bottom: 0.5rem;
+        .chat-messages::-webkit-scrollbar-track {
+            background: #f1f5f9;
         }
 
-        .footer-logo {
-            font-weight: 700;
-            color: #FFD700;
-        }
-
-        /* Modal */
-        .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.7);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            padding: 1rem;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .modal.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .modal-content {
-            background: white;
-            border-radius: 12px;
-            padding: 2rem;
-            max-width: 500px;
-            width: 100%;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            transform: translateY(20px);
-            transition: all 0.3s ease;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-
-        .modal.active .modal-content {
-            transform: translateY(0);
-        }
-
-        .modal-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid var(--border-light);
-        }
-
-        .modal-header h3 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--primary-green);
-        }
-
-        .close-btn {
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--text-light);
-            transition: color 0.3s ease;
-        }
-
-        .close-btn:hover {
-            color: var(--text-dark);
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: #0B8F4A;
+            border-radius: 10px;
         }
 
         /* Responsive */
         @media (max-width: 768px) {
-            .nav-wrapper {
-                flex-direction: column;
-                gap: 1rem;
+            .message-content {
+                max-width: 80%;
             }
 
-            .nav-tabs {
+            .chat-header {
+                padding: 1rem;
+            }
+
+            .header-info h1 {
+                font-size: 1.1rem;
+            }
+
+            .user-info {
                 width: 100%;
-                overflow-x: auto;
+                justify-content: space-between;
             }
 
-            .nav-tab {
-                padding: 0.75rem 1rem;
-                font-size: 0.9rem;
+            .chat-messages {
+                padding: 1rem;
             }
 
-            .grade-selection {
-                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            }
-
-            .students-grid,
-            .alumni-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .form-grid {
-                grid-template-columns: 1fr;
+            .chat-input-container {
+                padding: 1rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Passcode Modal -->
-    <div class="passcode-modal" id="passcode-modal">
-        <div class="passcode-content">
-            <img src="WEX LOGO.jpg" alt="Wexford Logo" class="passcode-logo">
-            <div class="passcode-icon">🔐</div>
-            <h2>Secure Access Required</h2>
-            <p>Enter passcode to access Student & Alumni Profiles</p>
-            <input type="password" class="passcode-input" id="passcode-input" placeholder="Enter passcode" maxlength="10" autocomplete="off">
-            <div class="passcode-error" id="passcode-error">❌ Incorrect passcode. Please try again.</div>
-            <button class="passcode-button" onclick="verifyPasscode()">🔓 Access Profiles</button>
-            <div class="passcode-hint">
-                <strong>⚠️ Authorized Personnel Only</strong><br>
-                This system contains sensitive student information
+    <div class="bg-animation">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <!-- Password Modal -->
+    <div class="password-modal" id="password-modal">
+        <div class="password-content">
+            <div class="password-icon">🔐</div>
+            <h2>Staff Access Only</h2>
+            <p>Enter password to access staff communication room</p>
+            <input type="password" class="password-input" id="password-input" placeholder="••••••" maxlength="10" autocomplete="off">
+            <div class="password-error" id="password-error">❌ Incorrect password. Please try again.</div>
+            <button class="password-button" onclick="verifyPassword()">🔓 Enter Staff Room</button>
+            <div class="password-hint">
+                <strong>⚠️ Staff Members Only</strong><br>
+                This is a private communication channel for Wexford staff
             </div>
         </div>
     </div>
 
-    <div class="container" id="main-container" style="display: none;">
-        <header>
-            <div class="header-content">
-                <img src="WEX LOGO.jpg" alt="Wexford Logo" class="logo">
-                <div class="header-text">
-                    <h1>Wexford Community School</h1>
-                    <p>Student & Alumni Profiles</p>
-                </div>
+    <!-- Login Form -->
+    <div class="login-container" id="login-container">
+        <div class="login-box">
+            <div class="login-header">
+                <img src="WEX LOGO.jpg" alt="Wexford Logo">
+                <h2>Staff Communication Room</h2>
+                <span class="staff-badge">👨‍🏫 Wexford Staff Only</span>
+                <p style="color: #64748b;">Please provide your details to continue</p>
             </div>
-        </header>
 
-        <div class="nav-container">
-            <div class="nav-wrapper">
-                <div class="nav-tabs">
-                    <button class="nav-tab active" data-tab="students">
-                        <span>👥</span> Current Students
-                    </button>
-                    <button class="nav-tab" data-tab="alumni">
-                        <span>🎓</span> Alumni
-                    </button>
-                    <button class="nav-tab" data-tab="add-student">
-                        <span>➕</span> Add Student
-                    </button>
-                </div>
+            <div class="onetime-notice">
+                ⏰ One-Time Login - Your session will remain active for 2 weeks
             </div>
-        </div>
 
-        <main>
-            <!-- Current Students Section -->
-            <section id="students" class="content-section active">
-                <div class="section-header">
-                    <h2>Current Students</h2>
-                    <p class="section-description">Browse and manage student profiles by grade level</p>
+            <form onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label>👤 Full Name</label>
+                    <input type="text" id="staff-name" placeholder="Enter your full name" required>
                 </div>
-
-                <div class="grade-selection">
-                    <div class="grade-card active" data-grade="lower-1">
-                        <div class="grade-icon">🎨</div>
-                        <div class="grade-name">Lower Primary 1</div>
-                        <div class="grade-count" id="count-lower-1">0 students</div>
-                    </div>
-                    <div class="grade-card" data-grade="lower-2">
-                        <div class="grade-icon">🎨</div>
-                        <div class="grade-name">Lower Primary 2</div>
-                        <div class="grade-count" id="count-lower-2">0 students</div>
-                    </div>
-                    <div class="grade-card" data-grade="lower-3">
-                        <div class="grade-icon">🎨</div>
-                        <div class="grade-name">Lower Primary 3</div>
-                        <div class="grade-count" id="count-lower-3">0 students</div>
-                    </div>
-                    <div class="grade-card" data-grade="upper-4">
-                        <div class="grade-icon">📚</div>
-                        <div class="grade-name">Upper Primary 4</div>
-                        <div class="grade-count" id="count-upper-4">0 students</div>
-                    </div>
-                    <div class="grade-card" data-grade="upper-5">
-                        <div class="grade-icon">📚</div>
-                        <div class="grade-name">Upper Primary 5</div>
-                        <div class="grade-count" id="count-upper-5">0 students</div>
-                    </div>
-                    <div class="grade-card" data-grade="upper-6">
-                        <div class="grade-icon">📚</div>
-                        <div class="grade-name">Upper Primary 6</div>
-                        <div class="grade-count" id="count-upper-6">0 students</div>
-                    </div>
-                    <div class="grade-card" data-grade="jhs-1">
-                        <div class="grade-icon">🎓</div>
-                        <div class="grade-name">JHS 1</div>
-                        <div class="grade-count" id="count-jhs-1">0 students</div>
-                    </div>
-                    <div class="grade-card" data-grade="jhs-2">
-                        <div class="grade-icon">🎓</div>
-                        <div class="grade-name">JHS 2</div>
-                        <div class="grade-count" id="count-jhs-2">0 students</div>
-                    </div>
-                    <div class="grade-card" data-grade="jhs-3">
-                        <div class="grade-icon">🎓</div>
-                        <div class="grade-name">JHS 3</div>
-                        <div class="grade-count" id="count-jhs-3">0 students</div>
-                    </div>
+                <div class="form-group">
+                    <label>💼 Department/Subject</label>
+                    <select id="staff-department" required>
+                        <option value="">Select your department...</option>
+                        <option value="Administration">Administration</option>
+                        <option value="Lower Primary">Lower Primary</option>
+                        <option value="Upper Primary">Upper Primary</option>
+                        <option value="JHS">JHS</option>
+                        <option value="Mathematics">Mathematics</option>
+                        <option value="English">English</option>
+                        <option value="Science">Science</option>
+                        <option value="ICT">ICT</option>
+                        <option value="Other">Other</option>
+                    </select>
                 </div>
-
-                <div class="students-grid" id="students-container"></div>
-            </section>
-
-            <!-- Alumni Section -->
-            <section id="alumni" class="content-section">
-                <div class="section-header">
-                    <h2>Alumni</h2>
-                    <p class="section-description">Celebrating our graduates and their achievements</p>
+                <div class="form-group">
+                    <label>📞 Staff ID / Phone</label>
+                    <input type="text" id="staff-id" placeholder="Enter your staff ID or phone number" required>
                 </div>
-
-                <div class="alumni-grid" id="alumni-container"></div>
-            </section>
-
-            <!-- Add Student Section -->
-            <section id="add-student" class="content-section">
-                <div class="section-header">
-                    <h2>Add New Student</h2>
-                    <p class="section-description">Create a new student profile for the school records</p>
-                </div>
-
-                <div class="form-section">
-                    <div class="form-header">
-                        <span style="font-size: 2rem;">➕</span>
-                        <h3>Student Information</h3>
-                    </div>
-                    <form id="student-form">
-                        <div class="form-grid">
-                            <div class="form-group">
-                                <label for="full-name">Full Name</label>
-                                <input type="text" id="full-name" placeholder="Enter student's full name" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="age">Age</label>
-                                <input type="number" id="age" placeholder="Enter age" min="5" max="18" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="gender">Gender</label>
-                                <select id="gender" required>
-                                    <option value="">Select gender</option>
-                                    <option>Male</option>
-                                    <option>Female</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="grade">Grade</label>
-                                <select id="grade" required>
-                                    <option value="">Select grade</option>
-                                    <option>Lower Primary 1</option>
-                                    <option>Lower Primary 2</option>
-                                    <option>Lower Primary 3</option>
-                                    <option>Upper Primary 4</option>
-                                    <option>Upper Primary 5</option>
-                                    <option>Upper Primary 6</option>
-                                    <option>JHS 1</option>
-                                    <option>JHS 2</option>
-                                    <option>JHS 3</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="guardian">Guardian Name</label>
-                                <input type="text" id="guardian" placeholder="Enter guardian's name" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="contact">Contact Number</label>
-                                <input type="tel" id="contact" placeholder="Enter contact number" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="student-id">Student ID</label>
-                                <input type="text" id="student-id" placeholder="Auto-generated or enter manually" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="address">Address</label>
-                                <input type="text" id="address" placeholder="Enter student's address">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Student Photo (Optional)</label>
-                            <div class="file-upload">
-                                <input type="file" id="photo" accept="image/*">
-                                <div class="file-upload-content">
-                                    <div class="file-upload-icon">📸</div>
-                                    <p style="font-weight: 600; color: var(--text-dark);">Click to upload photo</p>
-                                    <p style="font-size: 0.85rem; color: var(--text-medium); margin-top: 0.25rem;">PNG, JPG up to 5MB</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-actions">
-                            <button type="submit" class="submit-btn">
-                                <span>✅</span> Add Student Profile
-                            </button>
-                            <button type="reset" class="cancel-btn">Clear Form</button>
-                        </div>
-                    </form>
-                </div>
-            </section>
-        </main>
-
-        <footer>
-            <p><span class="footer-logo">Wexford Community School</span> - Student & Alumni Profiles</p>
-            <p>© 2025 | Established 1982</p>
-        </footer>
-    </div>
-
-    <!-- Edit Student Modal -->
-    <div class="modal" id="edit-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Edit Student Profile</h3>
-                <button class="close-btn" id="close-edit-modal">&times;</button>
-            </div>
-            <form id="edit-student-form">
-                <input type="hidden" id="edit-id">
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label for="edit-full-name">Full Name</label>
-                        <input type="text" id="edit-full-name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="edit-age">Age</label>
-                        <input type="number" id="edit-age" min="5" max="18" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="edit-gender">Gender</label>
-                        <select id="edit-gender" required>
-                            <option value="">Select gender</option>
-                            <option>Male</option>
-                            <option>Female</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="edit-grade">Grade</label>
-                        <select id="edit-grade" required>
-                            <option value="">Select grade</option>
-                            <option>Lower Primary 1</option>
-                            <option>Lower Primary 2</option>
-                            <option>Lower Primary 3</option>
-                            <option>Upper Primary 4</option>
-                            <option>Upper Primary 5</option>
-                            <option>Upper Primary 6</option>
-                            <option>JHS 1</option>
-                            <option>JHS 2</option>
-                            <option>JHS 3</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="edit-guardian">Guardian Name</label>
-                        <input type="text" id="edit-guardian" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="edit-contact">Contact Number</label>
-                        <input type="tel" id="edit-contact" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="edit-student-id">Student ID</label>
-                        <input type="text" id="edit-student-id" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="edit-address">Address</label>
-                        <input type="text" id="edit-address">
-                    </div>
-                </div>
-                <div class="form-actions">
-                    <button type="submit" class="submit-btn">
-                        <span>💾</span> Save Changes
-                    </button>
-                    <button type="button" class="cancel-btn" id="cancel-edit">Cancel</button>
-                </div>
+                <button type="submit" class="login-button">✅ Enter Staff Chat (Valid for 2 Weeks)</button>
             </form>
         </div>
     </div>
 
+    <!-- Chat Container -->
+    <div class="chat-container" id="chat-container" style="display: none;">
+        <div class="chat-header">
+            <div class="header-left">
+                <img src="WEX LOGO.jpg" alt="Logo" class="header-logo">
+                <div class="header-info">
+                    <h1>👨‍🏫 Staff Communication Room</h1>
+                    <p>Wexford Community School - Private Staff Channel</p>
+                </div>
+            </div>
+            <div class="user-info">
+                <div class="online-count" id="online-count">👥 Staff Online</div>
+                <div class="user-badge" id="user-display"></div>
+                <div class="history-badge" id="session-expiry"></div>
+            </div>
+        </div>
+
+        <div class="chat-messages" id="chat-messages">
+            <div class="empty-state">
+                <div class="empty-icon">💬</div>
+                <h3>Welcome to Staff Communication</h3>
+                <p>Start collaborating with your colleagues by sending a message below</p>
+            </div>
+        </div>
+
+        <div class="chat-input-container">
+            <div class="chat-input-wrapper">
+                <textarea class="chat-input" id="chat-input" placeholder="Type your message to staff members..." rows="1" onkeypress="handleEnter(event)"></textarea>
+                <button class="send-button" onclick="sendMessage()">➤</button>
+            </div>
+        </div>
+    </div>
+
     <script>
-        const CORRECT_PASSCODE = '2025@';
+        const CORRECT_PASSWORD = 'STAFF';
+        const TWO_WEEKS_MS = 14 * 24 * 60 * 60 * 1000; // 2 weeks in milliseconds
+        const MESSAGE_RETENTION_DAYS = 14; // Keep messages for 2 weeks
         
-        // Sample data
-        let students = [
-            {
-                id: 1,
-                name: "Michael Johnson",
-                age: 8,
-                gender: "Male",
-                grade: "Lower Primary 1",
-                guardian: "Robert Johnson",
-                contact: "+233 24 123 4567",
-                studentId: "STU-2025-001",
-                address: "East Legon, Accra",
-                photo: "👦"
-            },
-            {
-                id: 2,
-                name: "Emily Mensah",
-                age: 9,
-                gender: "Female",
-                grade: "Lower Primary 2",
-                guardian: "Grace Mensah",
-                contact: "+233 24 234 5678",
-                studentId: "STU-2025-002",
-                address: "Tema, Greater Accra",
-                photo: "👧"
-            }
-        ];
+        let currentStaff = null;
+        let messages = [];
+        let autoScroll = true; // Track if we should auto-scroll to bottom
 
-        let alumni = [];
-
-        // Passcode verification
-        function verifyPasscode() {
-            const input = document.getElementById('passcode-input');
-            const error = document.getElementById('passcode-error');
+        // Password verification
+        function verifyPassword() {
+            const input = document.getElementById('password-input');
+            const error = document.getElementById('password-error');
             
-            if (input.value === CORRECT_PASSCODE) {
-                document.getElementById('passcode-modal').classList.add('hidden');
-                document.getElementById('main-container').style.display = 'block';
-                initializePage();
+            if (input.value === CORRECT_PASSWORD) {
+                localStorage.setItem('staffAuthenticated', 'true');
+                localStorage.setItem('authTimestamp', Date.now());
+                document.getElementById('password-modal').classList.add('hidden');
             } else {
                 error.classList.add('show');
                 input.classList.add('error');
@@ -1183,406 +739,323 @@
             }
         }
 
-        // Enter key for passcode
-        document.getElementById('passcode-input').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') verifyPasscode();
+        // Enter key for password
+        document.getElementById('password-input').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') verifyPassword();
         });
 
-        // DOM Elements
-        const navTabs = document.querySelectorAll('.nav-tab');
-        const contentSections = document.querySelectorAll('.content-section');
-        const gradeCards = document.querySelectorAll('.grade-card');
-        const studentsContainer = document.getElementById('students-container');
-        const alumniContainer = document.getElementById('alumni-container');
-        const studentForm = document.getElementById('student-form');
-        const editModal = document.getElementById('edit-modal');
-        const closeEditModal = document.getElementById('close-edit-modal');
-        const cancelEdit = document.getElementById('cancel-edit');
-        const editStudentForm = document.getElementById('edit-student-form');
-
-        // Navigation Tabs
-        navTabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                const targetTab = tab.getAttribute('data-tab');
-                
-                navTabs.forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
-                
-                contentSections.forEach(section => {
-                    section.classList.remove('active');
-                    if (section.id === targetTab) {
-                        section.classList.add('active');
-                    }
-                });
-            });
-        });
-
-        // Grade Selection
-        gradeCards.forEach(card => {
-            card.addEventListener('click', () => {
-                const grade = card.getAttribute('data-grade');
-                
-                gradeCards.forEach(c => c.classList.remove('active'));
-                card.classList.add('active');
-                
-                filterStudentsByGrade(grade);
-            });
-        });
-
-        // Filter students by grade
-        function filterStudentsByGrade(grade) {
-            studentsContainer.innerHTML = '';
+        // Check if authentication is still valid (within 2 weeks)
+        function isAuthValid() {
+            const authTimestamp = localStorage.getItem('authTimestamp');
+            if (!authTimestamp) return false;
             
-            const gradeName = getGradeName(grade);
-            const gradeStudents = students.filter(student => student.grade === gradeName);
+            const timeElapsed = Date.now() - parseInt(authTimestamp);
+            return timeElapsed < TWO_WEEKS_MS;
+        }
+
+        // Handle login
+        function handleLogin(event) {
+            event.preventDefault();
             
-            if (gradeStudents.length > 0) {
-                gradeStudents.forEach(student => {
-                    studentsContainer.appendChild(createStudentCard(student));
-                });
-            } else {
-                studentsContainer.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-icon">👨‍🎓</div>
-                        <h3>No Students in This Grade</h3>
-                        <p>Add students using the "Add Student" tab</p>
-                    </div>
-                `;
+            const name = document.getElementById('staff-name').value;
+            const department = document.getElementById('staff-department').value;
+            const staffId = document.getElementById('staff-id').value;
+            
+            currentStaff = {
+                name: name,
+                department: department,
+                staffId: staffId,
+                joinedAt: new Date().toISOString(),
+                loginTimestamp: Date.now()
+            };
+            
+            // Save to localStorage for persistent login
+            localStorage.setItem('currentStaff', JSON.stringify(currentStaff));
+            localStorage.setItem('loginTimestamp', Date.now());
+            
+            // Capture and log client details
+            captureClientDetails(currentStaff);
+            
+            document.getElementById('login-container').classList.add('hidden');
+            document.getElementById('chat-container').style.display = 'flex';
+            
+            const badge = document.getElementById('user-display');
+            badge.textContent = `${name} (${department})`;
+            
+            updateSessionExpiry();
+            loadMessages();
+            updateOnlineCount();
+        }
+
+        // Capture client details
+        function captureClientDetails(staff) {
+            const clientDetails = {
+                staff: staff,
+                browser: navigator.userAgent,
+                platform: navigator.platform,
+                language: navigator.language,
+                screenSize: `${screen.width}x${screen.height}`,
+                timestamp: new Date().toISOString(),
+                ipAddress: 'Client-Side (Use backend for actual IP)'
+            };
+            
+            // Store client details
+            let clientLog = JSON.parse(localStorage.getItem('clientLog') || '[]');
+            clientLog.push(clientDetails);
+            localStorage.setItem('clientLog', JSON.stringify(clientLog));
+            
+            console.log('Client Login Details Captured:', clientDetails);
+        }
+
+        // Update session expiry display
+        function updateSessionExpiry() {
+            const loginTimestamp = localStorage.getItem('loginTimestamp');
+            if (!loginTimestamp) return;
+            
+            const expiryDate = new Date(parseInt(loginTimestamp) + TWO_WEEKS_MS);
+            const daysLeft = Math.ceil((expiryDate - Date.now()) / (1000 * 60 * 60 * 24));
+            
+            const expiryBadge = document.getElementById('session-expiry');
+            expiryBadge.textContent = `⏰ ${daysLeft} days left`;
+        }
+
+        // Clean old messages (older than 2 weeks)
+        function cleanOldMessages() {
+            const cutoffTime = Date.now() - (MESSAGE_RETENTION_DAYS * 24 * 60 * 60 * 1000);
+            messages = messages.filter(msg => msg.timestamp > cutoffTime);
+            localStorage.setItem('staffMessages', JSON.stringify(messages));
+        }
+
+        // Load messages from last 2 weeks
+        function loadMessages() {
+            const savedMessages = localStorage.getItem('staffMessages');
+            if (savedMessages) {
+                messages = JSON.parse(savedMessages);
+                cleanOldMessages(); // Remove messages older than 2 weeks
+                renderMessages();
             }
         }
 
-        // Convert grade ID to grade name
-        function getGradeName(gradeId) {
-            const gradeMap = {
-                'lower-1': 'Lower Primary 1',
-                'lower-2': 'Lower Primary 2',
-                'lower-3': 'Lower Primary 3',
-                'upper-4': 'Upper Primary 4',
-                'upper-5': 'Upper Primary 5',
-                'upper-6': 'Upper Primary 6',
-                'jhs-1': 'JHS 1',
-                'jhs-2': 'JHS 2',
-                'jhs-3': 'JHS 3'
-            };
+        // Render messages
+        function renderMessages() {
+            const container = document.getElementById('chat-messages');
+            const emptyState = container.querySelector('.empty-state');
             
-            return gradeMap[gradeId] || 'Unknown Grade';
-        }
-
-        // Get grade ID from name
-        function getGradeId(gradeName) {
-            const gradeMap = {
-                'Lower Primary 1': 'lower-1',
-                'Lower Primary 2': 'lower-2',
-                'Lower Primary 3': 'lower-3',
-                'Upper Primary 4': 'upper-4',
-                'Upper Primary 5': 'upper-5',
-                'Upper Primary 6': 'upper-6',
-                'JHS 1': 'jhs-1',
-                'JHS 2': 'jhs-2',
-                'JHS 3': 'jhs-3'
-            };
+            // Clear container but preserve scroll position
+            const scrollPosition = container.scrollTop;
+            const scrollHeight = container.scrollHeight;
             
-            return gradeMap[gradeName] || '';
-        }
-
-        // Update grade counts
-        function updateGradeCounts() {
-            const grades = ['lower-1', 'lower-2', 'lower-3', 'upper-4', 'upper-5', 'upper-6', 'jhs-1', 'jhs-2', 'jhs-3'];
+            if (messages.length > 0 && emptyState) {
+                emptyState.remove();
+            }
             
-            grades.forEach(gradeId => {
-                const gradeName = getGradeName(gradeId);
-                const count = students.filter(s => s.grade === gradeName).length;
-                const countEl = document.getElementById(`count-${gradeId}`);
-                if (countEl) {
-                    countEl.textContent = `${count} student${count !== 1 ? 's' : ''}`;
-                }
+            container.innerHTML = '';
+            
+            if (messages.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">💬</div>
+                        <h3>Welcome to Staff Communication</h3>
+                        <p>Start collaborating with your colleagues by sending a message below</p>
+                        <p style="margin-top: 1rem; font-size: 0.85rem;">Messages are kept for 2 weeks</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Add all messages
+            messages.forEach(msg => {
+                const isOwn = msg.staffId === currentStaff.staffId;
+                const messageEl = createMessageElement(msg, isOwn);
+                container.appendChild(messageEl);
             });
+            
+            // Only auto-scroll if we were at the bottom before
+            if (autoScroll) {
+                container.scrollTop = container.scrollHeight;
+            } else {
+                // Try to maintain the relative scroll position
+                const newScrollHeight = container.scrollHeight;
+                if (scrollHeight > 0) {
+                    container.scrollTop = scrollPosition + (newScrollHeight - scrollHeight);
+                }
+            }
         }
 
-        // Create student card element
-        function createStudentCard(student) {
-            const card = document.createElement('div');
-            card.className = 'student-card';
-            card.innerHTML = `
-                <div class="student-photo">${student.photo}</div>
-                <div class="student-info">
-                    <h3 class="student-name">${student.name}</h3>
-                    <span class="student-id">ID: ${student.studentId}</span>
-                    <div class="student-details">
-                        <div class="student-detail">
-                            <span class="detail-icon">👤</span>
-                            <span>${student.gender}, ${student.age} years old</span>
-                        </div>
-                        <div class="student-detail">
-                            <span class="detail-icon">👨‍👩‍👦</span>
-                            <span>Guardian: ${student.guardian}</span>
-                        </div>
-                        <div class="student-detail">
-                            <span class="detail-icon">📞</span>
-                            <span>${student.contact}</span>
-                        </div>
+        // Create message element
+        function createMessageElement(msg, isOwn) {
+            const div = document.createElement('div');
+            div.className = `message ${isOwn ? 'own' : ''}`;
+            
+            const initial = msg.staffName.charAt(0).toUpperCase();
+            
+            // Format date
+            const messageDate = new Date(msg.timestamp);
+            const today = new Date();
+            const isToday = messageDate.toDateString() === today.toDateString();
+            
+            const dateStr = isToday ? 
+                messageDate.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }) :
+                messageDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) + ' ' + 
+                messageDate.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+            
+            div.innerHTML = `
+                <div class="message-avatar">${initial}</div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-name">${msg.staffName}</span>
+                        <span class="message-role">${msg.department}</span>
+                        <span class="message-time">${dateStr}</span>
                     </div>
-                    <div class="student-actions">
-                        <button class="action-btn edit-btn" data-id="${student.id}">
-                            <span>✏️</span> Edit
-                        </button>
-                        <button class="action-btn graduate-btn" data-id="${student.id}">
-                            <span>🎓</span> Graduate
-                        </button>
-                    </div>
+                    <div class="message-bubble">${msg.text}</div>
                 </div>
             `;
             
-            const editBtn = card.querySelector('.edit-btn');
-            const graduateBtn = card.querySelector('.graduate-btn');
-            
-            editBtn.addEventListener('click', () => openEditModal(student.id));
-            graduateBtn.addEventListener('click', () => graduateStudent(student.id));
-            
-            return card;
+            return div;
         }
 
-        // Create alumni card element
-        function createAlumniCard(alumnus) {
-            const card = document.createElement('div');
-            card.className = 'alumni-card';
-            card.innerHTML = `
-                <div class="alumni-photo">${alumnus.photo}</div>
-                <div class="alumni-info">
-                    <h3 class="alumni-name">${alumnus.name}</h3>
-                    <span class="alumni-year">Class of ${alumnus.graduationYear}</span>
-                    <div class="alumni-details">
-                        <div class="student-detail">
-                            <span class="detail-icon">🎓</span>
-                            <span>Graduated from ${alumnus.formerGrade}</span>
-                        </div>
-                        <div class="student-detail">
-                            <span class="detail-icon">📚</span>
-                            <span>Now at: ${alumnus.currentSchool}</span>
-                        </div>
-                        <div class="student-detail">
-                            <span class="detail-icon">⭐</span>
-                            <span>${alumnus.achievements}</span>
-                        </div>
-                    </div>
-                    <div class="student-actions">
-                        <button class="action-btn remove-btn" data-id="${alumnus.id}">
-                            <span>🔙</span> Remove from Alumni
-                        </button>
-                    </div>
-                </div>
-            `;
+        // Send message
+        function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const text = input.value.trim();
             
-            const removeBtn = card.querySelector('.remove-btn');
-            removeBtn.addEventListener('click', () => removeFromAlumni(alumnus.id));
+            if (!text) return;
             
-            return card;
-        }
-
-        // Open edit modal
-        function openEditModal(studentId) {
-            const student = students.find(s => s.id === studentId);
-            if (!student) return;
-            
-            document.getElementById('edit-id').value = student.id;
-            document.getElementById('edit-full-name').value = student.name;
-            document.getElementById('edit-age').value = student.age;
-            document.getElementById('edit-gender').value = student.gender;
-            document.getElementById('edit-grade').value = student.grade;
-            document.getElementById('edit-guardian').value = student.guardian;
-            document.getElementById('edit-contact').value = student.contact;
-            document.getElementById('edit-student-id').value = student.studentId;
-            document.getElementById('edit-address').value = student.address || '';
-            
-            editModal.classList.add('active');
-        }
-
-        // Close edit modal
-        function closeEditModalFunc() {
-            editModal.classList.remove('active');
-        }
-
-        // Graduate student
-        function graduateStudent(studentId) {
-            const student = students.find(s => s.id === studentId);
-            if (!student) return;
-            
-            if (confirm(`Are you sure you want to graduate ${student.name} and move them to the Alumni section?`)) {
-                students = students.filter(s => s.id !== studentId);
-                
-                const currentYear = new Date().getFullYear();
-                alumni.push({
-                    id: studentId,
-                    name: student.name,
-                    graduationYear: currentYear.toString(),
-                    formerGrade: student.grade,
-                    currentSchool: "To be determined",
-                    achievements: "Graduated with honors",
-                    photo: student.photo,
-                    originalData: student
-                });
-                
-                updateGradeCounts();
-                const activeGradeCard = document.querySelector('.grade-card.active');
-                if (activeGradeCard) {
-                    filterStudentsByGrade(activeGradeCard.getAttribute('data-grade'));
-                }
-                renderAlumni();
-                
-                alert(`✅ ${student.name} has been graduated and moved to alumni!`);
-            }
-        }
-
-        // Remove from alumni
-        function removeFromAlumni(alumnusId) {
-            const alumnus = alumni.find(a => a.id === alumnusId);
-            if (!alumnus) return;
-            
-            if (confirm(`Are you sure you want to remove ${alumnus.name} from the Alumni section and restore them as a current student?`)) {
-                alumni = alumni.filter(a => a.id !== alumnusId);
-                
-                if (alumnus.originalData) {
-                    students.push(alumnus.originalData);
-                } else {
-                    students.push({
-                        id: alumnusId,
-                        name: alumnus.name,
-                        age: 15,
-                        gender: "Male",
-                        grade: alumnus.formerGrade,
-                        guardian: "Guardian Name",
-                        contact: "+233 24 000 0000",
-                        studentId: `STU-2025-${String(alumnusId).padStart(3, '0')}`,
-                        address: "Address not available",
-                        photo: alumnus.photo
-                    });
-                }
-                
-                updateGradeCounts();
-                renderAlumni();
-                
-                alert(`✅ ${alumnus.name} has been removed from alumni and restored as a current student!`);
-            }
-        }
-
-        // Render alumni
-        function renderAlumni() {
-            alumniContainer.innerHTML = '';
-            
-            if (alumni.length > 0) {
-                alumni.forEach(alumnus => {
-                    alumniContainer.appendChild(createAlumniCard(alumnus));
-                });
-            } else {
-                alumniContainer.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-icon">🎓</div>
-                        <h3>No Alumni Yet</h3>
-                        <p>Graduate students to add them to the alumni section</p>
-                    </div>
-                `;
-            }
-        }
-
-        // Add new student
-        studentForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            const name = document.getElementById('full-name').value;
-            const age = document.getElementById('age').value;
-            const gender = document.getElementById('gender').value;
-            const grade = document.getElementById('grade').value;
-            const guardian = document.getElementById('guardian').value;
-            const contact = document.getElementById('contact').value;
-            const studentId = document.getElementById('student-id').value;
-            const address = document.getElementById('address').value;
-            
-            const newStudent = {
-                id: students.length > 0 ? Math.max(...students.map(s => s.id)) + 1 : 1,
-                name,
-                age: parseInt(age),
-                gender,
-                grade,
-                guardian,
-                contact,
-                studentId,
-                address,
-                photo: gender === 'Male' ? '👦' : '👧'
+            const message = {
+                staffId: currentStaff.staffId,
+                staffName: currentStaff.name,
+                department: currentStaff.department,
+                text: text,
+                time: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }),
+                timestamp: Date.now()
             };
             
-            students.push(newStudent);
-            studentForm.reset();
-            updateGradeCounts();
+            messages.push(message);
+            localStorage.setItem('staffMessages', JSON.stringify(messages));
             
-            alert(`✅ ${name} has been added successfully!`);
-            
-            const activeGradeCard = document.querySelector('.grade-card.active');
-            if (activeGradeCard) {
-                filterStudentsByGrade(activeGradeCard.getAttribute('data-grade'));
-            }
-        });
-
-        // Edit student
-        editStudentForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            const id = parseInt(document.getElementById('edit-id').value);
-            const name = document.getElementById('edit-full-name').value;
-            const age = document.getElementById('edit-age').value;
-            const gender = document.getElementById('edit-gender').value;
-            const grade = document.getElementById('edit-grade').value;
-            const guardian = document.getElementById('edit-guardian').value;
-            const contact = document.getElementById('edit-contact').value;
-            const studentId = document.getElementById('edit-student-id').value;
-            const address = document.getElementById('edit-address').value;
-            
-            const studentIndex = students.findIndex(s => s.id === id);
-            if (studentIndex !== -1) {
-                students[studentIndex] = {
-                    ...students[studentIndex],
-                    name,
-                    age: parseInt(age),
-                    gender,
-                    grade,
-                    guardian,
-                    contact,
-                    studentId,
-                    address
-                };
-                
-                closeEditModalFunc();
-                updateGradeCounts();
-                
-                const activeGradeCard = document.querySelector('.grade-card.active');
-                if (activeGradeCard) {
-                    filterStudentsByGrade(activeGradeCard.getAttribute('data-grade'));
-                }
-                
-                alert(`✅ ${name}'s profile has been updated!`);
-            }
-        });
-
-        // Event listeners
-        closeEditModal.addEventListener('click', closeEditModalFunc);
-        cancelEdit.addEventListener('click', closeEditModalFunc);
-
-        editModal.addEventListener('click', (e) => {
-            if (e.target === editModal) {
-                closeEditModalFunc();
-            }
-        });
-
-        // Initialize page
-        function initializePage() {
-            updateGradeCounts();
-            filterStudentsByGrade('lower-1');
-            renderAlumni();
+            // Force auto-scroll when sending a new message
+            autoScroll = true;
+            renderMessages();
+            input.value = '';
+            input.style.height = 'auto';
         }
 
-        // Auto-focus passcode input
+        // Handle Enter key
+        function handleEnter(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                sendMessage();
+            }
+        }
+
+        // Auto-resize textarea
+        document.getElementById('chat-input').addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = (this.scrollHeight) + 'px';
+        });
+
+        // Update online count
+        function updateOnlineCount() {
+            const savedStaff = localStorage.getItem('currentStaff');
+            const count = savedStaff ? 1 : 0;
+            document.getElementById('online-count').textContent = `👥 ${count} Staff Online`;
+        }
+
+        // Check session validity periodically
+        function checkSessionValidity() {
+            if (!isAuthValid()) {
+                // Session expired
+                alert('Your 2-week session has expired. Please log in again.');
+                localStorage.removeItem('staffAuthenticated');
+                localStorage.removeItem('authTimestamp');
+                localStorage.removeItem('currentStaff');
+                localStorage.removeItem('loginTimestamp');
+                window.location.reload();
+            }
+            
+            if (!isLoginValid()) {
+                // Login expired
+                alert('Your 2-week login has expired. Please log in again.');
+                localStorage.removeItem('currentStaff');
+                localStorage.removeItem('loginTimestamp');
+                window.location.reload();
+            }
+        }
+
+        // Check if login is still valid (within 2 weeks)
+        function isLoginValid() {
+            const loginTimestamp = localStorage.getItem('loginTimestamp');
+            if (!loginTimestamp) return false;
+            
+            const timeElapsed = Date.now() - parseInt(loginTimestamp);
+            return timeElapsed < TWO_WEEKS_MS;
+        }
+
+        // Get all stored client details (for admin review)
+        function getClientLog() {
+            const clientLog = JSON.parse(localStorage.getItem('clientLog') || '[]');
+            console.table(clientLog);
+            return clientLog;
+        }
+
+        // Export client log (for admin purposes)
+        function exportClientLog() {
+            const clientLog = getClientLog();
+            const dataStr = JSON.stringify(clientLog, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'staff-login-log.json';
+            link.click();
+        }
+
+        // Initialize
         window.onload = () => {
-            document.getElementById('passcode-input').focus();
-        };
-    </script>
-</body>
-</html>
+            // Check authentication validity
+            const authenticated = localStorage.getItem('staffAuthenticated');
+            const authValid = isAuthValid();
+            
+            if (authenticated !== 'true' || !authValid) {
+                // Need to authenticate
+                if (authenticated === 'true' && !authValid) {
+                    localStorage.removeItem('staffAuthenticated');
+                    localStorage.removeItem('authTimestamp');
+                }
+                document.getElementById('password-input').focus();
+            } else {
+                // Already authenticated
+                document.getElementById('password-modal').classList.add('hidden');
+                
+                // Check if user is logged in
+                const savedStaff = localStorage.getItem('currentStaff');
+                const loginValid = isLoginValid();
+                
+                if (savedStaff && loginValid) {
+                    // Auto-login with saved credentials
+                    currentStaff = JSON.parse(savedStaff);
+                    document.getElementById('login-container').classList.add('hidden');
+                    document.getElementById('chat-container').style.display = 'flex';
+                    
+                    const badge = document.getElementById('user-display');
+                    badge.textContent = `${currentStaff.name} (${currentStaff.department})`;
+                    
+                    updateSessionExpiry();
+                    loadMessages();
+                    updateOnlineCount();
+                    
+                    // Log returning user
+                    console.log('Returning user:', currentStaff.name);
+                } else {
+                    // Login expired, clear and show login form
+                    if (savedStaff && !loginValid) {
+                        localStorage.removeItem('currentStaff');
+                        localStorage.removeItem('loginTimestamp');
+                    }
+                    // Login form is already visible
+                }
+            }
+            
+            // Add scroll event listener to track if user is manually scrolling
+            const chatMessages = document.getElementById('chat-messages
+                
