@@ -411,6 +411,12 @@
             font-size: 3rem;
         }
 
+        .student-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
         .student-info {
             padding: 1.5rem;
         }
@@ -482,12 +488,12 @@
             background: #d4eadf;
         }
 
-        .graduate-btn {
+        .move-btn {
             background: #FFD700;
             color: var(--primary-green);
         }
 
-        .graduate-btn:hover {
+        .move-btn:hover {
             background: #ffed4e;
         }
 
@@ -542,6 +548,12 @@
             justify-content: center;
             color: white;
             font-size: 3rem;
+        }
+
+        .alumni-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .alumni-info {
@@ -670,6 +682,45 @@
             font-size: 2.5rem;
             margin-bottom: 0.5rem;
             color: var(--primary-green);
+        }
+
+        .image-preview {
+            display: none;
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .image-preview img {
+            max-width: 200px;
+            max-height: 200px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .preview-actions {
+            margin-top: 0.5rem;
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+        }
+
+        .preview-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .remove-image-btn {
+            background: #fee;
+            color: #dc2626;
+        }
+
+        .remove-image-btn:hover {
+            background: #fdd;
         }
 
         .form-actions {
@@ -1031,13 +1082,19 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label>Student Photo (Optional)</label>
-                            <div class="file-upload">
-                                <input type="file" id="photo" accept="image/*">
-                                <div class="file-upload-content">
+                            <label>Student Photo</label>
+                            <div class="file-upload" id="file-upload-area">
+                                <input type="file" id="photo" accept="image/*" onchange="handleImageUpload(event)">
+                                <div class="file-upload-content" id="upload-content">
                                     <div class="file-upload-icon">📸</div>
                                     <p style="font-weight: 600; color: var(--text-dark);">Click to upload photo</p>
                                     <p style="font-size: 0.85rem; color: var(--text-medium); margin-top: 0.25rem;">PNG, JPG up to 5MB</p>
+                                </div>
+                            </div>
+                            <div class="image-preview" id="image-preview">
+                                <img id="preview-img" src="" alt="Preview">
+                                <div class="preview-actions">
+                                    <button type="button" class="preview-btn remove-image-btn" onclick="clearImage()">Remove Image</button>
                                 </div>
                             </div>
                         </div>
@@ -1045,7 +1102,7 @@
                             <button type="submit" class="submit-btn">
                                 <span>✅</span> Add Student Profile
                             </button>
-                            <button type="reset" class="cancel-btn">Clear Form</button>
+                            <button type="reset" class="cancel-btn" onclick="clearImage()">Clear Form</button>
                         </div>
                     </form>
                 </div>
@@ -1116,6 +1173,23 @@
                         <input type="text" id="edit-address">
                     </div>
                 </div>
+                <div class="form-group">
+                    <label>Student Photo</label>
+                    <div class="file-upload" id="edit-file-upload-area">
+                        <input type="file" id="edit-photo" accept="image/*" onchange="handleEditImageUpload(event)">
+                        <div class="file-upload-content" id="edit-upload-content">
+                            <div class="file-upload-icon">📸</div>
+                            <p style="font-weight: 600; color: var(--text-dark);">Click to upload new photo</p>
+                            <p style="font-size: 0.85rem; color: var(--text-medium); margin-top: 0.25rem;">PNG, JPG up to 5MB</p>
+                        </div>
+                    </div>
+                    <div class="image-preview" id="edit-image-preview">
+                        <img id="edit-preview-img" src="" alt="Preview">
+                        <div class="preview-actions">
+                            <button type="button" class="preview-btn remove-image-btn" onclick="clearEditImage()">Remove Image</button>
+                        </div>
+                    </div>
+                </div>
                 <div class="form-actions">
                     <button type="submit" class="submit-btn">
                         <span>💾</span> Save Changes
@@ -1126,38 +1200,237 @@
         </div>
     </div>
 
+    <!-- Move Student Modal -->
+    <div class="modal" id="move-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Move Student to Another Class</h3>
+                <button class="close-btn" id="close-move-modal">&times;</button>
+            </div>
+            <form id="move-student-form">
+                <input type="hidden" id="move-id">
+                <div class="form-group">
+                    <label for="move-student-name">Student Name</label>
+                    <input type="text" id="move-student-name" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="move-current-grade">Current Grade</label>
+                    <input type="text" id="move-current-grade" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="move-new-grade">New Grade</label>
+                    <select id="move-new-grade" required>
+                        <option value="">Select new grade</option>
+                        <option>Lower Primary 1</option>
+                        <option>Lower Primary 2</option>
+                        <option>Lower Primary 3</option>
+                        <option>Upper Primary 4</option>
+                        <option>Upper Primary 5</option>
+                        <option>Upper Primary 6</option>
+                        <option>JHS 1</option>
+                        <option>JHS 2</option>
+                        <option>JHS 3</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="submit-btn">
+                        <span>🔄</span> Move Student
+                    </button>
+                    <button type="button" class="cancel-btn" id="cancel-move">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
         const CORRECT_PASSCODE = '2025@';
+        const STORAGE_KEY = 'wexford_student_data';
         
-        // Sample data
-        let students = [
-            {
-                id: 1,
-                name: "Michael Johnson",
-                age: 8,
-                gender: "Male",
-                grade: "Lower Primary 1",
-                guardian: "Robert Johnson",
-                contact: "+233 24 123 4567",
-                studentId: "STU-2025-001",
-                address: "East Legon, Accra",
-                photo: "👦"
-            },
-            {
-                id: 2,
-                name: "Emily Mensah",
-                age: 9,
-                gender: "Female",
-                grade: "Lower Primary 2",
-                guardian: "Grace Mensah",
-                contact: "+233 24 234 5678",
-                studentId: "STU-2025-002",
-                address: "Tema, Greater Accra",
-                photo: "👧"
-            }
-        ];
+        // Load data from localStorage or use sample data
+        let students = loadStudentData();
+        let alumni = loadAlumniData();
 
-        let alumni = [];
+        // Load student data from localStorage
+        function loadStudentData() {
+            try {
+                const savedData = localStorage.getItem(`${STORAGE_KEY}_students`);
+                if (savedData) {
+                    console.log('✅ Loaded student data from localStorage');
+                    return JSON.parse(savedData);
+                }
+            } catch (error) {
+                console.error('❌ Error loading student data:', error);
+            }
+            
+            // Return sample data if nothing is saved
+            console.log('ℹ️ Using sample student data');
+            return [
+                {
+                    id: 1,
+                    name: "Michael Johnson",
+                    age: 8,
+                    gender: "Male",
+                    grade: "Lower Primary 1",
+                    guardian: "Robert Johnson",
+                    contact: "+233 24 123 4567",
+                    studentId: "STU-2025-001",
+                    address: "East Legon, Accra",
+                    photo: "👦",
+                    photoData: null
+                },
+                {
+                    id: 2,
+                    name: "Emily Mensah",
+                    age: 9,
+                    gender: "Female",
+                    grade: "Lower Primary 2",
+                    guardian: "Grace Mensah",
+                    contact: "+233 24 234 5678",
+                    studentId: "STU-2025-002",
+                    address: "Tema, Greater Accra",
+                    photo: "👧",
+                    photoData: null
+                }
+            ];
+        }
+
+        // Load alumni data from localStorage
+        function loadAlumniData() {
+            try {
+                const savedData = localStorage.getItem(`${STORAGE_KEY}_alumni`);
+                if (savedData) {
+                    console.log('✅ Loaded alumni data from localStorage');
+                    return JSON.parse(savedData);
+                }
+            } catch (error) {
+                console.error('❌ Error loading alumni data:', error);
+            }
+            
+            // Return empty array if nothing is saved
+            console.log('ℹ️ Using empty alumni data');
+            return [];
+        }
+
+        // Save student data to localStorage
+        function saveStudentData() {
+            try {
+                localStorage.setItem(`${STORAGE_KEY}_students`, JSON.stringify(students));
+                console.log('✅ Student data saved to localStorage');
+                console.log('📊 Total students:', students.length);
+                return true;
+            } catch (error) {
+                console.error('❌ Error saving student data:', error);
+                alert('⚠️ Error saving student data. Please try again.');
+                return false;
+            }
+        }
+
+        // Save alumni data to localStorage
+        function saveAlumniData() {
+            try {
+                localStorage.setItem(`${STORAGE_KEY}_alumni`, JSON.stringify(alumni));
+                console.log('✅ Alumni data saved to localStorage');
+                console.log('🎓 Total alumni:', alumni.length);
+                return true;
+            } catch (error) {
+                console.error('❌ Error saving alumni data:', error);
+                alert('⚠️ Error saving alumni data. Please try again.');
+                return false;
+            }
+        }
+
+        // Save all data
+        function saveAllData() {
+            const studentSuccess = saveStudentData();
+            const alumniSuccess = saveAlumniData();
+            return studentSuccess && alumniSuccess;
+        }
+
+        // Backup data before page unload
+        window.addEventListener('beforeunload', function() {
+            saveAllData();
+        });
+
+        // Save data periodically (every 30 seconds)
+        setInterval(saveAllData, 30000);
+
+        // Image handling variables
+        let uploadedImageData = null;
+        let editUploadedImageData = null;
+
+        // Handle image upload for new student
+        function handleImageUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            // Check file size (5MB limit)
+            if (file.size > 5 * 1024 * 1024) {
+                alert('⚠️ File size must be less than 5MB');
+                event.target.value = '';
+                return;
+            }
+
+            // Check file type
+            if (!file.type.startsWith('image/')) {
+                alert('⚠️ Please upload an image file (PNG, JPG, etc.)');
+                event.target.value = '';
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                uploadedImageData = e.target.result;
+                document.getElementById('preview-img').src = uploadedImageData;
+                document.getElementById('upload-content').style.display = 'none';
+                document.getElementById('image-preview').style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Handle image upload for edit student
+        function handleEditImageUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            // Check file size (5MB limit)
+            if (file.size > 5 * 1024 * 1024) {
+                alert('⚠️ File size must be less than 5MB');
+                event.target.value = '';
+                return;
+            }
+
+            // Check file type
+            if (!file.type.startsWith('image/')) {
+                alert('⚠️ Please upload an image file (PNG, JPG, etc.)');
+                event.target.value = '';
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                editUploadedImageData = e.target.result;
+                document.getElementById('edit-preview-img').src = editUploadedImageData;
+                document.getElementById('edit-upload-content').style.display = 'none';
+                document.getElementById('edit-image-preview').style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Clear uploaded image for new student
+        function clearImage() {
+            uploadedImageData = null;
+            document.getElementById('photo').value = '';
+            document.getElementById('upload-content').style.display = 'block';
+            document.getElementById('image-preview').style.display = 'none';
+        }
+
+        // Clear uploaded image for edit student
+        function clearEditImage() {
+            editUploadedImageData = null;
+            document.getElementById('edit-photo').value = '';
+            document.getElementById('edit-upload-content').style.display = 'block';
+            document.getElementById('edit-image-preview').style.display = 'none';
+        }
 
         // Passcode verification
         function verifyPasscode() {
@@ -1199,6 +1472,10 @@
         const closeEditModal = document.getElementById('close-edit-modal');
         const cancelEdit = document.getElementById('cancel-edit');
         const editStudentForm = document.getElementById('edit-student-form');
+        const moveModal = document.getElementById('move-modal');
+        const closeMoveModal = document.getElementById('close-move-modal');
+        const cancelMove = document.getElementById('cancel-move');
+        const moveStudentForm = document.getElementById('move-student-form');
 
         // Navigation Tabs
         navTabs.forEach(tab => {
@@ -1268,23 +1545,6 @@
             return gradeMap[gradeId] || 'Unknown Grade';
         }
 
-        // Get grade ID from name
-        function getGradeId(gradeName) {
-            const gradeMap = {
-                'Lower Primary 1': 'lower-1',
-                'Lower Primary 2': 'lower-2',
-                'Lower Primary 3': 'lower-3',
-                'Upper Primary 4': 'upper-4',
-                'Upper Primary 5': 'upper-5',
-                'Upper Primary 6': 'upper-6',
-                'JHS 1': 'jhs-1',
-                'JHS 2': 'jhs-2',
-                'JHS 3': 'jhs-3'
-            };
-            
-            return gradeMap[gradeName] || '';
-        }
-
         // Update grade counts
         function updateGradeCounts() {
             const grades = ['lower-1', 'lower-2', 'lower-3', 'upper-4', 'upper-5', 'upper-6', 'jhs-1', 'jhs-2', 'jhs-3'];
@@ -1303,8 +1563,19 @@
         function createStudentCard(student) {
             const card = document.createElement('div');
             card.className = 'student-card';
+            
+            // Determine if we have an uploaded image or should use emoji
+            let photoContent = '';
+            if (student.photoData) {
+                photoContent = `<img src="${student.photoData}" alt="${student.name}">`;
+            } else {
+                photoContent = `<div>${student.photo}</div>`;
+            }
+            
             card.innerHTML = `
-                <div class="student-photo">${student.photo}</div>
+                <div class="student-photo">
+                    ${photoContent}
+                </div>
                 <div class="student-info">
                     <h3 class="student-name">${student.name}</h3>
                     <span class="student-id">ID: ${student.studentId}</span>
@@ -1326,18 +1597,23 @@
                         <button class="action-btn edit-btn" data-id="${student.id}">
                             <span>✏️</span> Edit
                         </button>
-                        <button class="action-btn graduate-btn" data-id="${student.id}">
-                            <span>🎓</span> Graduate
+                        <button class="action-btn move-btn" data-id="${student.id}">
+                            <span>🔄</span> Move
+                        </button>
+                        <button class="action-btn remove-btn" data-id="${student.id}">
+                            <span>🗑️</span> Remove
                         </button>
                     </div>
                 </div>
             `;
             
             const editBtn = card.querySelector('.edit-btn');
-            const graduateBtn = card.querySelector('.graduate-btn');
+            const moveBtn = card.querySelector('.move-btn');
+            const removeBtn = card.querySelector('.remove-btn');
             
             editBtn.addEventListener('click', () => openEditModal(student.id));
-            graduateBtn.addEventListener('click', () => graduateStudent(student.id));
+            moveBtn.addEventListener('click', () => openMoveModal(student.id));
+            removeBtn.addEventListener('click', () => removeStudent(student.id));
             
             return card;
         }
@@ -1346,8 +1622,19 @@
         function createAlumniCard(alumnus) {
             const card = document.createElement('div');
             card.className = 'alumni-card';
+            
+            // Determine if we have an uploaded image or should use emoji
+            let photoContent = '';
+            if (alumnus.photoData) {
+                photoContent = `<img src="${alumnus.photoData}" alt="${alumnus.name}">`;
+            } else {
+                photoContent = `<div>${alumnus.photo}</div>`;
+            }
+            
             card.innerHTML = `
-                <div class="alumni-photo">${alumnus.photo}</div>
+                <div class="alumni-photo">
+                    ${photoContent}
+                </div>
                 <div class="alumni-info">
                     <h3 class="alumni-name">${alumnus.name}</h3>
                     <span class="alumni-year">Class of ${alumnus.graduationYear}</span>
@@ -1394,7 +1681,31 @@
             document.getElementById('edit-student-id').value = student.studentId;
             document.getElementById('edit-address').value = student.address || '';
             
+            // Handle image preview in edit modal
+            editUploadedImageData = null;
+            if (student.photoData) {
+                document.getElementById('edit-preview-img').src = student.photoData;
+                document.getElementById('edit-upload-content').style.display = 'none';
+                document.getElementById('edit-image-preview').style.display = 'block';
+            } else {
+                document.getElementById('edit-upload-content').style.display = 'block';
+                document.getElementById('edit-image-preview').style.display = 'none';
+            }
+            
             editModal.classList.add('active');
+        }
+
+        // Open move modal
+        function openMoveModal(studentId) {
+            const student = students.find(s => s.id === studentId);
+            if (!student) return;
+            
+            document.getElementById('move-id').value = student.id;
+            document.getElementById('move-student-name').value = student.name;
+            document.getElementById('move-current-grade').value = student.grade;
+            document.getElementById('move-new-grade').value = '';
+            
+            moveModal.classList.add('active');
         }
 
         // Close edit modal
@@ -1402,34 +1713,28 @@
             editModal.classList.remove('active');
         }
 
-        // Graduate student
-        function graduateStudent(studentId) {
+        // Close move modal
+        function closeMoveModalFunc() {
+            moveModal.classList.remove('active');
+        }
+
+        // Remove student
+        function removeStudent(studentId) {
             const student = students.find(s => s.id === studentId);
             if (!student) return;
             
-            if (confirm(`Are you sure you want to graduate ${student.name} and move them to the Alumni section?`)) {
+            if (confirm(`Are you sure you want to permanently remove ${student.name} from the school records? This action cannot be undone.`)) {
                 students = students.filter(s => s.id !== studentId);
                 
-                const currentYear = new Date().getFullYear();
-                alumni.push({
-                    id: studentId,
-                    name: student.name,
-                    graduationYear: currentYear.toString(),
-                    formerGrade: student.grade,
-                    currentSchool: "To be determined",
-                    achievements: "Graduated with honors",
-                    photo: student.photo,
-                    originalData: student
-                });
-                
-                updateGradeCounts();
-                const activeGradeCard = document.querySelector('.grade-card.active');
-                if (activeGradeCard) {
-                    filterStudentsByGrade(activeGradeCard.getAttribute('data-grade'));
+                if (saveAllData()) {
+                    updateGradeCounts();
+                    const activeGradeCard = document.querySelector('.grade-card.active');
+                    if (activeGradeCard) {
+                        filterStudentsByGrade(activeGradeCard.getAttribute('data-grade'));
+                    }
+                    
+                    alert(`✅ ${student.name} has been removed from the school records.`);
                 }
-                renderAlumni();
-                
-                alert(`✅ ${student.name} has been graduated and moved to alumni!`);
             }
         }
 
@@ -1438,30 +1743,13 @@
             const alumnus = alumni.find(a => a.id === alumnusId);
             if (!alumnus) return;
             
-            if (confirm(`Are you sure you want to remove ${alumnus.name} from the Alumni section and restore them as a current student?`)) {
+            if (confirm(`Are you sure you want to remove ${alumnus.name} from the Alumni section?`)) {
                 alumni = alumni.filter(a => a.id !== alumnusId);
                 
-                if (alumnus.originalData) {
-                    students.push(alumnus.originalData);
-                } else {
-                    students.push({
-                        id: alumnusId,
-                        name: alumnus.name,
-                        age: 15,
-                        gender: "Male",
-                        grade: alumnus.formerGrade,
-                        guardian: "Guardian Name",
-                        contact: "+233 24 000 0000",
-                        studentId: `STU-2025-${String(alumnusId).padStart(3, '0')}`,
-                        address: "Address not available",
-                        photo: alumnus.photo
-                    });
+                if (saveAllData()) {
+                    renderAlumni();
+                    alert(`✅ ${alumnus.name} has been removed from alumni!`);
                 }
-                
-                updateGradeCounts();
-                renderAlumni();
-                
-                alert(`✅ ${alumnus.name} has been removed from alumni and restored as a current student!`);
             }
         }
 
@@ -1507,18 +1795,22 @@
                 contact,
                 studentId,
                 address,
-                photo: gender === 'Male' ? '👦' : '👧'
+                photo: gender === 'Male' ? '👦' : '👧',
+                photoData: uploadedImageData
             };
             
             students.push(newStudent);
             studentForm.reset();
-            updateGradeCounts();
+            clearImage();
             
-            alert(`✅ ${name} has been added successfully!`);
-            
-            const activeGradeCard = document.querySelector('.grade-card.active');
-            if (activeGradeCard) {
-                filterStudentsByGrade(activeGradeCard.getAttribute('data-grade'));
+            if (saveAllData()) {
+                updateGradeCounts();
+                alert(`✅ ${name} has been added successfully!`);
+                
+                const activeGradeCard = document.querySelector('.grade-card.active');
+                if (activeGradeCard) {
+                    filterStudentsByGrade(activeGradeCard.getAttribute('data-grade'));
+                }
             }
         });
 
@@ -1547,28 +1839,65 @@
                     guardian,
                     contact,
                     studentId,
-                    address
+                    address,
+                    photoData: editUploadedImageData || students[studentIndex].photoData
                 };
                 
-                closeEditModalFunc();
-                updateGradeCounts();
-                
-                const activeGradeCard = document.querySelector('.grade-card.active');
-                if (activeGradeCard) {
-                    filterStudentsByGrade(activeGradeCard.getAttribute('data-grade'));
+                if (saveAllData()) {
+                    closeEditModalFunc();
+                    updateGradeCounts();
+                    
+                    const activeGradeCard = document.querySelector('.grade-card.active');
+                    if (activeGradeCard) {
+                        filterStudentsByGrade(activeGradeCard.getAttribute('data-grade'));
+                    }
+                    
+                    alert(`✅ ${name}'s profile has been updated!`);
                 }
+            }
+        });
+
+        // Move student to another class
+        moveStudentForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const id = parseInt(document.getElementById('move-id').value);
+            const newGrade = document.getElementById('move-new-grade').value;
+            
+            const studentIndex = students.findIndex(s => s.id === id);
+            if (studentIndex !== -1) {
+                const oldGrade = students[studentIndex].grade;
+                students[studentIndex].grade = newGrade;
                 
-                alert(`✅ ${name}'s profile has been updated!`);
+                if (saveAllData()) {
+                    closeMoveModalFunc();
+                    updateGradeCounts();
+                    
+                    const activeGradeCard = document.querySelector('.grade-card.active');
+                    if (activeGradeCard) {
+                        filterStudentsByGrade(activeGradeCard.getAttribute('data-grade'));
+                    }
+                    
+                    alert(`✅ Student has been moved from ${oldGrade} to ${newGrade}!`);
+                }
             }
         });
 
         // Event listeners
         closeEditModal.addEventListener('click', closeEditModalFunc);
         cancelEdit.addEventListener('click', closeEditModalFunc);
+        closeMoveModal.addEventListener('click', closeMoveModalFunc);
+        cancelMove.addEventListener('click', closeMoveModalFunc);
 
         editModal.addEventListener('click', (e) => {
             if (e.target === editModal) {
                 closeEditModalFunc();
+            }
+        });
+
+        moveModal.addEventListener('click', (e) => {
+            if (e.target === moveModal) {
+                closeMoveModalFunc();
             }
         });
 
@@ -1577,11 +1906,23 @@
             updateGradeCounts();
             filterStudentsByGrade('lower-1');
             renderAlumni();
+            
+            // Show data status
+            console.log('📊 Student data loaded successfully');
+            console.log('👥 Total students:', students.length);
+            console.log('🎓 Total alumni:', alumni.length);
+            console.log('💾 Data will be automatically saved');
         }
 
-        // Auto-focus passcode input
         window.onload = () => {
             document.getElementById('passcode-input').focus();
+            
+            // Display storage info
+            console.log('%c🔐 Wexford Student Portal', 'color: #0B8F4A; font-size: 16px; font-weight: bold;');
+            console.log('%c💾 Data Persistence: Active', 'color: #667eea; font-size: 12px;');
+            console.log('%c🔄 Auto-save: Every 30 seconds', 'color: #667eea; font-size: 12px;');
+            console.log('%c📱 Backup: Before page unload', 'color: #667eea; font-size: 12px;');
+            console.log('%c🖼️ Image Upload: Enabled', 'color: #667eea; font-size: 12px;');
         };
     </script>
 </body>
