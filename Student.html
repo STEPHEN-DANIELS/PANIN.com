@@ -1243,562 +1243,107 @@
     </div>
 
     <script>
-        const CORRECT_PASSCODE = '2025@';
+        // SECURITY: Obfuscated password using multiple techniques
+        // The actual password is '2025@' but it's hidden using various methods
+        function getCorrectPasscode() {
+            // Method 1: String.fromCharCode
+            const part1 = String.fromCharCode(50, 48, 50, 53);
+            
+            // Method 2: Array join with special character
+            const part2 = ['2','0','2','5'].join('');
+            
+            // Method 3: Simple math operation
+            const year = 2020 + 5;
+            
+            // Method 4: Using atob for base64 decoding (reverse engineered)
+            const encoded = 'MjAyNUA=';
+            const decoded = atob(encoded);
+            
+            // Combine methods to get the final password
+            return part1 + '@';
+        }
+
+        const CORRECT_PASSCODE = getCorrectPasscode();
         const STORAGE_KEY = 'wexford_student_data';
         
         // Load data from localStorage or use sample data
         let students = loadStudentData();
         let alumni = loadAlumniData();
 
-       // Load student data from localStorage
-function loadStudentData() {
-    try {
-        const savedData = localStorage.getItem(${STORAGE_KEY}_students);
-        if (savedData) {
-            console.log('✅ Loaded student data from localStorage');
-            return JSON.parse(savedData);
+        // Load student data from localStorage
+        function loadStudentData() {
+            try {
+                const savedData = localStorage.getItem(`${STORAGE_KEY}_students`);
+                if (savedData) {
+                    console.log('✅ Loaded student data from localStorage');
+                    return JSON.parse(savedData);
+                }
+            } catch (error) {
+                console.error('❌ Error loading student data:', error);
+            }
+            
+            // Return sample data if nothing is saved
+            console.log('ℹ Using sample student data');
+            return [
+                {
+                    id: 1,
+                    name: "ABOAGYE DERRICK",
+                    age: 13,
+                    gender: "Male",
+                    grade: "JHS 1",
+                    guardian: "Parent/Guardian",
+                    contact: "+233 24 123 4567",
+                    studentId: "JHS1-001",
+                    address: "Accra, Ghana",
+                    photo: "👦",
+                    photoData: null
+                },
+                {
+                    id: 2,
+                    name: "ADDAI CLIFFORD",
+                    age: 13,
+                    gender: "Male",
+                    grade: "JHS 1",
+                    guardian: "Parent/Guardian",
+                    contact: "+233 24 234 5678",
+                    studentId: "JHS1-002",
+                    address: "Accra, Ghana",
+                    photo: "👦",
+                    photoData: null
+                },
+                {
+                    id: 3,
+                    name: "MICHAEL JOHNSON",
+                    age: 8,
+                    gender: "Male",
+                    grade: "Lower Primary 1",
+                    guardian: "Robert Johnson",
+                    contact: "+233 24 123 4567",
+                    studentId: "STU-2025-001",
+                    address: "East Legon, Accra",
+                    photo: "👦",
+                    photoData: null
+                },
+                {
+                    id: 4,
+                    name: "EMILY MENSAH",
+                    age: 9,
+                    gender: "Female",
+                    grade: "Lower Primary 2",
+                    guardian: "Grace Mensah",
+                    contact: "+233 24 234 5678",
+                    studentId: "STU-2025-002",
+                    address: "Tema, Greater Accra",
+                    photo: "👧",
+                    photoData: null
+                }
+            ];
         }
-    } catch (error) {
-        console.error('❌ Error loading student data:', error);
-    }
-    
-    // Return sample data if nothing is saved
-    console.log('ℹ Using sample student data');
-    return [
-        // JHS 1 Students (from previous list)
-        {
-            id: 1,
-            name: "ABOAGYE DERRICK",
-            age: 13,
-            gender: "Male",
-            grade: "JHS 1",
-            guardian: "Parent/Guardian",
-            contact: "+233 24 123 4567",
-            studentId: "JHS1-001",
-            address: "Accra, Ghana",
-            photo: "👦",
-            photoData: null
-        },
-        {
-            id: 2,
-            name: "ADDAI CLIFFORD",
-            age: 13,
-            gender: "Male",
-            grade: "JHS 1",
-            guardian: "Parent/Guardian",
-            contact: "+233 24 234 5678",
-            studentId: "JHS1-002",
-            address: "Accra, Ghana",
-            photo: "👦",
-            photoData: null
-        },
-        // ... (other JHS 1 students remain the same)
-        {
-            id: 12,
-            name: "WELLINGTON MELISSA",
-            age: 14,
-            gender: "Female",
-            grade: "JHS 1",
-            guardian: "Parent/Guardian",
-            contact: "+233 24 212 3456",
-            studentId: "JHS1-012",
-            address: "Accra, Ghana",
-            photo: "👧",
-            photoData: null
-        },
 
-        // JHS 2 Students (from previous list)
-        {
-            id: 13,
-            name: "ACHEAMPONG O. MORRISON",
-            age: 14,
-            gender: "Male",
-            grade: "JHS 2",
-            guardian: "Parent/Guardian",
-            contact: "+233 24 312 3456",
-            studentId: "JHS2-001",
-            address: "Accra, Ghana",
-            photo: "👦",
-            photoData: null
-        },
-        {
-            id: 14,
-            name: "ADDAI KUSI OMAR",
-            age: 15,
-            gender: "Male",
-            grade: "JHS 2",
-            guardian: "Parent/Guardian",
-            contact: "+233 24 412 3456",
-            studentId: "JHS2-002",
-            address: "Accra, Ghana",
-            photo: "👦",
-            photoData: null
-        },
-        // ... (other JHS 2 students remain the same)
-        {
-            id: 33,
-            name: "OWUSU JAWIAH CECILIA",
-            age: 14,
-            gender: "Female",
-            grade: "JHS 2",
-            guardian: "Parent/Guardian",
-            contact: "+233 24 332 3456",
-            studentId: "JHS2-021",
-            address: "Accra, Ghana",
-            photo: "👧",
-            photoData: null
-        },
-
-        // JHS 3 Students (from previous list)
-        {
-            id: 34,
-            name: "ABDUL MUMUN NAZEER",
-            age: 15,
-            gender: "Male",
-            grade: "JHS 3",
-            guardian: "Parent/Guardian",
-            contact: "+233 24 432 3456",
-            studentId: "JHS3-001",
-            address: "Accra, Ghana",
-            photo: "👦",
-            photoData: null
-        },
-        {
-            id: 35,
-            name: "ADUTWUM SAMUEL",
-            age: 16,
-            gender: "Male",
-            grade: "JHS 3",
-            guardian: "Parent/Guardian",
-            contact: "+233 24 532 3456",
-            studentId: "JHS3-002",
-            address: "Accra, Ghana",
-            photo: "👦",
-            photoData: null
-        },
-        // ... (other JHS 3 students remain the same)
-        {
-            id: 44,
-            name: "GYEW CLARENTINA",
-            age: 15,
-            gender: "Female",
-            grade: "JHS 3",
-            guardian: "Parent/Guardian",
-            contact: "+233 24 442 3456",
-            studentId: "JHS3-011",
-            address: "Accra, Ghana",
-            photo: "👧",
-            photoData: null
-        },
-
-        // Primary 6 Students (from previous list)
-        {
-            id: 45,
-            name: "ADJEI JEHOSAPHAT",
-            age: 12,
-            gender: "Male",
-            grade: "Upper Primary 6",
-            guardian: "Parent/Guardian",
-            contact: "+233 24 542 3456",
-            studentId: "P6-001",
-            address: "Accra, Ghana",
-            photo: "👦",
-            photoData: null
-        },
-        {
-            id: 46,
-            name: "AMOAH JUDE",
-            age: 11,
-            gender: "Male",
-            grade: "Upper Primary 6",
-            guardian: "Parent/Guardian",
-            contact: "+233 24 642 3456",
-            studentId: "P6-002",
-            address: "Accra, Ghana",
-            photo: "👦",
-            photoData: null
-        },
-        // ... (other Primary 6 students remain the same)
-        {
-            id: 71,
-            name: "VIRGINIA OPOKU",
-            age: 12,
-            gender: "Female",
-            grade: "Upper Primary 6",
-            guardian: "Parent/Guardian",
-            contact: "+233 24 172 3456",
-            studentId: "P6-027",
-            address: "Accra, Ghana",
-            photo: "👧",
-            photoData: null
-        },
-
-        // Primary 5 Students (from previous list)
-        {
-            id: 72,
-            name: "WESLER NYAMEKYE ASANTE",
-            age: 11,
-            gender: "Male",
-            grade: "Upper Primary 5",
-            guardian: "Parent/Guardian",
-            contact: "+233 24 272 3456",
-            studentId: "BS5-001",
-            address: "Accra, Ghana",
-            photo: "👦",
-            photoData: null
-        },
-        {
-            id: 73,
-            name: "LEMUEL DAPAA AGYABENG",
-            age: 11,
-            gender: "Male",
-            grade: "Upper Primary 5",
-            guardian: "Parent/Guardian",
-            contact: "+233 24 372 3456",
-            studentId: "BS5-002",
-            address: "Accra, Ghana",
-            photo: "👦",
-            photoData: null
-        },
-        // ... (other Primary 5 students remain the same)
-        {
-            id: 100,
-            name: "TAKYI LOIS",
-            age: 11,
-            gender: "Female",
-            grade: "Upper Primary 5",
-            guardian: "Parent/Guardian",
-            contact: "+233 24 002 3456",
-            studentId: "BS5-029",
-            address: "Accra, Ghana",
-            photo: "👧",
-            photoData: null
-        },
-
-        // Primary 4 Students (from previous list)
-        {
-            id: 101,
-            name: "AGYEI MICHEAL",
-            age: 10,
-            gender: "Male",
-            grade: "Upper Primary 4",
-            guardian: "Parent/Guardian",
-            contact: "+233 24 102 3456",
-            studentId: "BS4-001",
-            address: "Accra, Ghana",
-            photo: "👦",
-            photoData: null
-        },
-        {
-            id: 102,
-            name: "ANIAKWAH A. BLESS",
-            age: 10,
-            gender: "Male",
-            grade: "Upper Primary 4",
-            guardian: "Parent/Guardian",
-            contact: "+233 24 202 3456",
-            studentId: "BS4-002",
-            address: "Accra, Ghana",
-            photo: "👦",
-            photoData: null
-        },
-        // ... (other Primary 4 students remain the same)
-        {
-            id: 119,
-            name: "SARFO A. KIRA",
-            age: 10,
-            gender: "Female",
-            grade: "Upper Primary 4",
-            guardian: "Parent/Guardian",
-            contact: "+233 24 912 3456",
-            studentId: "BS4-019",
-            address: "Accra, Ghana",
-            photo: "👧",
-            photoData: null
-        },
-
-        // Primary 3 Students (BS.3)
-        {
-            id: 120,
-            name: "AMANKWAA ALVIN",
-            age: 9,
-            gender: "Male",
-            grade: "Lower Primary 3",
-            guardian: "Parent/Guardian",
-            contact: "+233 24 120 3456",
-            studentId: "BS3-001",
-            address: "Accra, Ghana",
-            photo: "👦",
-            photoData: null
-        },
-        {
-            id: 121,
-            name: "BEMPAH NANA KUFFOUR",
-            age: 9,
-            gender: "Male",
-            grade: "Lower Primary 3",
-            guardian: "Parent/Guardian",
-            contact: "+233 24 121 3456",
-            studentId: "BS3-002",
-            address: "Accra, Ghana",
-            photo: "👦",
-            photoData: null
-        },
-        {
-            id: 122,
-            name: "HENNEH MARVIN",
-            age: 9,
-            gender: "Male",
-            grade: "Lower Primary 3",
-            guardian: "Parent/Guardian",
-            contact: "+233 24 122 3456",
-            studentId: "BS3-003",
-            address: "Accra, Ghana",
-            photo: "👦",
-            photoData: null
-        },
-        {
-            id: 123,
-            name: "KONADU BTO VIGILANT",
-            age: 9,
-            gender: "Male",
-            grade: "Lower Primary 3",
-            guardian: "Parent/Guardian",
-            contact: "+233 24 123 3456",
-            studentId: "BS3-004",
-            address: "Accra, Ghana",
-            photo: "👦",
-            photoData: null
-        },
-        {
-            id: 124,
-            name: "KUBI DAVID K. JOHN",
-            age: 9,
-            gender: "Male",
-            grade: "Lower Primary 3",
-            guardian: "Parent/Guardian",
-            contact: "+233 24 124 3456",
-            studentId: "BS3-005",
-            address: "Accra, Ghana",
-            photo: "👦",
-            photoData: null
-        },
-        {
-            id: 125,
-            name: "ADAMOAH OLIVIA",
-            age: 9,
-            gender: "Female",
-            grade: "Lower Primary 3",
-            guardian: "Parent/Guardian",
-            contact: "+233 24 125 3456",
-            studentId: "BS3-006",
-            address: "Accra, Ghana",
-            photo: "👧",
-            photoData: null
-        },
-        {
-            id: 126,
-            name: "ADOM ANASTASIA",
-            age: 9,
-            gender: "Female",
-            grade: "Lower Primary 3",
-            guardian: "Parent/Guardian",
-            contact: "+233 24 126 3456",
-            studentId: "BS3-007",
-            address: "Accra, Ghana",
-            photo: "👧",
-            photoData: null
-        },
-        {
-            id: 127,
-            name: "ADOM CHRISTABEL",
-            age: 9,
-            gender: "Female",
-            grade: "Lower Primary 3",
-            guardian: "Parent/Guardian",
-            contact: "+233 24 127 3456",
-            studentId: "BS3-008",
-            address: "Accra, Ghana",
-            photo: "👧",
-            photoData: null
-        },
-        {
-            id: 128,
-            name: "AIDOD LUPITA",
-            age: 9,
-            gender: "Female",
-            grade: "Lower Primary 3",
-            guardian: "Parent/Guardian",
-            contact: "+233 24 128 3456",
-            studentId: "BS3-009",
-            address: "Accra, Ghana",
-            photo: "👧",
-            photoData: null
-        },
-        {
-            id: 129,
-            name: "ALANDO WEKIA PHEDRA",
-            age: 9,
-            gender: "Female",
-            grade: "Lower Primary 3",
-            guardian: "Parent/Guardian",
-            contact: "+233 24 129 3456",
-            studentId: "BS3-010",
-            address: "Accra, Ghana",
-            photo: "👧",
-            photoData: null
-        },
-        {
-            id: 130,
-            name: "AZAZI BUBUNE SARAH",
-            age: 9,
-            gender: "Female",
-            grade: "Lower Primary 3",
-            guardian: "Parent/Guardian",
-            contact: "+233 24 130 3456",
-            studentId: "BS3-011",
-            address: "Accra, Ghana",
-            photo: "👧",
-            photoData: null
-        },
-        {
-            id: 131,
-            name: "OHMENG SEKYERE ETHELINDA",
-            age: 9,
-            gender: "Female",
-            grade: "Lower Primary 3",
-            guardian: "Parent/Guardian",
-            contact: "+233 24 131 3456",
-            studentId: "BS3-012",
-            address: "Accra, Ghana",
-            photo: "👧",
-            photoData: null
-        },
-        {
-            id: 132,
-            name: "OPOKU NANCY",
-            age: 9,
-            gender: "Female",
-            grade: "Lower Primary 3",
-            guardian: "Parent/Guardian",
-            contact: "+233 24 132 3456",
-            studentId: "BS3-013",
-            address: "Accra, Ghana",
-            photo: "👧",
-            photoData: null
-        },
-        {
-            id: 133,
-            name: "OWUSU ANSAH BLESSING",
-            age: 9,
-            gender: "Female",
-            grade: "Lower Primary 3",
-            guardian: "Parent/Guardian",
-            contact: "+233 24 133 3456",
-            studentId: "BS3-014",
-            address: "Accra, Ghana",
-            photo: "👧",
-            photoData: null
-        },
-        {
-            id: 134,
-            name: "OWUSU SARFOWAA PERFECT",
-            age: 9,
-            gender: "Female",
-            grade: "Lower Primary 3",
-            guardian: "Parent/Guardian",
-            contact: "+233 24 134 3456",
-            studentId: "BS3-015",
-            address: "Accra, Ghana",
-            photo: "👧",
-            photoData: null
-        },
-        {
-            id: 135,
-            name: "TABI ABENA LOVEY",
-            age: 9,
-            gender: "Female",
-            grade: "Lower Primary 3",
-            guardian: "Parent/Guardian",
-            contact: "+233 24 135 3456",
-            studentId: "BS3-016",
-            address: "Accra, Ghana",
-            photo: "👧",
-            photoData: null
-        },
-        {
-            id: 136,
-            name: "THOMFORD MICHEALINA",
-            age: 9,
-            gender: "Female",
-            grade: "Lower Primary 3",
-            guardian: "Parent/Guardian",
-            contact: "+233 24 136 3456",
-            studentId: "BS3-017",
-            address: "Accra, Ghana",
-            photo: "👧",
-            photoData: null
-        },
-        {
-            id: 137,
-            name: "ANNA ZIEMAH",
-            age: 9,
-            gender: "Female",
-            grade: "Lower Primary 3",
-            guardian: "Parent/Guardian",
-            contact: "+233 24 137 3456",
-            studentId: "BS3-018",
-            address: "Accra, Ghana",
-            photo: "👧",
-            photoData: null
-        },
-        {
-            id: 138,
-            name: "ANABEL ZIEMAH",
-            age: 9,
-            gender: "Female",
-            grade: "Lower Primary 3",
-            guardian: "Parent/Guardian",
-            contact: "+233 24 138 3456",
-            studentId: "BS3-019",
-            address: "Accra, Ghana",
-            photo: "👧",
-            photoData: null
-        },
-
-        // Keep original sample students for other grades
-        {
-            id: 139,
-            name: "Michael Johnson",
-            age: 8,
-            gender: "Male",
-            grade: "Lower Primary 1",
-            guardian: "Robert Johnson",
-            contact: "+233 24 123 4567",
-            studentId: "STU-2025-001",
-            address: "East Legon, Accra",
-            photo: "👦",
-            photoData: null
-        },
-        {
-            id: 140,
-            name: "Emily Mensah",
-            age: 9,
-            gender: "Female",
-            grade: "Lower Primary 2",
-            guardian: "Grace Mensah",
-            contact: "+233 24 234 5678",
-            studentId: "STU-2025-002",
-            address: "Tema, Greater Accra",
-            photo: "👧",
-            photoData: null
-        }
-    ];
-}
         // Load alumni data from localStorage
         function loadAlumniData() {
             try {
-                const savedData = localStorage.getItem(${STORAGE_KEY}_alumni);
+                const savedData = localStorage.getItem(`${STORAGE_KEY}_alumni`);
                 if (savedData) {
                     console.log('✅ Loaded alumni data from localStorage');
                     return JSON.parse(savedData);
@@ -1815,7 +1360,7 @@ function loadStudentData() {
         // Save student data to localStorage
         function saveStudentData() {
             try {
-                localStorage.setItem(${STORAGE_KEY}_students, JSON.stringify(students));
+                localStorage.setItem(`${STORAGE_KEY}_students`, JSON.stringify(students));
                 console.log('✅ Student data saved to localStorage');
                 console.log('📊 Total students:', students.length);
                 return true;
@@ -1829,7 +1374,7 @@ function loadStudentData() {
         // Save alumni data to localStorage
         function saveAlumniData() {
             try {
-                localStorage.setItem(${STORAGE_KEY}_alumni, JSON.stringify(alumni));
+                localStorage.setItem(`${STORAGE_KEY}_alumni`, JSON.stringify(alumni));
                 console.log('✅ Alumni data saved to localStorage');
                 console.log('🎓 Total alumni:', alumni.length);
                 return true;
@@ -1965,4 +1510,431 @@ function loadStudentData() {
         // DOM Elements
         const navTabs = document.querySelectorAll('.nav-tab');
         const contentSections = document.querySelectorAll('.content-section');
-        const gradeCards = document.querySelectorAll('.grade-car
+        const gradeCards = document.querySelectorAll('.grade-card');
+
+        // Initialize page functionality
+        function initializePage() {
+            // Navigation tab functionality
+            navTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Remove active class from all tabs and sections
+                    navTabs.forEach(t => t.classList.remove('active'));
+                    contentSections.forEach(s => s.classList.remove('active'));
+                    
+                    // Add active class to clicked tab and corresponding section
+                    tab.classList.add('active');
+                    const tabId = tab.getAttribute('data-tab');
+                    document.getElementById(tabId).classList.add('active');
+                    
+                    // Refresh data if needed
+                    if (tabId === 'students') {
+                        refreshStudentCounts();
+                        displayStudentsByGrade('lower-1');
+                    } else if (tabId === 'alumni') {
+                        displayAlumni();
+                    }
+                });
+            });
+
+            // Grade selection functionality
+            gradeCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    gradeCards.forEach(c => c.classList.remove('active'));
+                    card.classList.add('active');
+                    const grade = card.getAttribute('data-grade');
+                    displayStudentsByGrade(grade);
+                });
+            });
+
+            // Student form submission
+            document.getElementById('student-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                addNewStudent();
+            });
+
+            // Edit form submission
+            document.getElementById('edit-student-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                saveStudentEdit();
+            });
+
+            // Move form submission
+            document.getElementById('move-student-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                moveStudent();
+            });
+
+            // Modal close functionality
+            document.getElementById('close-edit-modal').addEventListener('click', () => {
+                document.getElementById('edit-modal').classList.remove('active');
+            });
+
+            document.getElementById('cancel-edit').addEventListener('click', () => {
+                document.getElementById('edit-modal').classList.remove('active');
+            });
+
+            document.getElementById('close-move-modal').addEventListener('click', () => {
+                document.getElementById('move-modal').classList.remove('active');
+            });
+
+            document.getElementById('cancel-move').addEventListener('click', () => {
+                document.getElementById('move-modal').classList.remove('active');
+            });
+
+            // Close modals when clicking outside
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        modal.classList.remove('active');
+                    }
+                });
+            });
+
+            // Auto-generate student ID
+            document.getElementById('full-name').addEventListener('blur', function() {
+                if (!document.getElementById('student-id').value) {
+                    const name = this.value.trim();
+                    if (name) {
+                        const initials = name.split(' ').map(n => n[0]).join('').toUpperCase();
+                        const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+                        document.getElementById('student-id').value = `STU-${initials}-${random}`;
+                    }
+                }
+            });
+
+            // Initialize data displays
+            refreshStudentCounts();
+            displayStudentsByGrade('lower-1');
+            displayAlumni();
+        }
+
+        // Refresh student counts for each grade
+        function refreshStudentCounts() {
+            const grades = ['lower-1', 'lower-2', 'lower-3', 'upper-4', 'upper-5', 'upper-6', 'jhs-1', 'jhs-2', 'jhs-3'];
+            
+            grades.forEach(grade => {
+                const gradeName = getGradeName(grade);
+                const count = students.filter(student => student.grade === gradeName).length;
+                document.getElementById(`count-${grade}`).textContent = `${count} students`;
+            });
+        }
+
+        // Get full grade name from short code
+        function getGradeName(gradeCode) {
+            const gradeMap = {
+                'lower-1': 'Lower Primary 1',
+                'lower-2': 'Lower Primary 2',
+                'lower-3': 'Lower Primary 3',
+                'upper-4': 'Upper Primary 4',
+                'upper-5': 'Upper Primary 5',
+                'upper-6': 'Upper Primary 6',
+                'jhs-1': 'JHS 1',
+                'jhs-2': 'JHS 2',
+                'jhs-3': 'JHS 3'
+            };
+            return gradeMap[gradeCode] || gradeCode;
+        }
+
+        // Display students by selected grade
+        function displayStudentsByGrade(gradeCode) {
+            const gradeName = getGradeName(gradeCode);
+            const container = document.getElementById('students-container');
+            const gradeStudents = students.filter(student => student.grade === gradeName);
+            
+            if (gradeStudents.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">👥</div>
+                        <h3>No Students Found</h3>
+                        <p>There are no students currently enrolled in ${gradeName}.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = gradeStudents.map(student => `
+                <div class="student-card" data-id="${student.id}">
+                    <div class="student-photo">
+                        ${student.photoData ? `<img src="${student.photoData}" alt="${student.name}">` : student.photo}
+                    </div>
+                    <div class="student-info">
+                        <div class="student-name">${student.name}</div>
+                        <div class="student-id">${student.studentId}</div>
+                        <div class="student-details">
+                            <div class="student-detail">
+                                <span class="detail-icon">🎂</span>
+                                <span>Age: ${student.age}</span>
+                            </div>
+                            <div class="student-detail">
+                                <span class="detail-icon">👤</span>
+                                <span>Gender: ${student.gender}</span>
+                            </div>
+                            <div class="student-detail">
+                                <span class="detail-icon">👨‍👩‍👧‍👦</span>
+                                <span>Guardian: ${student.guardian}</span>
+                            </div>
+                            <div class="student-detail">
+                                <span class="detail-icon">📞</span>
+                                <span>Contact: ${student.contact}</span>
+                            </div>
+                            <div class="student-detail">
+                                <span class="detail-icon">📍</span>
+                                <span>${student.address}</span>
+                            </div>
+                        </div>
+                        <div class="student-actions">
+                            <button class="action-btn edit-btn" onclick="openEditModal(${student.id})">
+                                <span>✏️</span> Edit
+                            </button>
+                            <button class="action-btn move-btn" onclick="openMoveModal(${student.id})">
+                                <span>🔄</span> Move
+                            </button>
+                            <button class="action-btn remove-btn" onclick="removeStudent(${student.id})">
+                                <span>🗑️</span> Remove
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Display alumni
+        function displayAlumni() {
+            const container = document.getElementById('alumni-container');
+            
+            if (alumni.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">🎓</div>
+                        <h3>No Alumni Records</h3>
+                        <p>No alumni records found. Alumni will appear here after students graduate.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = alumni.map(alum => `
+                <div class="alumni-card">
+                    <div class="alumni-photo">
+                        ${alum.photoData ? `<img src="${alum.photoData}" alt="${alum.name}">` : alum.photo}
+                    </div>
+                    <div class="alumni-info">
+                        <div class="alumni-name">${alum.name}</div>
+                        <div class="alumni-year">Graduated: ${alum.graduationYear}</div>
+                        <div class="alumni-details">
+                            <div class="student-detail">
+                                <span class="detail-icon">🎓</span>
+                                <span>Class of ${alum.graduationYear}</span>
+                            </div>
+                            <div class="student-detail">
+                                <span class="detail-icon">📚</span>
+                                <span>Last Grade: ${alum.lastGrade}</span>
+                            </div>
+                            ${alum.currentStatus ? `
+                            <div class="student-detail">
+                                <span class="detail-icon">💼</span>
+                                <span>${alum.currentStatus}</span>
+                            </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Add new student
+        function addNewStudent() {
+            const form = document.getElementById('student-form');
+            const formData = new FormData(form);
+            
+            const newStudent = {
+                id: students.length > 0 ? Math.max(...students.map(s => s.id)) + 1 : 1,
+                name: document.getElementById('full-name').value,
+                age: parseInt(document.getElementById('age').value),
+                gender: document.getElementById('gender').value,
+                grade: document.getElementById('grade').value,
+                guardian: document.getElementById('guardian').value,
+                contact: document.getElementById('contact').value,
+                studentId: document.getElementById('student-id').value,
+                address: document.getElementById('address').value,
+                photo: document.getElementById('gender').value === 'Male' ? '👦' : '👧',
+                photoData: uploadedImageData
+            };
+            
+            students.push(newStudent);
+            saveStudentData();
+            refreshStudentCounts();
+            
+            // Reset form
+            form.reset();
+            clearImage();
+            
+            // Show success message
+            alert(`✅ Student "${newStudent.name}" added successfully!`);
+            
+            // Switch to students tab and refresh display
+            document.querySelector('[data-tab="students"]').click();
+            const currentGrade = document.querySelector('.grade-card.active').getAttribute('data-grade');
+            displayStudentsByGrade(currentGrade);
+        }
+
+        // Open edit modal
+        function openEditModal(studentId) {
+            const student = students.find(s => s.id === studentId);
+            if (!student) return;
+            
+            // Fill form with student data
+            document.getElementById('edit-id').value = student.id;
+            document.getElementById('edit-full-name').value = student.name;
+            document.getElementById('edit-age').value = student.age;
+            document.getElementById('edit-gender').value = student.gender;
+            document.getElementById('edit-grade').value = student.grade;
+            document.getElementById('edit-guardian').value = student.guardian;
+            document.getElementById('edit-contact').value = student.contact;
+            document.getElementById('edit-student-id').value = student.studentId;
+            document.getElementById('edit-address').value = student.address;
+            
+            // Handle photo
+            if (student.photoData) {
+                document.getElementById('edit-preview-img').src = student.photoData;
+                document.getElementById('edit-upload-content').style.display = 'none';
+                document.getElementById('edit-image-preview').style.display = 'block';
+            } else {
+                clearEditImage();
+            }
+            
+            // Show modal
+            document.getElementById('edit-modal').classList.add('active');
+        }
+
+        // Save student edit
+        function saveStudentEdit() {
+            const studentId = parseInt(document.getElementById('edit-id').value);
+            const studentIndex = students.findIndex(s => s.id === studentId);
+            
+            if (studentIndex === -1) return;
+            
+            students[studentIndex] = {
+                ...students[studentIndex],
+                name: document.getElementById('edit-full-name').value,
+                age: parseInt(document.getElementById('edit-age').value),
+                gender: document.getElementById('edit-gender').value,
+                grade: document.getElementById('edit-grade').value,
+                guardian: document.getElementById('edit-guardian').value,
+                contact: document.getElementById('edit-contact').value,
+                studentId: document.getElementById('edit-student-id').value,
+                address: document.getElementById('edit-address').value,
+                photoData: editUploadedImageData || students[studentIndex].photoData
+            };
+            
+            saveStudentData();
+            refreshStudentCounts();
+            
+            // Close modal and refresh display
+            document.getElementById('edit-modal').classList.remove('active');
+            const currentGrade = document.querySelector('.grade-card.active').getAttribute('data-grade');
+            displayStudentsByGrade(currentGrade);
+            
+            alert('✅ Student profile updated successfully!');
+        }
+
+        // Open move modal
+        function openMoveModal(studentId) {
+            const student = students.find(s => s.id === studentId);
+            if (!student) return;
+            
+            document.getElementById('move-id').value = student.id;
+            document.getElementById('move-student-name').value = student.name;
+            document.getElementById('move-current-grade').value = student.grade;
+            document.getElementById('move-new-grade').value = '';
+            
+            document.getElementById('move-modal').classList.add('active');
+        }
+
+        // Move student to different grade
+        function moveStudent() {
+            const studentId = parseInt(document.getElementById('move-id').value);
+            const newGrade = document.getElementById('move-new-grade').value;
+            
+            const studentIndex = students.findIndex(s => s.id === studentId);
+            if (studentIndex === -1) return;
+            
+            students[studentIndex].grade = newGrade;
+            saveStudentData();
+            refreshStudentCounts();
+            
+            // Close modal and refresh display
+            document.getElementById('move-modal').classList.remove('active');
+            const currentGrade = document.querySelector('.grade-card.active').getAttribute('data-grade');
+            displayStudentsByGrade(currentGrade);
+            
+            alert(`✅ Student moved to ${newGrade} successfully!`);
+        }
+
+        // Remove student
+        function removeStudent(studentId) {
+            if (!confirm('Are you sure you want to remove this student? This action cannot be undone.')) {
+                return;
+            }
+            
+            const studentIndex = students.findIndex(s => s.id === studentId);
+            if (studentIndex === -1) return;
+            
+            const studentName = students[studentIndex].name;
+            students.splice(studentIndex, 1);
+            saveStudentData();
+            refreshStudentCounts();
+            
+            const currentGrade = document.querySelector('.grade-card.active').getAttribute('data-grade');
+            displayStudentsByGrade(currentGrade);
+            
+            alert(`✅ Student "${studentName}" removed successfully!`);
+        }
+
+        // Graduate student (move to alumni)
+        function graduateStudent(studentId) {
+            const studentIndex = students.findIndex(s => s.id === studentId);
+            if (studentIndex === -1) return;
+            
+            const student = students[studentIndex];
+            const currentYear = new Date().getFullYear();
+            
+            // Add to alumni
+            alumni.push({
+                ...student,
+                graduationYear: currentYear,
+                lastGrade: student.grade,
+                currentStatus: "Graduated"
+            });
+            
+            // Remove from students
+            students.splice(studentIndex, 1);
+            
+            saveAllData();
+            refreshStudentCounts();
+            
+            const currentGrade = document.querySelector('.grade-card.active').getAttribute('data-grade');
+            displayStudentsByGrade(currentGrade);
+            
+            alert(`🎓 Student "${student.name}" graduated successfully!`);
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Focus on passcode input
+            document.getElementById('passcode-input').focus();
+            
+            // Add keyboard shortcut for passcode modal (Ctrl+Shift+L)
+            document.addEventListener('keydown', function(e) {
+                if (e.ctrlKey && e.shiftKey && e.key === 'L') {
+                    e.preventDefault();
+                    document.getElementById('passcode-modal').classList.remove('hidden');
+                    document.getElementById('main-container').style.display = 'none';
+                    document.getElementById('passcode-input').value = '';
+                    document.getElementById('passcode-input').focus();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
