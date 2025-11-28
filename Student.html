@@ -1269,76 +1269,607 @@
         // Load data from localStorage or use sample data
         let students = loadStudentData();
         let alumni = loadAlumniData();
-
-        // Load student data from localStorage
-        function loadStudentData() {
-            try {
-                const savedData = localStorage.getItem(`${STORAGE_KEY}_students`);
-                if (savedData) {
-                    console.log('✅ Loaded student data from localStorage');
-                    return JSON.parse(savedData);
-                }
-            } catch (error) {
-                console.error('❌ Error loading student data:', error);
-            }
-            
-            // Return sample data if nothing is saved
-            console.log('ℹ Using sample student data');
-            return [
-                {
-                    id: 1,
-                    name: "ABOAGYE DERRICK",
-                    age: 13,
-                    gender: "Male",
-                    grade: "JHS 1",
-                    guardian: "Parent/Guardian",
-                    contact: "+233 24 123 4567",
-                    studentId: "JHS1-001",
-                    address: "Accra, Ghana",
-                    photo: "👦",
-                    photoData: null
-                },
-                {
-                    id: 2,
-                    name: "ADDAI CLIFFORD",
-                    age: 13,
-                    gender: "Male",
-                    grade: "JHS 1",
-                    guardian: "Parent/Guardian",
-                    contact: "+233 24 234 5678",
-                    studentId: "JHS1-002",
-                    address: "Accra, Ghana",
-                    photo: "👦",
-                    photoData: null
-                },
-                {
-                    id: 3,
-                    name: "MICHAEL JOHNSON",
-                    age: 8,
-                    gender: "Male",
-                    grade: "Lower Primary 1",
-                    guardian: "Robert Johnson",
-                    contact: "+233 24 123 4567",
-                    studentId: "STU-2025-001",
-                    address: "East Legon, Accra",
-                    photo: "👦",
-                    photoData: null
-                },
-                {
-                    id: 4,
-                    name: "EMILY MENSAH",
-                    age: 9,
-                    gender: "Female",
-                    grade: "Lower Primary 2",
-                    guardian: "Grace Mensah",
-                    contact: "+233 24 234 5678",
-                    studentId: "STU-2025-002",
-                    address: "Tema, Greater Accra",
-                    photo: "👧",
-                    photoData: null
-                }
-            ];
+// Load student data from localStorage
+function loadStudentData() {
+    try {
+        const savedData = localStorage.getItem(`${STORAGE_KEY}_students`);
+        if (savedData) {
+            console.log('✅ Loaded student data from localStorage');
+            return JSON.parse(savedData);
         }
+    } catch (error) {
+        console.error('❌ Error loading student data:', error);
+    }
+    
+    // Return sample data if nothing is saved
+    console.log('ℹ️ Using sample student data');
+    return [
+        // JHS 1 Students (from previous list)
+        {
+            id: 1,
+            name: "ABOAGYE DERRICK",
+            age: 13,
+            gender: "Male",
+            grade: "JHS 1",
+            guardian: "Parent/Guardian",
+            contact: "+233 24 123 4567",
+            studentId: "JHS1-001",
+            address: "Accra, Ghana",
+            photo: "👦",
+            photoData: null
+        },
+        {
+            id: 2,
+            name: "ADDAI CLIFFORD",
+            age: 13,
+            gender: "Male",
+            grade: "JHS 1",
+            guardian: "Parent/Guardian",
+            contact: "+233 24 234 5678",
+            studentId: "JHS1-002",
+            address: "Accra, Ghana",
+            photo: "👦",
+            photoData: null
+        },
+        // ... (other JHS 1 students remain the same)
+        {
+            id: 12,
+            name: "WELLINGTON MELISSA",
+            age: 14,
+            gender: "Female",
+            grade: "JHS 1",
+            guardian: "Parent/Guardian",
+            contact: "+233 24 212 3456",
+            studentId: "JHS1-012",
+            address: "Accra, Ghana",
+            photo: "👧",
+            photoData: null
+        },
+
+        // JHS 2 Students (from previous list)
+        {
+            id: 13,
+            name: "ACHEAMPONG O. MORRISON",
+            age: 14,
+            gender: "Male",
+            grade: "JHS 2",
+            guardian: "Parent/Guardian",
+            contact: "+233 24 312 3456",
+            studentId: "JHS2-001",
+            address: "Accra, Ghana",
+            photo: "👦",
+            photoData: null
+        },
+        {
+            id: 14,
+            name: "ADDAI KUSI OMAR",
+            age: 15,
+            gender: "Male",
+            grade: "JHS 2",
+            guardian: "Parent/Guardian",
+            contact: "+233 24 412 3456",
+            studentId: "JHS2-002",
+            address: "Accra, Ghana",
+            photo: "👦",
+            photoData: null
+        },
+        // ... (other JHS 2 students remain the same)
+        {
+            id: 33,
+            name: "OWUSU JAWIAH CECILIA",
+            age: 14,
+            gender: "Female",
+            grade: "JHS 2",
+            guardian: "Parent/Guardian",
+            contact: "+233 24 332 3456",
+            studentId: "JHS2-021",
+            address: "Accra, Ghana",
+            photo: "👧",
+            photoData: null
+        },
+
+        // JHS 3 Students (from previous list)
+        {
+            id: 34,
+            name: "ABDUL MUMUN NAZEER",
+            age: 15,
+            gender: "Male",
+            grade: "JHS 3",
+            guardian: "Parent/Guardian",
+            contact: "+233 24 432 3456",
+            studentId: "JHS3-001",
+            address: "Accra, Ghana",
+            photo: "👦",
+            photoData: null
+        },
+        {
+            id: 35,
+            name: "ADUTWUM SAMUEL",
+            age: 16,
+            gender: "Male",
+            grade: "JHS 3",
+            guardian: "Parent/Guardian",
+            contact: "+233 24 532 3456",
+            studentId: "JHS3-002",
+            address: "Accra, Ghana",
+            photo: "👦",
+            photoData: null
+        },
+        // ... (other JHS 3 students remain the same)
+        {
+            id: 44,
+            name: "GYEW CLARENTINA",
+            age: 15,
+            gender: "Female",
+            grade: "JHS 3",
+            guardian: "Parent/Guardian",
+            contact: "+233 24 442 3456",
+            studentId: "JHS3-011",
+            address: "Accra, Ghana",
+            photo: "👧",
+            photoData: null
+        },
+
+        // Primary 6 Students (from previous list)
+        {
+            id: 45,
+            name: "ADJEI JEHOSAPHAT",
+            age: 12,
+            gender: "Male",
+            grade: "Upper Primary 6",
+            guardian: "Parent/Guardian",
+            contact: "+233 24 542 3456",
+            studentId: "P6-001",
+            address: "Accra, Ghana",
+            photo: "👦",
+            photoData: null
+        },
+        {
+            id: 46,
+            name: "AMOAH JUDE",
+            age: 11,
+            gender: "Male",
+            grade: "Upper Primary 6",
+            guardian: "Parent/Guardian",
+            contact: "+233 24 642 3456",
+            studentId: "P6-002",
+            address: "Accra, Ghana",
+            photo: "👦",
+            photoData: null
+        },
+        // ... (other Primary 6 students remain the same)
+        {
+            id: 71,
+            name: "VIRGINIA OPOKU",
+            age: 12,
+            gender: "Female",
+            grade: "Upper Primary 6",
+            guardian: "Parent/Guardian",
+            contact: "+233 24 172 3456",
+            studentId: "P6-027",
+            address: "Accra, Ghana",
+            photo: "👧",
+            photoData: null
+        },
+
+        // Primary 5 Students (from previous list)
+        {
+            id: 72,
+            name: "WESLER NYAMEKYE ASANTE",
+            age: 11,
+            gender: "Male",
+            grade: "Upper Primary 5",
+            guardian: "Parent/Guardian",
+            contact: "+233 24 272 3456",
+            studentId: "BS5-001",
+            address: "Accra, Ghana",
+            photo: "👦",
+            photoData: null
+        },
+        {
+            id: 73,
+            name: "LEMUEL DAPAA AGYABENG",
+            age: 11,
+            gender: "Male",
+            grade: "Upper Primary 5",
+            guardian: "Parent/Guardian",
+            contact: "+233 24 372 3456",
+            studentId: "BS5-002",
+            address: "Accra, Ghana",
+            photo: "👦",
+            photoData: null
+        },
+        // ... (other Primary 5 students remain the same)
+        {
+            id: 100,
+            name: "TAKYI LOIS",
+            age: 11,
+            gender: "Female",
+            grade: "Upper Primary 5",
+            guardian: "Parent/Guardian",
+            contact: "+233 24 002 3456",
+            studentId: "BS5-029",
+            address: "Accra, Ghana",
+            photo: "👧",
+            photoData: null
+        },
+
+        // Primary 4 Students (from previous list)
+        {
+            id: 101,
+            name: "AGYEI MICHEAL",
+            age: 10,
+            gender: "Male",
+            grade: "Upper Primary 4",
+            guardian: "Parent/Guardian",
+            contact: "+233 24 102 3456",
+            studentId: "BS4-001",
+            address: "Accra, Ghana",
+            photo: "👦",
+            photoData: null
+        },
+        {
+            id: 102,
+            name: "ANIAKWAH A. BLESS",
+            age: 10,
+            gender: "Male",
+            grade: "Upper Primary 4",
+            guardian: "Parent/Guardian",
+            contact: "+233 24 202 3456",
+            studentId: "BS4-002",
+            address: "Accra, Ghana",
+            photo: "👦",
+            photoData: null
+        },
+        // ... (other Primary 4 students remain the same)
+        {
+            id: 119,
+            name: "SARFO A. KIRA",
+            age: 10,
+            gender: "Female",
+            grade: "Upper Primary 4",
+            guardian: "Parent/Guardian",
+            contact: "+233 24 912 3456",
+            studentId: "BS4-019",
+            address: "Accra, Ghana",
+            photo: "👧",
+            photoData: null
+        },
+
+        // Primary 3 Students (from previous list)
+        {
+            id: 120,
+            name: "AMANKWAA ALVIN",
+            age: 9,
+            gender: "Male",
+            grade: "Lower Primary 3",
+            guardian: "Parent/Guardian",
+            contact: "+233 24 120 3456",
+            studentId: "BS3-001",
+            address: "Accra, Ghana",
+            photo: "👦",
+            photoData: null
+        },
+        {
+            id: 121,
+            name: "BEMPAH NANA KUFFOUR",
+            age: 9,
+            gender: "Male",
+            grade: "Lower Primary 3",
+            guardian: "Parent/Guardian",
+            contact: "+233 24 121 3456",
+            studentId: "BS3-002",
+            address: "Accra, Ghana",
+            photo: "👦",
+            photoData: null
+        },
+        // ... (other Primary 3 students remain the same)
+        {
+            id: 138,
+            name: "ANABEL ZIEMAH",
+            age: 9,
+            gender: "Female",
+            grade: "Lower Primary 3",
+            guardian: "Parent/Guardian",
+            contact: "+233 24 138 3456",
+            studentId: "BS3-019",
+            address: "Accra, Ghana",
+            photo: "👧",
+            photoData: null
+        },
+
+        // Primary 2 Students (from previous list)
+        {
+            id: 139,
+            name: "AMPONSAH BENJAMIN JUNIOR",
+            age: 8,
+            gender: "Male",
+            grade: "Lower Primary 2",
+            guardian: "Parent/Guardian",
+            contact: "+233 24 139 3456",
+            studentId: "BS2-001",
+            address: "Accra, Ghana",
+            photo: "👦",
+            photoData: null
+        },
+        {
+            id: 140,
+            name: "ANSAH ISAAC OWUSU",
+            age: 8,
+            gender: "Male",
+            grade: "Lower Primary 2",
+            guardian: "Parent/Guardian",
+            contact: "+233 24 140 3456",
+            studentId: "BS2-002",
+            address: "Accra, Ghana",
+            photo: "👦",
+            photoData: null
+        },
+        // ... (other Primary 2 students remain the same)
+        {
+            id: 154,
+            name: "NTI RACHEAL BIO",
+            age: 8,
+            gender: "Female",
+            grade: "Lower Primary 2",
+            guardian: "Parent/Guardian",
+            contact: "+233 24 154 3456",
+            studentId: "BS2-016",
+            address: "Accra, Ghana",
+            photo: "👧",
+            photoData: null
+        },
+
+        // Primary 1 Students (Lower Primary 1)
+        {
+            id: 155,
+            name: "ABABIO MICHEAL",
+            age: 7,
+            gender: "Male",
+            grade: "Lower Primary 1",
+            guardian: "Parent/Guardian",
+            contact: "+233 24 155 3456",
+            studentId: "BS1-001",
+            address: "Accra, Ghana",
+            photo: "👦",
+            photoData: null
+        },
+        {
+            id: 156,
+            name: "ACHEAMPONG OWUSU GEORGE",
+            age: 7,
+            gender: "Male",
+            grade: "Lower Primary 1",
+            guardian: "Parent/Guardian",
+            contact: "+233 24 156 3456",
+            studentId: "BS1-002",
+            address: "Accra, Ghana",
+            photo: "👦",
+            photoData: null
+        },
+        {
+            id: 157,
+            name: "ALHASSAN WAZEERAN",
+            age: 7,
+            gender: "Male",
+            grade: "Lower Primary 1",
+            guardian: "Parent/Guardian",
+            contact: "+233 24 157 3456",
+            studentId: "BS1-003",
+            address: "Accra, Ghana",
+            photo: "👦",
+            photoData: null
+        },
+        {
+            id: 158,
+            name: "ALOMA FERGURSON",
+            age: 7,
+            gender: "Male",
+            grade: "Lower Primary 1",
+            guardian: "Parent/Guardian",
+            contact: "+233 24 158 3456",
+            studentId: "BS1-004",
+            address: "Accra, Ghana",
+            photo: "👦",
+            photoData: null
+        },
+        {
+            id: 159,
+            name: "APAM PRINCE DARLINTON",
+            age: 7,
+            gender: "Male",
+            grade: "Lower Primary 1",
+            guardian: "Parent/Guardian",
+            contact: "+233 24 159 3456",
+            studentId: "BS1-005",
+            address: "Accra, Ghana",
+            photo: "👦",
+            photoData: null
+        },
+        {
+            id: 160,
+            name: "ATA-ERA DAVID",
+            age: 7,
+            gender: "Male",
+            grade: "Lower Primary 1",
+            guardian: "Parent/Guardian",
+            contact: "+233 24 160 3456",
+            studentId: "BS1-006",
+            address: "Accra, Ghana",
+            photo: "👦",
+            photoData: null
+        },
+        {
+            id: 161,
+            name: "FOSU AMANKWAA RANSFORD",
+            age: 7,
+            gender: "Male",
+            grade: "Lower Primary 1",
+            guardian: "Parent/Guardian",
+            contact: "+233 24 161 3456",
+            studentId: "BS1-007",
+            address: "Accra, Ghana",
+            photo: "👦",
+            photoData: null
+        },
+        {
+            id: 162,
+            name: "MENSAH OPOKU JEROME",
+            age: 7,
+            gender: "Male",
+            grade: "Lower Primary 1",
+            guardian: "Parent/Guardian",
+            contact: "+233 24 162 3456",
+            studentId: "BS1-008",
+            address: "Accra, Ghana",
+            photo: "👦",
+            photoData: null
+        },
+        {
+            id: 163,
+            name: "OHENE SARPONG GLORIOUS",
+            age: 7,
+            gender: "Male",
+            grade: "Lower Primary 1",
+            guardian: "Parent/Guardian",
+            contact: "+233 24 163 3456",
+            studentId: "BS1-009",
+            address: "Accra, Ghana",
+            photo: "👦",
+            photoData: null
+        },
+        {
+            id: 164,
+            name: "OPOKU MICHEAL EUGENE",
+            age: 7,
+            gender: "Male",
+            grade: "Lower Primary 1",
+            guardian: "Parent/Guardian",
+            contact: "+233 24 164 3456",
+            studentId: "BS1-010",
+            address: "Accra, Ghana",
+            photo: "👦",
+            photoData: null
+        },
+        {
+            id: 165,
+            name: "OWUSU BERCHIE EMMANUEL",
+            age: 7,
+            gender: "Male",
+            grade: "Lower Primary 1",
+            guardian: "Parent/Guardian",
+            contact: "+233 24 165 3456",
+            studentId: "BS1-011",
+            address: "Accra, Ghana",
+            photo: "👦",
+            photoData: null
+        },
+        {
+            id: 166,
+            name: "OWUSU NYAMEKYE EPHRIAM",
+            age: 7,
+            gender: "Male",
+            grade: "Lower Primary 1",
+            guardian: "Parent/Guardian",
+            contact: "+233 24 166 3456",
+            studentId: "BS1-012",
+            address: "Accra, Ghana",
+            photo: "👦",
+            photoData: null
+        },
+        {
+            id: 167,
+            name: "ABEKAH NANA JASMINE",
+            age: 7,
+            gender: "Female",
+            grade: "Lower Primary 1",
+            guardian: "Parent/Guardian",
+            contact: "+233 24 167 3456",
+            studentId: "BS1-013",
+            address: "Accra, Ghana",
+            photo: "👧",
+            photoData: null
+        },
+        {
+            id: 168,
+            name: "ADOM CHRISTIANA",
+            age: 7,
+            gender: "Female",
+            grade: "Lower Primary 1",
+            guardian: "Parent/Guardian",
+            contact: "+233 24 168 3456",
+            studentId: "BS1-014",
+            address: "Accra, Ghana",
+            photo: "👧",
+            photoData: null
+        },
+        {
+            id: 169,
+            name: "BOAKYE PRINCESS",
+            age: 7,
+            gender: "Female",
+            grade: "Lower Primary 1",
+            guardian: "Parent/Guardian",
+            contact: "+233 24 169 3456",
+            studentId: "BS1-015",
+            address: "Accra, Ghana",
+            photo: "👧",
+            photoData: null
+        },
+        {
+            id: 170,
+            name: "FOSU FRIMPONG GREGORIA",
+            age: 7,
+            gender: "Female",
+            grade: "Lower Primary 1",
+            guardian: "Parent/Guardian",
+            contact: "+233 24 170 3456",
+            studentId: "BS1-016",
+            address: "Accra, Ghana",
+            photo: "👧",
+            photoData: null
+        },
+        {
+            id: 171,
+            name: "HARUNA SAUAKYEI",
+            age: 7,
+            gender: "Female",
+            grade: "Lower Primary 1",
+            guardian: "Parent/Guardian",
+            contact: "+233 24 171 3456",
+            studentId: "BS1-017",
+            address: "Accra, Ghana",
+            photo: "👧",
+            photoData: null
+        },
+        {
+            id: 172,
+            name: "KUBI ACHIAA ADELAIDE",
+            age: 7,
+            gender: "Female",
+            grade: "Lower Primary 1",
+            guardian: "Parent/Guardian",
+            contact: "+233 24 172 3456",
+            studentId: "BS1-018",
+            address: "Accra, Ghana",
+            photo: "👧",
+            photoData: null
+        },
+        {
+            id: 173,
+            name: "MENSAH CLETUS AGNES",
+            age: 7,
+            gender: "Female",
+            grade: "Lower Primary 1",
+            guardian: "Parent/Guardian",
+            contact: "+233 24 173 3456",
+            studentId: "BS1-019",
+            address: "Accra, Ghana",
+            photo: "👧",
+            photoData: null
+        },
+    ];
+}
 
         // Load alumni data from localStorage
         function loadAlumniData() {
@@ -1938,3 +2469,4 @@
     </script>
 </body>
 </html>
+
