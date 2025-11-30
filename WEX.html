@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wexford Edu Hub - Premium Learning Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;700;800&display=swap');
 
         :root {
             --primary-green: #0B8F4A;
@@ -17,6 +18,12 @@
             --text-dark: #1E293B;
             --text-medium: #475569;
             --text-light: #94A3B8;
+            --gold: #FFD700;
+            --silver: #C0C0C0;
+            --bronze: #CD7F32;
+            --accent-purple: #8B5CF6;
+            --accent-blue: #3B82F6;
+            --accent-pink: #EC4899;
         }
 
         * {
@@ -29,9 +36,10 @@
             font-family: 'Poppins', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        /* Animated Background Particles */
+        /* Premium 3D Background */
         .bg-animation {
             position: fixed;
             top: 0;
@@ -110,9 +118,10 @@
             position: relative;
             box-shadow: 0 0 80px rgba(0, 0, 0, 0.4);
             z-index: 1;
+            overflow: hidden;
         }
 
-        /* Premium Header */
+        /* Premium Header with Glass Morphism */
         header {
             background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(20px);
@@ -238,7 +247,7 @@
             }
         }
 
-        /* Search Modal */
+        /* Enhanced Search Modal */
         .search-modal {
             display: none;
             position: fixed;
@@ -317,18 +326,34 @@
             font-family: 'Poppins', sans-serif;
         }
 
-        /* Stats Banner */
+        /* Enhanced Stats Banner */
         .stats-banner {
             background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
             padding: 1.5rem;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stats-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.1)"/></svg>');
+            background-size: cover;
+            pointer-events: none;
         }
 
         .stat-item {
             text-align: center;
             color: var(--white);
+            position: relative;
+            z-index: 1;
         }
 
         .stat-number {
@@ -336,6 +361,7 @@
             font-weight: 800;
             display: block;
             margin-bottom: 0.25rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
 
         .stat-label {
@@ -350,7 +376,7 @@
             background: var(--light-gray);
         }
 
-        /* School Gallery Slideshow */
+        /* Enhanced School Gallery Slideshow */
         .school-gallery {
             margin-bottom: 2rem;
             border-radius: 20px;
@@ -474,7 +500,7 @@
             right: 1rem;
         }
 
-        /* Welcome Banner with Slideshow */
+        /* Enhanced Welcome Banner with 3D Effects */
         .welcome-banner {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             padding: 2rem 1.5rem;
@@ -486,6 +512,7 @@
             box-shadow: 0 10px 40px rgba(102, 126, 234, 0.4);
             animation: scaleIn 0.6s ease-out;
             min-height: 200px;
+            perspective: 1000px;
         }
 
         @keyframes scaleIn {
@@ -532,6 +559,7 @@
             justify-content: center;
             background-size: cover;
             background-position: center;
+            transform-style: preserve-3d;
         }
 
         .banner-slide.active {
@@ -562,6 +590,7 @@
         .banner-content {
             position: relative;
             z-index: 2;
+            transform: translateZ(20px);
         }
 
         .banner-slide h2 {
@@ -589,7 +618,7 @@
             opacity: 0.9;
         }
 
-        /* Date/Time Display */
+        /* Enhanced Date/Time Display */
         .datetime-display {
             position: absolute;
             top: 1rem;
@@ -601,9 +630,10 @@
             font-size: 0.75rem;
             font-weight: 600;
             z-index: 10;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
-        /* Quick Actions */
+        /* Enhanced Quick Actions */
         .quick-actions {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -620,6 +650,20 @@
             border: 2px solid transparent;
             cursor: pointer;
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quick-action::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(11, 143, 74, 0.1) 0%, rgba(5, 168, 84, 0.1) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
         .quick-action:hover {
@@ -628,11 +672,17 @@
             border-color: var(--primary-green);
         }
 
+        .quick-action:hover::before {
+            opacity: 1;
+        }
+
         .quick-action-icon {
             font-size: 2rem;
             margin-bottom: 0.5rem;
             display: block;
             animation: bounce 2s ease infinite;
+            position: relative;
+            z-index: 1;
         }
 
         @keyframes bounce {
@@ -648,9 +698,11 @@
             font-size: 0.75rem;
             font-weight: 600;
             color: var(--text-dark);
+            position: relative;
+            z-index: 1;
         }
 
-        /* Grade Header */
+        /* Enhanced Grade Header */
         .grade-header {
             background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
             color: var(--white);
@@ -662,6 +714,7 @@
             box-shadow: 0 10px 40px rgba(11, 143, 74, 0.3);
             position: relative;
             overflow: hidden;
+            text-align: center;
         }
 
         .grade-header::before {
@@ -676,13 +729,25 @@
             animation: pulse 3s ease infinite;
         }
 
-        /* Progress Section */
+        /* Enhanced Progress Section */
         .progress-section {
             background: var(--white);
             padding: 1.5rem;
             border-radius: 16px;
             margin-bottom: 2rem;
             box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
         }
 
         .progress-header {
@@ -739,7 +804,7 @@
             }
         }
 
-        /* Achievement Badges */
+        /* Enhanced Achievement Badges */
         .achievements {
             display: flex;
             gap: 1rem;
@@ -751,6 +816,7 @@
         .achievement-badge {
             min-width: 70px;
             text-align: center;
+            position: relative;
         }
 
         .achievement-icon {
@@ -758,6 +824,7 @@
             display: block;
             margin-bottom: 0.25rem;
             transition: all 0.3s ease;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
         }
 
         .achievement-badge:hover .achievement-icon {
@@ -770,7 +837,7 @@
             font-weight: 600;
         }
 
-        /* Subject Sections */
+        /* Enhanced Subject Sections */
         .subject-section {
             background: var(--white);
             padding: 1.75rem;
@@ -779,11 +846,29 @@
             margin-bottom: 1.75rem;
             border: 1px solid var(--border-gray);
             transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .subject-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
+            transform: scaleY(0);
+            transition: transform 0.4s ease;
         }
 
         .subject-section:hover {
             transform: translateY(-8px);
             box-shadow: 0 16px 48px rgba(0, 0, 0, 0.12);
+        }
+
+        .subject-section:hover::before {
+            transform: scaleY(1);
         }
 
         .subject-header {
@@ -814,7 +899,7 @@
             font-weight: 700;
         }
 
-        /* Video Grid */
+        /* Enhanced Video Grid */
         .video-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -831,12 +916,29 @@
             color: inherit;
             cursor: pointer;
             transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .video-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(11, 143, 74, 0.1) 0%, rgba(5, 168, 84, 0.1) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
         .video-card:hover {
             transform: translateY(-8px) scale(1.02);
             box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
             border-color: var(--primary-green);
+        }
+
+        .video-card:hover::before {
+            opacity: 1;
         }
 
         .video-thumbnail {
@@ -846,6 +948,7 @@
             align-items: center;
             justify-content: center;
             position: relative;
+            overflow: hidden;
         }
 
         .video-thumbnail::after {
@@ -871,6 +974,8 @@
 
         .video-info {
             padding: 1rem;
+            position: relative;
+            z-index: 1;
         }
 
         .video-title {
@@ -895,7 +1000,7 @@
             font-size: 1rem;
         }
 
-        /* Coming Soon Badge */
+        /* Enhanced Coming Soon Badge */
         .coming-soon {
             display: inline-flex;
             align-items: center;
@@ -908,9 +1013,10 @@
             font-weight: 700;
             margin: 1rem 0;
             box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+            animation: pulse 2s ease infinite;
         }
 
-        /* Side Menu */
+        /* Enhanced Side Menu */
         .menu-overlay {
             position: fixed;
             top: 0;
@@ -1009,6 +1115,20 @@
             font-weight: 600;
             transition: all 0.3s ease;
             border-left: 4px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-list li a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(11, 143, 74, 0.1) 0%, rgba(5, 168, 84, 0.1) 100%);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
         }
 
         .menu-list li a:hover {
@@ -1016,6 +1136,10 @@
             border-left-color: var(--primary-green);
             color: var(--primary-green);
             padding-left: 2.5rem;
+        }
+
+        .menu-list li a:hover::before {
+            transform: translateX(0);
         }
 
         .menu-contact {
@@ -1037,7 +1161,7 @@
             line-height: 1.6;
         }
 
-        /* Bottom Navigation */
+        /* Enhanced Bottom Navigation */
         nav {
             position: fixed;
             bottom: 0;
@@ -1074,6 +1198,20 @@
             border-radius: 14px;
             transition: all 0.3s ease;
             font-family: 'Poppins', sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tab-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(11, 143, 74, 0.1) 0%, rgba(5, 168, 84, 0.1) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
         .tab-button svg {
@@ -1086,6 +1224,10 @@
             background: var(--primary-light);
         }
 
+        .tab-button.active::before {
+            opacity: 1;
+        }
+
         .tab-button.active svg {
             transform: scale(1.15);
         }
@@ -1095,7 +1237,7 @@
             background: var(--light-gray);
         }
 
-        /* Upload Form */
+        /* Enhanced Upload Form */
         .upload-form {
             display: flex;
             flex-direction: column;
@@ -1104,6 +1246,18 @@
             background: var(--white);
             border-radius: 20px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .upload-form::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
         }
 
         .upload-form input,
@@ -1138,6 +1292,20 @@
             transition: all 0.4s ease;
             box-shadow: 0 8px 24px rgba(11, 143, 74, 0.3);
             font-family: 'Poppins', sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .upload-form button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
         .upload-form button:hover {
@@ -1145,7 +1313,11 @@
             box-shadow: 0 16px 40px rgba(11, 143, 74, 0.4);
         }
 
-        /* Footer */
+        .upload-form button:hover::before {
+            opacity: 1;
+        }
+
+        /* Enhanced Footer */
         footer {
             padding: 2rem 1.5rem;
             text-align: center;
@@ -1154,6 +1326,18 @@
             background: var(--white);
             border-top: 1px solid var(--border-gray);
             font-weight: 600;
+            position: relative;
+            overflow: hidden;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
         }
 
         /* Content Visibility */
@@ -1177,6 +1361,226 @@
                 opacity: 1;
                 transform: translateY(0);
             }
+        }
+
+        /* New Features: Interactive Quiz Cards */
+        .quiz-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quiz-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(11, 143, 74, 0.05) 0%, rgba(5, 168, 84, 0.05) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .quiz-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+            border-color: var(--primary-green);
+        }
+
+        .quiz-card:hover::before {
+            opacity: 1;
+        }
+
+        .quiz-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .quiz-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.875rem;
+            color: var(--text-light);
+        }
+
+        /* New Features: Student Leaderboard */
+        .leaderboard {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+        }
+
+        .leaderboard-header {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .leaderboard-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-gray);
+            transition: all 0.3s ease;
+        }
+
+        .leaderboard-item:last-child {
+            border-bottom: none;
+        }
+
+        .leaderboard-item:hover {
+            background: var(--primary-light);
+            border-radius: 8px;
+        }
+
+        .leaderboard-rank {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-right: 1rem;
+        }
+
+        .rank-1 {
+            background: var(--gold);
+            color: var(--text-dark);
+        }
+
+        .rank-2 {
+            background: var(--silver);
+            color: var(--text-dark);
+        }
+
+        .rank-3 {
+            background: var(--bronze);
+            color: var(--text-dark);
+        }
+
+        .rank-other {
+            background: var(--light-gray);
+            color: var(--text-medium);
+        }
+
+        .leaderboard-name {
+            flex: 1;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .leaderboard-score {
+            font-weight: 700;
+            color: var(--primary-green);
+        }
+
+        /* New Features: Interactive Calendar */
+        .calendar-widget {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .calendar-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .calendar-nav {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .calendar-nav button {
+            background: var(--primary-light);
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .calendar-nav button:hover {
+            background: var(--primary-green);
+            color: var(--white);
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.5rem;
+        }
+
+        .calendar-day {
+            text-align: center;
+            padding: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-light);
+        }
+
+        .calendar-date {
+            text-align: center;
+            padding: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .calendar-date:hover {
+            background: var(--primary-light);
+        }
+
+        .calendar-date.active {
+            background: var(--primary-green);
+            color: var(--white);
+        }
+
+        .calendar-date.event {
+            position: relative;
+        }
+
+        .calendar-date.event::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--primary-green);
         }
 
         /* Responsive */
@@ -1862,19 +2266,61 @@
                     </p>
                     
                     <div style="display: grid; gap: 1rem;">
-                        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 1.5rem; border-radius: 16px; color: white; cursor: pointer; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
-                            <h4 style="font-size: 1.1rem; margin-bottom: 0.5rem; font-weight: 700;">📐 Mathematics Quiz</h4>
-                            <p style="font-size: 0.875rem; opacity: 0.95;">20 Questions • 30 Minutes</p>
+                        <div class="quiz-card" onclick="startQuiz('math')">
+                            <h4 class="quiz-title">📐 Mathematics Quiz</h4>
+                            <div class="quiz-meta">
+                                <span>20 Questions</span>
+                                <span>30 Minutes</span>
+                            </div>
                         </div>
                         
-                        <div style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); padding: 1.5rem; border-radius: 16px; color: white; cursor: pointer; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
-                            <h4 style="font-size: 1.1rem; margin-bottom: 0.5rem; font-weight: 700;">📖 English Quiz</h4>
-                            <p style="font-size: 0.875rem; opacity: 0.95;">15 Questions • 25 Minutes</p>
+                        <div class="quiz-card" onclick="startQuiz('english')">
+                            <h4 class="quiz-title">📖 English Quiz</h4>
+                            <div class="quiz-meta">
+                                <span>15 Questions</span>
+                                <span>25 Minutes</span>
+                            </div>
                         </div>
                         
-                        <div style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%); padding: 1.5rem; border-radius: 16px; color: white; cursor: pointer; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
-                            <h4 style="font-size: 1.1rem; margin-bottom: 0.5rem; font-weight: 700;">🔬 Science Quiz</h4>
-                            <p style="font-size: 0.875rem; opacity: 0.95;">18 Questions • 28 Minutes</p>
+                        <div class="quiz-card" onclick="startQuiz('science')">
+                            <h4 class="quiz-title">🔬 Science Quiz</h4>
+                            <div class="quiz-meta">
+                                <span>18 Questions</span>
+                                <span>28 Minutes</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Student Leaderboard -->
+                <section class="subject-section">
+                    <h3 class="subject-header">🏆 Student Leaderboard</h3>
+                    <div class="leaderboard">
+                        <div class="leaderboard-header">Top Performers This Week</div>
+                        <div class="leaderboard-item">
+                            <div class="leaderboard-rank rank-1">1</div>
+                            <div class="leaderboard-name">Kwame Mensah</div>
+                            <div class="leaderboard-score">98%</div>
+                        </div>
+                        <div class="leaderboard-item">
+                            <div class="leaderboard-rank rank-2">2</div>
+                            <div class="leaderboard-name">Ama Osei</div>
+                            <div class="leaderboard-score">95%</div>
+                        </div>
+                        <div class="leaderboard-item">
+                            <div class="leaderboard-rank rank-3">3</div>
+                            <div class="leaderboard-name">Kofi Asante</div>
+                            <div class="leaderboard-score">92%</div>
+                        </div>
+                        <div class="leaderboard-item">
+                            <div class="leaderboard-rank rank-other">4</div>
+                            <div class="leaderboard-name">Esi Boateng</div>
+                            <div class="leaderboard-score">89%</div>
+                        </div>
+                        <div class="leaderboard-item">
+                            <div class="leaderboard-rank rank-other">5</div>
+                            <div class="leaderboard-name">Yaw Appiah</div>
+                            <div class="leaderboard-score">87%</div>
                         </div>
                     </div>
                 </section>
@@ -2204,6 +2650,11 @@
                 event.target.reset();
                 alert('🎉 Video uploaded successfully!\n\nIn production, this would save to the database.');
             }, 2000);
+        }
+
+        // Start Quiz Function
+        function startQuiz(subject) {
+            alert(`Starting ${subject} quiz!\n\nIn production, this would launch an interactive quiz interface with questions, timers, and scoring.`);
         }
 
         // Initialize
