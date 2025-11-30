@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wexford Admin Panel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
 
@@ -73,10 +74,23 @@
             border-radius: 15px;
             box-shadow: 0 5px 20px rgba(0,0,0,0.1);
             transition: transform 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
         }
 
         .stat-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
         }
 
         .stat-card h3 {
@@ -103,6 +117,18 @@
             padding: 30px;
             border-radius: 15px;
             box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
         }
 
         .panel h2 {
@@ -132,6 +158,7 @@
             border-radius: 8px;
             font-size: 14px;
             transition: border 0.3s;
+            font-family: 'Poppins', sans-serif;
         }
 
         input:focus,
@@ -139,6 +166,7 @@
         select:focus {
             outline: none;
             border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
 
         textarea {
@@ -154,6 +182,7 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
+            font-family: 'Poppins', sans-serif;
         }
 
         .btn-primary {
@@ -247,6 +276,11 @@
             background: #f8f9fa;
             margin-bottom: 15px;
             border-radius: 5px;
+            transition: transform 0.2s;
+        }
+
+        .announcement-item:hover {
+            transform: translateX(5px);
         }
 
         .announcement-date {
@@ -272,6 +306,11 @@
             background: #f8f9fa;
             border-radius: 8px;
             border-left: 4px solid #667eea;
+            transition: transform 0.2s;
+        }
+
+        .monitor-item:hover {
+            transform: translateY(-3px);
         }
 
         .monitor-label {
@@ -290,6 +329,18 @@
             padding: 15px;
             border-radius: 8px;
             margin-bottom: 20px;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
 
         .alert-success {
@@ -298,10 +349,149 @@
             border: 1px solid #c3e6cb;
         }
 
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
         .full-width {
             grid-column: 1 / -1;
         }
 
+        /* Login Screen Styles */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .login-box {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            width: 100%;
+            max-width: 400px;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-header h1 {
+            color: #667eea;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .login-header p {
+            color: #999;
+            font-size: 14px;
+        }
+
+        .login-form .form-group {
+            margin-bottom: 20px;
+        }
+
+        .login-form label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 600;
+        }
+
+        .login-form input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border 0.3s;
+        }
+
+        .login-form input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .login-error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+            font-size: 14px;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .login-btn:hover {
+            transform: scale(1.02);
+        }
+
+        .security-note {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e7f3ff;
+            border-left: 4px solid #667eea;
+            border-radius: 5px;
+            font-size: 12px;
+            color: #555;
+        }
+
+        /* Priority Badges */
+        .priority-badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .priority-normal {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .priority-important {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .priority-urgent {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Responsive Design */
         @media (max-width: 768px) {
             .main-content {
                 grid-template-columns: 1fr;
@@ -310,11 +500,58 @@
             .dashboard {
                 grid-template-columns: 1fr;
             }
+            
+            .monitoring-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #764ba2;
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div id="loginScreen" class="login-container" style="display: none;">
+        <div class="login-box">
+            <div class="login-header">
+                <h1>🛡️ Admin Login</h1>
+                <p>Wexford Control Panel</p>
+            </div>
+            <div id="loginError" class="login-error"></div>
+            <form class="login-form" id="loginForm">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" id="username" required autocomplete="username">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="password" required autocomplete="current-password">
+                </div>
+                <button type="submit" class="login-btn">Login</button>
+            </form>
+            <div class="security-note">
+                🔒 This is a secure admin area. All access attempts are logged.
+            </div>
+        </div>
+    </div>
+
+    <div id="adminPanel" class="container" style="display: none;">
         <header>
             <h1>🛡️ Admin Control Panel</h1>
             <div class="admin-info">
@@ -323,6 +560,7 @@
                     <div style="font-weight: 600;">Admin User</div>
                     <div style="font-size: 12px; color: #999;">Super Administrator</div>
                 </div>
+                <button id="logoutBtn" class="btn btn-danger" style="margin-left: 15px;">🚪 Logout</button>
             </div>
         </header>
 
@@ -417,6 +655,17 @@
     </div>
 
     <script>
+        // Authentication Configuration
+        const ADMIN_CREDENTIALS = {
+            username: 'admin',
+            password: 'WexfordAdmin2025' // Change this to your secure password
+        };
+
+        // Session Management
+        let isAuthenticated = false;
+        let sessionTimeout = null;
+        const SESSION_DURATION = 30 * 60 * 1000; // 30 minutes
+
         // Data Storage
         let members = [
             { id: 1, name: 'John Doe', email: 'john@example.com', status: 'active' },
@@ -428,12 +677,96 @@
 
         let announcements = [];
 
-        // Initialize
+        // Check authentication on page load
+        function checkAuth() {
+            const authToken = localStorage.getItem('adminAuth');
+            const authTime = localStorage.getItem('authTime');
+            
+            if (authToken === 'authenticated' && authTime) {
+                const elapsed = Date.now() - parseInt(authTime);
+                if (elapsed < SESSION_DURATION) {
+                    isAuthenticated = true;
+                    showAdminPanel();
+                    startSessionTimeout();
+                    return;
+                } else {
+                    localStorage.removeItem('adminAuth');
+                    localStorage.removeItem('authTime');
+                }
+            }
+            
+            showLoginScreen();
+        }
+
+        // Show Login Screen
+        function showLoginScreen() {
+            document.getElementById('loginScreen').style.display = 'flex';
+            document.getElementById('adminPanel').style.display = 'none';
+        }
+
+        // Show Admin Panel
+        function showAdminPanel() {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('adminPanel').style.display = 'block';
+            init();
+        }
+
+        // Handle Login
+        function handleLogin(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorDiv = document.getElementById('loginError');
+            
+            if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
+                isAuthenticated = true;
+                localStorage.setItem('adminAuth', 'authenticated');
+                localStorage.setItem('authTime', Date.now().toString());
+                showAdminPanel();
+                startSessionTimeout();
+            } else {
+                errorDiv.textContent = '❌ Invalid username or password. Access denied.';
+                errorDiv.style.display = 'block';
+                document.getElementById('password').value = '';
+                
+                setTimeout(() => {
+                    errorDiv.style.display = 'none';
+                }, 3000);
+            }
+        }
+
+        // Start Session Timeout
+        function startSessionTimeout() {
+            clearTimeout(sessionTimeout);
+            sessionTimeout = setTimeout(() => {
+                logout();
+            }, SESSION_DURATION);
+        }
+
+        // Logout Function
+        function logout() {
+            isAuthenticated = false;
+            localStorage.removeItem('adminAuth');
+            localStorage.removeItem('authTime');
+            clearTimeout(sessionTimeout);
+            showLoginScreen();
+        }
+
+        // Initialize Admin Panel
         function init() {
             updateStats();
             renderMembers();
             renderAnnouncements();
             simulateMonitoring();
+            
+            // Load announcements from localStorage if available
+            const savedAnnouncements = localStorage.getItem('wexfordAnnouncements');
+            if (savedAnnouncements) {
+                announcements = JSON.parse(savedAnnouncements);
+                updateStats();
+                renderAnnouncements();
+            }
         }
 
         // Update Statistics
@@ -520,6 +853,9 @@
             
             announcements.unshift(announcement);
             
+            // Save to localStorage for persistence
+            localStorage.setItem('wexfordAnnouncements', JSON.stringify(announcements));
+            
             // Show success alert
             const alert = document.getElementById('announcementAlert');
             alert.innerHTML = '<div class="alert alert-success">✓ Announcement posted successfully!</div>';
@@ -537,7 +873,10 @@
             const list = document.getElementById('announcementsList');
             list.innerHTML = announcements.slice(0, 5).map(ann => `
                 <div class="announcement-item">
-                    <div class="announcement-date">${ann.date} • ${ann.priority.toUpperCase()}</div>
+                    <div class="announcement-date">
+                        ${ann.date} 
+                        <span class="priority-badge priority-${ann.priority}">${ann.priority}</span>
+                    </div>
                     <div style="font-weight: 600; margin-bottom: 5px;">${ann.title}</div>
                     <div class="announcement-text">${ann.message}</div>
                     <button class="btn btn-danger" onclick="deleteAnnouncement(${ann.id})" 
@@ -549,6 +888,7 @@
         // Delete Announcement
         function deleteAnnouncement(id) {
             announcements = announcements.filter(a => a.id !== id);
+            localStorage.setItem('wexfordAnnouncements', JSON.stringify(announcements));
             updateStats();
             renderAnnouncements();
         }
@@ -572,216 +912,12 @@
             setInterval(updateValues, 5000);
         }
 
+        // Event Listeners
+        document.getElementById('loginForm').addEventListener('submit', handleLogin);
+        document.getElementById('logoutBtn').addEventListener('click', logout);
+
         // Initialize on load
-        init();
-      <script>
-        // Authentication Configuration
-        const ADMIN_CREDENTIALS = {
-            username: 'admin',
-            password: 'WexfordAdmin2025' // Change this to your secure password
-        };
-
-        // Session Management
-        let isAuthenticated = false;
-        let sessionTimeout = null;
-        const SESSION_DURATION = 30 * 60 * 1000; // 30 minutes
-
-        // Check authentication on page load
-        function checkAuth() {
-            const authToken = sessionStorage.getItem('adminAuth');
-            const authTime = sessionStorage.getItem('authTime');
-            
-            if (authToken === 'authenticated' && authTime) {
-                const elapsed = Date.now() - parseInt(authTime);
-                if (elapsed < SESSION_DURATION) {
-                    isAuthenticated = true;
-                    showAdminPanel();
-                    startSessionTimeout();
-                    return;
-                }
-            }
-            
-            showLoginScreen();
-        }
-
-        // Show Login Screen
-        function showLoginScreen() {
-            document.body.innerHTML = `
-                <style>
-                    .login-container {
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        min-height: 100vh;
-                        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                    }
-                    .login-box {
-                        background: white;
-                        padding: 40px;
-                        border-radius: 20px;
-                        box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-                        width: 100%;
-                        max-width: 400px;
-                    }
-                    .login-header {
-                        text-align: center;
-                        margin-bottom: 30px;
-                    }
-                    .login-header h1 {
-                        color: #667eea;
-                        font-size: 32px;
-                        margin-bottom: 10px;
-                    }
-                    .login-header p {
-                        color: #999;
-                        font-size: 14px;
-                    }
-                    .login-form .form-group {
-                        margin-bottom: 20px;
-                    }
-                    .login-form label {
-                        display: block;
-                        margin-bottom: 8px;
-                        color: #555;
-                        font-weight: 600;
-                    }
-                    .login-form input {
-                        width: 100%;
-                        padding: 12px;
-                        border: 2px solid #e0e0e0;
-                        border-radius: 8px;
-                        font-size: 14px;
-                        transition: border 0.3s;
-                    }
-                    .login-form input:focus {
-                        outline: none;
-                        border-color: #667eea;
-                    }
-                    .login-error {
-                        background: #f8d7da;
-                        color: #721c24;
-                        padding: 12px;
-                        border-radius: 8px;
-                        margin-bottom: 20px;
-                        display: none;
-                        font-size: 14px;
-                    }
-                    .login-btn {
-                        width: 100%;
-                        padding: 14px;
-                        background: linear-gradient(135deg, #667eea, #764ba2);
-                        color: white;
-                        border: none;
-                        border-radius: 8px;
-                        font-size: 16px;
-                        font-weight: 600;
-                        cursor: pointer;
-                        transition: transform 0.3s;
-                    }
-                    .login-btn:hover {
-                        transform: scale(1.02);
-                    }
-                    .security-note {
-                        margin-top: 20px;
-                        padding: 15px;
-                        background: #e7f3ff;
-                        border-left: 4px solid #667eea;
-                        border-radius: 5px;
-                        font-size: 12px;
-                        color: #555;
-                    }
-                </style>
-                <div class="login-container">
-                    <div class="login-box">
-                        <div class="login-header">
-                            <h1>🛡️ Admin Login</h1>
-                            <p>Wexford Control Panel</p>
-                        </div>
-                        <div id="loginError" class="login-error"></div>
-                        <form class="login-form" id="loginForm">
-                            <div class="form-group">
-                                <label>Username</label>
-                                <input type="text" id="username" required autocomplete="username">
-                            </div>
-                            <div class="form-group">
-                                <label>Password</label>
-                                <input type="password" id="password" required autocomplete="current-password">
-                            </div>
-                            <button type="submit" class="login-btn">Login</button>
-                        </form>
-                        <div class="security-note">
-                            🔒 This is a secure admin area. All access attempts are logged.
-                        </div>
-                    </div>
-                </div>
-            `;
-
-            document.getElementById('loginForm').addEventListener('submit', handleLogin);
-        }
-
-        // Handle Login
-        function handleLogin(e) {
-            e.preventDefault();
-            
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            const errorDiv = document.getElementById('loginError');
-            
-            if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
-                isAuthenticated = true;
-                sessionStorage.setItem('adminAuth', 'authenticated');
-                sessionStorage.setItem('authTime', Date.now().toString());
-                location.reload();
-            } else {
-                errorDiv.textContent = '❌ Invalid username or password. Access denied.';
-                errorDiv.style.display = 'block';
-                document.getElementById('password').value = '';
-                
-                setTimeout(() => {
-                    errorDiv.style.display = 'none';
-                }, 3000);
-            }
-        }
-
-        // Show Admin Panel
-        function showAdminPanel() {
-            // Original admin panel code will run here
-            init();
-        }
-
-        // Start Session Timeout
-        function startSessionTimeout() {
-            clearTimeout(sessionTimeout);
-            sessionTimeout = setTimeout(() => {
-                logout();
-            }, SESSION_DURATION);
-        }
-
-        // Logout Function
-        function logout() {
-            isAuthenticated = false;
-            sessionStorage.removeItem('adminAuth');
-            sessionStorage.removeItem('authTime');
-            clearTimeout(sessionTimeout);
-            location.reload();
-        }
-
-        // Add logout button to header (will be called after init)
-        function addLogoutButton() {
-            const header = document.querySelector('header');
-            const logoutBtn = document.createElement('button');
-            logoutBtn.className = 'btn btn-danger';
-            logoutBtn.textContent = '🚪 Logout';
-            logoutBtn.style.marginLeft = '15px';
-            logoutBtn.onclick = logout;
-            header.querySelector('.admin-info').appendChild(logoutBtn);
-        }
-
-        // Data Storage
-        let members = [
+        window.onload = checkAuth;
     </script>
-    
-      </script>
-  
 </body>
 </html>
