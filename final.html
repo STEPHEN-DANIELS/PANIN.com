@@ -4,12 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wexford Edu Hub - Premium Learning Platform</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Add manifest for PWA -->
-    <link rel="manifest" href="manifest.json">
+    <meta name="description" content="Wexford Edu Hub — World-class learning platform that works 100% offline">
+    
+    <!-- PWA Tags -->
     <meta name="theme-color" content="#0B8F4A">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Wexford Edu">
+    <link rel="apple-touch-icon" href="WEX LOGO.jpg">
+
+    <!-- Fonts & Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;700;800&display=swap');
 
@@ -29,6 +37,11 @@
             --accent-purple: #8B5CF6;
             --accent-blue: #3B82F6;
             --accent-pink: #EC4899;
+            --primary: #0B8F4A;
+            --accent: #FFD700;
+            --text: #1F2937;
+            --radius: 1.75rem;
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         * {
@@ -42,6 +55,41 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             overflow-x: hidden;
+        }
+
+        /* Floating Particles from Third Code */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(11, 143, 74, 0.08);
+            border-radius: 50%;
+            animation: float 25s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
         }
 
         /* Offline Status Indicator */
@@ -73,65 +121,6 @@
             overflow: hidden;
             z-index: 0;
             pointer-events: none;
-        }
-
-        .particle {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 50%;
-            animation: float 20s infinite ease-in-out;
-        }
-
-        .particle:nth-child(1) {
-            width: 80px;
-            height: 80px;
-            left: 10%;
-            animation-delay: 0s;
-        }
-
-        .particle:nth-child(2) {
-            width: 60px;
-            height: 60px;
-            left: 30%;
-            animation-delay: 2s;
-        }
-
-        .particle:nth-child(3) {
-            width: 100px;
-            height: 100px;
-            left: 50%;
-            animation-delay: 4s;
-        }
-
-        .particle:nth-child(4) {
-            width: 70px;
-            height: 70px;
-            left: 70%;
-            animation-delay: 6s;
-        }
-
-        .particle:nth-child(5) {
-            width: 90px;
-            height: 90px;
-            left: 85%;
-            animation-delay: 8s;
-        }
-
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(100vh) rotate(0deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 0.5;
-            }
-            90% {
-                opacity: 0.5;
-            }
-            100% {
-                transform: translateY(-100vh) rotate(360deg);
-                opacity: 0;
-            }
         }
 
         .app-container {
@@ -1513,101 +1502,7 @@
             color: var(--primary-green);
         }
 
-        /* New Features: Interactive Calendar */
-        .calendar-widget {
-            background: var(--white);
-            border-radius: 16px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
-        }
-
-        .calendar-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .calendar-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--text-dark);
-        }
-
-        .calendar-nav {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .calendar-nav button {
-            background: var(--primary-light);
-            border: none;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .calendar-nav button:hover {
-            background: var(--primary-green);
-            color: var(--white);
-        }
-
-        .calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 0.5rem;
-        }
-
-        .calendar-day {
-            text-align: center;
-            padding: 0.5rem;
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: var(--text-light);
-        }
-
-        .calendar-date {
-            text-align: center;
-            padding: 0.5rem;
-            font-size: 0.875rem;
-            font-weight: 600;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .calendar-date:hover {
-            background: var(--primary-light);
-        }
-
-        .calendar-date.active {
-            background: var(--primary-green);
-            color: var(--white);
-        }
-
-        .calendar-date.event {
-            position: relative;
-        }
-
-        .calendar-date.event::after {
-            content: '';
-            position: absolute;
-            bottom: 2px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 4px;
-            height: 4px;
-            border-radius: 50%;
-            background: var(--primary-green);
-        }
-
-        /* ====== ADMIN PANEL STYLES (ADDED FROM FIRST CODE) ====== */
+        /* ====== ADMIN PANEL STYLES ====== */
         .admin-panel {
             display: none;
             padding: 1.5rem 1.25rem 120px;
@@ -1742,6 +1637,48 @@
         }
         /* End Admin Panel Styles */
 
+        /* PWA Install Button */
+        #install-btn {
+            position: fixed;
+            bottom: 90px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary-green);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            border: none;
+            font-weight: 700;
+            box-shadow: 0 10px 30px rgba(11, 143, 74, 0.4);
+            z-index: 9999;
+            display: none;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #install-btn:hover {
+            transform: translateX(-50%) scale(1.05);
+            box-shadow: 0 15px 40px rgba(11, 143, 74, 0.6);
+        }
+
+        /* Offline Toast */
+        #offline-toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #dc2626;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            z-index: 9999;
+            display: none;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+        }
+
         /* Responsive */
         @media (max-width: 380px) {
             .video-grid {
@@ -1768,6 +1705,14 @@
     </style>
 </head>
 <body>
+    <!-- Floating Particles from Third Code -->
+    <div class="particles">
+        <div class="particle" style="width:90px;height:90px;left:10%;animation-delay:0s;"></div>
+        <div class="particle" style="width:70px;height:70px;left:35%;animation-delay:6s;"></div>
+        <div class="particle" style="width:110px;height:110px;left:70%;animation-delay:12s;"></div>
+        <div class="particle" style="width:80px;height:80px;left:85%;animation-delay:18s;"></div>
+    </div>
+
     <!-- Offline Status Indicator -->
     <div class="offline-status" id="offlineStatus">
         ⚠️ You are currently offline. Some features may be limited.
@@ -1934,7 +1879,7 @@
                     </div>
                     </div>
                 
-                    <! -- Gallery Slide 6 -->
+                    <!-- Gallery Slide 6 -->
                 <div class="gallery-slide" id="gallery-6">
                     <img src="Wor.jpg" alt="Sports Field">
                     <div class="gallery-overlay">
@@ -2569,7 +2514,7 @@
                 </form>
             </div>
 
-            <!-- NEW: ADMIN PANEL PAGE (ADDED FROM FIRST CODE) -->
+            <!-- NEW: ADMIN PANEL PAGE -->
             <div id="admin-panel" class="admin-panel">
                 <div class="admin-header">
                     <h1>Admin Dashboard</h1>
@@ -2694,7 +2639,45 @@
         </footer>
     </div>
 
+    <!-- Install Button (PWA) -->
+    <button id="install-btn">Install Wexford App</button>
+
+    <!-- Offline Toast -->
+    <div id="offline-toast">Offline Mode — Learning Never Stops!</div>
+
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 900,
+            easing: 'ease-out-cubic',
+            once: true
+        });
+
+        // === PWA INSTALL ===
+        let deferredPrompt;
+        const installBtn = document.getElementById('install-btn');
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installBtn.style.display = 'block';
+        });
+        installBtn.addEventListener('click', () => {
+            installBtn.style.display = 'none';
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
+        });
+
+        // === OFFLINE DETECTION ===
+        window.addEventListener('offline', () => {
+            document.getElementById('offline-toast').style.display = 'block';
+            setTimeout(() => document.getElementById('offline-toast').style.display = 'none', 6000);
+        });
+        window.addEventListener('online', () => {
+            document.getElementById('offline-toast').style.display = 'none';
+        });
+
         // Gallery Slideshow Variables
         let currentGallerySlide = 0;
         const totalGallerySlides = 19;
@@ -2952,15 +2935,26 @@
             setInterval(updateAnnouncementTimes, 60000);
         };
 
-        // Service Worker Registration for PWA
+        // Service Worker Registration for PWA (Embedded - No Extra File Needed)
         if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-                navigator.serviceWorker.register('/sw.js').then(function(registration) {
-                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
-                }, function(err) {
-                    console.log('ServiceWorker registration failed: ', err);
+            const swCode = `
+                const CACHE = 'wexford-v25';
+                const files = [
+                    '/', 'index.html',
+                    'WEX LOGO.jpg','Eva.jpg','bs2.jpg','BS6.jpg','Wor.jpg','quiz.jpg',
+                    'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;700;800;900&display=swap',
+                    'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
+                    'https://unpkg.com/aos@2.3.1/dist/aos.css',
+                    'https://unpkg.com/aos@2.3.1/dist/aos.js'
+                ];
+                self.addEventListener('install', e => e.waitUntil(caches.open(CACHE).then(c => c.addAll(files)).then(() => self.skipWaiting())));
+                self.addEventListener('fetch', e => {
+                    e.respondWith(caches.match(e.request).then(r => r || fetch(e.request).catch(() => caches.match('index.html'))));
                 });
-            });
+            `;
+            const blob = new Blob([swCode], {type: 'application/javascript'});
+            const url = URL.createObjectURL(blob);
+            navigator.serviceWorker.register(url);
         }
     </script>
 </body>
