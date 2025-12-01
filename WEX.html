@@ -4,7 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wexford Edu Hub - Premium Learning Platform</title>
+    <meta name="description" content="Wexford Edu Hub — World-class learning platform that works 100% offline">
+    
+    <!-- PWA Tags -->
+    <meta name="theme-color" content="#0B8F4A">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Wexford Edu">
+    <link rel="apple-touch-icon" href="WEX LOGO.jpg">
+
+    <!-- Fonts & Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;700;800&display=swap');
 
@@ -24,6 +37,11 @@
             --accent-purple: #8B5CF6;
             --accent-blue: #3B82F6;
             --accent-pink: #EC4899;
+            --primary: #0B8F4A;
+            --accent: #FFD700;
+            --text: #1F2937;
+            --radius: 1.75rem;
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         * {
@@ -39,6 +57,60 @@
             overflow-x: hidden;
         }
 
+        /* Floating Particles from Third Code */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(11, 143, 74, 0.08);
+            border-radius: 50%;
+            animation: float 25s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Offline Status Indicator */
+        .offline-status {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #ff6b6b;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            z-index: 1000;
+            font-weight: 600;
+            display: none;
+        }
+
+        .offline-status.online {
+            background: var(--primary-green);
+        }
+
         /* Premium 3D Background */
         .bg-animation {
             position: fixed;
@@ -49,65 +121,6 @@
             overflow: hidden;
             z-index: 0;
             pointer-events: none;
-        }
-
-        .particle {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 50%;
-            animation: float 20s infinite ease-in-out;
-        }
-
-        .particle:nth-child(1) {
-            width: 80px;
-            height: 80px;
-            left: 10%;
-            animation-delay: 0s;
-        }
-
-        .particle:nth-child(2) {
-            width: 60px;
-            height: 60px;
-            left: 30%;
-            animation-delay: 2s;
-        }
-
-        .particle:nth-child(3) {
-            width: 100px;
-            height: 100px;
-            left: 50%;
-            animation-delay: 4s;
-        }
-
-        .particle:nth-child(4) {
-            width: 70px;
-            height: 70px;
-            left: 70%;
-            animation-delay: 6s;
-        }
-
-        .particle:nth-child(5) {
-            width: 90px;
-            height: 90px;
-            left: 85%;
-            animation-delay: 8s;
-        }
-
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(100vh) rotate(0deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 0.5;
-            }
-            90% {
-                opacity: 0.5;
-            }
-            100% {
-                transform: translateY(-100vh) rotate(360deg);
-                opacity: 0;
-            }
         }
 
         .app-container {
@@ -1489,98 +1502,181 @@
             color: var(--primary-green);
         }
 
-        /* New Features: Interactive Calendar */
-        .calendar-widget {
-            background: var(--white);
-            border-radius: 16px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+        /* ====== ADMIN PANEL STYLES ====== */
+        .admin-panel {
+            display: none;
+            padding: 1.5rem 1.25rem 120px;
+            background: var(--light-gray);
         }
-
-        .calendar-header {
+        .admin-panel.active { display: block; animation: fadeInContent 0.5s ease-out; }
+        .admin-header {
+            text-align: center;
+            padding: 2rem 1rem;
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            border-radius: 20px;
+            color: white;
+            margin-bottom: 2rem;
+            box-shadow: 0 15px 40px rgba(30, 58, 138, 0.4);
+        }
+        .admin-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+        }
+        .admin-header p { opacity: 0.9; font-weight: 500; }
+        .admin-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.2rem;
+            margin: 2rem 0;
+        }
+        .admin-stat {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 18px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        .admin-stat:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary-green);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+        }
+        .admin-stat-value {
+            font-size: 2.4rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #0B8F4A, #05A854);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .admin-stat-label { font-size: 0.9rem; color: var(--text-medium); margin-top: 0.5rem; }
+        .admin-actions {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.2rem;
+            margin: 2rem 0;
+        }
+        .admin-action {
+            background: white;
+            padding: 1.8rem 1rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.07);
+            transition: all 0.35s ease;
+            cursor: pointer;
+        }
+        .admin-action:hover {
+            transform: translateY(-12px) scale(1.05);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.2);
+        }
+        .admin-action i {
+            font-size: 2.8rem;
+            margin-bottom: 0.8rem;
+            background: linear-gradient(135deg, #0B8F4A, #05A854);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .admin-action span {
+            display: block;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--text-dark);
+        }
+        .admin-section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.7rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin: 2.5rem 0 1.5rem;
+            padding-left: 1rem;
+            position: relative;
+        }
+        .admin-section-title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 7px;
+            height: 38px;
+            background: linear-gradient(135deg, #0B8F4A, #05A854);
+            border-radius: 4px;
+        }
+        .admin-report {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 18px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.07);
+            margin-bottom: 1.5rem;
+        }
+        .admin-report-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 1rem;
         }
-
-        .calendar-title {
+        .admin-report-title {
+            font-weight: 800;
             font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--text-dark);
         }
-
-        .calendar-nav {
-            display: flex;
-            gap: 0.5rem;
+        .admin-report-value {
+            font-weight: 800;
+            color: var(--primary-green);
+            font-size: 1.3rem;
         }
-
-        .calendar-nav button {
+        .admin-activity {
             background: var(--primary-light);
-            border: none;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            padding: 1rem;
+            border-radius: 14px;
+            margin: 0.5rem 0;
+            font-size: 0.9rem;
+            border-left: 4px solid var(--primary-green);
         }
+        /* End Admin Panel Styles */
 
-        .calendar-nav button:hover {
-            background: var(--primary-green);
-            color: var(--white);
-        }
-
-        .calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 0.5rem;
-        }
-
-        .calendar-day {
-            text-align: center;
-            padding: 0.5rem;
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: var(--text-light);
-        }
-
-        .calendar-date {
-            text-align: center;
-            padding: 0.5rem;
-            font-size: 0.875rem;
-            font-weight: 600;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .calendar-date:hover {
-            background: var(--primary-light);
-        }
-
-        .calendar-date.active {
-            background: var(--primary-green);
-            color: var(--white);
-        }
-
-        .calendar-date.event {
-            position: relative;
-        }
-
-        .calendar-date.event::after {
-            content: '';
-            position: absolute;
-            bottom: 2px;
+        /* PWA Install Button */
+        #install-btn {
+            position: fixed;
+            bottom: 90px;
             left: 50%;
             transform: translateX(-50%);
-            width: 4px;
-            height: 4px;
-            border-radius: 50%;
             background: var(--primary-green);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            border: none;
+            font-weight: 700;
+            box-shadow: 0 10px 30px rgba(11, 143, 74, 0.4);
+            z-index: 9999;
+            display: none;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #install-btn:hover {
+            transform: translateX(-50%) scale(1.05);
+            box-shadow: 0 15px 40px rgba(11, 143, 74, 0.6);
+        }
+
+        /* Offline Toast */
+        #offline-toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #dc2626;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            z-index: 9999;
+            display: none;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
         }
 
         /* Responsive */
@@ -1609,6 +1705,19 @@
     </style>
 </head>
 <body>
+    <!-- Floating Particles from Third Code -->
+    <div class="particles">
+        <div class="particle" style="width:90px;height:90px;left:10%;animation-delay:0s;"></div>
+        <div class="particle" style="width:70px;height:70px;left:35%;animation-delay:6s;"></div>
+        <div class="particle" style="width:110px;height:110px;left:70%;animation-delay:12s;"></div>
+        <div class="particle" style="width:80px;height:80px;left:85%;animation-delay:18s;"></div>
+    </div>
+
+    <!-- Offline Status Indicator -->
+    <div class="offline-status" id="offlineStatus">
+        ⚠️ You are currently offline. Some features may be limited.
+    </div>
+
     <!-- Animated Background -->
     <div class="bg-animation">
         <div class="particle"></div>
@@ -1671,7 +1780,7 @@
             </div>
         </div>
 
-        <!-- Side Menu -->
+        <!-- Side Menu - Updated with Admin Panel -->
         <div id="menu-overlay" class="menu-overlay" onclick="closeMenuOnOverlay(event)">
             <div class="side-menu">
                 <div class="menu-header">
@@ -1699,9 +1808,10 @@
                     <li><a href="#" onclick="showPage('about'); toggleMenu()">
                         ℹ️ About Us
                     </a></li>
-                        <li><a href="https://stephen-daniels.github.io/PANIN.com/admins.html" onclick="toggleMenu()">
-                         🛡️ Admin Panel
-                        </a></li>
+                    <!-- Updated Admin Panel Link -->
+                    <li><a href="#" onclick="showPage('admin-panel'); toggleMenu()">
+                        🛡️ Admin Panel
+                    </a></li>
                     <li><a href="https://www.ck12.org/c/arithmetic/add-whole-numbers/?by=ck12&difficulty=all#all&noback=true" onclick="toggleMenu()">
                         🔗 External Resources
                     </a></li>
@@ -1769,7 +1879,7 @@
                     </div>
                     </div>
                 
-                    <! -- Gallery Slide 6 -->
+                    <!-- Gallery Slide 6 -->
                 <div class="gallery-slide" id="gallery-6">
                     <img src="Wor.jpg" alt="Sports Field">
                     <div class="gallery-overlay">
@@ -2403,17 +2513,91 @@
                     <button type="submit">🚀 Submit Video Link</button>
                 </form>
             </div>
+
+            <!-- NEW: ADMIN PANEL PAGE -->
+            <div id="admin-panel" class="admin-panel">
+                <div class="admin-header">
+                    <h1>Admin Dashboard</h1>
+                    <p>Panin Sarfo • System Administrator</p>
+                </div>
+
+                <div class="admin-stats">
+                    <div class="admin-stat">
+                        <div class="admin-stat-value">512</div>
+                        <div class="admin-stat-label">Total Students</div>
+                    </div>
+                    <div class="admin-stat">
+                        <div class="admin-stat-value">48</div>
+                        <div class="admin-stat-label">Active Teachers</div>
+                    </div>
+                    <div class="admin-stat">
+                        <div class="admin-stat-value">1,284</div>
+                        <div class="admin-stat-label">Total Resources</div>
+                    </div>
+                    <div class="admin-stat">
+                        <div class="admin-stat-value">98.2%</div>
+                        <div class="admin-stat-label">System Uptime</div>
+                    </div>
+                </div>
+
+                <h2 class="admin-section-title">Control Center</h2>
+                <div class="admin-actions">
+                    <div class="admin-action" onclick="alert('Managing users...')">
+                        <i class="fas fa-users-cog"></i>
+                        <span>Manage Users</span>
+                    </div>
+                    <div class="admin-action" onclick="alert('Content approval queue opened')">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Approve Content</span>
+                    </div>
+                    <div class="admin-action" onclick="alert('Analytics dashboard loading...')">
+                        <i class="fas fa-chart-pie"></i>
+                        <span>Analytics</span>
+                    </div>
+                    <div class="admin-action" onclick="alert('Sending broadcast...')">
+                        <i class="fas fa-broadcast-tower"></i>
+                        <span>Broadcast Alert</span>
+                    </div>
+                    <div class="admin-action" onclick="alert('Backup in progress...')">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <span>Backup System</span>
+                    </div>
+                    <div class="admin-action" onclick="alert('Settings opened')">
+                        <i class="fas fa-cogs"></i>
+                        <span>System Settings</span>
+                    </div>
+                </div>
+
+                <h2 class="admin-section-title">System Reports</h2>
+                <div class="admin-report">
+                    <div class="admin-report-header">
+                        <div class="admin-report-title">Daily Active Users</div>
+                        <div class="admin-report-value">428</div>
+                    </div>
+                    <div style="height:8px; background:#e0e0e0; border-radius:4px; overflow:hidden;">
+                        <div style="width:88%; height:100%; background:linear-gradient(90deg,#0B8F4A,#05A854);"></div>
+                    </div>
+                </div>
+                <div class="admin-report">
+                    <div class="admin-report-header">
+                        <div class="admin-report-title">Storage Used</div>
+                        <div class="admin-report-value">42.8 GB</div>
+                    </div>
+                    <div style="height:8px; background:#e0e0e0; border-radius:4px; overflow:hidden;">
+                        <div style="width:71%; height:100%; background:linear-gradient(90deg,#f59e0b,#f97316);"></div>
+                    </div>
+                </div>
+
+                <h2 class="admin-section-title">Recent Activity</h2>
+                <div class="admin-activity">Teacher Stephen uploaded 5 new videos</div>
+                <div class="admin-activity">Parent portal login spike detected (+32%)</div>
+                <div class="admin-activity">System backup completed successfully</div>
+                <div class="admin-activity">New announcement posted by Admin</div>
+                <div class="admin-activity">12 pending content approvals</div>
+            </div>
+            <!-- End Admin Panel -->
         </main>
-   <!-- Footer -->
-        <footer>
-            <div style="margin-bottom: 0.5rem;">
-                <strong style="color: var(--primary-green);">Wexford Edu Hub</strong> - Empowering Education Through Technology
-            </div>
-            <div style="font-size: 0.75rem;">
-                © 2025 PANIN SARFO — Designed with ❤️ for excellence in education
-            </div>
-        </footer>
-    </div>
+
         <!-- Bottom Navigation -->
         <nav>
             <div class="nav-buttons">
@@ -2455,7 +2639,45 @@
         </footer>
     </div>
 
+    <!-- Install Button (PWA) -->
+    <button id="install-btn">Install Wexford App</button>
+
+    <!-- Offline Toast -->
+    <div id="offline-toast">Offline Mode — Learning Never Stops!</div>
+
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 900,
+            easing: 'ease-out-cubic',
+            once: true
+        });
+
+        // === PWA INSTALL ===
+        let deferredPrompt;
+        const installBtn = document.getElementById('install-btn');
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installBtn.style.display = 'block';
+        });
+        installBtn.addEventListener('click', () => {
+            installBtn.style.display = 'none';
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
+        });
+
+        // === OFFLINE DETECTION ===
+        window.addEventListener('offline', () => {
+            document.getElementById('offline-toast').style.display = 'block';
+            setTimeout(() => document.getElementById('offline-toast').style.display = 'none', 6000);
+        });
+        window.addEventListener('online', () => {
+            document.getElementById('offline-toast').style.display = 'none';
+        });
+
         // Gallery Slideshow Variables
         let currentGallerySlide = 0;
         const totalGallerySlides = 19;
@@ -2657,11 +2879,54 @@
             alert(`Starting ${subject} quiz!\n\nIn production, this would launch an interactive quiz interface with questions, timers, and scoring.`);
         }
 
+        // Offline Functionality
+        function updateOnlineStatus() {
+            const offlineStatus = document.getElementById('offlineStatus');
+            if (navigator.onLine) {
+                offlineStatus.textContent = '✅ You are back online!';
+                offlineStatus.className = 'offline-status online';
+                setTimeout(() => {
+                    offlineStatus.style.display = 'none';
+                }, 3000);
+            } else {
+                offlineStatus.textContent = '⚠️ You are currently offline. Some features may be limited.';
+                offlineStatus.className = 'offline-status';
+                offlineStatus.style.display = 'block';
+            }
+        }
+
+        // Cache important resources for offline use
+        function cacheResources() {
+            if ('caches' in window) {
+                caches.open('wexford-edu-v1').then(cache => {
+                    return cache.addAll([
+                        '/',
+                        'WEX LOGO.jpg',
+                        'Eva.jpg',
+                        'bs2.jpg',
+                        'BS6.jpg',
+                        'quiz.jpg',
+                        'Wor.jpg',
+                        'new.mp4',
+                        'multi-base.mp4'
+                    ]);
+                });
+            }
+        }
+
         // Initialize
         window.onload = () => {
             switchTab('lower-primary');
             updateDateTime();
             updateAnnouncementTimes();
+            updateOnlineStatus();
+            
+            // Set up event listeners for online/offline status
+            window.addEventListener('online', updateOnlineStatus);
+            window.addEventListener('offline', updateOnlineStatus);
+            
+            // Cache resources for offline use
+            cacheResources();
             
             // Update date/time every minute
             setInterval(updateDateTime, 60000);
@@ -2669,6 +2934,28 @@
             // Update announcement times every minute
             setInterval(updateAnnouncementTimes, 60000);
         };
+
+        // Service Worker Registration for PWA (Embedded - No Extra File Needed)
+        if ('serviceWorker' in navigator) {
+            const swCode = `
+                const CACHE = 'wexford-v25';
+                const files = [
+                    '/', 'index.html',
+                    'WEX LOGO.jpg','Eva.jpg','bs2.jpg','BS6.jpg','Wor.jpg','quiz.jpg',
+                    'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;700;800;900&display=swap',
+                    'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
+                    'https://unpkg.com/aos@2.3.1/dist/aos.css',
+                    'https://unpkg.com/aos@2.3.1/dist/aos.js'
+                ];
+                self.addEventListener('install', e => e.waitUntil(caches.open(CACHE).then(c => c.addAll(files)).then(() => self.skipWaiting())));
+                self.addEventListener('fetch', e => {
+                    e.respondWith(caches.match(e.request).then(r => r || fetch(e.request).catch(() => caches.match('index.html'))));
+                });
+            `;
+            const blob = new Blob([swCode], {type: 'application/javascript'});
+            const url = URL.createObjectURL(blob);
+            navigator.serviceWorker.register(url);
+        }
     </script>
 </body>
 </html>
