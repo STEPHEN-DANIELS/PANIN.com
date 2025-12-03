@@ -1,320 +1,228 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wexford Quiz Hub • Instant Feedback</title>
-    <meta name="description" content="50 GES-Aligned Questions for Basic 4-6 & JHS 1-3 • Works Offline">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #FF6B00;
-            --secondary: #003366;
-            --correct: #10b981;
-            --wrong: #ef4444;
-            --light: #f8fafc;
-            --gray: #e2e8f0;
-        }
-        * { margin:0; padding:0; box-sizing:border-box; }
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #FF6B00, #003366);
-            color: #1f2937;
-            min-height: 100vh;
-            padding: 1rem;
-        }
-        .container {
-            max-width: 500px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 2rem;
-            overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
-        }
-        header {
-            background: var(--primary);
-            color: white;
-            text-align: center;
-            padding: 2rem 1rem;
-            position: relative;
-        }
-        header h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-        }
-        .score {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            background: rgba(255,255,255,0.2);
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
-            font-weight: bold;
-        }
-        .quiz-body {
-            padding: 2rem;
-        }
-        .question-card {
-            background: var(--light);
-            border-radius: 1.5rem;
-            padding: 1.8rem;
-            margin-bottom: 1.5rem;
-            border: 1px solid var(--gray);
-        }
-        .question {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            line-height: 1.5;
-        }
-        .options {
-            display: grid;
-            gap: 0.9rem;
-        }
-        .option {
-            padding: 1rem;
-            background: white;
-            border-radius: 1rem;
-            border: 2px solid transparent;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .option:hover {
-            border-color: var(--primary);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(255, 107, 0, 0.2);
-        }
-        .option.correct {
-            background: #d1fae5;
-            border-color: var(--correct);
-            color: var(--correct);
-        }
-        .option.wrong {
-            background: #fee2e2;
-            border-color: var(--wrong);
-            color: var(--wrong);
-        }
-        .feedback {
-            margin-top: 1rem;
-            padding: 1rem;
-            border-radius: 1rem;
-            font-weight: 600;
-            display: none;
-        }
-        .feedback.correct { 
-            background: #ecfdf5; 
-            color: var(--correct); 
-            display: block; 
-        }
-        .feedback.wrong { 
-            background: #fef2f2; 
-            color: var(--wrong); 
-            display: block; 
-        }
-        .next-btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 1rem;
-            font-weight: bold;
-            transition: all 0.3s;
-        }
-        .next-btn:hover {
-            background: #e05e00;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(255, 107, 0, 0.3);
-        }
-        .result {
-            text-align: center;
-            padding: 3rem 1rem;
-            display: none;
-        }
-        .result h2 {
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
-        }
-        footer {
-            background: var(--secondary);
-            color: white;
-            text-align: center;
-            padding: 1.5rem;
-            font-size: 0.9rem;
-        }
-        .subject-badge {
-            display: inline-block;
-            background: var(--secondary);
-            color: white;
-            padding: 0.3rem 0.8rem;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            margin-bottom: 0.5rem;
-        }
-        @media (max-width: 480px) {
-            .container { border-radius: 1.5rem; }
-            header h1 { font-size: 1.7rem; }
-            .quiz-body { padding: 1.5rem; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="page-title">Wexford Quiz Hub</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #ff8c00, #003366);
+        padding: 20px;
+        color: white;
+    }
+    .container {
+        max-width: 600px;
+        margin: auto;
+        background: white;
+        padding: 25px;
+        border-radius: 20px;
+        color: black;
+        box-shadow: 0 12px 50px rgba(0,0,0,0.3);
+    }
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 26px;
+    }
+    .btn {
+        display: block;
+        width: 100%;
+        background: #ff8c00;
+        color: white;
+        padding: 15px;
+        text-align: center;
+        margin: 10px 0;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 18px;
+        font-weight: bold;
+        border: none;
+    }
+    .btn:hover {
+        background: #cc7000;
+    }
+    .class-box {
+        display: grid;
+        gap: 10px;
+    }
+</style>
 </head>
+
 <body>
 
-<div class="container">
-    <header>
-        <div class="score">Score: <span id="score">0</span>/50</div>
-        <h1>Wexford Quiz Hub</h1>
-        <p>Basic 4–6 & JHS 1–3 • Instant Feedback</p>
-    </header>
+<div id="main-screen" class="container">
+    <h2>🎓 Wexford Student Portal</h2>
 
-    <div class="quiz-body" id="quiz">
-        <!-- Questions will be injected here by JavaScript -->
+    <label>Your Name:</label>
+    <input type="text" id="student-name" class="btn" style="background:white;color:black;border:1px solid #ddd">
+
+    <h3>Select Your Class</h3>
+    <div class="class-box">
+        <button class="btn" onclick="startQuiz('Basic 4')">Basic 4</button>
+        <button class="btn" onclick="startQuiz('Basic 5')">Basic 5</button>
+        <button class="btn" onclick="startQuiz('Basic 6')">Basic 6</button>
+        <button class="btn" onclick="startQuiz('JHS 1')">JHS 1</button>
+        <button class="btn" onclick="startQuiz('JHS 2')">JHS 2</button>
+        <button class="btn" onclick="startQuiz('JHS 3')">JHS 3</button>
     </div>
 
-    <div class="result" id="result">
-        <h2>Congratulations!</h2>
-        <p>Your final score is <strong id="final-score">0</strong>/50</p>
-        <button class="next-btn" onclick="location.reload()">Try Again</button>
-    </div>
-    
-    <footer>
-        Sir Stephen loves you
-    </footer>
+    <br>
+    <button class="btn" style="background:#003366" onclick="openAdmin()">Admin Panel</button>
 </div>
 
+
+
+<!-- QUIZ SCREEN -->
+<div id="quiz-screen" class="container" style="display:none;">
+    <h2 id="quiz-title"></h2>
+    <div id="quiz"></div>
+    <button class="btn" onclick="nextQuestion()" id="next-btn" style="display:none;">Next Question</button>
+    <div id="result" style="display:none;text-align:center;">
+        <h2>🎉 Quiz Complete!</h2>
+        <p>Your Score: <span id="final-score"></span></p>
+        <button class="btn" onclick="location.reload()">Restart</button>
+    </div>
+</div>
+
+
+
+<!-- ADMIN PANEL -->
+<div id="admin-screen" class="container" style="display:none;">
+    <h2>🛠 Admin Control Panel</h2>
+
+    <button class="btn" onclick="upgradeStudent()">Upgrade Student Level</button>
+    <button class="btn" onclick="deleteStudent()">Delete Student</button>
+
+    <button class="btn" style="background:#444" onclick="goHome()">Back to Home</button>
+</div>
+
+
+
 <script>
-// 50 REAL GES-Standard Questions (Basic 4–6 & JHS 1–3)
-const questions = [
-    // BASIC 4–6 (Mathematics)
-    { q: "What is 45 + 78?", options: ["112", "123", "133", "143"], ans: 1, subject: "Math • Basic 5" },
-    { q: "If a book costs GH₵25 and you pay GH₵50, how much change do you get?", options: ["GH₵20", "GH₵25", "GH₵30", "GH₵75"], ans: 1, subject: "Math • Basic 4" },
-    { q: "What fraction is shaded if 3 out of 8 parts are shaded?", options: ["3/5", "3/8", "5/8", "1/3"], ans: 1, subject: "Math • Basic 6" },
-    { q: "How many sides does a hexagon have?", options: ["5", "6", "7", "8"], ans: 1, subject: "Math • Basic 4" },
-    { q: "What is 15 × 4?", options: ["50", "60", "70", "80"], ans: 1, subject: "Math • Basic 5" },
+/* STUDENT PROFILE */
+let currentStudent = {
+    name: "",
+    class: "",
+};
 
-    // BASIC 4–6 (English)
-    { q: "Choose the correct spelling:", options: ["Recieve", "Receive", "Receeve", "Recive"], ans: 1, subject: "English • Basic 6" },
-    { q: "The opposite of 'big' is:", options: ["Large", "Small", "Tall", "Huge"], ans: 1, subject: "English • Basic 4" },
-    { q: "'He ___ to school every day.' Fill in:", options: ["go", "goes", "going", "gone"], ans: 1, subject: "English • Basic 5" },
-    { q: "What is a noun?", options: ["Action word", "Naming word", "Describing word", "Joining word"], ans: 1, subject: "English • Basic 6" },
-    { q: "Which is a pronoun? He, Run, Beautiful, And", options: ["He", "Run", "Beautiful", "And"], ans: 0, subject: "English • Basic 5" },
+/* QUESTION BANK — grouped by class */
+const quizBank = {
+    "Basic 4": [
+        { q: "How many sides has a hexagon?", options: ["5","6","7","8"], ans: 1 },
+        { q: "Opposite of 'big'?", options: ["small","huge","tall","long"], ans: 0 }
+    ],
+    "Basic 5": [
+        { q: "15 × 4 = ?", options: ["50","60","70","45"], ans: 1 }
+    ],
+    "Basic 6": [
+        { q: "12 × 12 = ?", options: ["124","144","154","134"], ans: 1 }
+    ],
+    "JHS 1": [
+        { q: "Value of π?", options: ["3.14","4.12","2.81","3.41"], ans: 0 }
+    ],
+    "JHS 2": [
+        { q: "Area of triangle formula?", options: ["l×w","½bh","πr²","s²"], ans: 1 }
+    ],
+    "JHS 3": [
+        { q: "Solve: 2(x + 5) = 18", options: ["x=4","x=7","x=9","x=2"], ans: 0 }
+    ]
+};
 
-    // BASIC 4–6 (Science)
-    { q: "Which of these is a living thing?", options: ["Stone", "Plant", "Car", "Table"], ans: 1, subject: "Science • Basic 4" },
-    { q: "What do plants need to make food?", options: ["Soil", "Sunlight", "Darkness", "Ice"], ans: 1, subject: "Science • Basic 5" },
-    { q: "The earth rotates on its:", options: ["Orbit", "Axis", "Moon", "Sun"], ans: 1, subject: "Science • Basic 6" },
-    { q: "Which is a source of water?", options: ["River", "Stone", "Fire", "Sand"], ans: 0, subject: "Science • Basic 4" },
-    { q: "We breathe in oxygen and breathe out:", options: ["Nitrogen", "Carbon dioxide", "Helium", "Smoke"], ans: 1, subject: "Science • Basic 6" },
 
-    // JHS 1–3 (Mathematics)
-    { q: "Solve: 2(x + 5) = 18", options: ["x = 4", "x = 7", "x = 9", "x = 13"], ans: 0, subject: "Math • JHS 2" },
-    { q: "What is the value of π (pi)?", options: ["3.14", "2.17", "4.13", "3.41"], ans: 0, subject: "Math • JHS 1" },
-    { q: "HCF of 12 and 18 is:", options: ["3", "6", "9", "12"], ans: 1, subject: "Math • JHS 3" },
-    { q: "Convert 0.75 to fraction:", options: ["3/4", "1/4", "7/5", "4/3"], ans: 0, subject: "Math • JHS 1" },
-    { q: "Area of a triangle = ?", options: ["½ × base × height", "length × width", "πr²", "side²"], ans: 0, subject: "Math • JHS 2" },
-
-    // JHS 1–3 (English)
-    { q: "The past tense of 'go' is:", options: ["Goes", "Went", "Going", "Gone"], ans: 1, subject: "English • JHS 1" },
-    { q: "A person who writes books is called:", options: ["Author", "Actor", "Doctor", "Pilot"], ans: 0, subject: "English • JHS 2" },
-    { q: "'She sings beautifully.' The adverb is:", options: ["She", "Sings", "Beautifully", "None"], ans: 2, subject: "English • JHS 3" },
-    { q: "Active to Passive: 'They built the house.'", options: ["The house was built by them", "The house is built", "They are building", "The house built them"], ans: 0, subject: "English • JHS 3" },
-    { q: "Synonym of 'happy':", options: ["Sad", "Joyful", "Angry", "Tired"], ans: 1, subject: "English • JHS 1" },
-
-    // JHS 1–3 (Integrated Science)
-    { q: "The chemical symbol for water is:", options: ["O₂", "H₂O", "CO₂", "NaCl"], ans: 1, subject: "Science • JHS 1" },
-    { q: "Which planet is closest to the sun?", options: ["Venus", "Mercury", "Earth", "Mars"], ans: 1, subject: "Science • JHS 2" },
-    { q: "Photosynthesis occurs in the:", options: ["Roots", "Leaves", "Stem", "Flowers"], ans: 1, subject: "Science • JHS 1" },
-    { q: "Force is measured in:", options: ["Joules", "Newtons", "Watts", "Volts"], ans: 1, subject: "Science • JHS 3" },
-    { q: "The brain and spinal cord form the:", options: ["Circulatory system", "Nervous system", "Digestive system", "Respiratory system"], ans: 1, subject: "Science • JHS 2" },
-
-    // More mixed questions to reach 50
-    { q: "What is 25% of 200?", options: ["25", "50", "75", "100"], ans: 1, subject: "Math • JHS 1" },
-    { q: "The capital of Ghana is:", options: ["Kumasi", "Accra", "Takoradi", "Tamale"], ans: 1, subject: "Social • Basic 6" },
-    { q: "A baby goat is called:", options: ["Kid", "Calf", "Puppy", "Lamb"], ans: 0, subject: "Science • Basic 5" },
-    { q: "How many days in February in a leap year?", options: ["28", "29", "30", "31"], ans: 1, subject: "Math • Basic 6" },
-    { q: "Which is a verb?", options: ["Run", "Beautiful", "Table", "Happy"], ans: 0, subject: "English • Basic 4" },
-    { q: "The human body has ___ bones", options: ["206", "208", "306", "106"], ans: 0, subject: "Science • JHS 1" },
-    { q: "12 × 12 = ?", options: ["124", "134", "144", "154"], ans: 2, subject: "Math • Basic 6" },
-    { q: "Which is a mammal?", options: ["Snake", "Bat", "Crocodile", "Frog"], ans: 1, subject: "Science • JHS 1" },
-    { q: "The plural of 'child' is:", options: ["Childs", "Children", "Childes", "Childrens"], ans: 1, subject: "English • Basic 5" },
-    { q: "What is 1000g in kilograms?", options: ["1kg", "10kg", "0.1kg", "100kg"], ans: 0, subject: "Math • JHS 1" },
-    { q: "We see with our:", options: ["Ears", "Eyes", "Nose", "Mouth"], ans: 1, subject: "Science • Basic 4" },
-    { q: "The currency of Ghana is:", options: ["Dollar", "Cedi", "Euro", "Pound"], ans: 1, subject: "Social • Basic 5" },
-    { q: "A triangle with all sides equal is:", options: ["Isosceles", "Scalene", "Equilateral", "Right-angled"], ans: 2, subject: "Math • JHS 2" },
-    { q: "The largest organ in the body is:", options: ["Heart", "Brain", "Skin", "Liver"], ans: 2, subject: "Science • JHS 2" },
-    { q: "Which is correct?", options: ["Your welcome", "You're welcome", "You'r welcome", "Yur welcome"], ans: 1, subject: "English • JHS 1" },
-    { q: "5² + 12² = ?", options: ["13", "144", "169", "25"], ans: 2, subject: "Math • JHS 3" },
-    { q: "The process of changing from liquid to gas is:", options: ["Condensation", "Evaporation", "Freezing", "Melting"], ans: 1, subject: "Science • JHS 1" },
-    { q: "How many continents are there?", options: ["5", "6", "7", "8"], ans: 2, subject: "Social • Basic 6" },
-    { q: "The past tense of 'eat' is:", options: ["Eated", "Ate", "Eaten", "Eating"], ans: 1, subject: "English • JHS 1" },
-    { q: "What is 1/4 of 80?", options: ["20", "25", "30", "40"], ans: 0, subject: "Math • Basic 6" }
-];
-
-let current = 0;
+let currentQuiz = [];
+let index = 0;
 let score = 0;
 
+
+/* START QUIZ */
+function startQuiz(level) {
+    const name = document.getElementById("student-name").value;
+
+    if (name.trim() === "") {
+        alert("Enter your name before proceeding");
+        return;
+    }
+
+    currentStudent.name = name;
+    currentStudent.class = level;
+
+    document.getElementById("page-title").innerText = level + " • Wexford Quiz Hub";
+
+    document.getElementById("main-screen").style.display = "none";
+    document.getElementById("quiz-screen").style.display = "block";
+    document.getElementById("quiz-title").innerText = level + " Quiz";
+
+    currentQuiz = quizBank[level];
+    index = 0;
+    score = 0;
+
+    showQuestion();
+}
+
+
+/* DISPLAY QUESTION */
 function showQuestion() {
-    const q = questions[current];
-    const quizDiv = document.getElementById('quiz');
-    quizDiv.innerHTML = `
-        <div class="question-card">
-            <div class="subject-badge">${q.subject}</div>
-            <div style="color:var(--primary);font-size:0.9rem;margin-bottom:0.5rem;">Question ${current + 1} of 50</div>
-            <div class="question">${q.q}</div>
-            <div class="options">
-                ${q.options.map((opt, i) => `
-                    <div class="option" onclick="checkAnswer(${i}, this)">
-                        ${opt}
-                    </div>
-                `).join('')}
-            </div>
-            <div id="feedback" class="feedback"></div>
-            <button class="next-btn" onclick="nextQuestion()" style="display:none" id="next-btn">Next Question</button>
-        </div>
+    const q = currentQuiz[index];
+    document.getElementById("quiz").innerHTML = `
+        <h3>${q.q}</h3>
+        ${q.options.map((opt,i)=>`
+            <button class="btn" style="background:white;color:black;border:1px solid #ccc"
+                onclick="checkAnswer(${i})">${opt}</button>
+        `).join("")}
     `;
 }
 
-function checkAnswer(selected, element) {
-    const feedback = document.getElementById('feedback');
-    const nextBtn = document.getElementById('next-btn');
-    const correct = questions[current].ans;
 
-    document.querySelectorAll('.option').forEach((opt, i) => {
-        opt.style.pointerEvents = 'none';
-        if (i === correct) opt.classList.add('correct');
-        if (i === selected && i !== correct) opt.classList.add('wrong');
-    });
+/* CHECK ANSWER */
+function checkAnswer(selected) {
+    const correct = currentQuiz[index].ans;
+    if (selected === correct) score++;
 
-    if (selected === correct) {
-        score++;
-        document.getElementById('score').textContent = score;
-        feedback.className = 'feedback correct';
-        feedback.textContent = 'Correct! Well done!';
-    } else {
-        feedback.className = 'feedback wrong';
-        feedback.textContent = `Wrong! Correct answer: ${questions[current].options[correct]}`;
-    }
-    feedback.style.display = 'block';
-    nextBtn.style.display = 'block';
+    document.getElementById("next-btn").style.display = "block";
 }
 
+
+/* NEXT QUESTION */
 function nextQuestion() {
-    current++;
-    if (current < questions.length) {
+    index++;
+    document.getElementById("next-btn").style.display = "none";
+
+    if (index < currentQuiz.length) {
         showQuestion();
     } else {
-        document.getElementById('quiz').style.display = 'none';
-        document.getElementById('result').style.display = 'block';
-        document.getElementById('final-score').textContent = score;
+        showResult();
     }
 }
 
-// Start Quiz
-showQuestion();
+
+/* RESULT */
+function showResult() {
+    document.getElementById("quiz").style.display = "none";
+    document.getElementById("result").style.display = "block";
+    document.getElementById("final-score").innerText = score + "/" + currentQuiz.length;
+}
+
+
+
+/* ADMIN PANEL */
+function openAdmin() {
+    document.getElementById("main-screen").style.display = "none";
+    document.getElementById("admin-screen").style.display = "block";
+}
+
+function goHome() {
+    location.reload();
+}
+
+function upgradeStudent() {
+    alert("✔ Student upgraded to next class successfully!");
+}
+
+function deleteStudent() {
+    alert("❌ Student profile deleted successfully!");
+}
 </script>
 
 </body>
