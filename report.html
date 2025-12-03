@@ -8,10 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <!-- EmailJS for sending emails -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <style>
-        /* All existing CSS styles remain the same */
         :root {
             --primary: #0B8F4A; /* Wexford Green */
             --secondary: #003366; /* Dark Blue */
@@ -39,86 +36,888 @@
             padding: 20px;
         }
         
-        /* ... (All existing CSS styles remain exactly the same) ... */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+        }
         
-        /* Add these new styles for modal and loader */
-        .modal {
-            display: none;
-            position: fixed;
+        /* HEADER WITH ACTUAL LOGO */
+        .school-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2rem 2.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .school-header::before {
+            content: "";
+            position: absolute;
             top: 0;
             left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path fill="rgba(255,255,255,0.05)" d="M0,0 L100,0 L100,100 Z"/></svg>');
+            background-size: cover;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            gap: 1.5rem;
+        }
+        
+        .school-logo {
+            width: 100px;
+            height: 100px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .logo-placeholder {
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1001;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             justify-content: center;
+            text-align: center;
+            background: white;
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 0.6rem;
+            line-height: 1.2;
+            padding: 5px;
+        }
+        
+        .school-info {
+            flex: 1;
+            max-width: 600px;
+        }
+        
+        .school-name {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .school-location {
+            font-size: 1.1rem;
+            font-weight: 600;
+            opacity: 0.9;
+            margin-bottom: 0.5rem;
+        }
+        
+        .school-motto {
+            font-size: 1rem;
+            font-weight: 500;
+            opacity: 0.9;
+            font-style: italic;
+            margin-top: 0.5rem;
+            color: #e2e8f0;
+        }
+        
+        /* MAIN CONTENT */
+        .main-content {
+            display: flex;
+            min-height: 700px;
+        }
+        
+        .form-section {
+            flex: 1;
+            padding: 2.5rem;
+            background: var(--light);
+            border-right: 1px solid var(--gray);
+        }
+        
+        .preview-section {
+            flex: 1.5;
+            padding: 2.5rem;
+            background: white;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .section-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 0.5rem;
+        }
+        
+        .section-title i {
+            margin-right: 10px;
+            color: var(--primary);
+        }
+        
+        /* FORM STYLES */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid var(--gray);
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'Open Sans', sans-serif;
+            transition: all 0.3s;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(11, 143, 74, 0.1);
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        /* SUBJECT INPUT */
+        .subject-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid var(--gray);
             align-items: center;
         }
         
-        .modal-content {
+        .subject-header {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+            gap: 0.8rem;
+            margin-bottom: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--secondary);
+            color: white;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+        
+        .remove-subject {
+            background: var(--danger);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.3s;
+            justify-self: center;
+        }
+        
+        .remove-subject:hover {
+            background: #dc2626;
+        }
+        
+        .add-subject {
+            background: var(--light);
+            border: 2px dashed var(--gray);
+            color: var(--secondary);
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        
+        .add-subject:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        
+        /* BUTTONS */
+        .btn {
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #0a7d41;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(11, 143, 74, 0.2);
+        }
+        
+        .btn-secondary {
+            background: var(--secondary);
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #00264d;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 51, 102, 0.2);
+        }
+        
+        .btn-accent {
+            background: var(--accent);
+            color: white;
+        }
+        
+        .btn-accent:hover {
+            background: #e05e00;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(255, 107, 0, 0.2);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            color: var(--secondary);
+            border: 2px solid var(--secondary);
+        }
+        
+        .btn-outline:hover {
+            background: var(--secondary);
+            color: white;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        /* COMMUNICATION PANEL */
+        .communication-panel {
             background: white;
-            padding: 2rem;
+            padding: 1.5rem;
             border-radius: 10px;
-            max-width: 500px;
-            width: 90%;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--gray);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        
+        .communication-panel h3 {
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .contact-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .communication-buttons {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+        
+        .com-btn {
+            flex: 1;
+            min-width: 120px;
+            padding: 12px 15px;
+        }
+        
+        .btn-email {
+            background: linear-gradient(135deg, #ea4335, #d14836);
+        }
+        
+        .btn-sms {
+            background: linear-gradient(135deg, #34a853, #2e8b57);
+        }
+        
+        .btn-whatsapp {
+            background: linear-gradient(135deg, #25d366, #128c7e);
+        }
+        
+        .btn-save {
+            background: linear-gradient(135deg, var(--info), #2563eb);
+        }
+        
+        /* REPORT CARD PREVIEW - TWO PAGE LAYOUT */
+        .report-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            border: 1px solid var(--gray);
+            flex: 1;
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        /* PAGE CONTROLS */
+        .page-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            background: var(--light);
+            border-radius: 8px;
+        }
+        
+        .page-btn {
+            padding: 8px 20px;
+            border: 2px solid var(--primary);
+            background: transparent;
+            color: var(--primary);
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .page-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .page-btn:hover:not(.active) {
+            background: rgba(11, 143, 74, 0.1);
+        }
+        
+        /* PAGES */
+        .report-page {
+            display: none;
+            min-height: 800px;
+            position: relative;
+        }
+        
+        .report-page.active {
+            display: block;
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        /* WATERMARK */
+        .watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            opacity: 0.08;
+            z-index: 1;
+            pointer-events: none;
+            width: 80%;
             text-align: center;
         }
         
-        .modal h3 {
+        .watermark-logo {
+            font-size: 120px;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .watermark-text {
+            font-size: 60px;
+            color: var(--secondary);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+        }
+        
+        .report-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* PAGE 1 STYLES */
+        .report-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid var(--primary);
+        }
+        
+        .report-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2rem;
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .report-subtitle {
+            font-size: 1.2rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        /* STUDENT INFO - MODERN NON-TABLE LAYOUT */
+        .student-info-modern {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .info-card {
+            background: var(--light);
+            border-radius: 10px;
+            padding: 1.5rem;
+            border-left: 5px solid var(--primary);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        
+        .info-label {
+            font-size: 0.9rem;
+            color: #64748b;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+        
+        .info-value {
+            font-size: 1.2rem;
+            color: var(--dark);
+            font-weight: 600;
+        }
+        
+        /* ACADEMIC PERFORMANCE TABLE */
+        .performance-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+        }
+        
+        .performance-table th {
+            background: var(--secondary);
+            color: white;
+            padding: 12px 10px;
+            text-align: center;
+            font-weight: 600;
+            border: 1px solid var(--secondary);
+        }
+        
+        .performance-table td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid var(--gray);
+        }
+        
+        .performance-table tr:nth-child(even) {
+            background: var(--light);
+        }
+        
+        /* GRADE COLORS */
+        .grade-A { color: var(--success); font-weight: 700; }
+        .grade-B { color: #3b82f6; font-weight: 700; }
+        .grade-C { color: #f59e0b; font-weight: 700; }
+        .grade-D { color: #f97316; font-weight: 700; }
+        .grade-E { color: #8b5cf6; font-weight: 700; }
+        .grade-F { color: var(--danger); font-weight: 700; }
+        
+        /* PAGE 2 STYLES */
+        .page2-content {
+            padding-top: 1rem;
+        }
+        
+        /* REMARKS SECTION */
+        .remarks-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .remark-box {
+            background: var(--light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-top: 4px solid var(--primary);
+            min-height: 200px;
+        }
+        
+        .remark-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.2rem;
             color: var(--secondary);
             margin-bottom: 1rem;
         }
         
-        .modal p {
-            margin-bottom: 1.5rem;
-            color: var(--dark);
+        .remark-content {
+            line-height: 1.6;
+            min-height: 150px;
+            padding: 10px;
+            background: white;
+            border-radius: 6px;
+            border: 1px solid var(--gray);
         }
         
-        .modal-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-        }
-        
-        .progress-bar {
-            width: 100%;
-            height: 4px;
-            background: var(--gray);
-            border-radius: 2px;
-            overflow: hidden;
-            margin: 1rem 0;
-        }
-        
-        .progress {
-            height: 100%;
-            background: var(--primary);
-            width: 0%;
-            transition: width 0.3s ease;
-        }
-        
-        .status-message {
-            padding: 1rem;
+        /* GRADING SYSTEM */
+        .grading-system {
+            background: var(--light);
+            padding: 1.5rem;
             border-radius: 8px;
-            margin: 1rem 0;
-            text-align: left;
+            margin-bottom: 2rem;
         }
         
-        .status-success {
-            background: #d1fae5;
-            color: #065f46;
-            border-left: 4px solid #10b981;
+        .grading-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
         }
         
-        .status-error {
-            background: #fee2e2;
-            color: #991b1b;
-            border-left: 4px solid #ef4444;
+        .grading-table th {
+            background: var(--primary);
+            color: white;
+            padding: 10px;
+            text-align: center;
         }
         
-        .status-info {
-            background: #dbeafe;
-            color: #1e40af;
-            border-left: 4px solid #3b82f6;
+        .grading-table td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid var(--gray);
+        }
+        
+        .grading-table tr:nth-child(even) {
+            background: white;
+        }
+        
+        /* SIGNATURE SECTION */
+        .signature-section {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--gray);
+        }
+        
+        .signature-box {
+            text-align: center;
+            flex: 1;
+        }
+        
+        .signature-line {
+            margin-top: 3rem;
+            border-top: 1px solid var(--dark);
+            width: 200px;
+            margin: 3rem auto 0.5rem;
+        }
+        
+        /* PRINT STYLES */
+        @media print {
+            .form-section, .action-buttons, .school-header, .no-print, 
+            .page-controls, .communication-panel, .summary-box, footer {
+                display: none !important;
+            }
+            
+            .preview-section {
+                width: 100%;
+                padding: 0;
+            }
+            
+            .report-card {
+                box-shadow: none;
+                border: none;
+                padding: 0;
+            }
+            
+            .container {
+                max-width: 100%;
+                box-shadow: none;
+                border-radius: 0;
+            }
+            
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .report-page {
+                display: block !important;
+                page-break-after: always;
+                min-height: auto;
+            }
+            
+            .report-page:last-child {
+                page-break-after: auto;
+            }
+        }
+        
+        /* RESPONSIVE */
+        @media (max-width: 992px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .form-section {
+                border-right: none;
+                border-bottom: 1px solid var(--gray);
+            }
+            
+            .student-info-modern {
+                grid-template-columns: 1fr;
+            }
+            
+            .subject-row, .subject-header {
+                grid-template-columns: 1.5fr 1fr 1fr 1fr 0.5fr;
+                font-size: 0.9rem;
+            }
+            
+            .remarks-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-inputs {
+                grid-template-columns: 1fr;
+            }
+            
+            .communication-buttons {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .school-name {
+                font-size: 1.8rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .subject-row, .subject-header {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+            
+            .subject-row > div {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            
+            .subject-row > div::before {
+                content: attr(data-label);
+                font-weight: 600;
+                margin-right: 10px;
+            }
+            
+            .subject-header {
+                display: none;
+            }
+            
+            .signature-section {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            
+            .logo-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .school-logo {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+        }
+        
+        /* ANIMATIONS */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        /* LOADING STATE */
+        .loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem;
+            color: var(--secondary);
+        }
+        
+        .loading-spinner {
+            border: 4px solid var(--gray);
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1rem;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* STUDENT SELECTOR */
+        .student-selector {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--gray);
+        }
+        
+        .student-selector label {
+            margin-bottom: 0.8rem;
+            display: block;
+            font-size: 1.1rem;
+        }
+        
+        .student-selector select {
+            font-size: 1rem;
+        }
+        
+        /* SUMMARY BOX */
+        .summary-box {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            text-align: center;
+        }
+        
+        .summary-item h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .summary-item p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        /* FOOTER */
+        footer {
+            background: var(--secondary);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        /* DOWNLOAD BUTTON */
+        .btn-download {
+            background: linear-gradient(135deg, var(--accent), #ff8533);
+            color: white;
+        }
+        
+        .btn-download:hover {
+            background: linear-gradient(135deg, #e05e00, #ff8533);
+        }
+        
+        /* NOTIFICATION */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            border-left: 4px solid var(--success);
+            z-index: 1000;
+            transform: translateX(150%);
+            transition: transform 0.3s ease;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification.error {
+            border-left-color: var(--danger);
+        }
+        
+        .notification.warning {
+            border-left-color: var(--warning);
         }
     </style>
 </head>
@@ -128,6 +927,7 @@
         <div class="school-header no-print">
             <div class="logo-container">
                 <div class="school-logo">
+                    <!-- Logo placeholder - replace with actual image -->
                     <div class="logo-placeholder">
                         NEW WEXFORD<br>
                         COMMUNITY SCHOOL<br>
@@ -172,14 +972,10 @@
                             <label for="parentPhone"><i class="fas fa-phone"></i> Parent Phone</label>
                             <input type="tel" id="parentPhone" placeholder="+233 XX XXX XXXX">
                         </div>
-                        <div class="form-group">
-                            <label for="parentName"><i class="fas fa-user-friends"></i> Parent Name</label>
-                            <input type="text" id="parentName" placeholder="Parent/Guardian Name">
-                        </div>
                     </div>
                     <div class="communication-buttons">
                         <button class="btn com-btn btn-email" id="sendEmail">
-                            <i class="fas fa-envelope"></i> Send Email with PDF
+                            <i class="fas fa-envelope"></i> Send Email
                         </button>
                         <button class="btn com-btn btn-sms" id="sendSMS">
                             <i class="fas fa-sms"></i> Send SMS
@@ -520,30 +1316,7 @@
         <div id="notificationMessage"></div>
     </div>
 
-    <!-- EMAIL MODAL -->
-    <div id="emailModal" class="modal">
-        <div class="modal-content">
-            <h3><i class="fas fa-envelope"></i> Sending Report Card</h3>
-            <div class="progress-bar">
-                <div class="progress" id="emailProgress"></div>
-            </div>
-            <div id="emailStatus" class="status-message status-info">
-                <i class="fas fa-spinner fa-spin"></i> Generating PDF...
-            </div>
-            <div class="modal-buttons">
-                <button class="btn btn-outline" id="cancelSend">Cancel</button>
-            </div>
-        </div>
-    </div>
-
     <script>
-        // Initialize EmailJS (You need to get your own Public Key from EmailJS)
-        // Go to https://www.emailjs.com/ and create a free account
-        // Replace 'YOUR_PUBLIC_KEY' with your actual EmailJS public key
-        // Replace 'YOUR_SERVICE_ID' with your EmailJS service ID
-        // Replace 'YOUR_TEMPLATE_ID' with your EmailJS template ID
-        emailjs.init('YOUR_PUBLIC_KEY'); // ← Replace with your actual EmailJS public key
-
         // DOM Elements
         const reportForm = document.getElementById('reportForm');
         const subjectsContainer = document.getElementById('subjectsContainer');
@@ -559,10 +1332,6 @@
         const pageButtons = document.querySelectorAll('.page-btn');
         const notification = document.getElementById('notification');
         const notificationMessage = document.getElementById('notificationMessage');
-        const emailModal = document.getElementById('emailModal');
-        const emailProgress = document.getElementById('emailProgress');
-        const emailStatus = document.getElementById('emailStatus');
-        const cancelSendBtn = document.getElementById('cancelSend');
         
         // Communication buttons
         const sendEmailBtn = document.getElementById('sendEmail');
@@ -571,15 +1340,37 @@
         const saveReportBtn = document.getElementById('saveReport');
         const sendAllBtn = document.getElementById('sendAll');
         
-        // Variables for tracking email sending
-        let emailSendingInProgress = false;
-        let currentPDFBlob = null;
-        
         // Student data from the document (30+ students)
         const students = [
             { name: "WESLER NYAMEKYE ASANTE", class: "BS 5", term: "1ST TERM", subjects: ["MATHEMATICS", "ENGLISH LANGUAGE", "INTEGRATED SCIENCE", "HISTORY", "COMPUTING", "CREATIVE ART", "RME", "GHANAIAN LANGUAGE"] },
             { name: "LEMUEL DAPAA AGYABENG", class: "BS 5", term: "1ST TERM", subjects: ["MATHEMATICS", "ENGLISH LANGUAGE", "INTEGRATED SCIENCE", "SOCIAL STUDIES", "CAREER TECHNOLOGY", "CREATIVE ART", "RME", "GHANAIAN LANGUAGE"] },
-            // ... (all other student data remains the same)
+            { name: "DARKO OHENE ANSAH", class: "BS 5", term: "1ST TERM", subjects: ["MATHEMATICS", "ENGLISH LANGUAGE", "INTEGRATED SCIENCE", "HISTORY", "COMPUTING", "CREATIVE ART", "RME", "GHANAIAN LANGUAGE"] },
+            { name: "ZAID MUMIN ABDUL", class: "BS 5", term: "1ST TERM", subjects: ["MATHEMATICS", "ENGLISH LANGUAGE", "INTEGRATED SCIENCE", "SOCIAL STUDIES", "CAREER TECHNOLOGY", "CREATIVE ART", "RME", "GHANAIAN LANGUAGE"] },
+            { name: "BLESSING BANNOR", class: "BS 5", term: "1ST TERM", subjects: ["MATHEMATICS", "ENGLISH LANGUAGE", "INTEGRATED SCIENCE", "HISTORY", "COMPUTING", "CREATIVE ART", "RME", "GHANAIAN LANGUAGE"] },
+            { name: "JASON NYARKO BOADU", class: "BS 5", term: "1ST TERM", subjects: ["MATHEMATICS", "ENGLISH LANGUAGE", "INTEGRATED SCIENCE", "SOCIAL STUDIES", "CAREER TECHNOLOGY", "CREATIVE ART", "RME", "GHANAIAN LANGUAGE"] },
+            { name: "LEO NANA KWAKU BOADUM", class: "BS 5", term: "1ST TERM", subjects: ["MATHEMATICS", "ENGLISH LANGUAGE", "INTEGRATED SCIENCE", "HISTORY", "COMPUTING", "CREATIVE ART", "RME", "GHANAIAN LANGUAGE"] },
+            { name: "NATHENIEL ATTA ERA", class: "BS 5", term: "1ST TERM", subjects: ["MATHEMATICS", "ENGLISH LANGUAGE", "INTEGRATED SCIENCE", "SOCIAL STUDIES", "CAREER TECHNOLOGY", "CREATIVE ART", "RME", "GHANAIAN LANGUAGE"] },
+            { name: "AARON KWAKU FRIMPONG", class: "BS 5", term: "1ST TERM", subjects: ["MATHEMATICS", "ENGLISH LANGUAGE", "INTEGRATED SCIENCE", "HISTORY", "COMPUTING", "CREATIVE ART", "RME", "GHANAIAN LANGUAGE"] },
+            { name: "ALEXANDER KWAME", class: "BS 5", term: "1ST TERM", subjects: ["MATHEMATICS", "ENGLISH LANGUAGE", "INTEGRATED SCIENCE", "SOCIAL STUDIES", "CAREER TECHNOLOGY", "CREATIVE ART", "RME", "GHANAIAN LANGUAGE"] },
+            { name: "BENEDICT BOATENG OPOKU", class: "BS 5", term: "1ST TERM", subjects: ["MATHEMATICS", "ENGLISH LANGUAGE", "INTEGRATED SCIENCE", "HISTORY", "COMPUTING", "CREATIVE ART", "RME", "GHANAIAN LANGUAGE"] },
+            { name: "KELVIN AKWASI SARPONG", class: "BS 5", term: "1ST TERM", subjects: ["MATHEMATICS", "ENGLISH LANGUAGE", "INTEGRATED SCIENCE", "SOCIAL STUDIES", "CAREER TECHNOLOGY", "CREATIVE ART", "RME", "GHANAIAN LANGUAGE"] },
+            { name: "NADAL KOFI SARPONG", class: "BS 5", term: "1ST TERM", subjects: ["MATHEMATICS", "ENGLISH LANGUAGE", "INTEGRATED SCIENCE", "HISTORY", "COMPUTING", "CREATIVE ART", "RME", "GHANAIAN LANGUAGE"] },
+            { name: "ONESSIMUS OBENG", class: "BS 5", term: "1ST TERM", subjects: ["MATHEMATICS", "ENGLISH LANGUAGE", "INTEGRATED SCIENCE", "SOCIAL STUDIES", "CAREER TECHNOLOGY", "CREATIVE ART", "RME", "GHANAIAN LANGUAGE"] },
+            { name: "RONNIE KWABENA YEBOAH", class: "BS 5", term: "1ST TERM", subjects: ["MATHEMATICS", "ENGLISH LANGUAGE", "INTEGRATED SCIENCE", "HISTORY", "COMPUTING", "CREATIVE ART", "RME", "GHANAIAN LANGUAGE"] },
+            { name: "DANIEL OSEI", class: "BS 5", term: "1ST TERM", subjects: ["MATHEMATICS", "ENGLISH LANGUAGE", "INTEGRATED SCIENCE", "SOCIAL STUDIES", "CAREER TECHNOLOGY", "CREATIVE ART", "RME", "GHANAIAN LANGUAGE"] },
+            { name: "IDAHOSAH COPLAND KENNETH OWUSU", class: "BS 5", term: "1ST TERM", subjects: ["MATHEMATICS", "ENGLISH LANGUAGE", "INTEGRATED SCIENCE", "HISTORY", "COMPUTING", "CREATIVE ART", "RME", "GHANAIAN LANGUAGE"] },
+            { name: "EVANS YENDER", class: "BS 5", term: "1ST TERM", subjects: ["MATHEMATICS", "ENGLISH LANGUAGE", "INTEGRATED SCIENCE", "SOCIAL STUDIES", "CAREER TECHNOLOGY", "CREATIVE ART", "RME", "GHANAIAN LANGUAGE"] },
+            { name: "OBADIAH OWUSU ANSAH", class: "BS 5", term: "1ST TERM", subjects: ["MATHEMATICS", "ENGLISH LANGUAGE", "INTEGRATED SCIENCE", "HISTORY", "COMPUTING", "CREATIVE ART", "RME", "GHANAIAN LANGUAGE"] },
+            { name: "BRIDGET OWUSU ANSAH", class: "BS 5", term: "1ST TERM", subjects: ["MATHEMATICS", "ENGLISH LANGUAGE", "INTEGRATED SCIENCE", "SOCIAL STUDIES", "CAREER TECHNOLOGY", "CREATIVE ART", "RME", "GHANAIAN LANGUAGE"] },
+            { name: "QUEEN ANKRAH", class: "BS 5", term: "1ST TERM", subjects: ["MATHEMATICS", "ENGLISH LANGUAGE", "INTEGRATED SCIENCE", "HISTORY", "COMPUTING", "CREATIVE ART", "RME", "GHANAIAN LANGUAGE"] },
+            { name: "LYDIA AFRANE", class: "BS 5", term: "1ST TERM", subjects: ["MATHEMATICS", "ENGLISH LANGUAGE", "INTEGRATED SCIENCE", "SOCIAL STUDIES", "CAREER TECHNOLOGY", "CREATIVE ART", "RME", "GHANAIAN LANGUAGE"] },
+            { name: "EMMANUELLA OWUSU ANTWIWAA", class: "BS 5", term: "1ST TERM", subjects: ["MATHEMATICS", "ENGLISH LANGUAGE", "INTEGRATED SCIENCE", "HISTORY", "COMPUTING", "CREATIVE ART", "RME", "GHANAIAN LANGUAGE"] },
+            { name: "BEATRICE BOATENG ABANBILA", class: "BS 5", term: "1ST TERM", subjects: ["MATHEMATICS", "ENGLISH LANGUAGE", "INTEGRATED SCIENCE", "SOCIAL STUDIES", "CAREER TECHNOLOGY", "CREATIVE ART", "RME", "GHANAIAN LANGUAGE"] },
+            { name: "NANA AMA KYEREWAA AYIREBI", class: "BS 5", term: "1ST TERM", subjects: ["MATHEMATICS", "ENGLISH LANGUAGE", "INTEGRATED SCIENCE", "HISTORY", "COMPUTING", "CREATIVE ART", "RME", "GHANAIAN LANGUAGE"] },
+            { name: "RHIAN POKUA", class: "BS 5", term: "1ST TERM", subjects: ["MATHEMATICS", "ENGLISH LANGUAGE", "INTEGRATED SCIENCE", "SOCIAL STUDIES", "CAREER TECHNOLOGY", "CREATIVE ART", "RME", "GHANAIAN LANGUAGE"] },
+            { name: "OBENG JEWEL", class: "BS 5", term: "1ST TERM", subjects: ["MATHEMATICS", "ENGLISH LANGUAGE", "INTEGRATED SCIENCE", "HISTORY", "COMPUTING", "CREATIVE ART", "RME", "GHANAIAN LANGUAGE"] },
+            { name: "HAWA SEIDU", class: "BS 5", term: "1ST TERM", subjects: ["MATHEMATICS", "ENGLISH LANGUAGE", "INTEGRATED SCIENCE", "SOCIAL STUDIES", "CAREER TECHNOLOGY", "CREATIVE ART", "RME", "GHANAIAN LANGUAGE"] },
+            { name: "TAKYI LOIS", class: "BS 5", term: "1ST TERM", subjects: ["MATHEMATICS", "ENGLISH LANGUAGE", "INTEGRATED SCIENCE", "SOCIAL STUDIES", "CAREER TECHNOLOGY", "CREATIVE ART", "RME", "GHANAIAN LANGUAGE"] }
         ];
         
         // Grading system
@@ -592,6 +1383,24 @@
             { min: 0, max: 39, grade: 'F', remark: 'Fail' }
         ];
         
+        // Teacher remarks based on performance
+        const teacherRemarks = [
+            "An exceptional student with outstanding performance. Shows great initiative and consistently exceeds expectations. Demonstrates excellent understanding of all subjects.",
+            "A very good student who performs well in all subjects. Shows good understanding of concepts and applies knowledge effectively. Consistent effort is evident.",
+            "Good performance with room for improvement. Shows understanding of most concepts but needs to work on challenging areas. With more focus, better results can be achieved.",
+            "Satisfactory performance. Basic understanding of concepts but needs to put in more effort to improve grades. Regular practice and study will help.",
+            "Needs to improve performance. Struggles with several concepts and should seek extra help in weak subjects. More dedication to studies is required."
+        ];
+        
+        // Headteacher remarks
+        const headteacherRemarks = [
+            "Excellent academic performance. Keep up the good work and continue to be a role model to other students.",
+            "Very good results. Continue to work hard and aim for even higher achievement next term.",
+            "Good effort shown this term. With more focus and dedication, you can achieve better results.",
+            "Satisfactory performance. More effort and commitment to studies is required for improvement.",
+            "Needs significant improvement. Must take studies more seriously and seek help where needed."
+        ];
+        
         // Show notification
         function showNotification(message, type = 'success') {
             notificationMessage.textContent = message;
@@ -601,311 +1410,6 @@
                 notification.classList.remove('show');
             }, 3000);
         }
-        
-        // Update email modal status
-        function updateEmailStatus(message, type = 'info', progress = 0) {
-            emailStatus.innerHTML = message;
-            emailStatus.className = `status-message status-${type}`;
-            emailProgress.style.width = `${progress}%`;
-        }
-        
-        // Generate PDF as blob (for email attachment)
-        async function generatePDFBlob() {
-            try {
-                const { jsPDF } = window.jspdf;
-                const pdf = new jsPDF('p', 'mm', 'a4');
-                
-                // Capture Page 1
-                updateEmailStatus('<i class="fas fa-spinner fa-spin"></i> Generating PDF page 1...', 'info', 30);
-                const page1 = document.getElementById('page1');
-                const canvas1 = await html2canvas(page1, {
-                    scale: 2,
-                    useCORS: true,
-                    logging: false,
-                    backgroundColor: '#ffffff'
-                });
-                
-                const imgWidth = 210; // A4 width in mm
-                const imgHeight1 = (canvas1.height * imgWidth) / canvas1.width;
-                
-                // Add Page 1 to PDF
-                pdf.addImage(canvas1.toDataURL('image/png'), 'PNG', 0, 0, imgWidth, imgHeight1);
-                
-                // Add new page
-                updateEmailStatus('<i class="fas fa-spinner fa-spin"></i> Generating PDF page 2...', 'info', 60);
-                pdf.addPage();
-                
-                // Capture Page 2
-                const page2 = document.getElementById('page2');
-                const canvas2 = await html2canvas(page2, {
-                    scale: 2,
-                    useCORS: true,
-                    logging: false,
-                    backgroundColor: '#ffffff'
-                });
-                
-                const imgHeight2 = (canvas2.height * imgWidth) / canvas2.width;
-                
-                // Add Page 2 to PDF
-                pdf.addImage(canvas2.toDataURL('image/png'), 'PNG', 0, 0, imgWidth, imgHeight2);
-                
-                // Generate blob
-                updateEmailStatus('<i class="fas fa-spinner fa-spin"></i> Finalizing PDF...', 'info', 90);
-                const pdfBlob = pdf.output('blob');
-                
-                return pdfBlob;
-            } catch (error) {
-                console.error('Error generating PDF:', error);
-                throw error;
-            }
-        }
-        
-        // Convert blob to base64 for EmailJS attachment
-        function blobToBase64(blob) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onloadend = () => {
-                    // Remove the data URL prefix
-                    const base64 = reader.result.split(',')[1];
-                    resolve(base64);
-                };
-                reader.onerror = reject;
-                reader.readAsDataURL(blob);
-            });
-        }
-        
-        // Send PDF via EmailJS
-        async function sendPDFViaEmail() {
-            try {
-                const studentName = document.getElementById('studentName').value;
-                const parentEmail = document.getElementById('parentEmail').value;
-                const parentName = document.getElementById('parentName').value;
-                const className = document.getElementById('className').value;
-                const term = document.getElementById('term').value;
-                const academicYear = document.getElementById('academicYear').value;
-                
-                if (!parentEmail) {
-                    throw new Error('Please enter parent email address');
-                }
-                
-                if (!studentName) {
-                    throw new Error('Please generate a report first');
-                }
-                
-                // Generate PDF
-                updateEmailStatus('<i class="fas fa-spinner fa-spin"></i> Generating PDF...', 'info', 20);
-                const pdfBlob = await generatePDFBlob();
-                
-                // Convert blob to base64
-                updateEmailStatus('<i class="fas fa-spinner fa-spin"></i> Preparing email attachment...', 'info', 60);
-                const pdfBase64 = await blobToBase64(pdfBlob);
-                
-                // Prepare email template parameters
-                const templateParams = {
-                    to_email: parentEmail,
-                    to_name: parentName || 'Parent/Guardian',
-                    student_name: studentName,
-                    class_name: className,
-                    term: term,
-                    academic_year: academicYear,
-                    school_name: 'Wexford Community School',
-                    attachment: pdfBase64,
-                    attachment_name: `Wexford_${studentName.replace(/\s+/g, '_')}_${className}_${term}.pdf`
-                };
-                
-                // Send email using EmailJS
-                updateEmailStatus('<i class="fas fa-spinner fa-spin"></i> Sending email...', 'info', 80);
-                
-                // Send email with attachment
-                // Note: You need to set up an EmailJS template that accepts attachments
-                const response = await emailjs.send(
-                    'YOUR_SERVICE_ID', // Replace with your EmailJS service ID
-                    'YOUR_TEMPLATE_ID', // Replace with your EmailJS template ID
-                    templateParams
-                );
-                
-                updateEmailStatus('<i class="fas fa-check-circle"></i> Email sent successfully!', 'success', 100);
-                return response;
-                
-            } catch (error) {
-                console.error('Email sending error:', error);
-                updateEmailStatus(`<i class="fas fa-exclamation-circle"></i> Error: ${error.message || 'Failed to send email'}`, 'error', 0);
-                throw error;
-            }
-        }
-        
-        // Send PDF via SMS (using Twilio API - requires backend)
-        async function sendPDFViaSMS() {
-            const studentName = document.getElementById('studentName').value;
-            const parentPhone = document.getElementById('parentPhone').value;
-            
-            if (!studentName) {
-                showNotification('Please generate a report first', 'error');
-                return;
-            }
-            
-            if (!parentPhone) {
-                showNotification('Please enter parent phone number', 'error');
-                return;
-            }
-            
-            // Generate PDF first
-            const pdfBlob = await generatePDFBlob();
-            currentPDFBlob = pdfBlob;
-            
-            // Note: SMS with PDF attachment requires Twilio API or similar service
-            // For demo purposes, we'll create a download link and send it via SMS
-            const className = document.getElementById('className').value;
-            const term = document.getElementById('term').value;
-            
-            // Create download link
-            const pdfUrl = URL.createObjectURL(pdfBlob);
-            const downloadLink = `${window.location.origin}/download/report.pdf`;
-            
-            // Create SMS content with download link
-            const message = `Wexford School: ${term} report for ${studentName} (${className}) is ready. Download: ${downloadLink}`;
-            
-            // For actual implementation, you would call your backend API
-            // Example: await fetch('/api/send-sms', { method: 'POST', body: JSON.stringify({ phone: parentPhone, message: message }) });
-            
-            // For demo, open SMS app
-            const smsLink = `sms:${parentPhone}?body=${encodeURIComponent(message)}`;
-            window.open(smsLink, '_blank');
-            
-            showNotification('SMS app opened with download link', 'success');
-        }
-        
-        // Send PDF via WhatsApp
-        async function sendPDFViaWhatsApp() {
-            const studentName = document.getElementById('studentName').value;
-            const parentPhone = document.getElementById('parentPhone').value;
-            
-            if (!studentName) {
-                showNotification('Please generate a report first', 'error');
-                return;
-            }
-            
-            if (!parentPhone) {
-                showNotification('Please enter parent phone number', 'error');
-                return;
-            }
-            
-            // Generate PDF
-            const pdfBlob = await generatePDFBlob();
-            currentPDFBlob = pdfBlob;
-            
-            // Create download link
-            const pdfUrl = URL.createObjectURL(pdfBlob);
-            
-            // Create WhatsApp message
-            const className = document.getElementById('className').value;
-            const term = document.getElementById('term').value;
-            
-            const message = `Dear Parent,\n\n${term} report card for *${studentName}* (${className}) is now available.\n\nDownload link: ${pdfUrl}\n\n*Wexford Community School*\n*Innovation, Technology, and Discipline*`;
-            
-            // Create WhatsApp link
-            const whatsappLink = `https://wa.me/${parentPhone.replace(/\D/g, '')}?text=${encodeURIComponent(message)}`;
-            
-            // Open WhatsApp
-            window.open(whatsappLink, '_blank');
-            
-            showNotification('Opening WhatsApp with download link', 'success');
-        }
-        
-        // Send Email button
-        sendEmailBtn.addEventListener('click', async function() {
-            emailSendingInProgress = true;
-            emailModal.style.display = 'flex';
-            
-            try {
-                await sendPDFViaEmail();
-                
-                // Close modal after 2 seconds on success
-                setTimeout(() => {
-                    if (emailSendingInProgress) {
-                        emailModal.style.display = 'none';
-                        emailSendingInProgress = false;
-                        showNotification('Report card sent via email successfully!', 'success');
-                    }
-                }, 2000);
-                
-            } catch (error) {
-                // Keep modal open to show error
-                setTimeout(() => {
-                    if (emailSendingInProgress) {
-                        showNotification(`Email sending failed: ${error.message}`, 'error');
-                    }
-                }, 1000);
-            }
-        });
-        
-        // Cancel send button
-        cancelSendBtn.addEventListener('click', function() {
-            emailSendingInProgress = false;
-            emailModal.style.display = 'none';
-            showNotification('Email sending cancelled', 'warning');
-        });
-        
-        // Send SMS button (updated)
-        sendSMSBtn.addEventListener('click', async function() {
-            try {
-                await sendPDFViaSMS();
-            } catch (error) {
-                showNotification(`SMS sending failed: ${error.message}`, 'error');
-            }
-        });
-        
-        // Send WhatsApp button (updated)
-        sendWhatsAppBtn.addEventListener('click', async function() {
-            try {
-                await sendPDFViaWhatsApp();
-            } catch (error) {
-                showNotification(`WhatsApp sending failed: ${error.message}`, 'error');
-            }
-        });
-        
-        // Send to all channels
-        sendAllBtn.addEventListener('click', async function() {
-            const studentName = document.getElementById('studentName').value;
-            const parentEmail = document.getElementById('parentEmail').value;
-            const parentPhone = document.getElementById('parentPhone').value;
-            
-            if (!studentName) {
-                showNotification('Please generate a report first', 'error');
-                return;
-            }
-            
-            if (!parentEmail && !parentPhone) {
-                showNotification('Please enter at least one contact method', 'error');
-                return;
-            }
-            
-            // Generate PDF first (will be used for all channels)
-            try {
-                const pdfBlob = await generatePDFBlob();
-                currentPDFBlob = pdfBlob;
-                
-                // Save report
-                saveReportBtn.click();
-                
-                // Send to all available channels
-                if (parentEmail) {
-                    setTimeout(() => sendEmailBtn.click(), 100);
-                }
-                
-                if (parentPhone) {
-                    setTimeout(() => {
-                        sendSMSBtn.click();
-                        setTimeout(() => sendWhatsAppBtn.click(), 500);
-                    }, 300);
-                }
-                
-                showNotification('Report being sent through all available channels', 'success');
-                
-            } catch (error) {
-                showNotification(`Failed to generate PDF: ${error.message}`, 'error');
-            }
-        });
         
         // Page navigation
         pageButtons.forEach(button => {
@@ -1033,7 +1537,6 @@
                 // Reset contact info
                 document.getElementById('parentEmail').value = "";
                 document.getElementById('parentPhone').value = "";
-                document.getElementById('parentName').value = "";
                 
                 // Generate default report
                 setTimeout(generateReport, 100);
@@ -1045,7 +1548,7 @@
             window.print();
         });
         
-        // Download as PDF
+        // Download as PDF with two pages
         downloadPDFBtn.addEventListener('click', async function() {
             const button = this;
             const originalHTML = button.innerHTML;
@@ -1129,7 +1632,6 @@
                 conduct: document.getElementById('conduct').value,
                 parentEmail: document.getElementById('parentEmail').value,
                 parentPhone: document.getElementById('parentPhone').value,
-                parentName: document.getElementById('parentName').value,
                 subjects: [],
                 timestamp: new Date().toISOString()
             };
@@ -1167,6 +1669,131 @@
             localStorage.setItem('wexfordReports', JSON.stringify(reports));
             
             showNotification(`Report saved successfully for ${studentName}!`, 'success');
+        });
+        
+        // Send Email function
+        sendEmailBtn.addEventListener('click', function() {
+            const studentName = document.getElementById('studentName').value;
+            const parentEmail = document.getElementById('parentEmail').value;
+            
+            if (!studentName) {
+                showNotification('Please generate a report first', 'error');
+                return;
+            }
+            
+            if (!parentEmail) {
+                showNotification('Please enter parent email address', 'error');
+                return;
+            }
+            
+            const className = document.getElementById('className').value;
+            const term = document.getElementById('term').value;
+            
+            // Create email content
+            const subject = `Wexford Community School - ${term} Report Card for ${studentName}`;
+            const body = `Dear Parent/Guardian,\n\nPlease find attached the ${term} report card for ${studentName} (${className}).\n\nYou can also view it online at your convenience.\n\nBest regards,\nWexford Community School\nAtwima Manhyia`;
+            
+            // Create mailto link
+            const mailtoLink = `mailto:${parentEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            
+            // Open email client
+            window.open(mailtoLink, '_blank');
+            
+            showNotification('Email client opened with report details', 'success');
+        });
+        
+        // Send SMS function
+        sendSMSBtn.addEventListener('click', function() {
+            const studentName = document.getElementById('studentName').value;
+            const parentPhone = document.getElementById('parentPhone').value;
+            
+            if (!studentName) {
+                showNotification('Please generate a report first', 'error');
+                return;
+            }
+            
+            if (!parentPhone) {
+                showNotification('Please enter parent phone number', 'error');
+                return;
+            }
+            
+            const className = document.getElementById('className').value;
+            const term = document.getElementById('term').value;
+            
+            // Create SMS content
+            const message = `Wexford School: ${term} report for ${studentName} (${className}) is ready. Check email for details or contact school.`;
+            
+            // Create sms link
+            const smsLink = `sms:${parentPhone}?body=${encodeURIComponent(message)}`;
+            
+            // Open SMS app
+            window.open(smsLink, '_blank');
+            
+            showNotification('SMS app opened with report notification', 'success');
+        });
+        
+        // Send WhatsApp function
+        sendWhatsAppBtn.addEventListener('click', function() {
+            const studentName = document.getElementById('studentName').value;
+            const parentPhone = document.getElementById('parentPhone').value;
+            
+            if (!studentName) {
+                showNotification('Please generate a report first', 'error');
+                return;
+            }
+            
+            if (!parentPhone) {
+                showNotification('Please enter parent phone number', 'error');
+                return;
+            }
+            
+            const className = document.getElementById('className').value;
+            const term = document.getElementById('term').value;
+            
+            // Create WhatsApp message
+            const message = `Dear Parent,\n\n${term} report card for *${studentName}* (${className}) is now available. Please check your email for the detailed report or contact the school office.\n\n*Wexford Community School*\n*Innovation, Technology, and Discipline*`;
+            
+            // Create WhatsApp link
+            const whatsappLink = `https://wa.me/${parentPhone.replace(/\D/g, '')}?text=${encodeURIComponent(message)}`;
+            
+            // Open WhatsApp
+            window.open(whatsappLink, '_blank');
+            
+            showNotification('Opening WhatsApp to send report notification', 'success');
+        });
+        
+        // Send to all channels
+        sendAllBtn.addEventListener('click', function() {
+            const studentName = document.getElementById('studentName').value;
+            const parentEmail = document.getElementById('parentEmail').value;
+            const parentPhone = document.getElementById('parentPhone').value;
+            
+            if (!studentName) {
+                showNotification('Please generate a report first', 'error');
+                return;
+            }
+            
+            if (!parentEmail && !parentPhone) {
+                showNotification('Please enter at least one contact method', 'error');
+                return;
+            }
+            
+            // Save report first
+            saveReportBtn.click();
+            
+            // Send notifications
+            if (parentEmail) {
+                setTimeout(() => sendEmailBtn.click(), 100);
+            }
+            
+            if (parentPhone) {
+                setTimeout(() => {
+                    sendSMSBtn.click();
+                    setTimeout(() => sendWhatsAppBtn.click(), 500);
+                }, 300);
+            }
+            
+            showNotification('Report sent through all available channels', 'success');
         });
         
         // Generate report function
@@ -1379,24 +2006,6 @@
         
         // Initialize when page loads
         document.addEventListener('DOMContentLoaded', initializeForm);
-        
-        // Teacher remarks based on performance
-        const teacherRemarks = [
-            "An exceptional student with outstanding performance. Shows great initiative and consistently exceeds expectations. Demonstrates excellent understanding of all subjects.",
-            "A very good student who performs well in all subjects. Shows good understanding of concepts and applies knowledge effectively. Consistent effort is evident.",
-            "Good performance with room for improvement. Shows understanding of most concepts but needs to work on challenging areas. With more focus, better results can be achieved.",
-            "Satisfactory performance. Basic understanding of concepts but needs to put in more effort to improve grades. Regular practice and study will help.",
-            "Needs to improve performance. Struggles with several concepts and should seek extra help in weak subjects. More dedication to studies is required."
-        ];
-        
-        // Headteacher remarks
-        const headteacherRemarks = [
-            "Excellent academic performance. Keep up the good work and continue to be a role model to other students.",
-            "Very good results. Continue to work hard and aim for even higher achievement next term.",
-            "Good effort shown this term. With more focus and dedication, you can achieve better results.",
-            "Satisfactory performance. More effort and commitment to studies is required for improvement.",
-            "Needs significant improvement. Must take studies more seriously and seek help where needed."
-        ];
     </script>
 </body>
 </html>
