@@ -3,16 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduTrack • Smart Report Card Generator</title>
-    <meta name="description" content="Generate professional student report cards with automatic grading system">
+    <title>Wexford Community School • Terminal Report Card</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #FF6B00;
-            --primary-dark: #e05e00;
-            --secondary: #003366;
-            --accent: #10b981;
+            --primary: #0B8F4A; /* Wexford Green */
+            --secondary: #003366; /* Dark Blue */
+            --accent: #FF6B00; /* Orange */
             --light: #f8fafc;
             --gray: #e2e8f0;
             --dark: #1e293b;
@@ -28,8 +26,8 @@
         }
         
         body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            font-family: 'Open Sans', sans-serif;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
             color: var(--dark);
             min-height: 100vh;
             padding: 20px;
@@ -39,22 +37,22 @@
             max-width: 1200px;
             margin: 0 auto;
             background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
             overflow: hidden;
         }
         
         /* HEADER */
-        header {
+        .school-header {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
-            padding: 2.5rem 2rem;
+            padding: 2.5rem;
             text-align: center;
             position: relative;
             overflow: hidden;
         }
         
-        header::before {
+        .school-header::before {
             content: "";
             position: absolute;
             top: 0;
@@ -65,39 +63,43 @@
             background-size: cover;
         }
         
-        .logo {
+        .logo-container {
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
         
-        .logo-icon {
+        .school-logo {
+            width: 80px;
+            height: 80px;
             background: white;
-            color: var(--primary);
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.8rem;
-            margin-right: 15px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-right: 20px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
         }
         
-        .logo h1 {
-            font-family: 'Poppins', sans-serif;
+        .school-logo i {
             font-size: 2.5rem;
-            font-weight: 700;
+            color: var(--primary);
         }
         
-        .header-subtitle {
-            font-size: 1.1rem;
+        .school-name {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.8rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+        
+        .school-motto {
+            font-size: 1.2rem;
+            font-weight: 500;
             opacity: 0.9;
-            max-width: 600px;
-            margin: 0 auto;
-            line-height: 1.6;
+            margin-top: 0.5rem;
+            font-style: italic;
         }
         
         /* MAIN CONTENT */
@@ -122,12 +124,14 @@
         }
         
         .section-title {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Montserrat', sans-serif;
             font-size: 1.8rem;
             margin-bottom: 1.5rem;
             color: var(--secondary);
             display: flex;
             align-items: center;
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 0.5rem;
         }
         
         .section-title i {
@@ -151,16 +155,16 @@
             width: 100%;
             padding: 12px 15px;
             border: 2px solid var(--gray);
-            border-radius: 10px;
+            border-radius: 8px;
             font-size: 1rem;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Open Sans', sans-serif;
             transition: all 0.3s;
         }
         
         input:focus, select:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.1);
+            box-shadow: 0 0 0 3px rgba(11, 143, 74, 0.1);
         }
         
         .form-row {
@@ -172,41 +176,29 @@
             flex: 1;
         }
         
+        /* SUBJECT INPUT */
         .subject-row {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+            gap: 0.8rem;
             margin-bottom: 1rem;
             padding: 1rem;
             background: white;
-            border-radius: 10px;
+            border-radius: 8px;
             border: 1px solid var(--gray);
+            align-items: center;
         }
         
-        .subject-name {
-            flex: 2;
-        }
-        
-        .subject-marks {
-            flex: 1;
-        }
-        
-        .add-subject {
-            background: var(--light);
-            border: 2px dashed var(--gray);
-            color: var(--secondary);
-            padding: 12px;
-            border-radius: 10px;
+        .subject-header {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+            gap: 0.8rem;
+            margin-bottom: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--secondary);
+            color: white;
+            border-radius: 6px;
             font-weight: 600;
-            cursor: pointer;
-            text-align: center;
-            transition: all 0.3s;
-            margin-top: 10px;
-        }
-        
-        .add-subject:hover {
-            border-color: var(--primary);
-            color: var(--primary);
         }
         
         .remove-subject {
@@ -221,16 +213,35 @@
             justify-content: center;
             cursor: pointer;
             transition: background 0.3s;
+            justify-self: center;
         }
         
         .remove-subject:hover {
             background: #dc2626;
         }
         
+        .add-subject {
+            background: var(--light);
+            border: 2px dashed var(--gray);
+            color: var(--secondary);
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        
+        .add-subject:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        
         /* BUTTONS */
         .btn {
             padding: 14px 28px;
-            border-radius: 10px;
+            border-radius: 8px;
             font-weight: 600;
             font-size: 1rem;
             border: none;
@@ -248,9 +259,9 @@
         }
         
         .btn-primary:hover {
-            background: var(--primary-dark);
+            background: #0a7d41;
             transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(255, 107, 0, 0.2);
+            box-shadow: 0 6px 12px rgba(11, 143, 74, 0.2);
         }
         
         .btn-secondary {
@@ -284,7 +295,7 @@
         /* REPORT CARD PREVIEW */
         .report-card {
             background: white;
-            border-radius: 15px;
+            border-radius: 12px;
             padding: 2rem;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
             border: 1px solid var(--gray);
@@ -299,141 +310,155 @@
             border-bottom: 2px solid var(--primary);
         }
         
-        .school-name {
-            font-family: 'Poppins', sans-serif;
+        .report-title {
+            font-family: 'Montserrat', sans-serif;
             font-size: 2rem;
             color: var(--secondary);
             margin-bottom: 0.5rem;
         }
         
-        .report-title {
-            font-size: 1.5rem;
+        .report-subtitle {
+            font-size: 1.2rem;
             color: var(--primary);
-            margin-bottom: 1.5rem;
+            font-weight: 600;
         }
         
-        .student-info {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
+        /* STUDENT INFO TABLE */
+        .student-info-table {
+            width: 100%;
+            border-collapse: collapse;
             margin-bottom: 2rem;
+            background: var(--light);
+            border-radius: 8px;
+            overflow: hidden;
         }
         
-        .info-item {
-            display: flex;
-            margin-bottom: 0.5rem;
+        .student-info-table td {
+            padding: 12px 15px;
+            border: 1px solid var(--gray);
         }
         
         .info-label {
-            font-weight: 600;
-            min-width: 140px;
-            color: var(--secondary);
+            font-weight: 700;
+            background: var(--secondary);
+            color: white;
+            width: 35%;
         }
         
-        .info-value {
-            flex: 1;
-        }
-        
-        /* MARKS TABLE */
-        .marks-table {
+        /* ACADEMIC PERFORMANCE TABLE */
+        .performance-table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 2rem;
         }
         
-        .marks-table th {
+        .performance-table th {
             background: var(--secondary);
             color: white;
-            padding: 12px 15px;
-            text-align: left;
+            padding: 12px 10px;
+            text-align: center;
             font-weight: 600;
+            border: 1px solid var(--secondary);
         }
         
-        .marks-table td {
-            padding: 12px 15px;
-            border-bottom: 1px solid var(--gray);
+        .performance-table td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid var(--gray);
         }
         
-        .marks-table tr:nth-child(even) {
+        .performance-table tr:nth-child(even) {
             background: var(--light);
         }
         
-        .grade-A { color: var(--success); font-weight: 600; }
-        .grade-B { color: #3b82f6; font-weight: 600; }
-        .grade-C { color: #f59e0b; font-weight: 600; }
-        .grade-D { color: #f97316; font-weight: 600; }
-        .grade-F { color: var(--danger); font-weight: 600; }
+        /* GRADE COLORS */
+        .grade-A { color: var(--success); font-weight: 700; }
+        .grade-B { color: #3b82f6; font-weight: 700; }
+        .grade-C { color: #f59e0b; font-weight: 700; }
+        .grade-D { color: #f97316; font-weight: 700; }
+        .grade-E { color: #8b5cf6; font-weight: 700; }
+        .grade-F { color: var(--danger); font-weight: 700; }
         
-        /* SUMMARY */
-        .summary {
+        /* REMARKS SECTION */
+        .remarks-section {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-            margin-top: 2rem;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
         }
         
-        .summary-box {
+        .remark-box {
             background: var(--light);
             padding: 1.5rem;
-            border-radius: 10px;
-            text-align: center;
+            border-radius: 8px;
             border-top: 4px solid var(--primary);
         }
         
-        .summary-value {
-            font-size: 2.2rem;
-            font-weight: 700;
+        .remark-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.2rem;
             color: var(--secondary);
-            margin-bottom: 0.5rem;
-        }
-        
-        .summary-label {
-            font-size: 0.9rem;
-            color: #64748b;
-            font-weight: 500;
-        }
-        
-        .performance {
-            margin-top: 2rem;
-            padding: 1.5rem;
-            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
-            border-radius: 10px;
-            border-left: 4px solid var(--accent);
-        }
-        
-        .performance h4 {
-            color: var(--secondary);
-            margin-bottom: 0.5rem;
-        }
-        
-        /* FOOTER */
-        footer {
-            background: var(--secondary);
-            color: white;
-            padding: 1.5rem;
-            text-align: center;
-        }
-        
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
             margin-bottom: 1rem;
         }
         
-        .footer-links a {
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            transition: color 0.3s;
+        .remark-content {
+            min-height: 100px;
+            line-height: 1.6;
         }
         
-        .footer-links a:hover {
+        /* GRADING SYSTEM */
+        .grading-system {
+            background: var(--light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+        
+        .grading-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        
+        .grading-table th {
+            background: var(--primary);
             color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        
+        .grading-table td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid var(--gray);
+        }
+        
+        .grading-table tr:nth-child(even) {
+            background: white;
+        }
+        
+        /* SIGNATURE SECTION */
+        .signature-section {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--gray);
+        }
+        
+        .signature-box {
+            text-align: center;
+        }
+        
+        .signature-line {
+            margin-top: 3rem;
+            border-top: 1px solid var(--dark);
+            width: 200px;
         }
         
         /* PRINT STYLES */
         @media print {
-            .form-section, .action-buttons, footer {
+            .form-section, .action-buttons, .school-header, .no-print {
                 display: none !important;
             }
             
@@ -453,6 +478,11 @@
                 box-shadow: none;
                 border-radius: 0;
             }
+            
+            body {
+                background: white;
+                padding: 0;
+            }
         }
         
         /* RESPONSIVE */
@@ -466,35 +496,58 @@
                 border-bottom: 1px solid var(--gray);
             }
             
-            .student-info {
-                grid-template-columns: 1fr;
+            .subject-row, .subject-header {
+                grid-template-columns: 1.5fr 1fr 1fr 1fr 0.5fr;
+                font-size: 0.9rem;
             }
             
-            .summary {
-                grid-template-columns: repeat(2, 1fr);
+            .remarks-section {
+                grid-template-columns: 1fr;
             }
         }
         
-        @media (max-width: 576px) {
+        @media (max-width: 768px) {
             .form-row {
                 flex-direction: column;
                 gap: 0;
-            }
-            
-            .summary {
-                grid-template-columns: 1fr;
             }
             
             .action-buttons {
                 flex-direction: column;
             }
             
-            .logo h1 {
+            .school-name {
                 font-size: 2rem;
             }
             
             .section-title {
                 font-size: 1.5rem;
+            }
+            
+            .subject-row, .subject-header {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+            
+            .subject-row > div {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            
+            .subject-row > div::before {
+                content: attr(data-label);
+                font-weight: 600;
+                margin-right: 10px;
+            }
+            
+            .subject-header {
+                display: none;
+            }
+            
+            .signature-section {
+                flex-direction: column;
+                gap: 2rem;
             }
         }
         
@@ -532,108 +585,175 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+        
+        /* STUDENT SELECTOR */
+        .student-selector {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--gray);
+        }
+        
+        .student-selector label {
+            margin-bottom: 0.8rem;
+            display: block;
+            font-size: 1.1rem;
+        }
+        
+        .student-selector select {
+            font-size: 1rem;
+        }
+        
+        /* SUMMARY BOX */
+        .summary-box {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            text-align: center;
+        }
+        
+        .summary-item h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .summary-item p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        /* FOOTER */
+        footer {
+            background: var(--secondary);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- HEADER -->
-        <header>
-            <div class="logo">
-                <div class="logo-icon">
+        <!-- SCHOOL HEADER -->
+        <div class="school-header">
+            <div class="logo-container">
+                <div class="school-logo">
                     <i class="fas fa-graduation-cap"></i>
                 </div>
-                <h1>EduTrack</h1>
+                <div>
+                    <h1 class="school-name">WEXFORD COMMUNITY SCHOOL</h1>
+                    <p class="school-motto"><i class="fas fa-quote-left"></i> Innovative, Technology, and Discipline <i class="fas fa-quote-right"></i></p>
+                </div>
             </div>
-            <p class="header-subtitle">Generate professional student report cards with automatic grading system. Calculate percentages, assign grades, and create printable reports in seconds.</p>
-        </header>
+        </div>
         
         <!-- MAIN CONTENT -->
         <div class="main-content">
             <!-- FORM SECTION -->
             <div class="form-section">
-                <h2 class="section-title"><i class="fas fa-edit"></i> Student Information</h2>
+                <h2 class="section-title"><i class="fas fa-user-edit"></i> Student Information</h2>
+                
+                <div class="student-selector">
+                    <label for="studentSelect"><i class="fas fa-users"></i> Select Student</label>
+                    <select id="studentSelect" class="student-select">
+                        <option value="">-- Select a student --</option>
+                        <!-- Students will be populated by JavaScript -->
+                    </select>
+                </div>
                 
                 <form id="reportForm">
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="studentName"><i class="fas fa-user"></i> Full Name</label>
+                            <label for="studentName"><i class="fas fa-user"></i> Student Name</label>
                             <input type="text" id="studentName" placeholder="Enter student's full name" required>
                         </div>
                         <div class="form-group">
-                            <label for="rollNumber"><i class="fas fa-id-card"></i> Roll Number</label>
-                            <input type="text" id="rollNumber" placeholder="e.g., 2023001" required>
+                            <label for="rollNumber"><i class="fas fa-hashtag"></i> Number on Roll</label>
+                            <input type="text" id="rollNumber" placeholder="e.g., 1, 2, 3..." required>
                         </div>
                     </div>
                     
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="className"><i class="fas fa-school"></i> Class & Section</label>
-                            <input type="text" id="className" placeholder="e.g., Class 6A" required>
+                            <label for="className"><i class="fas fa-school"></i> Class</label>
+                            <input type="text" id="className" placeholder="e.g., BS 5" value="BS 5" required>
                         </div>
                         <div class="form-group">
-                            <label for="academicYear"><i class="fas fa-calendar-alt"></i> Academic Year</label>
-                            <input type="text" id="academicYear" placeholder="e.g., 2023-2024" value="2023-2024" required>
+                            <label for="term"><i class="fas fa-calendar-alt"></i> Term</label>
+                            <select id="term" required>
+                                <option value="1ST TERM">1ST TERM</option>
+                                <option value="2ND TERM">2ND TERM</option>
+                                <option value="3RD TERM">3RD TERM</option>
+                            </select>
                         </div>
                     </div>
                     
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="schoolName"><i class="fas fa-university"></i> School Name</label>
-                            <input type="text" id="schoolName" placeholder="Enter school name" value="Greenwood International School" required>
+                            <label for="academicYear"><i class="fas fa-calendar"></i> Academic Year</label>
+                            <input type="text" id="academicYear" placeholder="e.g., 2025-2026" value="2025-2026" required>
                         </div>
                         <div class="form-group">
-                            <label for="teacherName"><i class="fas fa-chalkboard-teacher"></i> Class Teacher</label>
-                            <input type="text" id="teacherName" placeholder="Enter teacher's name" required>
+                            <label for="attendance"><i class="fas fa-chart-line"></i> Attendance</label>
+                            <input type="text" id="attendance" placeholder="e.g., 85/90" value="85/90">
                         </div>
                     </div>
                     
-                    <h2 class="section-title" style="margin-top: 2.5rem;"><i class="fas fa-book"></i> Subject Marks</h2>
-                    <p style="margin-bottom: 1rem; color: #64748b;">Enter marks for each subject (out of 100)</p>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="vacationDate"><i class="fas fa-plane-departure"></i> Vacation Date</label>
+                            <input type="text" id="vacationDate" placeholder="e.g., 15th December, 2025" value="15th December, 2025">
+                        </div>
+                        <div class="form-group">
+                            <label for="reopeningDate"><i class="fas fa-plane-arrival"></i> Next Term Reopens</label>
+                            <input type="text" id="reopeningDate" placeholder="e.g., 10th January, 2026" value="10th January, 2026">
+                        </div>
+                    </div>
+                    
+                    <h2 class="section-title" style="margin-top: 2.5rem;"><i class="fas fa-book-open"></i> Academic Performance</h2>
+                    <p style="margin-bottom: 1rem; color: #64748b;">Enter marks for Class Work (50%) and Exams (50%)</p>
+                    
+                    <div class="subject-header no-print">
+                        <div>SUBJECT</div>
+                        <div>CLASS (50%)</div>
+                        <div>EXAMS (50%)</div>
+                        <div>POSITION</div>
+                        <div>ACTION</div>
+                    </div>
                     
                     <div id="subjectsContainer">
                         <!-- Subjects will be added here dynamically -->
-                        <div class="subject-row">
-                            <div class="form-group subject-name">
-                                <input type="text" class="subjectInput" placeholder="Subject name" value="English" required>
-                            </div>
-                            <div class="form-group subject-marks">
-                                <input type="number" class="marksInput" placeholder="Marks" min="0" max="100" value="85" required>
-                            </div>
-                            <button type="button" class="remove-subject" disabled>
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                        
-                        <div class="subject-row">
-                            <div class="form-group subject-name">
-                                <input type="text" class="subjectInput" placeholder="Subject name" value="Mathematics" required>
-                            </div>
-                            <div class="form-group subject-marks">
-                                <input type="number" class="marksInput" placeholder="Marks" min="0" max="100" value="92" required>
-                            </div>
-                            <button type="button" class="remove-subject">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                        
-                        <div class="subject-row">
-                            <div class="form-group subject-name">
-                                <input type="text" class="subjectInput" placeholder="Subject name" value="Science" required>
-                            </div>
-                            <div class="form-group subject-marks">
-                                <input type="number" class="marksInput" placeholder="Marks" min="0" max="100" value="78" required>
-                            </div>
-                            <button type="button" class="remove-subject">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
                     </div>
                     
                     <div class="add-subject" id="addSubject">
                         <i class="fas fa-plus"></i> Add Another Subject
                     </div>
                     
-                    <div class="action-buttons">
+                    <div class="action-buttons no-print">
                         <button type="button" class="btn btn-primary" id="generateReport">
                             <i class="fas fa-file-alt"></i> Generate Report Card
                         </button>
@@ -656,113 +776,162 @@
                 <div id="reportPreview" class="report-card">
                     <!-- Report card will be generated here -->
                     <div class="report-header">
-                        <h2 class="school-name">Greenwood International School</h2>
-                        <h3 class="report-title">STUDENT REPORT CARD</h3>
-                        <p>Academic Year: 2023-2024</p>
+                        <h2 class="report-title">TERMINAL REPORT CARD</h2>
+                        <p class="report-subtitle">WEXFORD COMMUNITY SCHOOL</p>
                     </div>
                     
-                    <div class="student-info">
-                        <div class="info-item">
-                            <span class="info-label">Student Name:</span>
-                            <span class="info-value" id="previewName">John Doe</span>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">Roll Number:</span>
-                            <span class="info-value" id="previewRoll">2023001</span>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">Class & Section:</span>
-                            <span class="info-value" id="previewClass">Class 6A</span>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">Class Teacher:</span>
-                            <span class="info-value" id="previewTeacher">Ms. Sarah Johnson</span>
-                        </div>
-                    </div>
+                    <table class="student-info-table">
+                        <tr>
+                            <td class="info-label">Student Name:</td>
+                            <td id="previewName">WESLER NYAMEKYE ASANTE</td>
+                        </tr>
+                        <tr>
+                            <td class="info-label">Class:</td>
+                            <td id="previewClass">BS 5</td>
+                        </tr>
+                        <tr>
+                            <td class="info-label">Term:</td>
+                            <td id="previewTerm">1ST TERM</td>
+                        </tr>
+                        <tr>
+                            <td class="info-label">Academic Year:</td>
+                            <td id="previewYear">2025-2026</td>
+                        </tr>
+                        <tr>
+                            <td class="info-label">Number on Roll:</td>
+                            <td id="previewRoll">1</td>
+                        </tr>
+                        <tr>
+                            <td class="info-label">Vacation Date:</td>
+                            <td id="previewVacation">15th December, 2025</td>
+                        </tr>
+                        <tr>
+                            <td class="info-label">Next Term Reopens:</td>
+                            <td id="previewReopening">10th January, 2026</td>
+                        </tr>
+                        <tr>
+                            <td class="info-label">Attendance:</td>
+                            <td id="previewAttendance">85/90</td>
+                        </tr>
+                    </table>
                     
-                    <table class="marks-table">
+                    <h3 style="margin-bottom: 1rem; color: var(--secondary);">ACADEMIC PERFORMANCE</h3>
+                    <table class="performance-table">
                         <thead>
                             <tr>
-                                <th>Subject</th>
-                                <th>Marks Obtained</th>
-                                <th>Out of 100</th>
-                                <th>Grade</th>
+                                <th>SUBJECT</th>
+                                <th>CLASS (50%)</th>
+                                <th>EXAMS (50%)</th>
+                                <th>TOTAL</th>
+                                <th>GRADE</th>
+                                <th>POSITION</th>
+                                <th>REMARK</th>
                             </tr>
                         </thead>
                         <tbody id="marksTableBody">
                             <!-- Marks will be populated here -->
-                            <tr>
-                                <td>English</td>
-                                <td>85</td>
-                                <td>100</td>
-                                <td class="grade-A">A</td>
-                            </tr>
-                            <tr>
-                                <td>Mathematics</td>
-                                <td>92</td>
-                                <td>100</td>
-                                <td class="grade-A">A</td>
-                            </tr>
-                            <tr>
-                                <td>Science</td>
-                                <td>78</td>
-                                <td>100</td>
-                                <td class="grade-C">C</td>
-                            </tr>
                         </tbody>
                     </table>
                     
-                    <div class="summary">
-                        <div class="summary-box">
-                            <div class="summary-value" id="totalMarks">255</div>
-                            <div class="summary-label">Total Marks</div>
+                    <div class="remarks-section">
+                        <div class="remark-box">
+                            <h4 class="remark-title">Teacher's Remark</h4>
+                            <div class="remark-content" id="teacherRemark">
+                                <!-- Teacher's remark will be added here -->
+                            </div>
                         </div>
-                        <div class="summary-box">
-                            <div class="summary-value" id="percentage">85%</div>
-                            <div class="summary-label">Percentage</div>
-                        </div>
-                        <div class="summary-box">
-                            <div class="summary-value" id="overallGrade" class="grade-A">A</div>
-                            <div class="summary-label">Overall Grade</div>
+                        <div class="remark-box">
+                            <h4 class="remark-title">Headteacher's Remark</h4>
+                            <div class="remark-content" id="headteacherRemark">
+                                <!-- Headteacher's remark will be added here -->
+                            </div>
                         </div>
                     </div>
                     
-                    <div class="performance">
-                        <h4><i class="fas fa-chart-line"></i> Performance Summary</h4>
-                        <p id="performanceText">John has performed excellently this term, showing consistent improvement across all subjects. Strong performance in Mathematics and English.</p>
+                    <div class="grading-system">
+                        <h4 style="color: var(--secondary); margin-bottom: 0.5rem;">GRADING SYSTEM</h4>
+                        <table class="grading-table">
+                            <thead>
+                                <tr>
+                                    <th>MARKS RANGE</th>
+                                    <th>GRADE</th>
+                                    <th>REMARK</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>80 - 100</td>
+                                    <td class="grade-A">A</td>
+                                    <td>Excellent</td>
+                                </tr>
+                                <tr>
+                                    <td>70 - 79</td>
+                                    <td class="grade-B">B</td>
+                                    <td>Very Good</td>
+                                </tr>
+                                <tr>
+                                    <td>60 - 69</td>
+                                    <td class="grade-C">C</td>
+                                    <td>Good</td>
+                                </tr>
+                                <tr>
+                                    <td>50 - 59</td>
+                                    <td class="grade-D">D</td>
+                                    <td>Credit</td>
+                                </tr>
+                                <tr>
+                                    <td>40 - 49</td>
+                                    <td class="grade-E">E</td>
+                                    <td>Pass</td>
+                                </tr>
+                                <tr>
+                                    <td>Below 40</td>
+                                    <td class="grade-F">F</td>
+                                    <td>Fail</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                     
-                    <div style="margin-top: 2rem; display: flex; justify-content: space-between; padding-top: 1.5rem; border-top: 1px solid var(--gray);">
-                        <div>
-                            <p style="font-weight: 600;">Class Teacher's Signature</p>
-                            <p style="margin-top: 2rem;">_______________________</p>
+                    <div class="signature-section">
+                        <div class="signature-box">
+                            <p><strong>Class Teacher's Signature</strong></p>
+                            <div class="signature-line"></div>
                         </div>
-                        <div>
-                            <p style="font-weight: 600;">Principal's Signature</p>
-                            <p style="margin-top: 2rem;">_______________________</p>
+                        <div class="signature-box">
+                            <p><strong>Headteacher's Signature</strong></p>
+                            <div class="signature-line"></div>
+                        </div>
+                        <div class="signature-box">
+                            <p><strong>School Stamp</strong></p>
+                            <div style="margin-top: 3rem; font-style: italic;">Date: _________________</div>
                         </div>
                     </div>
                 </div>
                 
-                <div class="action-buttons" style="margin-top: 2rem;">
+                <div class="summary-box no-print" id="summaryBox" style="display: none;">
+                    <!-- Summary will be added here -->
+                </div>
+                
+                <div class="action-buttons no-print" style="margin-top: 2rem;">
                     <button class="btn btn-secondary" id="printReport">
                         <i class="fas fa-print"></i> Print Report Card
                     </button>
                     <button class="btn btn-primary" id="downloadPDF">
-                        <i class="fas fa-download"></i> Download as PDF
+                        <i class="fas fa-download"></i> Save as PDF
                     </button>
                 </div>
             </div>
         </div>
         
         <!-- FOOTER -->
-        <footer>
+        <footer class="no-print">
             <div class="footer-links">
-                <a href="#"><i class="fas fa-question-circle"></i> Help</a>
+                <a href="#"><i class="fas fa-info-circle"></i> About</a>
                 <a href="#"><i class="fas fa-shield-alt"></i> Privacy</a>
-                <a href="#"><i class="fas fa-envelope"></i> Contact</a>
+                <a href="#"><i class="fas fa-phone-alt"></i> Contact</a>
             </div>
-            <p>© 2023 EduTrack Report Card Generator. All rights reserved.</p>
+            <p>© 2025 Wexford Community School • All Rights Reserved</p>
         </footer>
     </div>
 
@@ -777,77 +946,132 @@
         const downloadPDFBtn = document.getElementById('downloadPDF');
         const loadingPreview = document.getElementById('loadingPreview');
         const reportPreview = document.getElementById('reportPreview');
+        const studentSelect = document.getElementById('studentSelect');
+        const summaryBox = document.getElementById('summaryBox');
+        
+        // Student data from the document
+        const students = [
+            { name: "WESLER NYAMEKYE ASANTE", class: "BS 5", term: "1ST TERM", subjects: ["MATHEMATICS", "ENGLISH LANGUAGE", "INTEGRATED SCIENCE", "HISTORY", "COMPUTING", "CREATIVE ART", "RME", "GHANAIAN LANGUAGE"] },
+            { name: "LEMUEL DAPAA AGYABENG", class: "BS 5", term: "1ST TERM", subjects: ["MATHEMATICS", "ENGLISH LANGUAGE", "INTEGRATED SCIENCE", "SOCIAL STUDIES", "CAREER TECHNOLOGY", "CREATIVE ART", "RME", "GHANAIAN LANGUAGE"] },
+            { name: "DARKO OHENE ANSAH", class: "BS 5", term: "1ST TERM", subjects: ["MATHEMATICS", "ENGLISH LANGUAGE", "INTEGRATED SCIENCE", "HISTORY", "COMPUTING", "CREATIVE ART", "RME", "GHANAIAN LANGUAGE"] },
+            { name: "ZAID MUMIN ABDUL", class: "BS 5", term: "1ST TERM", subjects: ["MATHEMATICS", "ENGLISH LANGUAGE", "INTEGRATED SCIENCE", "SOCIAL STUDIES", "CAREER TECHNOLOGY", "CREATIVE ART", "RME", "GHANAIAN LANGUAGE"] },
+            { name: "BLESSING BANNOR", class: "BS 5", term: "1ST TERM", subjects: ["MATHEMATICS", "ENGLISH LANGUAGE", "INTEGRATED SCIENCE", "HISTORY", "COMPUTING", "CREATIVE ART", "RME", "GHANAIAN LANGUAGE"] }
+        ];
         
         // Grading system
         const gradingSystem = [
-            { min: 90, max: 100, grade: 'A', remark: 'Excellent' },
-            { min: 80, max: 89, grade: 'B', remark: 'Very Good' },
-            { min: 70, max: 79, grade: 'C', remark: 'Good' },
-            { min: 60, max: 69, grade: 'D', remark: 'Satisfactory' },
-            { min: 40, max: 59, grade: 'E', remark: 'Pass' },
+            { min: 80, max: 100, grade: 'A', remark: 'Excellent' },
+            { min: 70, max: 79, grade: 'B', remark: 'Very Good' },
+            { min: 60, max: 69, grade: 'C', remark: 'Good' },
+            { min: 50, max: 59, grade: 'D', remark: 'Credit' },
+            { min: 40, max: 49, grade: 'E', remark: 'Pass' },
             { min: 0, max: 39, grade: 'F', remark: 'Fail' }
         ];
         
-        // Performance remarks
-        const performanceRemarks = [
-            "has shown exceptional dedication and performance this term. Keep up the excellent work!",
-            "has performed very well with consistent effort across all subjects. Continue to strive for excellence.",
-            "has shown good progress this term. With more focus, even better results can be achieved.",
-            "has passed all subjects. Additional effort and regular study will help improve performance.",
-            "needs to focus more on studies and complete assignments regularly to improve results."
+        // Teacher remarks based on performance
+        const teacherRemarks = [
+            "An exceptional student with outstanding performance. Shows great initiative and consistently exceeds expectations.",
+            "A very good student who performs well in all subjects. Shows good understanding of concepts.",
+            "Good performance with room for improvement. Should focus more on challenging subjects.",
+            "Satisfactory performance. Needs to put in more effort to improve grades.",
+            "Needs to improve performance. Should seek extra help in weak subjects."
         ];
         
-        // Initialize with sample data
-        document.addEventListener('DOMContentLoaded', function() {
-            generateReport();
+        // Headteacher remarks
+        const headteacherRemarks = [
+            "Excellent academic performance. Keep up the good work.",
+            "Very good results. Continue to work hard.",
+            "Good effort. Aim for higher grades next term.",
+            "Satisfactory performance. More effort is required.",
+            "Needs improvement. Focus on studies."
+        ];
+        
+        // Initialize student dropdown
+        function initializeStudentDropdown() {
+            studentSelect.innerHTML = '<option value="">-- Select a student --</option>';
+            
+            students.forEach((student, index) => {
+                const option = document.createElement('option');
+                option.value = index;
+                option.textContent = student.name;
+                studentSelect.appendChild(option);
+            });
+        }
+        
+        // Load student data when selected
+        studentSelect.addEventListener('change', function() {
+            const selectedIndex = this.value;
+            
+            if (selectedIndex !== "") {
+                const student = students[selectedIndex];
+                
+                // Fill form with student data
+                document.getElementById('studentName').value = student.name;
+                document.getElementById('className').value = student.class;
+                document.getElementById('term').value = student.term;
+                document.getElementById('rollNumber').value = parseInt(selectedIndex) + 1;
+                
+                // Clear existing subjects
+                subjectsContainer.innerHTML = '';
+                
+                // Add subjects for this student
+                student.subjects.forEach(subject => {
+                    addSubjectRow(subject);
+                });
+                
+                // Generate report automatically
+                setTimeout(generateReport, 500);
+            }
         });
         
         // Add subject row
-        addSubjectBtn.addEventListener('click', function() {
+        function addSubjectRow(subjectName = "") {
             const subjectRow = document.createElement('div');
             subjectRow.className = 'subject-row fade-in';
             subjectRow.innerHTML = `
-                <div class="form-group subject-name">
-                    <input type="text" class="subjectInput" placeholder="Subject name" required>
+                <div>
+                    <input type="text" class="subjectInput" placeholder="Subject name" value="${subjectName}" required>
                 </div>
-                <div class="form-group subject-marks">
-                    <input type="number" class="marksInput" placeholder="Marks" min="0" max="100" required>
+                <div>
+                    <input type="number" class="classMarks" placeholder="Marks" min="0" max="50" value="${Math.floor(Math.random() * 26) + 25}" required>
                 </div>
-                <button type="button" class="remove-subject">
-                    <i class="fas fa-times"></i>
-                </button>
+                <div>
+                    <input type="number" class="examMarks" placeholder="Marks" min="0" max="50" value="${Math.floor(Math.random() * 26) + 25}" required>
+                </div>
+                <div>
+                    <input type="number" class="position" placeholder="Position" min="1" value="${Math.floor(Math.random() * 20) + 1}">
+                </div>
+                <div>
+                    <button type="button" class="remove-subject">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
             `;
             
             subjectsContainer.appendChild(subjectRow);
             
-            // Add event listener to the new remove button
+            // Add event listener to the remove button
             const removeBtn = subjectRow.querySelector('.remove-subject');
             removeBtn.addEventListener('click', function() {
                 subjectRow.remove();
-                // Generate report after removal
                 setTimeout(generateReport, 100);
             });
             
-            // Add input event listeners to new fields
+            // Add input event listeners
             const subjectInput = subjectRow.querySelector('.subjectInput');
-            const marksInput = subjectRow.querySelector('.marksInput');
+            const classMarks = subjectRow.querySelector('.classMarks');
+            const examMarks = subjectRow.querySelector('.examMarks');
+            const position = subjectRow.querySelector('.position');
             
             subjectInput.addEventListener('input', generateReport);
-            marksInput.addEventListener('input', generateReport);
-            
-            // Focus on the new subject input
-            subjectInput.focus();
-        });
+            classMarks.addEventListener('input', generateReport);
+            examMarks.addEventListener('input', generateReport);
+            position.addEventListener('input', generateReport);
+        }
         
-        // Add event listeners to existing remove buttons
-        document.querySelectorAll('.remove-subject').forEach(btn => {
-            if (!btn.disabled) {
-                btn.addEventListener('click', function() {
-                    this.closest('.subject-row').remove();
-                    // Generate report after removal
-                    setTimeout(generateReport, 100);
-                });
-            }
+        // Add subject button event
+        addSubjectBtn.addEventListener('click', function() {
+            addSubjectRow();
         });
         
         // Generate report card
@@ -857,22 +1081,19 @@
         resetFormBtn.addEventListener('click', function() {
             if (confirm('Are you sure you want to reset the form? All data will be lost.')) {
                 reportForm.reset();
+                subjectsContainer.innerHTML = '';
                 
-                // Clear all but first subject row
-                const subjectRows = subjectsContainer.querySelectorAll('.subject-row');
-                for (let i = 1; i < subjectRows.length; i++) {
-                    subjectRows[i].remove();
-                }
+                // Add default subjects
+                const defaultSubjects = ["MATHEMATICS", "ENGLISH LANGUAGE", "INTEGRATED SCIENCE", "HISTORY", "COMPUTING", "CREATIVE ART", "RME", "GHANAIAN LANGUAGE"];
+                defaultSubjects.forEach(subject => {
+                    addSubjectRow(subject);
+                });
                 
-                // Reset first subject row
-                const firstSubjectInput = subjectsContainer.querySelector('.subjectInput');
-                const firstMarksInput = subjectsContainer.querySelector('.marksInput');
-                
-                firstSubjectInput.value = 'English';
-                firstMarksInput.value = '85';
+                // Reset student select
+                studentSelect.value = "";
                 
                 // Generate default report
-                generateReport();
+                setTimeout(generateReport, 100);
             }
         });
         
@@ -883,14 +1104,12 @@
         
         // Download as PDF (simulated)
         downloadPDFBtn.addEventListener('click', function() {
-            // In a real implementation, you would use a library like jsPDF
-            // For now, we'll show a simulated download
             this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating PDF...';
             this.disabled = true;
             
             setTimeout(() => {
-                alert('PDF download started! In a real implementation, this would download the report card as a PDF file.');
-                this.innerHTML = '<i class="fas fa-download"></i> Download as PDF';
+                alert('Report card saved as PDF! In a real implementation, this would download the file.');
+                this.innerHTML = '<i class="fas fa-download"></i> Save as PDF';
                 this.disabled = false;
             }, 1500);
         });
@@ -900,54 +1119,90 @@
             // Show loading
             loadingPreview.style.display = 'flex';
             reportPreview.style.opacity = '0.5';
+            summaryBox.style.display = 'none';
             
             // Simulate processing delay
             setTimeout(() => {
                 // Get form values
-                const studentName = document.getElementById('studentName').value || 'John Doe';
-                const rollNumber = document.getElementById('rollNumber').value || '2023001';
-                const className = document.getElementById('className').value || 'Class 6A';
-                const academicYear = document.getElementById('academicYear').value || '2023-2024';
-                const schoolName = document.getElementById('schoolName').value || 'Greenwood International School';
-                const teacherName = document.getElementById('teacherName').value || 'Ms. Sarah Johnson';
+                const studentName = document.getElementById('studentName').value || "WESLER NYAMEKYE ASANTE";
+                const rollNumber = document.getElementById('rollNumber').value || "1";
+                const className = document.getElementById('className').value || "BS 5";
+                const term = document.getElementById('term').value || "1ST TERM";
+                const academicYear = document.getElementById('academicYear').value || "2025-2026";
+                const vacationDate = document.getElementById('vacationDate').value || "15th December, 2025";
+                const reopeningDate = document.getElementById('reopeningDate').value || "10th January, 2026";
+                const attendance = document.getElementById('attendance').value || "85/90";
                 
                 // Get subjects and marks
                 const subjectInputs = document.querySelectorAll('.subjectInput');
-                const marksInputs = document.querySelectorAll('.marksInput');
+                const classMarksInputs = document.querySelectorAll('.classMarks');
+                const examMarksInputs = document.querySelectorAll('.examMarks');
+                const positionInputs = document.querySelectorAll('.position');
                 
                 let subjects = [];
+                let totalClassMarks = 0;
+                let totalExamMarks = 0;
                 let totalMarks = 0;
                 let subjectCount = 0;
+                let totalGradePoints = 0;
                 
                 for (let i = 0; i < subjectInputs.length; i++) {
                     const subject = subjectInputs[i].value.trim();
-                    const marks = parseInt(marksInputs[i].value) || 0;
+                    const classMarks = parseInt(classMarksInputs[i].value) || 0;
+                    const examMarks = parseInt(examMarksInputs[i].value) || 0;
+                    const position = positionInputs[i].value || "";
                     
-                    if (subject && !isNaN(marks)) {
-                        const grade = calculateGrade(marks);
+                    if (subject && !isNaN(classMarks) && !isNaN(examMarks)) {
+                        const total = classMarks + examMarks;
+                        const grade = calculateGrade(total);
+                        const remark = getSubjectRemark(total);
+                        
                         subjects.push({
                             name: subject,
-                            marks: marks,
+                            classMarks: classMarks,
+                            examMarks: examMarks,
+                            total: total,
                             grade: grade.grade,
-                            gradeClass: `grade-${grade.grade}`
+                            gradeClass: `grade-${grade.grade}`,
+                            position: position,
+                            remark: remark
                         });
                         
-                        totalMarks += marks;
+                        totalClassMarks += classMarks;
+                        totalExamMarks += examMarks;
+                        totalMarks += total;
                         subjectCount++;
+                        
+                        // Calculate grade points (A=5, B=4, C=3, D=2, E=1, F=0)
+                        const gradePoints = { 'A': 5, 'B': 4, 'C': 3, 'D': 2, 'E': 1, 'F': 0 };
+                        totalGradePoints += gradePoints[grade.grade] || 0;
                     }
                 }
                 
-                // Calculate percentage
-                const percentage = subjectCount > 0 ? Math.round((totalMarks / (subjectCount * 100)) * 100) : 0;
-                const overallGrade = calculateGrade(percentage);
+                // Calculate averages
+                const averageClassMarks = subjectCount > 0 ? Math.round(totalClassMarks / subjectCount) : 0;
+                const averageExamMarks = subjectCount > 0 ? Math.round(totalExamMarks / subjectCount) : 0;
+                const averageTotal = subjectCount > 0 ? Math.round(totalMarks / subjectCount) : 0;
+                const averageGrade = calculateGrade(averageTotal);
+                const averageGradePoints = subjectCount > 0 ? (totalGradePoints / subjectCount).toFixed(2) : 0;
+                
+                // Determine overall performance
+                let performanceIndex;
+                if (averageTotal >= 80) performanceIndex = 0;
+                else if (averageTotal >= 70) performanceIndex = 1;
+                else if (averageTotal >= 60) performanceIndex = 2;
+                else if (averageTotal >= 50) performanceIndex = 3;
+                else performanceIndex = 4;
                 
                 // Update preview
                 document.getElementById('previewName').textContent = studentName;
-                document.getElementById('previewRoll').textContent = rollNumber;
                 document.getElementById('previewClass').textContent = className;
-                document.getElementById('previewTeacher').textContent = teacherName;
-                document.querySelector('.school-name').textContent = schoolName;
-                document.querySelector('.report-header p').textContent = `Academic Year: ${academicYear}`;
+                document.getElementById('previewTerm').textContent = term;
+                document.getElementById('previewYear').textContent = academicYear;
+                document.getElementById('previewRoll').textContent = rollNumber;
+                document.getElementById('previewVacation').textContent = vacationDate;
+                document.getElementById('previewReopening').textContent = reopeningDate;
+                document.getElementById('previewAttendance').textContent = attendance;
                 
                 // Update marks table
                 const marksTableBody = document.getElementById('marksTableBody');
@@ -958,31 +1213,36 @@
                     row.className = 'fade-in';
                     row.innerHTML = `
                         <td>${subject.name}</td>
-                        <td>${subject.marks}</td>
-                        <td>100</td>
+                        <td>${subject.classMarks}</td>
+                        <td>${subject.examMarks}</td>
+                        <td>${subject.total}</td>
                         <td class="${subject.gradeClass}">${subject.grade}</td>
+                        <td>${subject.position}</td>
+                        <td>${subject.remark}</td>
                     `;
                     marksTableBody.appendChild(row);
                 });
                 
-                // Update summary
-                document.getElementById('totalMarks').textContent = totalMarks;
-                document.getElementById('percentage').textContent = `${percentage}%`;
+                // Update remarks
+                document.getElementById('teacherRemark').textContent = teacherRemarks[performanceIndex];
+                document.getElementById('headteacherRemark').textContent = headteacherRemarks[performanceIndex];
                 
-                const overallGradeElement = document.getElementById('overallGrade');
-                overallGradeElement.textContent = overallGrade.grade;
-                overallGradeElement.className = `summary-value grade-${overallGrade.grade}`;
-                
-                // Update performance text
-                let performanceIndex;
-                if (percentage >= 85) performanceIndex = 0;
-                else if (percentage >= 70) performanceIndex = 1;
-                else if (percentage >= 55) performanceIndex = 2;
-                else if (percentage >= 40) performanceIndex = 3;
-                else performanceIndex = 4;
-                
-                const performanceText = document.getElementById('performanceText');
-                performanceText.textContent = `${studentName} ${performanceRemarks[performanceIndex]}`;
+                // Update summary box
+                summaryBox.style.display = 'grid';
+                summaryBox.innerHTML = `
+                    <div class="summary-item">
+                        <h3>${averageTotal}%</h3>
+                        <p>Average Score</p>
+                    </div>
+                    <div class="summary-item">
+                        <h3 class="${averageGrade.gradeClass}">${averageGrade.grade}</h3>
+                        <p>Overall Grade</p>
+                    </div>
+                    <div class="summary-item">
+                        <h3>${averageGradePoints}</h3>
+                        <p>Grade Point Average</p>
+                    </div>
+                `;
                 
                 // Hide loading and show preview
                 loadingPreview.style.display = 'none';
@@ -996,25 +1256,48 @@
             }, 800);
         }
         
-        // Calculate grade based on marks
-        function calculateGrade(marks) {
+        // Calculate grade based on total marks
+        function calculateGrade(total) {
             for (const grade of gradingSystem) {
-                if (marks >= grade.min && marks <= grade.max) {
+                if (total >= grade.min && total <= grade.max) {
                     return grade;
                 }
             }
             return gradingSystem[gradingSystem.length - 1]; // Return 'F' if no match
         }
         
+        // Get subject remark based on marks
+        function getSubjectRemark(total) {
+            if (total >= 80) return "Excellent";
+            if (total >= 70) return "Very Good";
+            if (total >= 60) return "Good";
+            if (total >= 50) return "Credit";
+            if (total >= 40) return "Pass";
+            return "Needs Improvement";
+        }
+        
+        // Initialize the form with default data
+        function initializeForm() {
+            // Add default subjects
+            const defaultSubjects = ["MATHEMATICS", "ENGLISH LANGUAGE", "INTEGRATED SCIENCE", "HISTORY", "COMPUTING", "CREATIVE ART", "RME", "GHANAIAN LANGUAGE"];
+            defaultSubjects.forEach(subject => {
+                addSubjectRow(subject);
+            });
+            
+            // Populate student dropdown
+            initializeStudentDropdown();
+            
+            // Generate initial report
+            generateReport();
+        }
+        
         // Add input event listeners to form fields
-        document.querySelectorAll('#reportForm input').forEach(input => {
+        document.querySelectorAll('#reportForm input, #reportForm select').forEach(input => {
             input.addEventListener('input', generateReport);
         });
         
-        // Add input event listeners to existing subject inputs
-        document.querySelectorAll('.subjectInput, .marksInput').forEach(input => {
-            input.addEventListener('input', generateReport);
-        });
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', initializeForm);
     </script>
 </body>
 </html>
