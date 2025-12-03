@@ -1355,12 +1355,14 @@
 
         /* Content Visibility */
         .tab-content,
-        .menu-page {
+        .menu-page,
+        .admin-panel {
             display: none;
         }
 
         .tab-content.active,
-        .menu-page.active {
+        .menu-page.active,
+        .admin-panel.active {
             display: block;
             animation: fadeInContent 0.5s ease-out;
         }
@@ -1388,6 +1390,9 @@
             cursor: pointer;
             position: relative;
             overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+            display: block;
         }
 
         .quiz-card::before {
@@ -1406,6 +1411,8 @@
             transform: translateY(-5px);
             box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
             border-color: var(--primary-green);
+            text-decoration: none;
+            color: inherit;
         }
 
         .quiz-card:hover::before {
@@ -1791,18 +1798,18 @@
                     <li><a href="#" onclick="showPage('announcements'); toggleMenu()">
                         📢 Announcements
                     </a></li>
-                    <li><a href="https://stephen-daniels.github.io/PANIN.com/Staff.html" onclick="toggleMenu()">
+                    <li><a href="https://stephen-daniels.github.io/PANIN.com/Staff.html" target="_blank" onclick="toggleMenu()">
                         👥 Staff Directory
                     </a></li>
-                    <li><a href="https://stephen-daniels.github.io/PANIN.com/Student.html" onclick="showPage('student'); toggleMenu()">
+                    <li><a href="https://stephen-daniels.github.io/PANIN.com/Student.html" target="_blank" onclick="toggleMenu()">
                         👥 Student Profile
                          </a></li>
-                    <li><a href="https://stephen-daniels.github.io/PANIN.com/Con.html" onclick="showPage('student'); toggleMenu()">
+                    <li><a href="https://stephen-daniels.github.io/PANIN.com/Con.html" target="_blank" onclick="toggleMenu()">
                         👥 Staff Forum
-                        <li><a href="https://stephen-daniels.github.io/PANIN.com/PTA.html" onclick="showPage('student'); toggleMenu()">
+                        <li><a href="https://stephen-daniels.github.io/PANIN.com/PTA.html" target="_blank" onclick="toggleMenu()">
                         👥 PTA Forum
                     </a></li>
-                    <li><a href="https://stephen-daniels.github.io/PANIN.com/wexquiz.html" onclick="showPage('trial'); toggleMenu()">
+                    <li><a href="#" onclick="showPage('trial'); toggleMenu()">
                         📝 Trial Questions
                     </a></li>
                     <li><a href="#" onclick="showPage('about'); toggleMenu()">
@@ -1812,7 +1819,7 @@
                     <li><a href="#" onclick="showPage('admin-panel'); toggleMenu()">
                         🛡️ Admin Panel
                     </a></li>
-                    <li><a href="https://www.ck12.org/c/arithmetic/add-whole-numbers/?by=ck12&difficulty=all#all&noback=true" onclick="toggleMenu()">
+                    <li><a href="https://www.ck12.org/c/arithmetic/add-whole-numbers/?by=ck12&difficulty=all#all&noback=true" target="_blank" onclick="toggleMenu()">
                         🔗 External Resources
                     </a></li>
                     <li><a href="#" onclick="showPage('upload'); toggleMenu()">
@@ -2118,14 +2125,14 @@
                         <span class="subject-badge">8 Videos</span>
                     </h3>
                     <div class="video-grid">
-                        <a href="https://www.youtube.com/watch?v=11eckLmJEMw&list=RD11eckLmJEMw&start_radio=1" class="video-card">
+                        <a href="https://www.youtube.com/watch?v=11eckLmJEMw&list=RD11eckLmJEMw&start_radio=1" class="video-card" target="_blank">
                             <div class="video-thumbnail" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
                             <div class="video-info">
                                 <p class="video-title">Counting Shapes</p>
                                 <p class="video-lesson">Lesson 1.2</p>
                             </div>
                         </a>
-                        <a href="https://www.youtube.com/watch?v=NybHckSEQBI" class="video-card">
+                        <a href="https://www.youtube.com/watch?v=NybHckSEQBI" class="video-card" target="_blank">
                             <div class="video-thumbnail" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"></div>
                             <div class="video-info">
                                 <p class="video-title">Addition Basics</p>
@@ -2141,7 +2148,7 @@
                         <span class="subject-badge">5 Videos</span>
                     </h3>
                     <div class="video-grid">
-                        <a href="https://www.youtube.com/watch?v=-4CL3Xn-ycw&list=PL0HMo9RIVkoxyScPHjfleUL7q8Z3hOxqn" class="video-card">
+                        <a href="https://www.youtube.com/watch?v=-4CL3Xn-ycw&list=PL0HMo9RIVkoxyScPHjfleUL7q8Z3hOxqn" class="video-card" target="_blank">
                             <div class="video-thumbnail" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);"></div>
                             <div class="video-info">
                                 <p class="video-title">Phonics: 'Sh' Sound</p>
@@ -2157,7 +2164,7 @@
                         <span class="subject-badge">6 Videos</span>
                     </h3>
                     <div class="video-grid">
-                        <a href="https://www.youtube.com/watch?v=AVC-426M6V0" class="video-card">
+                        <a href="https://www.youtube.com/watch?v=AVC-426M6V0" class="video-card" target="_blank">
                             <div class="video-thumbnail" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);"></div>
                             <div class="video-info">
                                 <p class="video-title">The Water Cycle</p>
@@ -2188,7 +2195,7 @@
                         <span class="subject-badge">12 Videos</span>
                     </h3>
                     <div class="video-grid">
-                        <div class="video-card">
+                        <div class="video-card" onclick="playVideo('new.mp4')">
                             <video controls style="width: 100%; height: 120px; object-fit: cover; border-radius: 0;">
                                 <source src="new.mp4" type="video/mp4">
                             </video>
@@ -2197,7 +2204,7 @@
                                 <p class="video-lesson">Lesson 5.1</p>
                             </div>
                         </div>
-                        <div class="video-card">
+                        <div class="video-card" onclick="playVideo('multi-base.mp4')">
                             <video controls style="width: 100%; height: 120px; object-fit: cover; border-radius: 0;">
                                 <source src="multi-base.mp4" type="video/mp4">
                             </video>
@@ -2376,29 +2383,29 @@
                     </p>
                     
                     <div style="display: grid; gap: 1rem;">
-                        <div class="quiz-card"<a href="https://stephen-daniels.github.io/PANIN.com/wexquiz.html" onclick="showPage()></a>
+                        <a href="https://stephen-daniels.github.io/PANIN.com/wexquiz.html" target="_blank" class="quiz-card">
                             <h4 class="quiz-title">📐 Mathematics Quiz</h4>
                             <div class="quiz-meta">
                                 <span>20 Questions</span>
                                 <span>30 Minutes</span>
                             </div>
-                        </div>
+                        </a>
                         
-                        <div class="quiz-card" <a href="https://stephen-daniels.github.io/PANIN.com/wexquiz.html" onclick="showPage()></a>
+                        <a href="https://stephen-daniels.github.io/PANIN.com/wexquiz.html" target="_blank" class="quiz-card">
                             <h4 class="quiz-title">📖 English Quiz</h4>
                             <div class="quiz-meta">
                                 <span>15 Questions</span>
                                 <span>25 Minutes</span>
                             </div>
-                        </div>
+                        </a>
                         
-                        <div class="quiz-card"<a href="https://stephen-daniels.github.io/PANIN.com/wexquiz.html" onclick="showPage()></a>
+                        <a href="https://stephen-daniels.github.io/PANIN.com/wexquiz.html" target="_blank" class="quiz-card">
                             <h4 class="quiz-title">🔬 Science Quiz</h4>
                             <div class="quiz-meta">
                                 <span>18 Questions</span>
                                 <span>28 Minutes</span>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 </section>
 
@@ -2549,27 +2556,27 @@
 
                 <h2 class="admin-section-title">Control Center</h2>
                 <div class="admin-actions">
-                    <div class="admin-action" onclick="alert('Managing users...')">
+                    <div class="admin-action" onclick="openAdminModal('users')">
                         <i class="fas fa-users-cog"></i>
                         <span>Manage Users</span>
                     </div>
-                    <div class="admin-action" onclick="alert('Content approval queue opened')">
+                    <div class="admin-action" onclick="openAdminModal('content')">
                         <i class="fas fa-check-circle"></i>
                         <span>Approve Content</span>
                     </div>
-                    <div class="admin-action" onclick="alert('Analytics dashboard loading...')">
+                    <div class="admin-action" onclick="openAdminModal('analytics')">
                         <i class="fas fa-chart-pie"></i>
                         <span>Analytics</span>
                     </div>
-                    <div class="admin-action" onclick="alert('Sending broadcast...')">
+                    <div class="admin-action" onclick="openAdminModal('broadcast')">
                         <i class="fas fa-broadcast-tower"></i>
                         <span>Broadcast Alert</span>
                     </div>
-                    <div class="admin-action" onclick="alert('Backup in progress...')">
+                    <div class="admin-action" onclick="openAdminModal('backup')">
                         <i class="fas fa-cloud-upload-alt"></i>
                         <span>Backup System</span>
                     </div>
-                    <div class="admin-action" onclick="alert('Settings opened')">
+                    <div class="admin-action" onclick="openAdminModal('settings')">
                         <i class="fas fa-cogs"></i>
                         <span>System Settings</span>
                     </div>
@@ -2601,6 +2608,15 @@
                 <div class="admin-activity">System backup completed successfully</div>
                 <div class="admin-activity">New announcement posted by Admin</div>
                 <div class="admin-activity">12 pending content approvals</div>
+                
+                <!-- Admin Modal -->
+                <div id="admin-modal" class="admin-modal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 1000; justify-content: center; align-items: center;">
+                    <div style="background: white; padding: 2rem; border-radius: 20px; max-width: 400px; width: 90%;">
+                        <h3 id="admin-modal-title" style="margin-bottom: 1rem;"></h3>
+                        <div id="admin-modal-content"></div>
+                        <button onclick="closeAdminModal()" style="margin-top: 1rem; padding: 0.5rem 1rem; background: #0B8F4A; color: white; border: none; border-radius: 8px; cursor: pointer;">Close</button>
+                    </div>
+                </div>
             </div>
             <!-- End Admin Panel -->
         </main>
@@ -2645,17 +2661,6 @@
                 </button>
             </div>
         </nav>
-
-        <!-- Footer -->
-        <footer>
-            <div style="margin-bottom: 0.5rem;">
-                <strong style="color: var(--primary-green);">Wexford Edu Hub</strong> - Empowering Education Through Technology
-            </div>
-            <div style="font-size: 0.75rem;">
-                © 2025 PANIN SARFO — Designed with ❤️ for excellence in education
-            </div>
-        </footer>
-    </div>
 
     <!-- Install Button (PWA) -->
     <button id="install-btn">Install Wexford App</button>
@@ -2818,6 +2823,7 @@
         function switchTab(tabName) {
             document.querySelectorAll('.menu-page').forEach(page => page.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.admin-panel').forEach(panel => panel.classList.remove('active'));
             document.querySelectorAll('.tab-button').forEach(button => button.classList.remove('active'));
 
             const activeContent = document.getElementById(tabName);
@@ -2833,6 +2839,7 @@
         function showPage(pageName) {
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
             document.querySelectorAll('.menu-page').forEach(page => page.classList.remove('active'));
+            document.querySelectorAll('.admin-panel').forEach(panel => panel.classList.remove('active'));
             document.querySelectorAll('.tab-button').forEach(button => button.classList.remove('active'));
 
             const activePage = document.getElementById(pageName);
@@ -2892,9 +2899,58 @@
             }, 2000);
         }
 
-        // Start Quiz Function
+        // Start Quiz Function - Now opens the quiz platform
         function startQuiz(subject) {
-            alert(`Starting ${subject} quiz!\n\nIn production, this would launch an interactive quiz interface with questions, timers, and scoring.`);
+            window.open('https://stephen-daniels.github.io/PANIN.com/wexquiz.html', '_blank');
+        }
+
+        // Play Video Function
+        function playVideo(videoSrc) {
+            alert('Playing video: ' + videoSrc + '\n\nIn production, this would open the video player.');
+        }
+
+        // Admin Panel Functions
+        function openAdminModal(type) {
+            const modal = document.getElementById('admin-modal');
+            const title = document.getElementById('admin-modal-title');
+            const content = document.getElementById('admin-modal-content');
+            
+            const modals = {
+                'users': {
+                    title: 'Manage Users',
+                    content: '<p>User management interface would appear here.</p><button style="padding: 0.5rem 1rem; background: #0B8F4A; color: white; border: none; border-radius: 8px; margin: 0.5rem 0; cursor: pointer;">Add New User</button><br><button style="padding: 0.5rem 1rem; background: #f59e0b; color: white; border: none; border-radius: 8px; margin: 0.5rem 0; cursor: pointer;">Edit Permissions</button>'
+                },
+                'content': {
+                    title: 'Approve Content',
+                    content: '<p>12 items pending approval</p><ul style="margin: 1rem 0; padding-left: 1.5rem;"><li>Math Video - Grade 4</li><li>Science Quiz - JHS</li><li>English Worksheet</li></ul>'
+                },
+                'analytics': {
+                    title: 'Analytics Dashboard',
+                    content: '<p>Platform Statistics:</p><ul style="margin: 1rem 0; padding-left: 1.5rem;"><li>Active Users: 428</li><li>Total Views: 12,847</li><li>Completion Rate: 78%</li></ul>'
+                },
+                'broadcast': {
+                    title: 'Broadcast Message',
+                    content: '<textarea placeholder="Enter broadcast message..." style="width: 100%; height: 100px; padding: 0.5rem; margin: 0.5rem 0; border: 1px solid #ccc; border-radius: 8px;"></textarea><button style="padding: 0.5rem 1rem; background: #0B8F4A; color: white; border: none; border-radius: 8px; cursor: pointer;">Send Broadcast</button>'
+                },
+                'backup': {
+                    title: 'System Backup',
+                    content: '<p>Last Backup: Today, 02:30 AM</p><button style="padding: 0.5rem 1rem; background: #0B8F4A; color: white; border: none; border-radius: 8px; margin: 0.5rem 0; cursor: pointer;">Backup Now</button><br><button style="padding: 0.5rem 1rem; background: #f59e0b; color: white; border: none; border-radius: 8px; margin: 0.5rem 0; cursor: pointer;">Restore Backup</button>'
+                },
+                'settings': {
+                    title: 'System Settings',
+                    content: '<p>Platform Configuration:</p><ul style="margin: 1rem 0; padding-left: 1.5rem;"><li><label><input type="checkbox" checked> Enable Uploads</label></li><li><label><input type="checkbox" checked> Enable Comments</label></li><li><label><input type="checkbox"> Maintenance Mode</label></li></ul>'
+                }
+            };
+            
+            if (modals[type]) {
+                title.textContent = modals[type].title;
+                content.innerHTML = modals[type].content;
+                modal.style.display = 'flex';
+            }
+        }
+
+        function closeAdminModal() {
+            document.getElementById('admin-modal').style.display = 'none';
         }
 
         // Offline Functionality
