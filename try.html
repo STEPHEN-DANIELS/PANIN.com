@@ -3,2672 +3,1018 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wexford Edu Hub - Premium Learning Platform</title>
+    <title>EduTrack • Smart Report Card Generator</title>
+    <meta name="description" content="Generate professional student report cards with automatic grading system">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;700;800&display=swap');
-
         :root {
-            --primary-green: #0B8F4A;
-            --primary-dark: #076838;
-            --primary-light: #E8F5EE;
-            --white: #FFFFFF;
-            --light-gray: #F8FAFC;
-            --border-gray: #E2E8F0;
-            --text-dark: #1E293B;
-            --text-medium: #475569;
-            --text-light: #94A3B8;
-            --gold: #FFD700;
-            --silver: #C0C0C0;
-            --bronze: #CD7F32;
-            --accent-purple: #8B5CF6;
-            --accent-blue: #3B82F6;
-            --accent-pink: #EC4899;
+            --primary: #FF6B00;
+            --primary-dark: #e05e00;
+            --secondary: #003366;
+            --accent: #10b981;
+            --light: #f8fafc;
+            --gray: #e2e8f0;
+            --dark: #1e293b;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --success: #10b981;
         }
-
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
+        
         body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: var(--dark);
             min-height: 100vh;
-            overflow-x: hidden;
+            padding: 20px;
         }
-
-        /* Premium 3D Background */
-        .bg-animation {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        .particle {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 50%;
-            animation: float 20s infinite ease-in-out;
-        }
-
-        .particle:nth-child(1) {
-            width: 80px;
-            height: 80px;
-            left: 10%;
-            animation-delay: 0s;
-        }
-
-        .particle:nth-child(2) {
-            width: 60px;
-            height: 60px;
-            left: 30%;
-            animation-delay: 2s;
-        }
-
-        .particle:nth-child(3) {
-            width: 100px;
-            height: 100px;
-            left: 50%;
-            animation-delay: 4s;
-        }
-
-        .particle:nth-child(4) {
-            width: 70px;
-            height: 70px;
-            left: 70%;
-            animation-delay: 6s;
-        }
-
-        .particle:nth-child(5) {
-            width: 90px;
-            height: 90px;
-            left: 85%;
-            animation-delay: 8s;
-        }
-
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(100vh) rotate(0deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 0.5;
-            }
-            90% {
-                opacity: 0.5;
-            }
-            100% {
-                transform: translateY(-100vh) rotate(360deg);
-                opacity: 0;
-            }
-        }
-
-        .app-container {
-            max-width: 480px;
+        
+        .container {
+            max-width: 1200px;
             margin: 0 auto;
-            background: var(--white);
-            min-height: 100vh;
-            position: relative;
-            box-shadow: 0 0 80px rgba(0, 0, 0, 0.4);
-            z-index: 1;
-            overflow: hidden;
-        }
-
-        /* Premium Header with Glass Morphism */
-        header {
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(20px);
-            padding: 1.5rem 1.25rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-bottom: 1px solid rgba(11, 143, 74, 0.1);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-            animation: slideDown 0.6s ease-out;
-        }
-
-        @keyframes slideDown {
-            from {
-                transform: translateY(-100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .header-content {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .logo-section {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .logo {
-            width: 56px;
-            height: 56px;
-            border-radius: 14px;
-            object-fit: cover;
-            box-shadow: 0 8px 24px rgba(11, 143, 74, 0.3);
-            border: 3px solid var(--primary-light);
-            transition: transform 0.5s ease;
-        }
-
-        .logo:hover {
-            transform: rotate(360deg) scale(1.1);
-        }
-
-        .title-section h1 {
-            font-size: 1.3rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .subtitle {
-            font-size: 0.75rem;
-            color: var(--primary-green);
-            font-weight: 600;
-            margin-top: 3px;
-        }
-
-        .header-actions {
-            display: flex;
-            gap: 0.75rem;
-        }
-
-        .search-button,
-        .menu-button {
-            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
-            border: none;
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 12px rgba(11, 143, 74, 0.3);
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .search-button:hover,
-        .menu-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 24px rgba(11, 143, 74, 0.4);
-        }
-
-        .search-button svg,
-        .menu-button svg {
-            width: 22px;
-            height: 22px;
-            fill: var(--white);
-        }
-
-        .notification-badge {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%);
-            color: var(--white);
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            font-size: 0.7rem;
-            font-weight: 800;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            animation: pulse 2s ease infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.1);
-            }
-        }
-
-        /* Enhanced Search Modal */
-        .search-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(8px);
-            z-index: 300;
-            align-items: flex-start;
-            justify-content: center;
-            padding-top: 2rem;
-        }
-
-        .search-modal.active {
-            display: flex;
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        .search-content {
-            background: var(--white);
-            border-radius: 20px;
-            padding: 2rem;
-            width: 90%;
-            max-width: 400px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            animation: slideUp 0.4s ease-out;
-        }
-
-        @keyframes slideUp {
-            from {
-                transform: translateY(50px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 1rem 1.25rem;
-            border: 2px solid var(--border-gray);
-            border-radius: 12px;
-            font-size: 1rem;
-            font-family: 'Poppins', sans-serif;
-            transition: all 0.3s ease;
-        }
-
-        .search-input:focus {
-            outline: none;
-            border-color: var(--primary-green);
-            box-shadow: 0 0 0 4px var(--primary-light);
-        }
-
-        .close-search {
-            margin-top: 1rem;
-            width: 100%;
-            padding: 0.75rem;
-            background: var(--border-gray);
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: 600;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        /* Enhanced Stats Banner */
-        .stats-banner {
-            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
-            padding: 1.5rem;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .stats-banner::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.1)"/></svg>');
-            background-size: cover;
-            pointer-events: none;
-        }
-
-        .stat-item {
-            text-align: center;
-            color: var(--white);
-            position: relative;
-            z-index: 1;
-        }
-
-        .stat-number {
-            font-size: 1.75rem;
-            font-weight: 800;
-            display: block;
-            margin-bottom: 0.25rem;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
-
-        .stat-label {
-            font-size: 0.75rem;
-            opacity: 0.9;
-            font-weight: 500;
-        }
-
-        /* Main Content */
-        main {
-            padding: 1.5rem 1.25rem 100px;
-            background: var(--light-gray);
-        }
-
-        /* Enhanced School Gallery Slideshow */
-        .school-gallery {
-            margin-bottom: 2rem;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-            position: relative;
-            height: 300px;
-            animation: fadeInGallery 0.8s ease-out;
-        }
-
-        @keyframes fadeInGallery {
-            from {
-                opacity: 0;
-                transform: scale(0.95);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        .gallery-slide {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            transition: opacity 1.5s ease-in-out;
-        }
-
-        .gallery-slide.active {
-            opacity: 1;
-            z-index: 1;
-        }
-
-        .gallery-slide img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .gallery-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
-            padding: 1.5rem;
-            z-index: 2;
-        }
-
-        .gallery-caption {
-            color: white;
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 0.25rem;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
-        }
-
-        .gallery-description {
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 0.9rem;
-            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
-        }
-
-        .gallery-indicators {
-            position: absolute;
-            bottom: 1rem;
-            right: 1rem;
-            display: flex;
-            gap: 0.5rem;
-            z-index: 3;
-        }
-
-        .gallery-indicator {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.5);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .gallery-indicator.active {
             background: white;
-            width: 30px;
-            border-radius: 5px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
         }
-
-        .gallery-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(10px);
-            border: none;
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
+        
+        /* HEADER */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            z-index: 3;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path fill="rgba(255,255,255,0.05)" d="M0,0 L100,0 L100,100 Z"/></svg>');
+            background-size: cover;
+        }
+        
+        .logo {
             display: flex;
             align-items: center;
             justify-content: center;
-        }
-
-        .gallery-nav:hover {
-            background: rgba(255, 255, 255, 0.5);
-            transform: translateY(-50%) scale(1.1);
-        }
-
-        .gallery-nav.prev {
-            left: 1rem;
-        }
-
-        .gallery-nav.next {
-            right: 1rem;
-        }
-
-        /* Enhanced Welcome Banner with 3D Effects */
-        .welcome-banner {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 2rem 1.5rem;
-            border-radius: 20px;
-            color: var(--white);
-            margin-bottom: 2rem;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 10px 40px rgba(102, 126, 234, 0.4);
-            animation: scaleIn 0.6s ease-out;
-            min-height: 200px;
-            perspective: 1000px;
-        }
-
-        @keyframes scaleIn {
-            from {
-                transform: scale(0.9);
-                opacity: 0;
-            }
-            to {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-
-        .welcome-banner::before {
-            content: '🎓';
-            position: absolute;
-            font-size: 8rem;
-            right: -2rem;
-            top: -2rem;
-            opacity: 0.15;
-            animation: rotate 20s linear infinite;
-        }
-
-        @keyframes rotate {
-            from {
-                transform: rotate(0deg);
-            }
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        .banner-slide {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            padding: 2rem 1.5rem;
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            background-size: cover;
-            background-position: center;
-            transform-style: preserve-3d;
-        }
-
-        .banner-slide.active {
-            opacity: 1;
-            z-index: 1;
-        }
-
-        .banner-slide.text-slide {
-            background: transparent;
-        }
-
-        .banner-slide.image-slide {
-            background-size: cover;
-            background-position: center;
-        }
-
-        .banner-slide.image-slide::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.85) 0%, rgba(118, 75, 162, 0.85) 100%);
-            z-index: 0;
-        }
-
-        .banner-content {
-            position: relative;
-            z-index: 2;
-            transform: translateZ(20px);
-        }
-
-        .banner-slide h2 {
-            font-size: 1.5rem;
-            font-weight: 800;
-            margin-bottom: 0.5rem;
-            position: relative;
-            z-index: 1;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        .banner-slide p {
-            font-size: 0.95rem;
-            opacity: 0.95;
-            line-height: 1.5;
-            position: relative;
-            z-index: 1;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-        }
-
-        .quote-author {
-            font-size: 0.85rem;
-            font-style: italic;
-            margin-top: 0.5rem;
-            opacity: 0.9;
-        }
-
-        /* Enhanced Date/Time Display */
-        .datetime-display {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            z-index: 10;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Enhanced Quick Actions */
-        .quick-actions {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        .quick-action {
-            background: var(--white);
-            padding: 1.25rem 0.75rem;
-            border-radius: 16px;
-            text-align: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-            border: 2px solid transparent;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .quick-action::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(11, 143, 74, 0.1) 0%, rgba(5, 168, 84, 0.1) 100%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .quick-action:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
-            border-color: var(--primary-green);
-        }
-
-        .quick-action:hover::before {
-            opacity: 1;
-        }
-
-        .quick-action-icon {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-            display: block;
-            animation: bounce 2s ease infinite;
-            position: relative;
-            z-index: 1;
-        }
-
-        @keyframes bounce {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-5px);
-            }
-        }
-
-        .quick-action-label {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--text-dark);
-            position: relative;
-            z-index: 1;
-        }
-
-        /* Enhanced Grade Header */
-        .grade-header {
-            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
-            color: var(--white);
-            padding: 1.5rem 1.75rem;
-            border-radius: 20px;
-            margin-bottom: 2rem;
-            font-size: 1.6rem;
-            font-weight: 800;
-            box-shadow: 0 10px 40px rgba(11, 143, 74, 0.3);
-            position: relative;
-            overflow: hidden;
-            text-align: center;
-        }
-
-        .grade-header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -10%;
-            width: 200px;
-            height: 200px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            animation: pulse 3s ease infinite;
-        }
-
-        /* Enhanced Progress Section */
-        .progress-section {
-            background: var(--white);
-            padding: 1.5rem;
-            border-radius: 16px;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .progress-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
-        }
-
-        .progress-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             margin-bottom: 1rem;
         }
-
-        .progress-title {
-            font-weight: 700;
-            color: var(--text-dark);
-        }
-
-        .progress-percentage {
-            font-weight: 800;
-            color: var(--primary-green);
-            font-size: 1.25rem;
-        }
-
-        .progress-bar-container {
-            height: 12px;
-            background: var(--border-gray);
-            border-radius: 20px;
-            overflow: hidden;
-        }
-
-        .progress-bar-fill {
-            height: 100%;
-            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
-            border-radius: 20px;
-            transition: width 1.5s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .progress-bar-fill::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-            animation: shimmer 2s infinite;
-        }
-
-        @keyframes shimmer {
-            0% {
-                transform: translateX(-100%);
-            }
-            100% {
-                transform: translateX(100%);
-            }
-        }
-
-        /* Enhanced Achievement Badges */
-        .achievements {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1.5rem;
-            overflow-x: auto;
-            padding-bottom: 0.5rem;
-        }
-
-        .achievement-badge {
-            min-width: 70px;
-            text-align: center;
-            position: relative;
-        }
-
-        .achievement-icon {
-            font-size: 2.5rem;
-            display: block;
-            margin-bottom: 0.25rem;
-            transition: all 0.3s ease;
-            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
-        }
-
-        .achievement-badge:hover .achievement-icon {
-            transform: scale(1.2) rotate(10deg);
-        }
-
-        .achievement-label {
-            font-size: 0.7rem;
-            color: var(--text-medium);
-            font-weight: 600;
-        }
-
-        /* Enhanced Subject Sections */
-        .subject-section {
-            background: var(--white);
-            padding: 1.75rem;
-            border-radius: 20px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-            margin-bottom: 1.75rem;
-            border: 1px solid var(--border-gray);
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .subject-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 5px;
-            height: 100%;
-            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
-            transform: scaleY(0);
-            transition: transform 0.4s ease;
-        }
-
-        .subject-section:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.12);
-        }
-
-        .subject-section:hover::before {
-            transform: scaleY(1);
-        }
-
-        .subject-header {
-            font-size: 1.25rem;
-            font-weight: 800;
-            color: var(--text-dark);
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .subject-header::before {
-            content: '';
-            width: 5px;
-            height: 32px;
-            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
-            border-radius: 4px;
-        }
-
-        .subject-badge {
-            margin-left: auto;
-            background: var(--primary-light);
-            color: var(--primary-green);
-            padding: 0.375rem 0.875rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 700;
-        }
-
-        /* Enhanced Video Grid */
-        .video-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.25rem;
-        }
-
-        .video-card {
-            background: var(--white);
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-            border: 2px solid var(--border-gray);
-            text-decoration: none;
-            color: inherit;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            position: relative;
-        }
-
-        .video-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(11, 143, 74, 0.1) 0%, rgba(5, 168, 84, 0.1) 100%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .video-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
-            border-color: var(--primary-green);
-        }
-
-        .video-card:hover::before {
-            opacity: 1;
-        }
-
-        .video-thumbnail {
-            height: 120px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .video-thumbnail::after {
-            content: '▶';
-            position: absolute;
-            color: var(--white);
-            font-size: 2rem;
-            opacity: 0.9;
-            background: rgba(0, 0, 0, 0.3);
+        
+        .logo-icon {
+            background: white;
+            color: var(--primary);
             width: 50px;
             height: 50px;
-            border-radius: 50%;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s ease;
+            font-size: 1.8rem;
+            margin-right: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
-
-        .video-card:hover .video-thumbnail::after {
-            transform: scale(1.2);
-            background: rgba(11, 143, 74, 0.8);
-        }
-
-        .video-info {
-            padding: 1rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .video-title {
-            font-size: 0.95rem;
+        
+        .logo h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.5rem;
             font-weight: 700;
-            color: var(--text-dark);
-            margin-bottom: 0.5rem;
-            line-height: 1.4;
         }
-
-        .video-lesson {
-            font-size: 0.8rem;
-            color: var(--text-light);
-            font-weight: 600;
+        
+        .header-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        /* MAIN CONTENT */
+        .main-content {
+            display: flex;
+            min-height: 700px;
+        }
+        
+        .form-section {
+            flex: 1;
+            padding: 2.5rem;
+            background: var(--light);
+            border-right: 1px solid var(--gray);
+        }
+        
+        .preview-section {
+            flex: 1;
+            padding: 2.5rem;
+            background: white;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .section-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--secondary);
             display: flex;
             align-items: center;
-            gap: 0.375rem;
         }
-
-        .video-lesson::before {
-            content: '📚';
+        
+        .section-title i {
+            margin-right: 10px;
+            color: var(--primary);
+        }
+        
+        /* FORM STYLES */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid var(--gray);
+            border-radius: 10px;
             font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s;
         }
-
-        /* Enhanced Coming Soon Badge */
-        .coming-soon {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1.5rem;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: var(--white);
-            border-radius: 30px;
-            font-size: 0.95rem;
-            font-weight: 700;
-            margin: 1rem 0;
-            box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
-            animation: pulse 2s ease infinite;
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.1);
         }
-
-        /* Enhanced Side Menu */
-        .menu-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(8px);
-            z-index: 200;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
+        
+        .form-row {
+            display: flex;
+            gap: 1rem;
         }
-
-        .menu-overlay.active {
-            opacity: 1;
-            visibility: visible;
+        
+        .form-row .form-group {
+            flex: 1;
         }
-
-        .side-menu {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 85%;
-            max-width: 340px;
-            height: 100%;
-            background: var(--white);
-            box-shadow: 0 0 60px rgba(0, 0, 0, 0.3);
-            transform: translateX(-100%);
-            transition: transform 0.4s ease;
-            z-index: 201;
-            overflow-y: auto;
-        }
-
-        .menu-overlay.active .side-menu {
-            transform: translateX(0);
-        }
-
-        .menu-header {
-            padding: 2.5rem 2rem;
-            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
-            color: var(--white);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .menu-header::before {
-            content: '📚';
-            position: absolute;
-            font-size: 10rem;
-            right: -3rem;
-            top: -3rem;
-            opacity: 0.1;
-        }
-
-        .menu-header h3 {
-            font-size: 1.75rem;
-            font-weight: 800;
-            position: relative;
-            z-index: 1;
-        }
-
-        .menu-close {
-            position: absolute;
-            top: 2rem;
-            right: 2rem;
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            color: var(--white);
-            font-size: 1.25rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            z-index: 2;
-        }
-
-        .menu-close:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: rotate(90deg);
-        }
-
-        .menu-list {
-            list-style: none;
-            padding: 1.5rem 0;
-        }
-
-        .menu-list li a {
+        
+        .subject-row {
             display: flex;
             align-items: center;
             gap: 1rem;
-            padding: 1.25rem 2rem;
-            text-decoration: none;
-            color: var(--text-dark);
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border-left: 4px solid transparent;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .menu-list li a::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(11, 143, 74, 0.1) 0%, rgba(5, 168, 84, 0.1) 100%);
-            transform: translateX(-100%);
-            transition: transform 0.3s ease;
-        }
-
-        .menu-list li a:hover {
-            background: var(--primary-light);
-            border-left-color: var(--primary-green);
-            color: var(--primary-green);
-            padding-left: 2.5rem;
-        }
-
-        .menu-list li a:hover::before {
-            transform: translateX(0);
-        }
-
-        .menu-contact {
-            padding: 2rem;
-            border-top: 1px solid var(--border-gray);
-            margin-top: auto;
-        }
-
-        .menu-contact h4 {
-            font-size: 0.875rem;
-            font-weight: 700;
-            color: var(--text-dark);
             margin-bottom: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 10px;
+            border: 1px solid var(--gray);
         }
-
-        .menu-contact p {
-            font-size: 0.8rem;
-            color: var(--text-medium);
-            line-height: 1.6;
+        
+        .subject-name {
+            flex: 2;
         }
-
-        /* Enhanced Bottom Navigation */
-        nav {
-            position: fixed;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            max-width: 480px;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(20px);
-            border-top: 1px solid var(--border-gray);
-            box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.12);
-            z-index: 100;
-        }
-
-        .nav-buttons {
-            display: flex;
-            justify-content: space-around;
-            padding: 0.75rem 0.5rem;
-        }
-
-        .tab-button {
+        
+        .subject-marks {
             flex: 1;
+        }
+        
+        .add-subject {
+            background: var(--light);
+            border: 2px dashed var(--gray);
+            color: var(--secondary);
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        
+        .add-subject:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        
+        .remove-subject {
+            background: var(--danger);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            width: 32px;
+            height: 32px;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 0.75rem;
-            border: none;
-            background: transparent;
-            color: var(--text-light);
             cursor: pointer;
-            font-size: 0.7rem;
-            font-weight: 700;
-            border-radius: 14px;
-            transition: all 0.3s ease;
-            font-family: 'Poppins', sans-serif;
-            position: relative;
-            overflow: hidden;
+            transition: background 0.3s;
         }
-
-        .tab-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(11, 143, 74, 0.1) 0%, rgba(5, 168, 84, 0.1) 100%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
+        
+        .remove-subject:hover {
+            background: #dc2626;
         }
-
-        .tab-button svg {
-            margin-bottom: 0.375rem;
-            transition: all 0.3s ease;
-        }
-
-        .tab-button.active {
-            color: var(--primary-green);
-            background: var(--primary-light);
-        }
-
-        .tab-button.active::before {
-            opacity: 1;
-        }
-
-        .tab-button.active svg {
-            transform: scale(1.15);
-        }
-
-        .tab-button:hover:not(.active) {
-            color: var(--text-medium);
-            background: var(--light-gray);
-        }
-
-        /* Enhanced Upload Form */
-        .upload-form {
-            display: flex;
-            flex-direction: column;
-            gap: 1.25rem;
-            padding: 2rem;
-            background: var(--white);
-            border-radius: 20px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .upload-form::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
-        }
-
-        .upload-form input,
-        .upload-form select,
-        .upload-form textarea {
-            padding: 1.125rem 1.25rem;
-            border: 2px solid var(--border-gray);
-            border-radius: 14px;
-            font-size: 1rem;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .upload-form input:focus,
-        .upload-form select:focus,
-        .upload-form textarea:focus {
-            outline: none;
-            border-color: var(--primary-green);
-            box-shadow: 0 0 0 4px var(--primary-light);
-        }
-
-        .upload-form button {
-            padding: 1.25rem;
-            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
-            color: var(--white);
-            border: none;
-            border-radius: 14px;
-            font-weight: 700;
-            font-size: 1.125rem;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            box-shadow: 0 8px 24px rgba(11, 143, 74, 0.3);
-            font-family: 'Poppins', sans-serif;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .upload-form button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, transparent 100%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .upload-form button:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 16px 40px rgba(11, 143, 74, 0.4);
-        }
-
-        .upload-form button:hover::before {
-            opacity: 1;
-        }
-
-        /* Enhanced Footer */
-        footer {
-            padding: 2rem 1.5rem;
-            text-align: center;
-            font-size: 0.875rem;
-            color: var(--text-light);
-            background: var(--white);
-            border-top: 1px solid var(--border-gray);
+        
+        /* BUTTONS */
+        .btn {
+            padding: 14px 28px;
+            border-radius: 10px;
             font-weight: 600;
-            position: relative;
-            overflow: hidden;
-        }
-
-        footer::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
-        }
-
-        /* Content Visibility */
-        .tab-content,
-        .menu-page {
-            display: none;
-        }
-
-        .tab-content.active,
-        .menu-page.active {
-            display: block;
-            animation: fadeInContent 0.5s ease-out;
-        }
-
-        @keyframes fadeInContent {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* New Features: Interactive Quiz Cards */
-        .quiz-card {
-            background: var(--white);
-            border-radius: 16px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
-            border: 2px solid transparent;
-            transition: all 0.3s ease;
+            font-size: 1rem;
+            border: none;
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
-
-        .quiz-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(11, 143, 74, 0.05) 0%, rgba(5, 168, 84, 0.05) 100%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
         }
-
-        .quiz-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
-            border-color: var(--primary-green);
+        
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(255, 107, 0, 0.2);
         }
-
-        .quiz-card:hover::before {
-            opacity: 1;
+        
+        .btn-secondary {
+            background: var(--secondary);
+            color: white;
         }
-
-        .quiz-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--text-dark);
+        
+        .btn-secondary:hover {
+            background: #00264d;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 51, 102, 0.2);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            color: var(--secondary);
+            border: 2px solid var(--secondary);
+        }
+        
+        .btn-outline:hover {
+            background: var(--secondary);
+            color: white;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        /* REPORT CARD PREVIEW */
+        .report-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            border: 1px solid var(--gray);
+            flex: 1;
+            overflow-y: auto;
+        }
+        
+        .report-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid var(--primary);
+        }
+        
+        .school-name {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2rem;
+            color: var(--secondary);
             margin-bottom: 0.5rem;
         }
-
-        .quiz-meta {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.875rem;
-            color: var(--text-light);
-        }
-
-        /* New Features: Student Leaderboard */
-        .leaderboard {
-            background: var(--white);
-            border-radius: 16px;
-            padding: 1.5rem;
+        
+        .report-title {
+            font-size: 1.5rem;
+            color: var(--primary);
             margin-bottom: 1.5rem;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
         }
-
-        .leaderboard-header {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--text-dark);
-            margin-bottom: 1rem;
-            text-align: center;
-        }
-
-        .leaderboard-item {
-            display: flex;
-            align-items: center;
-            padding: 1rem;
-            border-bottom: 1px solid var(--border-gray);
-            transition: all 0.3s ease;
-        }
-
-        .leaderboard-item:last-child {
-            border-bottom: none;
-        }
-
-        .leaderboard-item:hover {
-            background: var(--primary-light);
-            border-radius: 8px;
-        }
-
-        .leaderboard-rank {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            margin-right: 1rem;
-        }
-
-        .rank-1 {
-            background: var(--gold);
-            color: var(--text-dark);
-        }
-
-        .rank-2 {
-            background: var(--silver);
-            color: var(--text-dark);
-        }
-
-        .rank-3 {
-            background: var(--bronze);
-            color: var(--text-dark);
-        }
-
-        .rank-other {
-            background: var(--light-gray);
-            color: var(--text-medium);
-        }
-
-        .leaderboard-name {
-            flex: 1;
-            font-weight: 600;
-            color: var(--text-dark);
-        }
-
-        .leaderboard-score {
-            font-weight: 700;
-            color: var(--primary-green);
-        }
-
-        /* New Features: Interactive Calendar */
-        .calendar-widget {
-            background: var(--white);
-            border-radius: 16px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
-        }
-
-        .calendar-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .calendar-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--text-dark);
-        }
-
-        .calendar-nav {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .calendar-nav button {
-            background: var(--primary-light);
-            border: none;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .calendar-nav button:hover {
-            background: var(--primary-green);
-            color: var(--white);
-        }
-
-        .calendar-grid {
+        
+        .student-info {
             display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 0.5rem;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
         }
-
-        .calendar-day {
-            text-align: center;
-            padding: 0.5rem;
-            font-size: 0.875rem;
+        
+        .info-item {
+            display: flex;
+            margin-bottom: 0.5rem;
+        }
+        
+        .info-label {
             font-weight: 600;
-            color: var(--text-light);
+            min-width: 140px;
+            color: var(--secondary);
         }
-
-        .calendar-date {
-            text-align: center;
-            padding: 0.5rem;
-            font-size: 0.875rem;
+        
+        .info-value {
+            flex: 1;
+        }
+        
+        /* MARKS TABLE */
+        .marks-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 2rem;
+        }
+        
+        .marks-table th {
+            background: var(--secondary);
+            color: white;
+            padding: 12px 15px;
+            text-align: left;
             font-weight: 600;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
         }
-
-        .calendar-date:hover {
-            background: var(--primary-light);
+        
+        .marks-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--gray);
         }
-
-        .calendar-date.active {
-            background: var(--primary-green);
-            color: var(--white);
+        
+        .marks-table tr:nth-child(even) {
+            background: var(--light);
         }
-
-        .calendar-date.event {
-            position: relative;
+        
+        .grade-A { color: var(--success); font-weight: 600; }
+        .grade-B { color: #3b82f6; font-weight: 600; }
+        .grade-C { color: #f59e0b; font-weight: 600; }
+        .grade-D { color: #f97316; font-weight: 600; }
+        .grade-F { color: var(--danger); font-weight: 600; }
+        
+        /* SUMMARY */
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
         }
-
-        .calendar-date.event::after {
-            content: '';
-            position: absolute;
-            bottom: 2px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 4px;
-            height: 4px;
-            border-radius: 50%;
-            background: var(--primary-green);
+        
+        .summary-box {
+            background: var(--light);
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            border-top: 4px solid var(--primary);
         }
-
-        /* Responsive */
-        @media (max-width: 380px) {
-            .video-grid {
+        
+        .summary-value {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .summary-label {
+            font-size: 0.9rem;
+            color: #64748b;
+            font-weight: 500;
+        }
+        
+        .performance {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border-radius: 10px;
+            border-left: 4px solid var(--accent);
+        }
+        
+        .performance h4 {
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+        
+        /* FOOTER */
+        footer {
+            background: var(--secondary);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        /* PRINT STYLES */
+        @media print {
+            .form-section, .action-buttons, footer {
+                display: none !important;
+            }
+            
+            .preview-section {
+                width: 100%;
+                padding: 0;
+            }
+            
+            .report-card {
+                box-shadow: none;
+                border: none;
+                padding: 0;
+            }
+            
+            .container {
+                max-width: 100%;
+                box-shadow: none;
+                border-radius: 0;
+            }
+        }
+        
+        /* RESPONSIVE */
+        @media (max-width: 992px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .form-section {
+                border-right: none;
+                border-bottom: 1px solid var(--gray);
+            }
+            
+            .student-info {
                 grid-template-columns: 1fr;
             }
-            .quick-actions {
+            
+            .summary {
                 grid-template-columns: repeat(2, 1fr);
             }
         }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
+        
+        @media (max-width: 576px) {
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .summary {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .logo h1 {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
         }
-
-        ::-webkit-scrollbar-track {
-            background: var(--light-gray);
+        
+        /* ANIMATIONS */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--primary-green);
-            border-radius: 10px;
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        /* LOADING STATE */
+        .loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem;
+            color: var(--secondary);
+        }
+        
+        .loading-spinner {
+            border: 4px solid var(--gray);
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1rem;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
-    <!-- Animated Background -->
-    <div class="bg-animation">
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-    </div>
-
-    <div class="app-container">
-        <!-- Header -->
+    <div class="container">
+        <!-- HEADER -->
         <header>
-            <div class="header-content">
-                <div class="logo-section">
-                    <img src="WEX LOGO.jpg" alt="Wexford Logo" class="logo">
-                    <div class="title-section">
-                        <h1>Wexford Edu Hub</h1>
-                        <p class="subtitle">Innovation, Technology & Discipline</p>
-                    </div>
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
                 </div>
-                <div class="header-actions">
-                    <button class="search-button" onclick="toggleSearch()">
-                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="11" cy="11" r="8" fill="none" stroke="currentColor" stroke-width="2"/>
-                            <path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2"/>
-                        </svg>
-                    </button>
-                    <button class="menu-button" onclick="toggleMenu()">
-                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/>
-                        </svg>
-                        <span class="notification-badge">3</span>
-                    </button>
-                </div>
+                <h1>EduTrack</h1>
             </div>
+            <p class="header-subtitle">Generate professional student report cards with automatic grading system. Calculate percentages, assign grades, and create printable reports in seconds.</p>
         </header>
-
-        <!-- Search Modal -->
-        <div id="search-modal" class="search-modal" onclick="closeSearchOnOverlay(event)">
-            <div class="search-content">
-                <h3 style="margin-bottom: 1rem; font-weight: 800; color: var(--text-dark);">🔍 Search Resources</h3>
-                <input type="text" class="search-input" placeholder="Search for videos, subjects, lessons..." onkeyup="handleSearch(event)">
-                <button class="close-search" onclick="toggleSearch()">Close</button>
-            </div>
-        </div>
-
-        <!-- Stats Banner -->
-        <div class="stats-banner">
-            <div class="stat-item">
-                <span class="stat-number">150+</span>
-                <span class="stat-label">Videos</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number">12</span>
-                <span class="stat-label">Subjects</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number">500+</span>
-                <span class="stat-label">Students</span>
-            </div>
-        </div>
-
-        <!-- Side Menu -->
-        <div id="menu-overlay" class="menu-overlay" onclick="closeMenuOnOverlay(event)">
-            <div class="side-menu">
-                <div class="menu-header">
-                    <h3>Navigation Menu</h3>
-                    <button class="menu-close" onclick="toggleMenu()">✕</button>
-                </div>
-                <ul class="menu-list">
-                    <li><a href="#" onclick="showPage('announcements'); toggleMenu()">
-                        📢 Announcements
-                    </a></li>
-                    <li><a href="https://stephen-daniels.github.io/PANIN.com/Staff.html" onclick="toggleMenu()">
-                        👥 Staff Directory
-                    </a></li>
-                    <li><a href="https://stephen-daniels.github.io/PANIN.com/Student.html" onclick="showPage('student'); toggleMenu()">
-                        👥 Student Profile
-                         </a></li>
-                    <li><a href="https://stephen-daniels.github.io/PANIN.com/Con.html" onclick="showPage('student'); toggleMenu()">
-                        👥 Staff Forum
-                        <li><a href="https://stephen-daniels.github.io/PANIN.com/PTA.html" onclick="showPage('student'); toggleMenu()">
-                        👥 PTA Forum
-                    </a></li>
-                    <li><a href="#" onclick="showPage('trial'); toggleMenu()">
-                        📝 Trial Questions
-                    </a></li>
-                    <li><a href="#" onclick="showPage('about'); toggleMenu()">
-                        ℹ️ About Us
-                    </a></li>
-                        <li><a href="https://stephen-daniels.github.io/PANIN.com/admins.html" onclick="toggleMenu()">
-                         🛡️ Admin Panel
-                        </a></li>
-                    <li><a href="https://www.ck12.org/c/arithmetic/add-whole-numbers/?by=ck12&difficulty=all#all&noback=true" onclick="toggleMenu()">
-                        🔗 External Resources
-                    </a></li>
-                    <li><a href="#" onclick="showPage('upload'); toggleMenu()">
-                        📤 Upload Content
-                    </a></li>
-                </ul>
+        
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <!-- FORM SECTION -->
+            <div class="form-section">
+                <h2 class="section-title"><i class="fas fa-edit"></i> Student Information</h2>
                 
-                <div class="menu-contact">
-                    <h4>📞 Contact Us</h4>
-                    <p>
-                        Email: info@wexfordedu.com<br>
-                        Phone: +233 XX XXX XXXX<br>
-                        Location: Accra, Ghana
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <main>
-            <!-- School Gallery Slideshow -->
-            <div class="school-gallery">
-                <!-- Gallery Slide 1 -->
-                <div class="gallery-slide active" id="gallery-1">
-                    <img src="Eva.jpg" alt="School Campus">
-                    <div class="gallery-overlay">
-                        <div class="gallery-caption">🏫 Our Beautiful Campus</div>
-                        <div class="gallery-description">Modern facilities for quality education</div>
-                    </div>
-                </div>
-
-                <!-- Gallery Slide 2 -->
-                <div class="gallery-slide" id="gallery-2">
-                    <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1200&q=80" alt="Students Learning">
-                    <div class="gallery-overlay">
-                        <div class="gallery-caption">📚 Interactive Classrooms</div>
-                        <div class="gallery-description">Engaging learning experiences for all students</div>
-                    </div>
-                </div>
-
-                <!-- Gallery Slide 3 -->
-                <div class="gallery-slide" id="gallery-3">
-                    <img src="bs2.jpg" alt="Computer Lab">
-                    <div class="gallery-overlay">
-                        <div class="gallery-caption">Sports</div>
-                        <div class="gallery-description">State-of-the-art technology for digital learning</div>
-                    </div>
-                </div>
-
-                <!-- Gallery Slide 4 -->
-                <div class="gallery-slide" id="gallery-4">
-                    <img src="https://stephen-daniels.github.io/PANIN.com/PICS.html/pics/IMG-20251114-WA0056.jpg" alt="Library">
-                    <div class="gallery-overlay">
-                        <div class="gallery-caption">📖 Staff</div>
-                        <div class="gallery-description">Extensive collection of books and resources</div>
-                    </div>
-                </div>
-
-                <!-- Gallery Slide 5 -->
-                <div class="gallery-slide" id="gallery-5">
-                    <img src="BS6.jpg" alt="Sports Field">
-                    <div class="gallery-overlay">
-                        <div class="gallery-caption">⚽ Sports Facilities</div>
-                        <div class="gallery-description">Promoting physical fitness and teamwork</div>
-                    </div>
-                    </div>
-                
-                    <! -- Gallery Slide 6 -->
-                <div class="gallery-slide" id="gallery-6">
-                    <img src="Wor.jpg" alt="Sports Field">
-                    <div class="gallery-overlay">
-                        <div class="gallery-caption">⚽ Moment of worship</div>
-                        <div class="gallery-description">When our praises go up, His presence comes down</div>
-                    </div>
-                </div>
-                
-            <!-- Gallery Slide 7 -->
-                <div class="gallery-slide" id="gallery-7">
-                    <img src="quiz.jpg" alt="Sports Field">
-                    <div class="gallery-overlay">
-                        <div class="gallery-caption">⚽Inter class quiz</div>
-                        <div class="gallery-description">Promoting physical fitness and teamwork</div>
-                    </div>
-                </div>
-
-                  <!-- Gallery Slide 8 -->
-                <div class="gallery-slide" id="gallery-8">
-                    <img src="https://stephen-daniels.github.io/PANIN.com/PICS.html/pics/IMG-20251114-WA0044.jpg" alt="Library">
-                    <div class="gallery-overlay">
-                        <div class="gallery-caption">⚽ Sports Facilities</div>
-                        <div class="gallery-description">Promoting physical fitness and teamwork</div>
-                    </div>
-                </div>
-
-                    <!-- Gallery Slide 9 -->
-                <div class="gallery-slide" id="gallery-9">
-                    <img src="https://stephen-daniels.github.io/PANIN.com/PICS.html/pics/IMG-20251114-WA0015.jpg" alt="Library">
-                    <div class="gallery-overlay">
-                        <div class="gallery-caption">⚽ Sports Facilities</div>
-                        <div class="gallery-description">Promoting physical fitness and teamwork</div>
-                    </div>
-                </div>
-
-                    <!-- Gallery Slide 10 -->
-                <div class="gallery-slide" id="gallery-10">
-                    <img src="https://stephen-daniels.github.io/PANIN.com/PICS.html/pics/IMG-20251114-WA0020.jpg" alt="Library">
-                    <div class="gallery-overlay">
-                        <div class="gallery-caption">⚽ Sports Facilities</div>
-                        <div class="gallery-description">Promoting physical fitness and teamwork</div>
-                    </div>
-                </div>
-
-                    <!-- Gallery Slide 11 -->
-                <div class="gallery-slide" id="gallery-11">
-                    <img src="https://stephen-daniels.github.io/PANIN.com/PICS.html/pics/IMG-20251114-WA0025.jpg" alt="Library">
-                    <div class="gallery-overlay">
-                        <div class="gallery-caption">⚽ Sports Facilities</div>
-                        <div class="gallery-description">Promoting physical fitness and teamwork</div>
-                    </div>
-                </div>
-
-                    <!-- Gallery Slide 12 -->
-                <div class="gallery-slide" id="gallery-12">
-                    <img src="https://stephen-daniels.github.io/PANIN.com/PICS.html/pics/IMG-20251114-WA0028.jpg" alt="Library">
-                    <div class="gallery-overlay">
-                        <div class="gallery-caption">⚽ Sports Facilities</div>
-                        <div class="gallery-description">Promoting physical fitness and teamwork</div>
-                    </div>
-                </div>
-
-                    <!-- Gallery Slide 13 -->
-                <div class="gallery-slide" id="gallery-13">
-                    <img src="https://stephen-daniels.github.io/PANIN.com/PICS.html/pics/IMG-20251114-WA0041.jpg" alt="Library">
-                    <div class="gallery-overlay">
-                        <div class="gallery-caption">⚽ Sports Facilities</div>
-                        <div class="gallery-description">Promoting physical fitness and teamwork</div>
-                    </div>
-                </div>
-
-                    <!-- Gallery Slide 14 -->
-                <div class="gallery-slide" id="gallery-14">
-                    <img src="https://stephen-daniels.github.io/PANIN.com/PICS.html/pics/IMG-20251114-WA0044.jpg.jpg" alt="Library">
-                    <div class="gallery-overlay">
-                        <div class="gallery-caption">⚽ Sports Facilities</div>
-                        <div class="gallery-description">Promoting physical fitness and teamwork</div>
-                    </div>
-                </div>
-                
-                    <!-- Gallery Slide 15 -->
-                <div class="gallery-slide" id="gallery-15">
-                    <img src="https://stephen-daniels.github.io/PANIN.com/PICS.html/pics/IMG-20251114-WA0019.jpg" alt="Library">
-                    <div class="gallery-overlay">
-                        <div class="gallery-caption">⚽ Sports Facilities</div>
-                        <div class="gallery-description">Promoting physical fitness and teamwork</div>
-                    </div>
-                </div>
-                
-                <!-- Navigation Buttons -->
-                <button class="gallery-nav prev" onclick="changeGallerySlide(-1)">‹</button>
-                <button class="gallery-nav next" onclick="changeGallerySlide(1)">›</button>
-
-                <!-- Indicators -->
-                <div class="gallery-indicators">
-                    <span class="gallery-indicator active" onclick="setGallerySlide(0)"></span>
-                    <span class="gallery-indicator" onclick="setGallerySlide(1)"></span>
-                    <span class="gallery-indicator" onclick="setGallerySlide(2)"></span>
-                    <span class="gallery-indicator" onclick="setGallerySlide(3)"></span>
-                    <span class="gallery-indicator" onclick="setGallerySlide(4)"></span>
-                    <span class="gallery-indicator" onclick="setGallerySlide(5)"></span>
-                    <span class="gallery-indicator" onclick="setGallerySlide(6)"></span>
-                    <span class="gallery-indicator" onclick="setGallerySlide(7)"></span>
-                    <span class="gallery-indicator" onclick="setGallerySlide(8)"></span>
-                    <span class="gallery-indicator" onclick="setGallerySlide(9)"></span>
-                    <span class="gallery-indicator" onclick="setGallerySlide(10)"></span>
-                    <span class="gallery-indicator" onclick="setGallerySlide(11)"></span>
-                    <span class="gallery-indicator" onclick="setGallerySlide(12)"></span>
-                    <span class="gallery-indicator" onclick="setGallerySlide(13)"></span>
-                    <span class="gallery-indicator" onclick="setGallerySlide(14)"></span>
-                    <span class="gallery-indicator" onclick="setGallerySlide(15)"></span>
-                </div>
-            </div>
-
-            <!-- Welcome Banner with Slideshow -->
-            <div class="welcome-banner">
-                <div class="datetime-display" id="datetime-display"></div>
-                
-                <!-- Slide 1: Welcome -->
-                <div class="banner-slide text-slide active" id="slide-1">
-                    <div class="banner-content">
-                        <h2>Welcome Back! 👋</h2>
-                        <p>Continue your learning journey with our latest resources and interactive lessons</p>
-                    </div>
-                </div>
-
-                <!-- Slide 2: Educational Image 1 - Students Learning -->
-                <div class="banner-slide image-slide" id="slide-2" style="background-image: url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&q=80');">
-                    <div class="banner-content">
-                        <h2>📚 Collaborative Learning</h2>
-                        <p>Join thousands of students in interactive study sessions and group discussions</p>
-                    </div>
-                </div>
-
-                <!-- Slide 3: Educational Image 2 - Technology in Education -->
-                <div class="banner-slide image-slide" id="slide-3" style="background-image: url('https://images.unsplash.com/photo-1509062522246-3755977927d7?w=800&q=80');">
-                    <div class="banner-content">
-                        <h2>💻 Digital Learning</h2>
-                        <p>Access cutting-edge educational technology and resources anytime, anywhere</p>
-                    </div>
-                </div>
-
-                <!-- Slide 4: Quote 1 -->
-                <div class="banner-slide text-slide" id="slide-4">
-                    <div class="banner-content">
-                        <h2>💡 Words of Wisdom</h2>
-                        <p>"Education is the most powerful weapon which you can use to change the world."</p>
-                        <p class="quote-author">— Nelson Mandela</p>
-                    </div>
-                </div>
-
-                <!-- Slide 5: Quote 2 -->
-                <div class="banner-slide text-slide" id="slide-5">
-                    <div class="banner-content">
-                        <h2>🎯 Stay Motivated</h2>
-                        <p>"The only way to do great work is to love what you do. Keep learning, keep growing!"</p>
-                        <p class="quote-author">— Steve Jobs</p>
-                    </div>
-                </div>
-
-                <!-- Slide 6: Quote 3 -->
-                <div class="banner-slide text-slide" id="slide-6">
-                    <div class="banner-content">
-                        <h2>⭐ Success Through Effort</h2>
-                        <p>"Success is not final, failure is not fatal: it is the courage to continue that counts."</p>
-                        <p class="quote-author">— Winston Churchill</p>
-                    </div>
-                </div>
-
-                <!-- Slide 7: Quote 4 -->
-                <div class="banner-slide text-slide" id="slide-7">
-                    <div class="banner-content">
-                        <h2>🌟 Dream Big</h2>
-                        <p>"The future belongs to those who believe in the beauty of their dreams."</p>
-                        <p class="quote-author">— Eleanor Roosevelt</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Quick Actions -->
-            <div class="quick-actions">
-                <div class="quick-action" onclick="switchTab('lower-primary')">
-                    <span class="quick-action-icon">🎨</span>
-                    <span class="quick-action-label">Primary</span>
-                </div>
-                <div class="quick-action" onclick="switchTab('jhs')">
-                    <span class="quick-action-icon">🎓</span>
-                    <span class="quick-action-label">JHS</span>
-                </div>
-                <div class="quick-action" onclick="showPage('trial')">
-                    <span class="quick-action-icon">📝</span>
-                    <span class="quick-action-label">Quizzes</span>
-                </div>
-                <div class="quick-action" onclick="showPage('upload')">
-                    <span class="quick-action-icon">📤</span>
-                    <span class="quick-action-label">Upload</span>
-                </div>
-            </div>
-
-            <!-- Lower Primary Tab -->
-            <div id="lower-primary" class="tab-content active">
-                <div class="grade-header">🎨 Lower Primary (Grades 1-3)</div>
-
-                <!-- Progress Section -->
-                <div class="progress-section">
-                    <div class="progress-header">
-                        <span class="progress-title">📊 Your Progress</span>
-                        <span class="progress-percentage">65%</span>
-                    </div>
-                    <div class="progress-bar-container">
-                        <div class="progress-bar-fill" style="width: 65%;"></div>
-                    </div>
-                    <div class="achievements">
-                        <div class="achievement-badge">
-                            <span class="achievement-icon">🏆</span>
-                            <span class="achievement-label">Champion</span>
+                <form id="reportForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="studentName"><i class="fas fa-user"></i> Full Name</label>
+                            <input type="text" id="studentName" placeholder="Enter student's full name" required>
                         </div>
-                        <div class="achievement-badge">
-                            <span class="achievement-icon">⭐</span>
-                            <span class="achievement-label">Star</span>
-                        </div>
-                        <div class="achievement-badge">
-                            <span class="achievement-icon">🎯</span>
-                            <span class="achievement-label">Achiever</span>
-                        </div>
-                        <div class="achievement-badge">
-                            <span class="achievement-icon">🔥</span>
-                            <span class="achievement-label">Streak</span>
-                        </div>
-                    </div>
-                </div>
-
-                <section class="subject-section">
-                    <h3 class="subject-header">
-                        📊 Maths Resources
-                        <span class="subject-badge">8 Videos</span>
-                    </h3>
-                    <div class="video-grid">
-                        <a href="https://www.youtube.com/watch?v=11eckLmJEMw&list=RD11eckLmJEMw&start_radio=1" class="video-card">
-                            <div class="video-thumbnail" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
-                            <div class="video-info">
-                                <p class="video-title">Counting Shapes</p>
-                                <p class="video-lesson">Lesson 1.2</p>
-                            </div>
-                        </a>
-                        <a href="https://www.youtube.com/watch?v=NybHckSEQBI" class="video-card">
-                            <div class="video-thumbnail" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"></div>
-                            <div class="video-info">
-                                <p class="video-title">Addition Basics</p>
-                                <p class="video-lesson">Lesson 2.1</p>
-                            </div>
-                        </a>
-                    </div>
-                </section>
-
-                <section class="subject-section">
-                    <h3 class="subject-header">
-                        📚 English Resources
-                        <span class="subject-badge">5 Videos</span>
-                    </h3>
-                    <div class="video-grid">
-                        <a href="https://www.youtube.com/watch?v=-4CL3Xn-ycw&list=PL0HMo9RIVkoxyScPHjfleUL7q8Z3hOxqn" class="video-card">
-                            <div class="video-thumbnail" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);"></div>
-                            <div class="video-info">
-                                <p class="video-title">Phonics: 'Sh' Sound</p>
-                                <p class="video-lesson">Unit 3</p>
-                            </div>
-                        </a>
-                    </div>
-                </section>
-
-                <section class="subject-section">
-                    <h3 class="subject-header">
-                        🔬 Science Resources
-                        <span class="subject-badge">6 Videos</span>
-                    </h3>
-                    <div class="video-grid">
-                        <a href="https://www.youtube.com/watch?v=AVC-426M6V0" class="video-card">
-                            <div class="video-thumbnail" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);"></div>
-                            <div class="video-info">
-                                <p class="video-title">The Water Cycle</p>
-                                <p class="video-lesson">Module 4</p>
-                            </div>
-                        </a>
-                    </div>
-                </section>
-            </div>
-
-            <!-- Upper Primary Tab -->
-            <div id="upper-primary" class="tab-content">
-                <div class="grade-header">📖 Upper Primary (Grades 4-6)</div>
-                
-                <div class="progress-section">
-                    <div class="progress-header">
-                        <span class="progress-title">📊 Your Progress</span>
-                        <span class="progress-percentage">45%</span>
-                    </div>
-                    <div class="progress-bar-container">
-                        <div class="progress-bar-fill" style="width: 45%;"></div>
-                    </div>
-                </div>
-
-                <section class="subject-section">
-                    <h3 class="subject-header">
-                        📊 Maths Resources
-                        <span class="subject-badge">12 Videos</span>
-                    </h3>
-                    <div class="video-grid">
-                        <div class="video-card">
-                            <video controls style="width: 100%; height: 120px; object-fit: cover; border-radius: 0;">
-                                <source src="new.mp4" type="video/mp4">
-                            </video>
-                            <div class="video-info">
-                                <p class="video-title">Math Fundamentals</p>
-                                <p class="video-lesson">Lesson 5.1</p>
-                            </div>
-                        </div>
-                        <div class="video-card">
-                            <video controls style="width: 100%; height: 120px; object-fit: cover; border-radius: 0;">
-                                <source src="multi-base.mp4" type="video/mp4">
-                            </video>
-                            <div class="video-info">
-                                <p class="video-title">Multi-Base Numbers</p>
-                                <p class="video-lesson">Lesson 5.2</p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <section class="subject-section">
-                    <h3 class="subject-header">
-                        📚 English Resources
-                        <span class="subject-badge">Coming Soon</span>
-                    </h3>
-                    <span class="coming-soon">📅 New content arriving soon!</span>
-                </section>
-
-                <section class="subject-section">
-                    <h3 class="subject-header">
-                        🔬 Science Resources
-                        <span class="subject-badge">Coming Soon</span>
-                    </h3>
-                    <span class="coming-soon">📅 Exciting experiments on the way!</span>
-                </section>
-            </div>
-
-            <!-- JHS Tab -->
-            <div id="jhs" class="tab-content">
-                <div class="grade-header">🎓 JHS (Junior High School)</div>
-                
-                <div class="progress-section">
-                    <div class="progress-header">
-                        <span class="progress-title">📊 Your Progress</span>
-                        <span class="progress-percentage">30%</span>
-                    </div>
-                    <div class="progress-bar-container">
-                        <div class="progress-bar-fill" style="width: 30%;"></div>
-                    </div>
-                </div>
-
-                <section class="subject-section">
-                    <h3 class="subject-header">
-                        📊 Mathematics
-                        <span class="subject-badge">Coming Soon</span>
-                    </h3>
-                    <span class="coming-soon">📅 Advanced math lessons launching soon!</span>
-                </section>
-
-                <section class="subject-section">
-                    <h3 class="subject-header">
-                        📚 English Language
-                        <span class="subject-badge">Coming Soon</span>
-                    </h3>
-                    <span class="coming-soon">📅 Grammar and composition videos incoming!</span>
-                </section>
-
-                <section class="subject-section">
-                    <h3 class="subject-header">
-                        🔬 Integrated Science
-                        <span class="subject-badge">Coming Soon</span>
-                    </h3>
-                    <span class="coming-soon">📅 Lab experiments and theory videos coming!</span>
-                </section>
-            </div>
-
-            <!-- Announcements Page -->
-            <div id="announcements" class="menu-page">
-                <div class="grade-header" style="background: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);">📢 School Announcements</div>
-                
-                <section class="subject-section">
-                    <h3 class="subject-header">🔔 Latest Updates</h3>
-                    
-                    <div style="display: grid; gap: 1.25rem;">
-                          <!-- Announcement 1 -->
-                        <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 1.5rem; border-radius: 16px; color: white; box-shadow: 0 4px 16px rgba(240, 147, 251, 0.3);">
-                            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
-                                <span style="font-size: 2rem;">📅</span>
-                                <div>
-                                    <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.25rem;">Upcoming Examinations</h4>
-                                    <p style="font-size: 0.75rem; opacity: 0.9;">Posted 1 day ago</p>
-                                </div>
-                            </div>
-                            <p style="font-size: 0.9rem; line-height: 1.6; opacity: 0.95;">
-                                Wishing You Success in the Upcoming Exams
-<br>​Dear Students,</br>
-​As your upcoming examinations draw near, we want to extend our very best wishes. It is always a pleasure to see you all achieve flying colors in your academic pursuit, and we have full faith in your ability to perform exceptionally well.
-​Key Reminders
-​Please use this final period before the exams to ensure you have taken care of the following essential administrative items:
-​Financial Clearance: Kindly settle any outstanding school fees and printing fees immediately. Only students who are financially cleared will be allowed to sit for the examinations.
-​Health and Preparation: Please prepare adequately for all your subjects. More importantly, ensure you are of good health throughout this period. A well-rested mind and body are your best tools for success.
-​We encourage you to manage your time wisely, study smart, and remain focused. We are here to support you.
-​Good luck as the exams begin!
-                            </p>
-                        </div>
-
-                        <!-- Announcement 2 -->
-                        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 1.5rem; border-radius: 16px; color: white; box-shadow: 0 4px 16px rgba(102, 126, 234, 0.3);">
-                            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
-                                <span style="font-size: 2rem;">🎉</span>
-                                <div>
-                                    <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.25rem;">New Video Content Available!</h4>
-                                    <p style="font-size: 0.75rem; opacity: 0.9;">Posted 2 hours ago</p>
-                                </div>
-                            </div>
-                            <p style="font-size: 0.9rem; line-height: 1.6; opacity: 0.95;">
-                                We've just added 15 new educational videos across Mathematics, Science, and English subjects. Check them out in your respective grade sections!
-                            </p>
-                        </div>
-
-                      
-                        <!-- Announcement 3 -->
-                        <div style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); padding: 1.5rem; border-radius: 16px; color: white; box-shadow: 0 4px 16px rgba(250, 112, 154, 0.3);">
-                            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
-                                <span style="font-size: 2rem;">⏰</span>
-                                <div>
-                                    <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.25rem;">Extended Library Hours</h4>
-                                    <p style="font-size: 0.75rem; opacity: 0.9;">Posted 3 days ago</p>
-                                </div>
-                            </div>
-                            <p style="font-size: 0.9rem; line-height: 1.6; opacity: 0.95;">
-                                The digital library is now accessible 24/7! Access all educational resources anytime from home. Login credentials have been sent to parents via SMS.
-                            </p>
-                        </div>
-
-                        <!-- Announcement 4 -->
-                        <div style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%); padding: 1.5rem; border-radius: 16px; color: white; box-shadow: 0 4px 16px rgba(48, 207, 208, 0.3);">
-                            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
-                                <span style="font-size: 2rem;">🏆</span>
-                                <div>
-                                    <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.25rem;">Student Achievement Awards</h4>
-                                    <p style="font-size: 0.75rem; opacity: 0.9;">Posted 5 days ago</p>
-                                </div>
-                            </div>
-                            <p style="font-size: 0.9rem; line-height: 1.6; opacity: 0.95;">
-                                Congratulations to all students who achieved 100% completion on their learning modules! Awards ceremony scheduled for Friday at 2 PM in the school hall.
-                            </p>
-                        </div>
-
-                        <!-- Announcement 5 -->
-                        <div style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); padding: 1.5rem; border-radius: 16px; color: white; box-shadow: 0 4px 16px rgba(17, 153, 142, 0.3);">
-                            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
-                                <span style="font-size: 2rem;">💻</span>
-                                <div>
-                                    <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.25rem;">ICT Workshop Registration Open</h4>
-                                    <p style="font-size: 0.75rem; opacity: 0.9;">Posted 1 week ago</p>
-                                </div>
-                            </div>
-                            <p style="font-size: 0.9rem; line-height: 1.6; opacity: 0.95;">
-                                Free coding workshop for upper primary and JHS students starts next month. Limited spaces available. Register through the school office or contact your class teacher.
-                            </p>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Important Notice Section -->
-                <section class="subject-section" style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(220, 38, 38, 0.1) 100%); border-left: 4px solid #ef4444;">
-                    <h3 class="subject-header" style="color: #dc2626;">
-                        ⚠️ Important Notice
-                    </h3>
-                    <p style="color: var(--text-dark); line-height: 1.6; font-weight: 500;">
-                        <strong>School Resumption:</strong> All students are expected to resume classes on Monday, January 20th, 2025. Please ensure all fees are settled before resumption. Contact the administration office for any inquiries.
-                    </p>
-                </section>
-            </div>
-
-            <!-- Trial Questions Page -->
-            <div id="trial" class="menu-page">
-                <div class="grade-header" style="background: linear-gradient(135deg, #3B82F6 0%, #8B5CF6 100%);">📝 Trial Questions & Quizzes</div>
-                
-                <section class="subject-section">
-                    <h3 class="subject-header">🎯 Practice Makes Perfect</h3>
-                    <p style="color: var(--text-medium); line-height: 1.6; margin-bottom: 1.5rem;">
-                        Test your knowledge with our comprehensive collection of practice questions and interactive quizzes designed to help you excel in your examinations.
-                    </p>
-                    
-                    <div style="display: grid; gap: 1rem;">
-                        <div class="quiz-card" onclick="startQuiz('math')">
-                            <h4 class="quiz-title">📐 Mathematics Quiz</h4>
-                            <div class="quiz-meta">
-                                <span>20 Questions</span>
-                                <span>30 Minutes</span>
-                            </div>
-                        </div>
-                        
-                        <div class="quiz-card" onclick="startQuiz('english')">
-                            <h4 class="quiz-title">📖 English Quiz</h4>
-                            <div class="quiz-meta">
-                                <span>15 Questions</span>
-                                <span>25 Minutes</span>
-                            </div>
-                        </div>
-                        
-                        <div class="quiz-card" onclick="startQuiz('science')">
-                            <h4 class="quiz-title">🔬 Science Quiz</h4>
-                            <div class="quiz-meta">
-                                <span>18 Questions</span>
-                                <span>28 Minutes</span>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Student Leaderboard -->
-                <section class="subject-section">
-                    <h3 class="subject-header">🏆 Student Leaderboard</h3>
-                    <div class="leaderboard">
-                        <div class="leaderboard-header">Top Performers This Week</div>
-                        <div class="leaderboard-item">
-                            <div class="leaderboard-rank rank-1">1</div>
-                            <div class="leaderboard-name">Kwame Mensah</div>
-                            <div class="leaderboard-score">98%</div>
-                        </div>
-                        <div class="leaderboard-item">
-                            <div class="leaderboard-rank rank-2">2</div>
-                            <div class="leaderboard-name">Ama Osei</div>
-                            <div class="leaderboard-score">95%</div>
-                        </div>
-                        <div class="leaderboard-item">
-                            <div class="leaderboard-rank rank-3">3</div>
-                            <div class="leaderboard-name">Kofi Asante</div>
-                            <div class="leaderboard-score">92%</div>
-                        </div>
-                        <div class="leaderboard-item">
-                            <div class="leaderboard-rank rank-other">4</div>
-                            <div class="leaderboard-name">Esi Boateng</div>
-                            <div class="leaderboard-score">89%</div>
-                        </div>
-                        <div class="leaderboard-item">
-                            <div class="leaderboard-rank rank-other">5</div>
-                            <div class="leaderboard-name">Yaw Appiah</div>
-                            <div class="leaderboard-score">87%</div>
-                        </div>
-                    </div>
-                </section>
-            </div>
-
-            <!-- About Page -->
-            <div id="about" class="menu-page">
-                <div class="grade-header" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">ℹ️ About Wexford Edu Hub</div>
-                
-                <section class="subject-section">
-                    <h3 class="subject-header">🎯 Our Mission</h3>
-                    <p style="color: var(--text-medium); line-height: 1.8; margin-bottom: 1.5rem;">
-                        Welcome to Wexford Edu Hub - a cutting-edge digital learning platform revolutionizing education through technology, innovation, and discipline. We serve as a central communication and information hub for students, parents, and staff.
-                    </p>
-                    
-                    <h3 class="subject-header">✨ What We Offer</h3>
-                    <div style="display: grid; gap: 1rem; margin-bottom: 1.5rem;">
-                        <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: var(--light-gray); border-radius: 12px;">
-                            <span style="font-size: 2rem;">📹</span>
-                            <div>
-                                <h4 style="font-weight: 700; margin-bottom: 0.25rem;">Video Library</h4>
-                                <p style="font-size: 0.875rem; color: var(--text-medium);">Comprehensive collection of educational videos</p>
-                            </div>
-                        </div>
-                        
-                        <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: var(--light-gray); border-radius: 12px;">
-                            <span style="font-size: 2rem;">📝</span>
-                            <div>
-                                <h4 style="font-weight: 700; margin-bottom: 0.25rem;">Interactive Quizzes</h4>
-                                <p style="font-size: 0.875rem; color: var(--text-medium);">Test your knowledge with practice questions</p>
-                            </div>
-                        </div>
-                        
-                        <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: var(--light-gray); border-radius: 12px;">
-                            <span style="font-size: 2rem;">📊</span>
-                            <div>
-                                <h4 style="font-weight: 700; margin-bottom: 0.25rem;">Progress Tracking</h4>
-                                <p style="font-size: 0.875rem; color: var(--text-medium);">Monitor your learning journey</p>
-                            </div>
+                        <div class="form-group">
+                            <label for="rollNumber"><i class="fas fa-id-card"></i> Roll Number</label>
+                            <input type="text" id="rollNumber" placeholder="e.g., 2023001" required>
                         </div>
                     </div>
                     
-                    <h3 class="subject-header">🏆 Our Values</h3>
-                    <p style="color: var(--text-medium); line-height: 1.8;">
-                        <strong>Innovation:</strong> Embracing technology for better learning<br>
-                        <strong>Technology:</strong> Leveraging digital tools for education<br>
-                        <strong>Discipline:</strong> Building character through consistent effort
-                    </p>
-                </section>
-            </div>
-
-            <!-- Upload Page -->
-            <div id="upload" class="menu-page">
-                <div class="grade-header" style="background: linear-gradient(135deg, #ee0979 0%, #ff6a00 100%);">📤 Upload Video Resource</div>
-                
-                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 1.5rem; border-radius: 16px; margin-bottom: 1.5rem; color: white;">
-                    <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">🎬 Share Your Knowledge</h3>
-                    <p style="font-size: 0.875rem; opacity: 0.95;">Upload educational videos to help students learn and grow. Your contributions make a difference!</p>
-                </div>
-                
-                <form class="upload-form" onsubmit="handleUpload(event)">
-                    <input type="text" placeholder="📌 Video Title" required>
-                    <input type="url" placeholder="🔗 Video Link (URL)" required>
-                    <select required>
-                        <option value="">🎯 Select Grade Level...</option>
-                        <option>Lower Primary (1-3)</option>
-                        <option>Upper Primary (4-6)</option>
-                        <option>JHS (7-9)</option>
-                    </select>
-                    <select required>
-                        <option value="">📚 Select Subject...</option>
-                        <option>Mathematics</option>
-                        <option>English Language</option>
-                        <option>Science</option>
-                        <option>Social Studies</option>
-                        <option>ICT</option>
-                        <option>Creative Arts</option>
-                    </select>
-                    <textarea placeholder="📝 Video Description (Optional)" rows="3" style="resize: vertical;"></textarea>
-                    <button type="submit">🚀 Submit Video Link</button>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="className"><i class="fas fa-school"></i> Class & Section</label>
+                            <input type="text" id="className" placeholder="e.g., Class 6A" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="academicYear"><i class="fas fa-calendar-alt"></i> Academic Year</label>
+                            <input type="text" id="academicYear" placeholder="e.g., 2023-2024" value="2023-2024" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="schoolName"><i class="fas fa-university"></i> School Name</label>
+                            <input type="text" id="schoolName" placeholder="Enter school name" value="Greenwood International School" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="teacherName"><i class="fas fa-chalkboard-teacher"></i> Class Teacher</label>
+                            <input type="text" id="teacherName" placeholder="Enter teacher's name" required>
+                        </div>
+                    </div>
+                    
+                    <h2 class="section-title" style="margin-top: 2.5rem;"><i class="fas fa-book"></i> Subject Marks</h2>
+                    <p style="margin-bottom: 1rem; color: #64748b;">Enter marks for each subject (out of 100)</p>
+                    
+                    <div id="subjectsContainer">
+                        <!-- Subjects will be added here dynamically -->
+                        <div class="subject-row">
+                            <div class="form-group subject-name">
+                                <input type="text" class="subjectInput" placeholder="Subject name" value="English" required>
+                            </div>
+                            <div class="form-group subject-marks">
+                                <input type="number" class="marksInput" placeholder="Marks" min="0" max="100" value="85" required>
+                            </div>
+                            <button type="button" class="remove-subject" disabled>
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="subject-row">
+                            <div class="form-group subject-name">
+                                <input type="text" class="subjectInput" placeholder="Subject name" value="Mathematics" required>
+                            </div>
+                            <div class="form-group subject-marks">
+                                <input type="number" class="marksInput" placeholder="Marks" min="0" max="100" value="92" required>
+                            </div>
+                            <button type="button" class="remove-subject">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="subject-row">
+                            <div class="form-group subject-name">
+                                <input type="text" class="subjectInput" placeholder="Subject name" value="Science" required>
+                            </div>
+                            <div class="form-group subject-marks">
+                                <input type="number" class="marksInput" placeholder="Marks" min="0" max="100" value="78" required>
+                            </div>
+                            <button type="button" class="remove-subject">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="add-subject" id="addSubject">
+                        <i class="fas fa-plus"></i> Add Another Subject
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button type="button" class="btn btn-primary" id="generateReport">
+                            <i class="fas fa-file-alt"></i> Generate Report Card
+                        </button>
+                        <button type="button" class="btn btn-outline" id="resetForm">
+                            <i class="fas fa-redo"></i> Reset Form
+                        </button>
+                    </div>
                 </form>
             </div>
-        </main>
-   <!-- Footer -->
+            
+            <!-- PREVIEW SECTION -->
+            <div class="preview-section">
+                <h2 class="section-title"><i class="fas fa-eye"></i> Report Card Preview</h2>
+                
+                <div id="loadingPreview" class="loading" style="display: none;">
+                    <div class="loading-spinner"></div>
+                    <p>Generating report card...</p>
+                </div>
+                
+                <div id="reportPreview" class="report-card">
+                    <!-- Report card will be generated here -->
+                    <div class="report-header">
+                        <h2 class="school-name">Greenwood International School</h2>
+                        <h3 class="report-title">STUDENT REPORT CARD</h3>
+                        <p>Academic Year: 2023-2024</p>
+                    </div>
+                    
+                    <div class="student-info">
+                        <div class="info-item">
+                            <span class="info-label">Student Name:</span>
+                            <span class="info-value" id="previewName">John Doe</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Roll Number:</span>
+                            <span class="info-value" id="previewRoll">2023001</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Class & Section:</span>
+                            <span class="info-value" id="previewClass">Class 6A</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Class Teacher:</span>
+                            <span class="info-value" id="previewTeacher">Ms. Sarah Johnson</span>
+                        </div>
+                    </div>
+                    
+                    <table class="marks-table">
+                        <thead>
+                            <tr>
+                                <th>Subject</th>
+                                <th>Marks Obtained</th>
+                                <th>Out of 100</th>
+                                <th>Grade</th>
+                            </tr>
+                        </thead>
+                        <tbody id="marksTableBody">
+                            <!-- Marks will be populated here -->
+                            <tr>
+                                <td>English</td>
+                                <td>85</td>
+                                <td>100</td>
+                                <td class="grade-A">A</td>
+                            </tr>
+                            <tr>
+                                <td>Mathematics</td>
+                                <td>92</td>
+                                <td>100</td>
+                                <td class="grade-A">A</td>
+                            </tr>
+                            <tr>
+                                <td>Science</td>
+                                <td>78</td>
+                                <td>100</td>
+                                <td class="grade-C">C</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <div class="summary">
+                        <div class="summary-box">
+                            <div class="summary-value" id="totalMarks">255</div>
+                            <div class="summary-label">Total Marks</div>
+                        </div>
+                        <div class="summary-box">
+                            <div class="summary-value" id="percentage">85%</div>
+                            <div class="summary-label">Percentage</div>
+                        </div>
+                        <div class="summary-box">
+                            <div class="summary-value" id="overallGrade" class="grade-A">A</div>
+                            <div class="summary-label">Overall Grade</div>
+                        </div>
+                    </div>
+                    
+                    <div class="performance">
+                        <h4><i class="fas fa-chart-line"></i> Performance Summary</h4>
+                        <p id="performanceText">John has performed excellently this term, showing consistent improvement across all subjects. Strong performance in Mathematics and English.</p>
+                    </div>
+                    
+                    <div style="margin-top: 2rem; display: flex; justify-content: space-between; padding-top: 1.5rem; border-top: 1px solid var(--gray);">
+                        <div>
+                            <p style="font-weight: 600;">Class Teacher's Signature</p>
+                            <p style="margin-top: 2rem;">_______________________</p>
+                        </div>
+                        <div>
+                            <p style="font-weight: 600;">Principal's Signature</p>
+                            <p style="margin-top: 2rem;">_______________________</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="action-buttons" style="margin-top: 2rem;">
+                    <button class="btn btn-secondary" id="printReport">
+                        <i class="fas fa-print"></i> Print Report Card
+                    </button>
+                    <button class="btn btn-primary" id="downloadPDF">
+                        <i class="fas fa-download"></i> Download as PDF
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- FOOTER -->
         <footer>
-            <div style="margin-bottom: 0.5rem;">
-                <strong style="color: var(--primary-green);">Wexford Edu Hub</strong> - Empowering Education Through Technology
+            <div class="footer-links">
+                <a href="#"><i class="fas fa-question-circle"></i> Help</a>
+                <a href="#"><i class="fas fa-shield-alt"></i> Privacy</a>
+                <a href="#"><i class="fas fa-envelope"></i> Contact</a>
             </div>
-            <div style="font-size: 0.75rem;">
-                © 2025 PANIN SARFO — Designed with ❤️ for excellence in education
-            </div>
-        </footer>
-    </div>
-        <!-- Bottom Navigation -->
-        <nav>
-            <div class="nav-buttons">
-                <button id="btn-lower-primary" class="tab-button active" onclick="switchTab('lower-primary')">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M3 3v18h18"/><path d="M18 17l-3-3-4 4-5-5-3 3"/>
-                    </svg>
-                    <span>Lwr Primary</span>
-                </button>
-                <button id="btn-upper-primary" class="tab-button" onclick="switchTab('upper-primary')">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h16a2 2 0 012 2v14z"/>
-                    </svg>
-                    <span>Upr Primary</span>
-                </button>
-                <button id="btn-jhs" class="tab-button" onclick="switchTab('jhs')">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
-                    </svg>
-                    <span>JHS</span>
-                </button>
-                <button id="btn-upload" class="tab-button" onclick="showPage('upload')">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 9l5-5 5 5M12 4v12"/>
-                    </svg>
-                    <span>Upload</span>
-                </button>
-            </div>
-        </nav>
-
-        <!-- Footer -->
-        <footer>
-            <div style="margin-bottom: 0.5rem;">
-                <strong style="color: var(--primary-green);">Wexford Edu Hub</strong> - Empowering Education Through Technology
-            </div>
-            <div style="font-size: 0.75rem;">
-                © 2025 PANIN SARFO — Designed with ❤️ for excellence in education
-            </div>
+            <p>© 2023 EduTrack Report Card Generator. All rights reserved.</p>
         </footer>
     </div>
 
     <script>
-        // Gallery Slideshow Variables
-        let currentGallerySlide = 0;
-        const totalGallerySlides = 19;
-
-        // Gallery Slideshow Functions
-        function showGallerySlide(index) {
-            const slides = document.querySelectorAll('.gallery-slide');
-            const indicators = document.querySelectorAll('.gallery-indicator');
+        // DOM Elements
+        const reportForm = document.getElementById('reportForm');
+        const subjectsContainer = document.getElementById('subjectsContainer');
+        const addSubjectBtn = document.getElementById('addSubject');
+        const generateReportBtn = document.getElementById('generateReport');
+        const resetFormBtn = document.getElementById('resetForm');
+        const printReportBtn = document.getElementById('printReport');
+        const downloadPDFBtn = document.getElementById('downloadPDF');
+        const loadingPreview = document.getElementById('loadingPreview');
+        const reportPreview = document.getElementById('reportPreview');
+        
+        // Grading system
+        const gradingSystem = [
+            { min: 90, max: 100, grade: 'A', remark: 'Excellent' },
+            { min: 80, max: 89, grade: 'B', remark: 'Very Good' },
+            { min: 70, max: 79, grade: 'C', remark: 'Good' },
+            { min: 60, max: 69, grade: 'D', remark: 'Satisfactory' },
+            { min: 40, max: 59, grade: 'E', remark: 'Pass' },
+            { min: 0, max: 39, grade: 'F', remark: 'Fail' }
+        ];
+        
+        // Performance remarks
+        const performanceRemarks = [
+            "has shown exceptional dedication and performance this term. Keep up the excellent work!",
+            "has performed very well with consistent effort across all subjects. Continue to strive for excellence.",
+            "has shown good progress this term. With more focus, even better results can be achieved.",
+            "has passed all subjects. Additional effort and regular study will help improve performance.",
+            "needs to focus more on studies and complete assignments regularly to improve results."
+        ];
+        
+        // Initialize with sample data
+        document.addEventListener('DOMContentLoaded', function() {
+            generateReport();
+        });
+        
+        // Add subject row
+        addSubjectBtn.addEventListener('click', function() {
+            const subjectRow = document.createElement('div');
+            subjectRow.className = 'subject-row fade-in';
+            subjectRow.innerHTML = `
+                <div class="form-group subject-name">
+                    <input type="text" class="subjectInput" placeholder="Subject name" required>
+                </div>
+                <div class="form-group subject-marks">
+                    <input type="number" class="marksInput" placeholder="Marks" min="0" max="100" required>
+                </div>
+                <button type="button" class="remove-subject">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
             
-            slides.forEach((slide, i) => {
-                slide.classList.remove('active');
-                if (i === index) {
-                    slide.classList.add('active');
-                }
-            });
-
-            indicators.forEach((indicator, i) => {
-                indicator.classList.remove('active');
-                if (i === index) {
-                    indicator.classList.add('active');
-                }
-            });
-        }
-
-        function changeGallerySlide(direction) {
-            currentGallerySlide += direction;
-            if (currentGallerySlide < 0) {
-                currentGallerySlide = totalGallerySlides - 1;
-            } else if (currentGallerySlide >= totalGallerySlides) {
-                currentGallerySlide = 0;
-            }
-            showGallerySlide(currentGallerySlide);
-        }
-
-        function setGallerySlide(index) {
-            currentGallerySlide = index;
-            showGallerySlide(currentGallerySlide);
-        }
-
-        function autoAdvanceGallery() {
-            currentGallerySlide = (currentGallerySlide + 1) % totalGallerySlides;
-            showGallerySlide(currentGallerySlide);
-        }
-
-        // Auto-advance gallery every 4 seconds
-        setInterval(autoAdvanceGallery, 4000);
-
-        // Current Slide Index for Banner
-        let currentSlide = 0;
-        const totalSlides = 7;
-
-        // Update Date/Time Display
-        function updateDateTime() {
-            const now = new Date();
-            const options = { 
-                weekday: 'short', 
-                year: 'numeric', 
-                month: 'short', 
-                day: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
-            };
-            const dateTimeString = now.toLocaleDateString('en-US', options);
-            const displayElement = document.getElementById('datetime-display');
-            if (displayElement) {
-                displayElement.textContent = dateTimeString;
-            }
-        }
-
-        // Calculate Time Ago
-        function getTimeAgo(dateString) {
-            const postDate = new Date(dateString);
-            const now = new Date();
-            const diffMs = now - postDate;
-            const diffMins = Math.floor(diffMs / 60000);
-            const diffHours = Math.floor(diffMs / 3600000);
-            const diffDays = Math.floor(diffMs / 86400000);
-            const diffWeeks = Math.floor(diffMs / 604800000);
-
-            if (diffMins < 1) return 'Just now';
-            if (diffMins < 60) return `${diffMins} minute${diffMins > 1 ? 's' : ''} ago`;
-            if (diffHours < 24) return `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`;
-            if (diffDays < 7) return `${diffDays} day${diffDays > 1 ? 's' : ''} ago`;
-            if (diffWeeks < 4) return `${diffWeeks} week${diffWeeks > 1 ? 's' : ''} ago`;
+            subjectsContainer.appendChild(subjectRow);
             
-            return postDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-        }
-
-        // Update All Announcement Times
-        function updateAnnouncementTimes() {
-            const announcementTimes = document.querySelectorAll('.announcement-time');
-            announcementTimes.forEach(element => {
-                const dateString = element.getAttribute('data-date');
-                if (dateString) {
-                    element.textContent = 'Posted ' + getTimeAgo(dateString);
-                }
+            // Add event listener to the new remove button
+            const removeBtn = subjectRow.querySelector('.remove-subject');
+            removeBtn.addEventListener('click', function() {
+                subjectRow.remove();
+                // Generate report after removal
+                setTimeout(generateReport, 100);
             });
-        }
-
-        // Banner Slideshow
-        function showSlide(index) {
-            const slides = document.querySelectorAll('.banner-slide');
-            slides.forEach((slide, i) => {
-                slide.classList.remove('active');
-                if (i === index) {
-                    slide.classList.add('active');
-                }
-            });
-        }
-
-        function nextSlide() {
-            currentSlide = (currentSlide + 1) % totalSlides;
-            showSlide(currentSlide);
-        }
-
-        // Auto-advance banner every 10 seconds
-        setInterval(nextSlide, 5000);
-
-        // Tab Switching
-        function switchTab(tabName) {
-            document.querySelectorAll('.menu-page').forEach(page => page.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.tab-button').forEach(button => button.classList.remove('active'));
-
-            const activeContent = document.getElementById(tabName);
-            if (activeContent) activeContent.classList.add('active');
-
-            const activeButton = document.getElementById('btn-' + tabName);
-            if (activeButton) activeButton.classList.add('active');
-
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // Show Menu Pages
-        function showPage(pageName) {
-            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.menu-page').forEach(page => page.classList.remove('active'));
-            document.querySelectorAll('.tab-button').forEach(button => button.classList.remove('active'));
-
-            const activePage = document.getElementById(pageName);
-            if (activePage) activePage.classList.add('active');
             
-            const activeButton = document.getElementById('btn-' + pageName);
-            if (activeButton) activeButton.classList.add('active');
-
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // Toggle Menu
-        function toggleMenu() {
-            document.getElementById('menu-overlay').classList.toggle('active');
-        }
-
-        // Close Menu on Overlay Click
-        function closeMenuOnOverlay(event) {
-            if (event.target.id === 'menu-overlay') toggleMenu();
-        }
-
-        // Toggle Search Modal
-        function toggleSearch() {
-            const modal = document.getElementById('search-modal');
-            modal.classList.toggle('active');
-            if (modal.classList.contains('active')) {
-                setTimeout(() => modal.querySelector('.search-input').focus(), 100);
+            // Add input event listeners to new fields
+            const subjectInput = subjectRow.querySelector('.subjectInput');
+            const marksInput = subjectRow.querySelector('.marksInput');
+            
+            subjectInput.addEventListener('input', generateReport);
+            marksInput.addEventListener('input', generateReport);
+            
+            // Focus on the new subject input
+            subjectInput.focus();
+        });
+        
+        // Add event listeners to existing remove buttons
+        document.querySelectorAll('.remove-subject').forEach(btn => {
+            if (!btn.disabled) {
+                btn.addEventListener('click', function() {
+                    this.closest('.subject-row').remove();
+                    // Generate report after removal
+                    setTimeout(generateReport, 100);
+                });
             }
-        }
-
-        // Close Search on Overlay Click
-        function closeSearchOnOverlay(event) {
-            if (event.target.id === 'search-modal') toggleSearch();
-        }
-
-        // Handle Search
-        function handleSearch(event) {
-            const query = event.target.value.toLowerCase();
-            if (event.key === 'Enter' && query) {
-                alert('🔍 Searching for: ' + query + '\n\nSearch functionality will be fully implemented in production!');
+        });
+        
+        // Generate report card
+        generateReportBtn.addEventListener('click', generateReport);
+        
+        // Reset form
+        resetFormBtn.addEventListener('click', function() {
+            if (confirm('Are you sure you want to reset the form? All data will be lost.')) {
+                reportForm.reset();
+                
+                // Clear all but first subject row
+                const subjectRows = subjectsContainer.querySelectorAll('.subject-row');
+                for (let i = 1; i < subjectRows.length; i++) {
+                    subjectRows[i].remove();
+                }
+                
+                // Reset first subject row
+                const firstSubjectInput = subjectsContainer.querySelector('.subjectInput');
+                const firstMarksInput = subjectsContainer.querySelector('.marksInput');
+                
+                firstSubjectInput.value = 'English';
+                firstMarksInput.value = '85';
+                
+                // Generate default report
+                generateReport();
             }
-        }
-
-        // Handle Upload Form
-        function handleUpload(event) {
-            event.preventDefault();
-            const button = event.target.querySelector('button');
-            const originalText = button.innerHTML;
-            button.innerHTML = '✅ Uploaded Successfully!';
-            button.style.background = 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)';
+        });
+        
+        // Print report card
+        printReportBtn.addEventListener('click', function() {
+            window.print();
+        });
+        
+        // Download as PDF (simulated)
+        downloadPDFBtn.addEventListener('click', function() {
+            // In a real implementation, you would use a library like jsPDF
+            // For now, we'll show a simulated download
+            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating PDF...';
+            this.disabled = true;
             
             setTimeout(() => {
-                button.innerHTML = originalText;
-                button.style.background = 'linear-gradient(135deg, #0B8F4A 0%, #05A854 100%)';
-                event.target.reset();
-                alert('🎉 Video uploaded successfully!\n\nIn production, this would save to the database.');
-            }, 2000);
-        }
-
-        // Start Quiz Function
-        function startQuiz(subject) {
-            alert(`Starting ${subject} quiz!\n\nIn production, this would launch an interactive quiz interface with questions, timers, and scoring.`);
-        }
-
-        // Initialize
-        window.onload = () => {
-            switchTab('lower-primary');
-            updateDateTime();
-            updateAnnouncementTimes();
+                alert('PDF download started! In a real implementation, this would download the report card as a PDF file.');
+                this.innerHTML = '<i class="fas fa-download"></i> Download as PDF';
+                this.disabled = false;
+            }, 1500);
+        });
+        
+        // Generate report function
+        function generateReport() {
+            // Show loading
+            loadingPreview.style.display = 'flex';
+            reportPreview.style.opacity = '0.5';
             
-            // Update date/time every minute
-            setInterval(updateDateTime, 60000);
-            
-            // Update announcement times every minute
-            setInterval(updateAnnouncementTimes, 60000);
-        };
+            // Simulate processing delay
+            setTimeout(() => {
+                // Get form values
+                const studentName = document.getElementById('studentName').value || 'John Doe';
+                const rollNumber = document.getElementById('rollNumber').value || '2023001';
+                const className = document.getElementById('className').value || 'Class 6A';
+                const academicYear = document.getElementById('academicYear').value || '2023-2024';
+                const schoolName = document.getElementById('schoolName').value || 'Greenwood International School';
+                const teacherName = document.getElementById('teacherName').value || 'Ms. Sarah Johnson';
+                
+                // Get subjects and marks
+                const subjectInputs = document.querySelectorAll('.subjectInput');
+                const marksInputs = document.querySelectorAll('.marksInput');
+                
+                let subjects = [];
+                let totalMarks = 0;
+                let subjectCount = 0;
+                
+                for (let i = 0; i < subjectInputs.length; i++) {
+                    const subject = subjectInputs[i].value.trim();
+                    const marks = parseInt(marksInputs[i].value) || 0;
+                    
+                    if (subject && !isNaN(marks)) {
+                        const grade = calculateGrade(marks);
+                        subjects.push({
+                            name: subject,
+                            marks: marks,
+                            grade: grade.grade,
+                            gradeClass: `grade-${grade.grade}`
+                        });
+                        
+                        totalMarks += marks;
+                        subjectCount++;
+                    }
+                }
+                
+                // Calculate percentage
+                const percentage = subjectCount > 0 ? Math.round((totalMarks / (subjectCount * 100)) * 100) : 0;
+                const overallGrade = calculateGrade(percentage);
+                
+                // Update preview
+                document.getElementById('previewName').textContent = studentName;
+                document.getElementById('previewRoll').textContent = rollNumber;
+                document.getElementById('previewClass').textContent = className;
+                document.getElementById('previewTeacher').textContent = teacherName;
+                document.querySelector('.school-name').textContent = schoolName;
+                document.querySelector('.report-header p').textContent = `Academic Year: ${academicYear}`;
+                
+                // Update marks table
+                const marksTableBody = document.getElementById('marksTableBody');
+                marksTableBody.innerHTML = '';
+                
+                subjects.forEach(subject => {
+                    const row = document.createElement('tr');
+                    row.className = 'fade-in';
+                    row.innerHTML = `
+                        <td>${subject.name}</td>
+                        <td>${subject.marks}</td>
+                        <td>100</td>
+                        <td class="${subject.gradeClass}">${subject.grade}</td>
+                    `;
+                    marksTableBody.appendChild(row);
+                });
+                
+                // Update summary
+                document.getElementById('totalMarks').textContent = totalMarks;
+                document.getElementById('percentage').textContent = `${percentage}%`;
+                
+                const overallGradeElement = document.getElementById('overallGrade');
+                overallGradeElement.textContent = overallGrade.grade;
+                overallGradeElement.className = `summary-value grade-${overallGrade.grade}`;
+                
+                // Update performance text
+                let performanceIndex;
+                if (percentage >= 85) performanceIndex = 0;
+                else if (percentage >= 70) performanceIndex = 1;
+                else if (percentage >= 55) performanceIndex = 2;
+                else if (percentage >= 40) performanceIndex = 3;
+                else performanceIndex = 4;
+                
+                const performanceText = document.getElementById('performanceText');
+                performanceText.textContent = `${studentName} ${performanceRemarks[performanceIndex]}`;
+                
+                // Hide loading and show preview
+                loadingPreview.style.display = 'none';
+                reportPreview.style.opacity = '1';
+                
+                // Add fade-in animation to new content
+                document.querySelectorAll('.fade-in').forEach(el => {
+                    el.style.animation = 'fadeIn 0.5s ease forwards';
+                });
+                
+            }, 800);
+        }
+        
+        // Calculate grade based on marks
+        function calculateGrade(marks) {
+            for (const grade of gradingSystem) {
+                if (marks >= grade.min && marks <= grade.max) {
+                    return grade;
+                }
+            }
+            return gradingSystem[gradingSystem.length - 1]; // Return 'F' if no match
+        }
+        
+        // Add input event listeners to form fields
+        document.querySelectorAll('#reportForm input').forEach(input => {
+            input.addEventListener('input', generateReport);
+        });
+        
+        // Add input event listeners to existing subject inputs
+        document.querySelectorAll('.subjectInput, .marksInput').forEach(input => {
+            input.addEventListener('input', generateReport);
+        });
     </script>
 </body>
 </html>
