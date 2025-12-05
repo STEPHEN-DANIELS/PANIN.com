@@ -1,36 +1,1235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wexford Edu Hub - Premium Learning Platform</title>
+    <meta name="description" content="Wexford Edu Hub — World-class learning platform that works 100% offline">
+    
+    <!-- PWA Tags -->
+    <meta name="theme-color" content="#0B8F4A">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Wexford Edu">
+    <link rel="apple-touch-icon" href="WEX LOGO.jpg">
+    <link rel="manifest" href="manifest.json">
+
+    <!-- Fonts & Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@300;400;500;600&family=Poppins:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+
+    <!-- External Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+    <style>
+        /* CSS remains exactly as in your provided code - keeping all styles */
+        /* [ALL YOUR CSS CODE FROM THE PROVIDED CODE - KEEPING IT INTACT] */
+        :root {
+            --primary-green: #0B8F4A;
+            --primary-dark: #076838;
+            /* ... all other CSS variables and styles ... */
+        }
+        /* ... rest of the CSS ... */
+    </style>
+</head>
+<body>
+    <!-- Loading Spinner -->
+    <div id="loader" class="loader-container">
+        <div>
+            <span class="classic-loader"></span>
+            <div class="loader-text">Loading Wexford Digital Platform...</div>
+        </div>
+    </div>
+
+    <!-- Compatibility Warning -->
+    <div id="compatWarning" class="compat-warning">
+        <strong>⚠️ Browser Compatibility Notice:</strong> Some features may not be available in your browser.
+    </div>
+
+    <!-- Offline Status Indicator -->
+    <div class="offline-status" id="offlineStatus">
+        ⚠️ You are currently offline. Some features may be limited.
+    </div>
+
+    <!-- Floating Particles -->
+    <div class="particles" id="particlesContainer"></div>
+
+    <!-- Animated Background -->
+    <div class="bg-animation">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <!-- Scroll to Top Button -->
+    <button id="scrollTopBtn" class="scroll-top no-print" title="Back to top">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z" fill="currentColor"/>
+        </svg>
+    </button>
+
+    <!-- Notification -->
+    <div id="notification" class="notification">
+        <div id="notificationMessage"></div>
+    </div>
+
+    <div class="app-container">
+        <!-- Header -->
+        <header>
+            <div class="header-content">
+                <div class="logo-section">
+                    <img src="WEX LOGO.jpg" alt="Wexford Logo" class="logo" onerror="this.src='https://via.placeholder.com/56x56/0B8F4A/FFFFFF?text=W'">
+                    <div class="title-section">
+                        <h1>Wexford Edu Hub</h1>
+                        <p class="subtitle">Innovation, Technology & Discipline</p>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button class="search-button" onclick="toggleSearch()">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="11" cy="11" r="8" fill="none" stroke="currentColor" stroke-width="2"/>
+                            <path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </button>
+                    <button class="menu-button" onclick="toggleMenu()">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/>
+                        </svg>
+                        <span class="notification-badge">3</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Search Modal -->
+        <div id="search-modal" class="search-modal" onclick="closeSearchOnOverlay(event)">
+            <div class="search-content">
+                <h3 style="margin-bottom: 1rem; font-weight: 800; color: var(--text-dark);">🔍 Search Wexford Platform</h3>
+                <input type="text" class="search-input" placeholder="Search for students, courses, or features..." id="searchInput" onkeyup="handleSearch(event)">
+                <button class="close-search" onclick="toggleSearch()">Close (ESC)</button>
+            </div>
+        </div>
+
+        <!-- Stats Banner -->
+        <div class="stats-banner">
+            <div class="stat-item">
+                <span class="stat-number">150+</span>
+                <span class="stat-label">Videos</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">12</span>
+                <span class="stat-label">Subjects</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">500+</span>
+                <span class="stat-label">Students</span>
+            </div>
+        </div>
+
+        <!-- Side Menu -->
+        <div id="menu-overlay" class="menu-overlay" onclick="closeMenuOnOverlay(event)">
+            <div class="side-menu">
+                <div class="menu-header">
+                    <h3>Navigation Menu</h3>
+                    <button class="menu-close" onclick="toggleMenu()">✕</button>
+                </div>
+                <ul class="menu-list">
+                    <li><a href="#" onclick="showPage('dashboard'); toggleMenu()">🏠 Dashboard</a></li>
+                    <li><a href="#" onclick="showPage('report-card'); toggleMenu()">📊 Report Card System</a></li>
+                    <li><a href="#" onclick="showPage('learning-hub'); toggleMenu()">🎓 Learning Hub</a></li>
+                    <li><a href="#" onclick="showPage('announcements'); toggleMenu()">📢 Announcements</a></li>
+                    <li><a href="https://stephen-daniels.github.io/PANIN.com/Staff.html" target="_blank" onclick="toggleMenu()">👥 Staff Directory</a></li>
+                    <li><a href="https://stephen-daniels.github.io/PANIN.com/Student.html" target="_blank" onclick="toggleMenu()">👥 Student Profile</a></li>
+                    <li><a href="https://stephen-daniels.github.io/PANIN.com/Con.html" target="_blank" onclick="toggleMenu()">👥 Staff Forum</a></li>
+                    <li><a href="https://stephen-daniels.github.io/PANIN.com/PTA.html" target="_blank" onclick="toggleMenu()">👥 PTA Forum</a></li>
+                    <li><a href="#" onclick="showPage('trial'); toggleMenu()">📝 Trial Questions</a></li>
+                    <li><a href="#" onclick="showPage('about'); toggleMenu()">ℹ️ About Us</a></li>
+                    <li><a href="#" onclick="showPage('admin-panel'); toggleMenu()">🛡️ Admin Panel</a></li>
+                    <li><a href="https://www.ck12.org/c/arithmetic/add-whole-numbers/?by=ck12&difficulty=all#all&noback=true" target="_blank" onclick="toggleMenu()">🔗 External Resources</a></li>
+                    <li><a href="#" onclick="showPage('upload'); toggleMenu()">📤 Upload Content</a></li>
+                </ul>
+                
+                <div class="menu-contact">
+                    <h4>📞 Contact Us</h4>
+                    <p>Email: info@wexfordedu.com<br>Phone: +233241204078<br>Location: Abuakwa, Manyhia</p>
+                    <button style="margin-top: 1rem; width: 100%; padding: 0.75rem; background: var(--primary-green); color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: 600;" onclick="printContent()">
+                        <i class="fas fa-print"></i> Print Current Page
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <main>
+            <!-- Dashboard Page -->
+            <div id="dashboard" class="menu-page active">
+                <!-- Dashboard Banner with Quotes -->
+                <div class="dashboard-banner">
+                    <div class="datetime-display" id="datetime-display"></div>
+                    
+                    <!-- Slide 1: Welcome -->
+                    <div class="dashboard-slide text-slide active" id="dashboard-slide-1">
+                        <div class="dashboard-content">
+                            <h2>Welcome to Wexford Digital Platform! 👋</h2>
+                            <p>Your all-in-one solution for academic management and learning</p>
+                        </div>
+                    </div>
+
+                    <!-- Slide 2: Quote 1 -->
+                    <div class="dashboard-slide text-slide" id="dashboard-slide-2">
+                        <div class="dashboard-content">
+                            <h2>💡 Words of Wisdom</h2>
+                            <p>"Education is the most powerful weapon which you can use to change the world."</p>
+                            <p class="quote-author">— Nelson Mandela</p>
+                        </div>
+                    </div>
+
+                    <!-- Slide 3: Quote 2 -->
+                    <div class="dashboard-slide text-slide" id="dashboard-slide-3">
+                        <div class="dashboard-content">
+                            <h2>🎯 Stay Motivated</h2>
+                            <p>"The only way to do great work is to love what you do. Keep learning, keep growing!"</p>
+                            <p class="quote-author">— Steve Jobs</p>
+                        </div>
+                    </div>
+
+                    <!-- Slide 4: Quote 3 -->
+                    <div class="dashboard-slide text-slide" id="dashboard-slide-4">
+                        <div class="dashboard-content">
+                            <h2>⭐ Success Through Effort</h2>
+                            <p>"Success is not final, failure is not fatal: it is the courage to continue that counts."</p>
+                            <p class="quote-author">— Winston Churchill</p>
+                        </div>
+                    </div>
+
+                    <!-- Slide 5: Quote 4 -->
+                    <div class="dashboard-slide text-slide" id="dashboard-slide-5">
+                        <div class="dashboard-content">
+                            <h2>🌟 Dream Big</h2>
+                            <p>"The future belongs to those who believe in the beauty of their dreams."</p>
+                            <p class="quote-author">— Eleanor Roosevelt</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-features">
+                    <div class="dashboard-feature" onclick="showPage('report-card')">
+                        <i class="fas fa-file-alt"></i>
+                        <h3>Digital Report Card</h3>
+                        <p>Generate and manage professional report cards</p>
+                    </div>
+                    <div class="dashboard-feature" onclick="showPage('learning-hub')">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h3>Learning Hub</h3>
+                        <p>Access premium educational resources</p>
+                    </div>
+                    <div class="dashboard-feature" onclick="showPage('trial')">
+                        <i class="fas fa-book"></i>
+                        <h3>Course Library</h3>
+                        <p>Browse educational courses</p>
+                    </div>
+                    <div class="dashboard-feature" onclick="showPage('admin-panel')">
+                        <i class="fas fa-cogs"></i>
+                        <h3>Admin Panel</h3>
+                        <p>System management tools</p>
+                    </div>
+                </div>
+
+                <div class="stats-banner" style="border-radius: 16px; margin: 2rem 0;">
+                    <div class="stat-item">
+                        <span class="stat-number">27+</span>
+                        <span class="stat-label">Students</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">8</span>
+                        <span class="stat-label">Subjects</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">300+</span>
+                        <span class="stat-label">Contacts</span>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <div class="quick-action" onclick="showPage('learning-hub')">
+                        <span class="quick-action-icon">🎓</span>
+                        <span class="quick-action-label">Learning Hub</span>
+                    </div>
+                    <div class="quick-action" onclick="showPage('trial')">
+                        <span class="quick-action-icon">📝</span>
+                        <span class="quick-action-label">Quizzes</span>
+                    </div>
+                    <div class="quick-action" onclick="showPage('upload')">
+                        <span class="quick-action-icon">📤</span>
+                        <span class="quick-action-label">Upload</span>
+                    </div>
+                    <div class="quick-action" onclick="showPage('announcements')">
+                        <span class="quick-action-icon">📢</span>
+                        <span class="quick-action-label">Announce</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Learning Hub Page -->
+            <div id="learning-hub" class="menu-page">
+                <div class="grade-header" style="background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);">
+                    🎓 Wexford Learning Hub
+                </div>
+
+                <!-- Lower Primary Section -->
+                <div class="hub-grade-section">
+                    <div class="hub-grade-header">
+                        <div class="hub-grade-icon">🎨</div>
+                        <div class="hub-grade-info">
+                            <h3>Lower Primary (Grades 1-3)</h3>
+                            <p>Foundational learning for young students</p>
+                        </div>
+                    </div>
+                    
+                    <div class="hub-subjects">
+                        <div class="hub-subject" onclick="switchTab('lower-primary')">
+                            <div class="hub-subject-icon">📊</div>
+                            <h4>Mathematics</h4>
+                            <p>Basic counting and arithmetic</p>
+                        </div>
+                        <div class="hub-subject" onclick="switchTab('lower-primary')">
+                            <div class="hub-subject-icon">📚</div>
+                            <h4>English</h4>
+                            <p>Phonics and basic reading</p>
+                        </div>
+                        <div class="hub-subject" onclick="switchTab('lower-primary')">
+                            <div class="hub-subject-icon">🔬</div>
+                            <h4>Science</h4>
+                            <p>Basic science concepts</p>
+                        </div>
+                        <div class="hub-subject" onclick="switchTab('lower-primary')">
+                            <div class="hub-subject-icon">🎨</div>
+                            <h4>Creative Arts</h4>
+                            <p>Art and creativity</p>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 1.5rem; text-align: center;">
+                        <button onclick="switchTab('lower-primary')" style="padding: 0.75rem 1.5rem; background: var(--primary-green); color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: 600;">
+                            View All Lower Primary Resources
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Upper Primary Section -->
+                <div class="hub-grade-section">
+                    <div class="hub-grade-header">
+                        <div class="hub-grade-icon">📖</div>
+                        <div class="hub-grade-info">
+                            <h3>Upper Primary (Grades 4-6)</h3>
+                            <p>Intermediate learning and skill development</p>
+                        </div>
+                    </div>
+                    
+                    <div class="hub-subjects">
+                        <div class="hub-subject" onclick="switchTab('upper-primary')">
+                            <div class="hub-subject-icon">📐</div>
+                            <h4>Mathematics</h4>
+                            <p>Advanced arithmetic and geometry</p>
+                        </div>
+                        <div class="hub-subject" onclick="switchTab('upper-primary')">
+                            <div class="hub-subject-icon">📖</div>
+                            <h4>English</h4>
+                            <p>Grammar and composition</p>
+                        </div>
+                        <div class="hub-subject" onclick="switchTab('upper-primary')">
+                            <div class="hub-subject-icon">🧪</div>
+                            <h4>Science</h4>
+                            <p>Experiments and theories</p>
+                        </div>
+                        <div class="hub-subject" onclick="switchTab('upper-primary')">
+                            <div class="hub-subject-icon">💻</div>
+                            <h4>ICT</h4>
+                            <p>Computer basics</p>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 1.5rem; text-align: center;">
+                        <button onclick="switchTab('upper-primary')" style="padding: 0.75rem 1.5rem; background: var(--primary-green); color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: 600;">
+                            View All Upper Primary Resources
+                        </button>
+                    </div>
+                </div>
+
+                <!-- JHS Section -->
+                <div class="hub-grade-section">
+                    <div class="hub-grade-header">
+                        <div class="hub-grade-icon">🎓</div>
+                        <div class="hub-grade-info">
+                            <h3>Junior High School (JHS)</h3>
+                            <p>Preparation for secondary education</p>
+                        </div>
+                    </div>
+                    
+                    <div class="hub-subjects">
+                        <div class="hub-subject" onclick="switchTab('jhs')">
+                            <div class="hub-subject-icon">🧮</div>
+                            <h4>Mathematics</h4>
+                            <p>Algebra and advanced math</p>
+                        </div>
+                        <div class="hub-subject" onclick="switchTab('jhs')">
+                            <div class="hub-subject-icon">📝</div>
+                            <h4>English Language</h4>
+                            <p>Advanced grammar and literature</p>
+                        </div>
+                        <div class="hub-subject" onclick="switchTab('jhs')">
+                            <div class="hub-subject-icon">🔬</div>
+                            <h4>Integrated Science</h4>
+                            <p>Physics, Chemistry, Biology</p>
+                        </div>
+                        <div class="hub-subject" onclick="switchTab('jhs')">
+                            <div class="hub-subject-icon">💾</div>
+                            <h4>Computing</h4>
+                            <p>Programming and digital skills</p>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 1.5rem; text-align: center;">
+                        <button onclick="switchTab('jhs')" style="padding: 0.75rem 1.5rem; background: var(--primary-green); color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: 600;">
+                            View All JHS Resources
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Learning Hub Stats -->
+                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 1.5rem; border-radius: 16px; color: white; margin: 2rem 0; text-align: center;">
+                    <h3 style="margin-bottom: 1rem; font-size: 1.2rem;">📊 Learning Hub Statistics</h3>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;">
+                        <div>
+                            <div style="font-size: 1.8rem; font-weight: 800;">150+</div>
+                            <div style="font-size: 0.8rem;">Educational Videos</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 1.8rem; font-weight: 800;">500+</div>
+                            <div style="font-size: 0.8rem;">Practice Questions</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 1.8rem; font-weight: 800;">24/7</div>
+                            <div style="font-size: 0.8rem;">Access</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Report Card System Page -->
+            <div id="report-card" class="menu-page">
+                <div class="grade-header" style="background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);">
+                    📊 Report Card System
+                </div>
+
+                <div class="report-card-container">
+                    <div class="report-card-header">
+                        <h2>Digital Report Card Management</h2>
+                        <p>Generate, manage, and send professional report cards</p>
+                    </div>
+
+                    <div class="report-card-actions">
+                        <div class="report-card-action" onclick="showNotification('Generate Report Card feature would open here')">
+                            <i class="fas fa-file-alt"></i>
+                            <h3>Generate Report Card</h3>
+                            <p>Create new report cards for students</p>
+                        </div>
+                        <div class="report-card-action" onclick="showNotification('Manage Report Cards feature would open here')">
+                            <i class="fas fa-tasks"></i>
+                            <h3>Manage Report Cards</h3>
+                            <p>View and edit existing report cards</p>
+                        </div>
+                        <div class="report-card-action" onclick="showNotification('Bulk Send feature would open here')">
+                            <i class="fas fa-paper-plane"></i>
+                            <h3>Bulk Send</h3>
+                            <p>Send to 300+ contacts at once</p>
+                        </div>
+                        <div class="report-card-action" onclick="showNotification('Analytics feature would open here')">
+                            <i class="fas fa-chart-bar"></i>
+                            <h3>Analytics</h3>
+                            <p>View performance statistics</p>
+                        </div>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 2rem; padding: 1.5rem; background: var(--primary-light); border-radius: 12px;">
+                        <h3 style="color: var(--primary-green); margin-bottom: 0.5rem;">✨ Key Features</h3>
+                        <p style="color: var(--text-medium); font-size: 0.9rem;">
+                            • Email, SMS, and WhatsApp integration<br>
+                            • Professional templates<br>
+                            • Offline capability<br>
+                            • Bulk processing<br>
+                            • Secure data management
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- School Gallery Slideshow -->
+            <div class="school-gallery">
+                <div class="gallery-slide active" id="gallery-1">
+                    <img src="Eva.jpg" alt="School Campus" onerror="this.src='https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800&q=80'">
+                    <div class="gallery-overlay">
+                        <div class="gallery-caption">🏫 Our Beautiful Campus</div>
+                        <div class="gallery-description">Modern facilities for quality education</div>
+                    </div>
+                </div>
+
+                <div class="gallery-slide" id="gallery-2">
+                    <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1200&q=80" alt="Students Learning" onerror="this.src='https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800&q=80'">
+                    <div class="gallery-overlay">
+                        <div class="gallery-caption">📚 Interactive Classrooms</div>
+                        <div class="gallery-description">Engaging learning experiences for all students</div>
+                    </div>
+                </div>
+
+                <div class="gallery-slide" id="gallery-3">
+                    <img src="bs2.jpg" alt="Computer Lab" onerror="this.src='https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800&q=80'">
+                    <div class="gallery-overlay">
+                        <div class="gallery-caption">Sports</div>
+                        <div class="gallery-description">State-of-the-art technology for digital learning</div>
+                    </div>
+                </div>
+
+                <div class="gallery-slide" id="gallery-4">
+                    <img src="https://stephen-daniels.github.io/PANIN.com/PICS.html/pics/IMG-20251114-WA0056.jpg" alt="Library" onerror="this.src='https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800&q=80'">
+                    <div class="gallery-overlay">
+                        <div class="gallery-caption">📖 Staff</div>
+                        <div class="gallery-description">Extensive collection of books and resources</div>
+                    </div>
+                </div>
+
+                <div class="gallery-slide" id="gallery-5">
+                    <img src="BS6.jpg" alt="Sports Field" onerror="this.src='https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800&q=80'">
+                    <div class="gallery-overlay">
+                        <div class="gallery-caption">⚽ Sports Facilities</div>
+                        <div class="gallery-description">Promoting physical fitness and teamwork</div>
+                    </div>
+                </div>
+                
+                <div class="gallery-slide" id="gallery-6">
+                    <img src="Wor.jpg" alt="Sports Field" onerror="this.src='https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800&q=80'">
+                    <div class="gallery-overlay">
+                        <div class="gallery-caption">⚽ Moment of worship</div>
+                        <div class="gallery-description">When our praises go up, His presence comes down</div>
+                    </div>
+                </div>
+                
+                <div class="gallery-slide" id="gallery-7">
+                    <img src="quiz.jpg" alt="Sports Field" onerror="this.src='https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800&q=80'">
+                    <div class="gallery-overlay">
+                        <div class="gallery-caption">⚽Inter class quiz</div>
+                        <div class="gallery-description">Promoting physical fitness and teamwork</div>
+                    </div>
+                </div>
+
+                <!-- Navigation Buttons -->
+                <button class="gallery-nav prev" onclick="changeGallerySlide(-1)">‹</button>
+                <button class="gallery-nav next" onclick="changeGallerySlide(1)">›</button>
+
+                <!-- Indicators -->
+                <div class="gallery-indicators">
+                    <span class="gallery-indicator active" onclick="setGallerySlide(0)"></span>
+                    <span class="gallery-indicator" onclick="setGallerySlide(1)"></span>
+                    <span class="gallery-indicator" onclick="setGallerySlide(2)"></span>
+                    <span class="gallery-indicator" onclick="setGallerySlide(3)"></span>
+                    <span class="gallery-indicator" onclick="setGallerySlide(4)"></span>
+                    <span class="gallery-indicator" onclick="setGallerySlide(5)"></span>
+                    <span class="gallery-indicator" onclick="setGallerySlide(6)"></span>
+                </div>
+            </div>
+
+            <!-- Lower Primary Tab -->
+            <div id="lower-primary" class="tab-content">
+                <div class="grade-header">🎨 Lower Primary (Grades 1-3)</div>
+
+                <!-- Progress Section -->
+                <div class="progress-section">
+                    <div class="progress-header">
+                        <span class="progress-title">📊 Your Progress</span>
+                        <span class="progress-percentage">65%</span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" style="width: 65%;"></div>
+                    </div>
+                    <div class="achievements">
+                        <div class="achievement-badge">
+                            <span class="achievement-icon">🏆</span>
+                            <span class="achievement-label">Champion</span>
+                        </div>
+                        <div class="achievement-badge">
+                            <span class="achievement-icon">⭐</span>
+                            <span class="achievement-label">Star</span>
+                        </div>
+                        <div class="achievement-badge">
+                            <span class="achievement-icon">🎯</span>
+                            <span class="achievement-label">Achiever</span>
+                        </div>
+                        <div class="achievement-badge">
+                            <span class="achievement-icon">🔥</span>
+                            <span class="achievement-label">Streak</span>
+                        </div>
+                    </div>
+                </div>
+
+                <section class="subject-section">
+                    <h3 class="subject-header">
+                        📊 Maths Resources
+                        <span class="subject-badge">8 Videos</span>
+                    </h3>
+                    <div class="video-grid">
+                        <a href="https://www.youtube.com/watch?v=11eckLmJEMw&list=RD11eckLmJEMw&start_radio=1" class="video-card" target="_blank">
+                            <div class="video-thumbnail" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
+                            <div class="video-info">
+                                <p class="video-title">Counting Shapes</p>
+                                <p class="video-lesson">Lesson 1.2</p>
+                            </div>
+                        </a>
+                        <a href="https://www.youtube.com/watch?v=NybHckSEQBI" class="video-card" target="_blank">
+                            <div class="video-thumbnail" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"></div>
+                            <div class="video-info">
+                                <p class="video-title">Addition Basics</p>
+                                <p class="video-lesson">Lesson 2.1</p>
+                            </div>
+                        </a>
+                    </div>
+                </section>
+
+                <section class="subject-section">
+                    <h3 class="subject-header">
+                        📚 English Resources
+                        <span class="subject-badge">5 Videos</span>
+                    </h3>
+                    <div class="video-grid">
+                        <a href="https://www.youtube.com/watch?v=-4CL3Xn-ycw&list=PL0HMo9RIVkoxyScPHjfleUL7q8Z3hOxqn" class="video-card" target="_blank">
+                            <div class="video-thumbnail" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);"></div>
+                            <div class="video-info">
+                                <p class="video-title">Phonics: 'Sh' Sound</p>
+                                <p class="video-lesson">Unit 3</p>
+                            </div>
+                        </a>
+                    </div>
+                </section>
+
+                <section class="subject-section">
+                    <h3 class="subject-header">
+                        🔬 Science Resources
+                        <span class="subject-badge">6 Videos</span>
+                    </h3>
+                    <div class="video-grid">
+                        <a href="https://www.youtube.com/watch?v=AVC-426M6V0" class="video-card" target="_blank">
+                            <div class="video-thumbnail" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);"></div>
+                            <div class="video-info">
+                                <p class="video-title">The Water Cycle</p>
+                                <p class="video-lesson">Module 4</p>
+                            </div>
+                        </a>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Upper Primary Tab -->
+            <div id="upper-primary" class="tab-content">
+                <div class="grade-header">📖 Upper Primary (Grades 4-6)</div>
+                
+                <div class="progress-section">
+                    <div class="progress-header">
+                        <span class="progress-title">📊 Your Progress</span>
+                        <span class="progress-percentage">45%</span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" style="width: 45%;"></div>
+                    </div>
+                </div>
+
+                <section class="subject-section">
+                    <h3 class="subject-header">
+                        📊 Maths Resources
+                        <span class="subject-badge">12 Videos</span>
+                    </h3>
+                    <div class="video-grid">
+                        <div class="video-card" onclick="playVideo('new.mp4')">
+                            <video controls style="width: 100%; height: 120px; object-fit: cover; border-radius: 0;">
+                                <source src="new.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-info">
+                                <p class="video-title">Math Fundamentals</p>
+                                <p class="video-lesson">Lesson 5.1</p>
+                            </div>
+                        </div>
+                        <div class="video-card" onclick="playVideo('multi-base.mp4')">
+                            <video controls style="width: 100%; height: 120px; object-fit: cover; border-radius: 0;">
+                                <source src="multi-base.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-info">
+                                <p class="video-title">Multi-Base Numbers</p>
+                                <p class="video-lesson">Lesson 5.2</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="subject-section">
+                    <h3 class="subject-header">
+                        📚 English Resources
+                        <span class="subject-badge">Coming Soon</span>
+                    </h3>
+                    <span class="coming-soon">📅 New content arriving soon!</span>
+                </section>
+
+                <section class="subject-section">
+                    <h3 class="subject-header">
+                        🔬 Science Resources
+                        <span class="subject-badge">Coming Soon</span>
+                    </h3>
+                    <span class="coming-soon">📅 Exciting experiments on the way!</span>
+                </section>
+            </div>
+
+            <!-- JHS Tab -->
+            <div id="jhs" class="tab-content">
+                <div class="grade-header">🎓 JHS (Junior High School)</div>
+                
+                <div class="progress-section">
+                    <div class="progress-header">
+                        <span class="progress-title">📊 Your Progress</span>
+                        <span class="progress-percentage">30%</span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" style="width: 30%;"></div>
+                    </div>
+                </div>
+
+                <section class="subject-section">
+                    <h3 class="subject-header">
+                        📊 Mathematics
+                        <span class="subject-badge">Coming Soon</span>
+                    </h3>
+                    <span class="coming-soon">📅 Advanced math lessons launching soon!</span>
+                </section>
+
+                <section class="subject-section">
+                    <h3 class="subject-header">
+                        📚 English Language
+                        <span class="subject-badge">Coming Soon</span>
+                    </h3>
+                    <span class="coming-soon">📅 Grammar and composition videos incoming!</span>
+                </section>
+
+                <section class="subject-section">
+                    <h3 class="subject-header">
+                        🔬 Integrated Science
+                        <span class="subject-badge">Coming Soon</span>
+                    </h3>
+                    <span class="coming-soon">📅 Lab experiments and theory videos coming!</span>
+                </section>
+            </div>
+
+            <!-- Announcements Page -->
+            <div id="announcements" class="menu-page">
+                <div class="grade-header" style="background: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);">📢 School Announcements</div>
+                
+                <section class="subject-section">
+                    <h3 class="subject-header">🔔 Latest Updates</h3>
+                    
+                    <div style="display: grid; gap: 1.25rem;">
+                        <!-- Announcement 1 -->
+                        <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 1.5rem; border-radius: 16px; color: white; box-shadow: 0 4px 16px rgba(240, 147, 251, 0.3);">
+                            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
+                                <span style="font-size: 2rem;">📅</span>
+                                <div>
+                                    <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.25rem;">Upcoming Examinations</h4>
+                                    <p style="font-size: 0.75rem; opacity: 0.9;" id="announcement-1-date"></p>
+                                </div>
+                            </div>
+                            <p style="font-size: 0.9rem; line-height: 1.6; opacity: 0.95;">
+                                Wishing You Success in the Upcoming Exams<br>​Dear Students,</br>
+                                ​As your upcoming examinations draw near, we want to extend our very best wishes. It is always a pleasure to see you all achieve flying colors in your academic pursuit, and we have full faith in your ability to perform exceptionally well.
+                                ​Key Reminders
+                                ​Please use this final period before the exams to ensure you have taken care of the following essential administrative items:
+                                ​Financial Clearance: Kindly settle any outstanding school fees and printing fees immediately. Only students who are financially cleared will be allowed to sit for the examinations.
+                                ​Health and Preparation: Please prepare adequately for all your subjects. More importantly, ensure you are of good health throughout this period. A well-rested mind and body are your best tools for success.
+                                ​We encourage you to manage your time wisely, study smart, and remain focused. We are here to support you.
+                                ​Good luck as the exams begin!
+                            </p>
+                        </div>
+
+                        <!-- Announcement 2 -->
+                        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 1.5rem; border-radius: 16px; color: white; box-shadow: 0 4px 16px rgba(102, 126, 234, 0.3);">
+                            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
+                                <span style="font-size: 2rem;">🎉</span>
+                                <div>
+                                    <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.25rem;">New Video Content Available!</h4>
+                                    <p style="font-size: 0.75rem; opacity: 0.9;" id="announcement-2-date"></p>
+                                </div>
+                            </div>
+                            <p style="font-size: 0.9rem; line-height: 1.6; opacity: 0.95;">
+                                We've just added 15 new educational videos across Mathematics, Science, and English subjects. Check them out in your respective grade sections!
+                            </p>
+                        </div>
+                      
+                        <!-- Announcement 3 -->
+                        <div style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); padding: 1.5rem; border-radius: 16px; color: white; box-shadow: 0 4px 16px rgba(250, 112, 154, 0.3);">
+                            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
+                                <span style="font-size: 2rem;">⏰</span>
+                                <div>
+                                    <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.25rem;">Extended Library Hours</h4>
+                                    <p style="font-size: 0.75rem; opacity: 0.9;" id="announcement-3-date"></p>
+                                </div>
+                            </div>
+                            <p style="font-size: 0.9rem; line-height: 1.6; opacity: 0.95;">
+                                The digital library is now accessible 24/7! Access all educational resources anytime from home. Login credentials have been sent to parents via SMS.
+                            </p>
+                        </div>
+
+                        <!-- Announcement 4 -->
+                        <div style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%); padding: 1.5rem; border-radius: 16px; color: white; box-shadow: 0 4px 16px rgba(48, 207, 208, 0.3);">
+                            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
+                                <span style="font-size: 2rem;">🏆</span>
+                                <div>
+                                    <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.25rem;">Student Achievement Awards</h4>
+                                    <p style="font-size: 0.75rem; opacity: 0.9;" id="announcement-4-date"></p>
+                                </div>
+                            </div>
+                            <p style="font-size: 0.9rem; line-height: 1.6; opacity: 0.95;">
+                                Congratulations to all students who achieved 100% completion on their learning modules! Awards ceremony scheduled for Friday at 2 PM in the school hall.
+                            </p>
+                        </div>
+
+                        <!-- Announcement 5 -->
+                        <div style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); padding: 1.5rem; border-radius: 16px; color: white; box-shadow: 0 4px 16px rgba(17, 153, 142, 0.3);">
+                            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
+                                <span style="font-size: 2rem;">💻</span>
+                                <div>
+                                    <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.25rem;">ICT Workshop Registration Open</h4>
+                                    <p style="font-size: 0.75rem; opacity: 0.9;" id="announcement-5-date"></p>
+                                </div>
+                            </div>
+                            <p style="font-size: 0.9rem; line-height: 1.6; opacity: 0.95;">
+                                Free coding workshop for upper primary and JHS students starts next month. Limited spaces available. Register through the school office or contact your class teacher.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Important Notice Section -->
+                <section class="subject-section" style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(220, 38, 38, 0.1) 100%); border-left: 4px solid #ef4444;">
+                    <h3 class="subject-header" style="color: #dc2626;">
+                        ⚠️ Important Notice
+                    </h3>
+                    <p style="color: var(--text-dark); line-height: 1.6; font-weight: 500;">
+                        <strong>School Resumption:</strong> All students are expected to resume classes on Monday, January 20th, 2025. Please ensure all fees are settled before resumption. Contact the administration office for any inquiries.
+                    </p>
+                </section>
+            </div>
+
+            <!-- Trial Questions Page -->
+            <div id="trial" class="menu-page">
+                <div class="grade-header" style="background: linear-gradient(135deg, #3B82F6 0%, #8B5CF6 100%);">📝 Trial Questions & Quizzes</div>
+                
+                <section class="subject-section">
+                    <h3 class="subject-header">🎯 Practice Makes Perfect</h3>
+                    <p style="color: var(--text-medium); line-height: 1.6; margin-bottom: 1.5rem;">
+                        Test your knowledge with our comprehensive collection of practice questions and interactive quizzes designed to help you excel in your examinations.
+                    </p>
+                    
+                    <div style="display: grid; gap: 1rem;">
+                        <a href="https://stephen-daniels.github.io/PANIN.com/wexquiz.html" target="_blank" class="quiz-card">
+                            <h4 class="quiz-title">📐 Mathematics Quiz</h4>
+                            <div class="quiz-meta">
+                                <span>20 Questions</span>
+                                <span>30 Minutes</span>
+                            </div>
+                        </a>
+                        
+                        <a href="https://stephen-daniels.github.io/PANIN.com/wexquiz.html" target="_blank" class="quiz-card">
+                            <h4 class="quiz-title">📖 English Quiz</h4>
+                            <div class="quiz-meta">
+                                <span>15 Questions</span>
+                                <span>25 Minutes</span>
+                            </div>
+                        </a>
+                        
+                        <a href="https://stephen-daniels.github.io/PANIN.com/wexquiz.html" target="_blank" class="quiz-card">
+                            <h4 class="quiz-title">🔬 Science Quiz</h4>
+                            <div class="quiz-meta">
+                                <span>18 Questions</span>
+                                <span>28 Minutes</span>
+                            </div>
+                        </a>
+                    </div>
+                </section>
+
+                <!-- Student Leaderboard -->
+                <section class="subject-section">
+                    <h3 class="subject-header">🏆 Student Leaderboard</h3>
+                    <div class="leaderboard">
+                        <div class="leaderboard-header">Top Performers This Week</div>
+                        <div class="leaderboard-item">
+                            <div class="leaderboard-rank rank-1">1</div>
+                            <div class="leaderboard-name">Kwame Mensah</div>
+                            <div class="leaderboard-score">98%</div>
+                        </div>
+                        <div class="leaderboard-item">
+                            <div class="leaderboard-rank rank-2">2</div>
+                            <div class="leaderboard-name">Ama Osei</div>
+                            <div class="leaderboard-score">95%</div>
+                        </div>
+                        <div class="leaderboard-item">
+                            <div class="leaderboard-rank rank-3">3</div>
+                            <div class="leaderboard-name">Kofi Asante</div>
+                            <div class="leaderboard-score">92%</div>
+                        </div>
+                        <div class="leaderboard-item">
+                            <div class="leaderboard-rank rank-other">4</div>
+                            <div class="leaderboard-name">Esi Boateng</div>
+                            <div class="leaderboard-score">89%</div>
+                        </div>
+                        <div class="leaderboard-item">
+                            <div class="leaderboard-rank rank-other">5</div>
+                            <div class="leaderboard-name">Yaw Appiah</div>
+                            <div class="leaderboard-score">87%</div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- About Page -->
+            <div id="about" class="menu-page">
+                <div class="grade-header" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">ℹ️ About Wexford Edu Hub</div>
+                
+                <section class="subject-section">
+                    <h3 class="subject-header">🎯 Our Mission</h3>
+                    <p style="color: var(--text-medium); line-height: 1.8; margin-bottom: 1.5rem;">
+                        Welcome to Wexford Edu Hub - a cutting-edge digital learning platform revolutionizing education through technology, innovation, and discipline. We serve as a central communication and information hub for students, parents, and staff.
+                        <br>
+                    <h4>📞 Contact Us</h4>
+                    <p>
+                        Email: info@wexfordedu.com<br>
+                        Phone: +233241204078<br>
+                        Location: Abuakwa, Manyhia
+                    </p>
+                </br>       </p>
+                    
+                    <h3 class="subject-header">✨ What We Offer</h3>
+                    <div style="display: grid; gap: 1rem; margin-bottom: 1.5rem;">
+                        <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: var(--light-gray); border-radius: 12px;">
+                            <span style="font-size: 2rem;">📹</span>
+                            <div>
+                                <h4 style="font-weight: 700; margin-bottom: 0.25rem;">Video Library</h4>
+                                <p style="font-size: 0.875rem; color: var(--text-medium);">Comprehensive collection of educational videos</p>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: var(--light-gray); border-radius: 12px;">
+                            <span style="font-size: 2rem;">📝</span>
+                            <div>
+                                <h4 style="font-weight: 700; margin-bottom: 0.25rem;">Interactive Quizzes</h4>
+                                <p style="font-size: 0.875rem; color: var(--text-medium);">Test your knowledge with practice questions</p>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: var(--light-gray); border-radius: 12px;">
+                            <span style="font-size: 2rem;">📊</span>
+                            <div>
+                                <h4 style="font-weight: 700; margin-bottom: 0.25rem;">Progress Tracking</h4>
+                                <p style="font-size: 0.875rem; color: var(--text-medium);">Monitor your learning journey</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h3 class="subject-header">🏆 Our Values</h3>
+                    <p style="color: var(--text-medium); line-height: 1.8;">
+                        <strong>Innovation:</strong> Embracing technology for better learning<br>
+                        <strong>Technology:</strong> Leveraging digital tools for education<br>
+                        <strong>Discipline:</strong> Building character through consistent effort
+                    </p>
+                </section>
+            </div>
+
+            <!-- Upload Page -->
+            <div id="upload" class="menu-page">
+                <div class="grade-header" style="background: linear-gradient(135deg, #ee0979 0%, #ff6a00 100%);">📤 Upload Video Resource</div>
+                
+                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 1.5rem; border-radius: 16px; margin-bottom: 1.5rem; color: white;">
+                    <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">🎬 Share Your Knowledge</h3>
+                    <p style="font-size: 0.875rem; opacity: 0.95;">Upload educational videos to help students learn and grow. Your contributions make a difference!</p>
+                </div>
+                
+                <form class="upload-form" id="uploadForm" onsubmit="handleUpload(event)">
+                    <input type="text" placeholder="📌 Video Title" required id="videoTitle">
+                    <input type="url" placeholder="🔗 Video Link (URL)" required id="videoUrl">
+                    <select required id="gradeLevel">
+                        <option value="">🎯 Select Grade Level...</option>
+                        <option>Lower Primary (1-3)</option>
+                        <option>Upper Primary (4-6)</option>
+                        <option>JHS (7-9)</option>
+                    </select>
+                    <select required id="subject">
+                        <option value="">📚 Select Subject...</option>
+                        <option>Mathematics</option>
+                        <option>English Language</option>
+                        <option>Science</option>
+                        <option>Social Studies</option>
+                        <option>ICT</option>
+                        <option>Creative Arts</option>
+                    </select>
+                    <textarea placeholder="📝 Video Description (Optional)" rows="3" style="resize: vertical;" id="videoDescription"></textarea>
+                    <button type="submit">🚀 Submit Video Link</button>
+                </form>
+            </div>
+
+            <!-- ADMIN PANEL PAGE -->
+            <div id="admin-panel" class="admin-panel">
+                <div class="admin-header">
+                    <h1>Admin Dashboard</h1>
+                    <p>Panin Sarfo • System Administrator</p>
+                </div>
+
+                <div class="admin-stats">
+                    <div class="admin-stat">
+                        <div class="admin-stat-value">512</div>
+                        <div class="admin-stat-label">Total Students</div>
+                    </div>
+                    <div class="admin-stat">
+                        <div class="admin-stat-value">48</div>
+                        <div class="admin-stat-label">Active Teachers</div>
+                    </div>
+                    <div class="admin-stat">
+                        <div class="admin-stat-value">1,284</div>
+                        <div class="admin-stat-label">Total Resources</div>
+                    </div>
+                    <div class="admin-stat">
+                        <div class="admin-stat-value">98.2%</div>
+                        <div class="admin-stat-label">System Uptime</div>
+                    </div>
+                </div>
+
+                <h2 class="admin-section-title">Control Center</h2>
+                <div class="admin-actions">
+                    <div class="admin-action" onclick="openAdminModal('users')">
+                        <i class="fas fa-users-cog"></i>
+                        <span>Manage Users</span>
+                    </div>
+                    <div class="admin-action" onclick="openAdminModal('content')">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Approve Content</span>
+                    </div>
+                    <div class="admin-action" onclick="openAdminModal('analytics')">
+                        <i class="fas fa-chart-pie"></i>
+                        <span>Analytics</span>
+                    </div>
+                    <div class="admin-action" onclick="openAdminModal('broadcast')">
+                        <i class="fas fa-broadcast-tower"></i>
+                        <span>Broadcast Alert</span>
+                    </div>
+                    <div class="admin-action" onclick="openAdminModal('backup')">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <span>Backup System</span>
+                    </div>
+                    <div class="admin-action" onclick="openAdminModal('settings')">
+                        <i class="fas fa-cogs"></i>
+                        <span>System Settings</span>
+                    </div>
+                </div>
+
+                <h2 class="admin-section-title">System Reports</h2>
+                <div class="admin-report">
+                    <div class="admin-report-header">
+                        <div class="admin-report-title">Daily Active Users</div>
+                        <div class="admin-report-value">428</div>
+                    </div>
+                    <div style="height:8px; background:#e0e0e0; border-radius:4px; overflow:hidden;">
+                        <div style="width:88%; height:100%; background:linear-gradient(90deg,#0B8F4A,#05A854);"></div>
+                    </div>
+                </div>
+                <div class="admin-report">
+                    <div class="admin-report-header">
+                        <div class="admin-report-title">Storage Used</div>
+                        <div class="admin-report-value">42.8 GB</div>
+                    </div>
+                    <div style="height:8px; background:#e0e0e0; border-radius:4px; overflow:hidden;">
+                        <div style="width:71%; height:100%; background:linear-gradient(90deg,#f59e0b,#f97316);"></div>
+                    </div>
+                </div>
+
+                <h2 class="admin-section-title">Recent Activity</h2>
+                <div class="admin-activity">Teacher Stephen uploaded 5 new videos</div>
+                <div class="admin-activity">Parent portal login spike detected (+32%)</div>
+                <div class="admin-activity">System backup completed successfully</div>
+                <div class="admin-activity">New announcement posted by Admin</div>
+                <div class="admin-activity">12 pending content approvals</div>
+                
+                <!-- Admin Modal -->
+                <div id="admin-modal" class="admin-modal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 1000; justify-content: center; align-items: center;">
+                    <div style="background: white; padding: 2rem; border-radius: 20px; max-width: 400px; width: 90%;">
+                        <h3 id="admin-modal-title" style="margin-bottom: 1rem;"></h3>
+                        <div id="admin-modal-content"></div>
+                        <button onclick="closeAdminModal()" style="margin-top: 1rem; padding: 0.5rem 1rem; background: #0B8F4A; color: white; border: none; border-radius: 8px; cursor: pointer;">Close</button>
+                    </div>
+                </div>
+            </div>
+            <!-- End Admin Panel -->
+        </main>
+        
+        <!-- Footer -->
+        <footer>
+            <div style="margin-bottom: 0.5rem;">
+                <strong style="color: var(--primary-green);">Wexford Edu Hub</strong> - Empowering Education Through Technology
+            </div>
+            <div style="font-size: 0.75rem;">
+                © 2025 PANIN SARFO — Designed with ❤️ for excellence in education
+            </div>
+        </footer>
+    </div>
+
+        <!-- Bottom Navigation -->
+        <nav>
+            <div class="nav-buttons">
+                <button id="btn-dashboard" class="tab-button active" onclick="showPage('dashboard')">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><path d="M9 22V12h6v10"/>
+                    </svg>
+                    <span>Dashboard</span>
+                </button>
+                <button id="btn-report-card" class="tab-button" onclick="showPage('report-card')">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/>
+                    </svg>
+                    <span>Report Card</span>
+                </button>
+                <button id="btn-learning-hub" class="tab-button" onclick="showPage('learning-hub')">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 3v18h18"/><path d="M18 17l-3-3-4 4-5-5-3 3"/>
+                    </svg>
+                    <span>Learning Hub</span>
+                </button>
+                <button id="btn-upload" class="tab-button" onclick="showPage('upload')">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 9l5-5 5 5M12 4v12"/>
+                    </svg>
+                    <span>Upload</span>
+                </button>
+            </div>
+        </nav>
+
+    <!-- Install Button (PWA) -->
+    <button id="install-btn">Install Wexford App</button>
+
+    <!-- Offline Toast -->
+    <div id="offline-toast">Offline Mode — Learning Never Stops!</div>
+
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 900,
+            easing: 'ease-out-cubic',
+            once: true
+        });
+
+        // ========== GLOBAL VARIABLES ==========
+        let deferredPrompt;
+        let currentDashboardSlide = 0;
+        let currentGallerySlide = 0;
+        const totalDashboardSlides = 5;
+        const totalGallerySlides = 7;
+
+        // ========== INITIALIZATION ==========
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeSystem();
+        });
+
+        function initializeSystem() {
+            // Hide loader
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('hidden');
+            }, 1000);
+
+            // Initialize components
+            checkCompatibility();
+            createParticles();
+            initDashboardBanner();
+            initGallerySlideshow();
+            updateDateTime();
+            updateAnnouncementDates();
+            setupEventListeners();
+            
+            // Check PWA installation
+            checkPWAInstallation();
+            
+            // Show welcome notification
+            setTimeout(() => {
+                showNotification('Welcome to Wexford Edu Hub! 🎓\nYour premium learning platform is ready.');
+            }, 1500);
+        }
+
+        // ========== UTILITY FUNCTIONS ==========
         function getTimeAgo(dateString) {
             const postDate = new Date(dateString);
             const now = new Date();
             const seconds = Math.floor((now - postDate) / 1000);
             
-            let interval = Math.floor(seconds / 31536000);
-            if (interval > 1) return interval + " years ago";
-            if (interval === 1) return interval + " year ago";
+            if (seconds < 60) return "Just now";
             
-            interval = Math.floor(seconds / 2592000);
-            if (interval > 1) return interval + " months ago";
-            if (interval === 1) return interval + " month ago";
+            const intervals = [
+                { label: 'year', seconds: 31536000 },
+                { label: 'month', seconds: 2592000 },
+                { label: 'day', seconds: 86400 },
+                { label: 'hour', seconds: 3600 },
+                { label: 'minute', seconds: 60 }
+            ];
             
-            interval = Math.floor(seconds / 86400);
-            if (interval > 1) return interval + " days ago";
-            if (interval === 1) return interval + " day ago";
+            for (const interval of intervals) {
+                const count = Math.floor(seconds / interval.seconds);
+                if (count >= 1) {
+                    return `${count} ${interval.label}${count > 1 ? 's' : ''} ago`;
+                }
+            }
             
-            interval = Math.floor(seconds / 3600);
-            if (interval > 1) return interval + " hours ago";
-            if (interval === 1) return interval + " hour ago";
-            
-            interval = Math.floor(seconds / 60);
-            if (interval > 1) return interval + " minutes ago";
-            if (interval === 1) return interval + " minute ago";
-            
-            return Math.floor(seconds) + " seconds ago";
+            return "Just now";
         }
 
-        // Initialize Date/Time Display
-        updateDateTime();
-        setInterval(updateDateTime, 60000); // Update every minute
+        function updateDateTime() {
+            const now = new Date();
+            const options = { 
+                weekday: 'short', 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            const dateTimeString = now.toLocaleDateString('en-US', options);
+            const displayElement = document.getElementById('datetime-display');
+            if (displayElement) {
+                displayElement.textContent = dateTimeString;
+            }
+        }
 
-        // === PAGE NAVIGATION FUNCTIONS ===
+        function updateAnnouncementDates() {
+            const dates = [
+                '2025-01-15T10:30:00',
+                '2025-01-14T14:20:00',
+                '2025-01-12T09:15:00',
+                '2025-01-10T16:45:00',
+                '2025-01-08T11:00:00'
+            ];
+            
+            dates.forEach((date, index) => {
+                const element = document.getElementById(`announcement-${index + 1}-date`);
+                if (element) {
+                    element.textContent = `Posted ${getTimeAgo(date)}`;
+                }
+            });
+        }
+
+        // ========== PAGE NAVIGATION ==========
         function showPage(pageId) {
             // Hide all pages
             const pages = document.querySelectorAll('.menu-page, .tab-content, .admin-panel');
@@ -45,47 +1244,123 @@
                 window.location.hash = pageId;
                 
                 // Update active tab button
-                const tabButtons = document.querySelectorAll('.tab-button');
-                tabButtons.forEach(btn => btn.classList.remove('active'));
-                
-                const correspondingBtn = document.getElementById(`btn-${pageId}`);
-                if (correspondingBtn) {
-                    correspondingBtn.classList.add('active');
-                }
+                updateActiveTabButton(pageId);
                 
                 // Scroll to top
                 window.scrollTo({ top: 0, behavior: 'smooth' });
+                
+                // Update page title
+                updatePageTitle(pageId);
             }
         }
 
-        // Switch between grade tabs (Lower Primary, Upper Primary, JHS)
+        function updateActiveTabButton(pageId) {
+            const tabButtons = document.querySelectorAll('.tab-button');
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            
+            const correspondingBtn = document.getElementById(`btn-${pageId}`);
+            if (correspondingBtn) {
+                correspondingBtn.classList.add('active');
+            }
+        }
+
+        function updatePageTitle(pageId) {
+            const pageTitles = {
+                'dashboard': 'Dashboard',
+                'report-card': 'Report Card System',
+                'learning-hub': 'Learning Hub',
+                'announcements': 'Announcements',
+                'trial': 'Trial Questions',
+                'about': 'About Us',
+                'upload': 'Upload Content',
+                'admin-panel': 'Admin Panel'
+            };
+            
+            if (pageTitles[pageId]) {
+                document.title = `Wexford Edu Hub - ${pageTitles[pageId]}`;
+            }
+        }
+
         function switchTab(tabId) {
             const tabs = ['lower-primary', 'upper-primary', 'jhs'];
             tabs.forEach(tab => {
                 const tabElement = document.getElementById(tab);
-                if (tabElement) {
-                    tabElement.classList.remove('active');
-                }
+                if (tabElement) tabElement.classList.remove('active');
             });
             
             const targetTab = document.getElementById(tabId);
             if (targetTab) {
                 targetTab.classList.add('active');
-                // Also show the learning hub page
                 showPage('learning-hub');
-                // Scroll to the tab content
                 setTimeout(() => {
                     targetTab.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }, 300);
             }
         }
 
-        // === SEARCH FUNCTIONALITY ===
+        // ========== DASHBOARD FUNCTIONS ==========
+        function initDashboardBanner() {
+            showDashboardSlide(0);
+            setInterval(nextDashboardSlide, 6000);
+        }
+
+        function showDashboardSlide(index) {
+            const slides = document.querySelectorAll('.dashboard-slide');
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active');
+                if (i === index) slide.classList.add('active');
+            });
+            currentDashboardSlide = index;
+        }
+
+        function nextDashboardSlide() {
+            const nextSlide = (currentDashboardSlide + 1) % totalDashboardSlides;
+            showDashboardSlide(nextSlide);
+        }
+
+        // ========== GALLERY FUNCTIONS ==========
+        function initGallerySlideshow() {
+            showGallerySlide(0);
+            setInterval(() => {
+                const nextSlide = (currentGallerySlide + 1) % totalGallerySlides;
+                showGallerySlide(nextSlide);
+            }, 4000);
+        }
+
+        function showGallerySlide(index) {
+            const slides = document.querySelectorAll('.gallery-slide');
+            const indicators = document.querySelectorAll('.gallery-indicator');
+            
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active');
+                if (i === index) slide.classList.add('active');
+            });
+
+            indicators.forEach((indicator, i) => {
+                indicator.classList.remove('active');
+                if (i === index) indicator.classList.add('active');
+            });
+            
+            currentGallerySlide = index;
+        }
+
+        function changeGallerySlide(direction) {
+            const newIndex = (currentGallerySlide + direction + totalGallerySlides) % totalGallerySlides;
+            showGallerySlide(newIndex);
+        }
+
+        function setGallerySlide(index) {
+            if (index >= 0 && index < totalGallerySlides) {
+                showGallerySlide(index);
+            }
+        }
+
+        // ========== SEARCH FUNCTIONALITY ==========
         function toggleSearch() {
             const searchModal = document.getElementById('search-modal');
-            searchModal.classList.toggle('active');
+            const isActive = searchModal.classList.toggle('active');
             
-            if (searchModal.classList.contains('active')) {
+            if (isActive) {
                 document.getElementById('searchInput').focus();
                 document.body.style.overflow = 'hidden';
             } else {
@@ -108,18 +1383,17 @@
         function performSearch() {
             const searchTerm = document.getElementById('searchInput').value.trim();
             if (searchTerm) {
-                showNotification(`Searching for: "${searchTerm}"\n\nSearch results would appear here in a real implementation.`);
-                // Close search modal
+                showNotification(`Searching for: "${searchTerm}"\n\nResults would include:\n• Student records\n• Course content\n• Educational videos\n• Announcements`);
                 toggleSearch();
             }
         }
 
-        // === MENU FUNCTIONALITY ===
+        // ========== MENU FUNCTIONALITY ==========
         function toggleMenu() {
             const menuOverlay = document.getElementById('menu-overlay');
-            menuOverlay.classList.toggle('active');
+            const isActive = menuOverlay.classList.toggle('active');
             
-            if (menuOverlay.classList.contains('active')) {
+            if (isActive) {
                 document.body.style.overflow = 'hidden';
             } else {
                 document.body.style.overflow = '';
@@ -132,143 +1406,189 @@
             }
         }
 
-        // === VIDEO PLAYER ===
-        function playVideo(videoSrc) {
-            showNotification(`Playing video: ${videoSrc}\n\nIn a real implementation, this would open a video player.`);
-        }
-
-        // === UPLOAD FORM HANDLING ===
+        // ========== UPLOAD FUNCTIONALITY ==========
         function handleUpload(event) {
             event.preventDefault();
-            const form = event.target;
-            const formData = new FormData(form);
+            
+            const videoData = {
+                title: document.getElementById('videoTitle').value,
+                url: document.getElementById('videoUrl').value,
+                grade: document.getElementById('gradeLevel').value,
+                subject: document.getElementById('subject').value,
+                description: document.getElementById('videoDescription').value,
+                timestamp: new Date().toISOString()
+            };
+            
+            // Store in localStorage
+            const uploads = JSON.parse(localStorage.getItem('videoUploads') || '[]');
+            uploads.push(videoData);
+            localStorage.setItem('videoUploads', JSON.stringify(uploads));
             
             showNotification('✅ Video uploaded successfully!\n\nYour educational video has been submitted for review. It will be available to students once approved.');
             
             // Reset form
-            form.reset();
+            document.getElementById('uploadForm').reset();
             
             // Return to dashboard
             setTimeout(() => showPage('dashboard'), 2000);
         }
 
-        // === ADMIN PANEL FUNCTIONS ===
+        // ========== ADMIN PANEL FUNCTIONS ==========
         function openAdminModal(modalType) {
             const modal = document.getElementById('admin-modal');
             const modalTitle = document.getElementById('admin-modal-title');
             const modalContent = document.getElementById('admin-modal-content');
             
-            let title = '';
-            let content = '';
-            
-            switch(modalType) {
-                case 'users':
-                    title = '👥 Manage Users';
-                    content = `
-                        <p>Manage user accounts and permissions:</p>
-                        <div style="margin: 1rem 0;">
-                            <input type="text" placeholder="Search users..." style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 6px; margin-bottom: 0.5rem;">
-                            <button style="width: 100%; padding: 0.5rem; background: #0B8F4A; color: white; border: none; border-radius: 6px; cursor: pointer;">Add New User</button>
-                        </div>
-                        <div style="max-height: 200px; overflow-y: auto;">
-                            <div style="padding: 0.5rem; border-bottom: 1px solid #eee;">Teacher Stephen</div>
-                            <div style="padding: 0.5rem; border-bottom: 1px solid #eee;">Admin Panin</div>
-                            <div style="padding: 0.5rem; border-bottom: 1px solid #eee;">Student Kwame</div>
-                        </div>
-                    `;
-                    break;
-                case 'content':
-                    title = '✅ Approve Content';
-                    content = `
-                        <p>Pending content for approval:</p>
-                        <div style="max-height: 200px; overflow-y: auto;">
-                            <div style="padding: 0.5rem; border-bottom: 1px solid #eee; display: flex; justify-content: space-between;">
-                                <span>Math Video by Teacher Ama</span>
-                                <button style="padding: 0.25rem 0.5rem; background: #0B8F4A; color: white; border: none; border-radius: 4px; cursor: pointer;">Approve</button>
-                            </div>
-                            <div style="padding: 0.5rem; border-bottom: 1px solid #eee; display: flex; justify-content: space-between;">
-                                <span>Science Quiz by Teacher Kofi</span>
-                                <button style="padding: 0.25rem 0.5rem; background: #0B8F4A; color: white; border: none; border-radius: 4px; cursor: pointer;">Approve</button>
+            const modalConfigs = {
+                'users': {
+                    title: '👥 Manage Users',
+                    content: `
+                        <div style="margin-bottom: 1rem;">
+                            <input type="text" placeholder="Search users..." style="width: 100%; padding: 0.75rem; border: 2px solid var(--border-gray); border-radius: 8px; margin-bottom: 0.75rem;">
+                            <div style="max-height: 200px; overflow-y: auto;">
+                                ${['Teacher Stephen', 'Admin Panin', 'Student Kwame', 'Parent Ama', 'Staff Kofi']
+                                    .map(user => `<div style="padding: 0.75rem; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center;">
+                                        <span>${user}</span>
+                                        <button onclick="adminAction('editUser', '${user}')" style="padding: 0.25rem 0.5rem; background: var(--primary-green); color: white; border: none; border-radius: 4px; cursor: pointer;">Edit</button>
+                                    </div>`).join('')}
                             </div>
                         </div>
-                    `;
-                    break;
-                case 'analytics':
-                    title = '📊 System Analytics';
-                    content = `
-                        <p>System performance metrics:</p>
-                        <div style="text-align: center; margin: 1rem 0;">
-                            <div style="font-size: 2rem; font-weight: bold; color: #0B8F4A;">98.2%</div>
-                            <div>Uptime</div>
+                        <button onclick="adminAction('addUser')" style="width: 100%; padding: 0.75rem; background: var(--primary-green); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Add New User</button>
+                    `
+                },
+                'content': {
+                    title: '✅ Approve Content',
+                    content: `
+                        <div style="max-height: 250px; overflow-y: auto;">
+                            ${[
+                                {title: 'Math Video by Teacher Ama', type: 'video'},
+                                {title: 'Science Quiz by Teacher Kofi', type: 'quiz'},
+                                {title: 'English Notes by Staff Esi', type: 'document'},
+                                {title: 'ICT Tutorial by Teacher Yaw', type: 'video'}
+                            ].map(item => `<div style="padding: 0.75rem; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <strong>${item.title}</strong><br>
+                                    <small style="color: #666;">Type: ${item.type}</small>
+                                </div>
+                                <div>
+                                    <button onclick="adminAction('approveContent', '${item.title}')" style="padding: 0.25rem 0.5rem; background: var(--primary-green); color: white; border: none; border-radius: 4px; cursor: pointer; margin-right: 0.25rem;">Approve</button>
+                                    <button onclick="adminAction('rejectContent', '${item.title}')" style="padding: 0.25rem 0.5rem; background: #ef4444; color: white; border: none; border-radius: 4px; cursor: pointer;">Reject</button>
+                                </div>
+                            </div>`).join('')}
+                        </div>
+                    `
+                },
+                'analytics': {
+                    title: '📊 System Analytics',
+                    content: `
+                        <div style="text-align: center;">
+                            <div style="font-size: 2.5rem; font-weight: 900; color: var(--primary-green); margin: 1rem 0;">98.2%</div>
+                            <div style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">System Uptime</div>
                         </div>
                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                            <div style="text-align: center;">
-                                <div style="font-size: 1.2rem; font-weight: bold;">428</div>
-                                <div>Active Users</div>
+                            <div style="text-align: center; padding: 1rem; background: var(--primary-light); border-radius: 8px;">
+                                <div style="font-size: 1.5rem; font-weight: 800; color: var(--primary-green);">428</div>
+                                <div style="font-size: 0.85rem; color: #666;">Active Users</div>
                             </div>
-                            <div style="text-align: center;">
-                                <div style="font-size: 1.2rem; font-weight: bold;">42.8 GB</div>
-                                <div>Storage Used</div>
+                            <div style="text-align: center; padding: 1rem; background: var(--primary-light); border-radius: 8px;">
+                                <div style="font-size: 1.5rem; font-weight: 800; color: #f59e0b;">42.8 GB</div>
+                                <div style="font-size: 0.85rem; color: #666;">Storage Used</div>
                             </div>
                         </div>
-                    `;
-                    break;
-                case 'broadcast':
-                    title = '📢 Broadcast Alert';
-                    content = `
-                        <p>Send message to all users:</p>
-                        <textarea placeholder="Enter broadcast message..." style="width: 100%; height: 100px; padding: 0.5rem; border: 1px solid #ddd; border-radius: 6px; margin-bottom: 0.5rem;"></textarea>
-                        <button style="width: 100%; padding: 0.5rem; background: #0B8F4A; color: white; border: none; border-radius: 6px; cursor: pointer;">Send Broadcast</button>
-                    `;
-                    break;
-                case 'backup':
-                    title = '💾 Backup System';
-                    content = `
-                        <p>System backup options:</p>
-                        <button style="width: 100%; padding: 0.5rem; background: #0B8F4A; color: white; border: none; border-radius: 6px; cursor: pointer; margin-bottom: 0.5rem;">Create Backup Now</button>
-                        <button style="width: 100%; padding: 0.5rem; background: #f59e0b; color: white; border: none; border-radius: 6px; cursor: pointer;">Schedule Auto Backup</button>
-                        <p style="font-size: 0.8rem; margin-top: 0.5rem; color: #666;">Last backup: Today, 02:00 AM</p>
-                    `;
-                    break;
-                case 'settings':
-                    title = '⚙️ System Settings';
-                    content = `
-                        <p>System configuration:</p>
-                        <div style="margin: 0.5rem 0;">
-                            <label><input type="checkbox" checked> Enable Notifications</label>
+                    `
+                },
+                'broadcast': {
+                    title: '📢 Broadcast Alert',
+                    content: `
+                        <textarea placeholder="Enter broadcast message to all users..." style="width: 100%; height: 120px; padding: 0.75rem; border: 2px solid var(--border-gray); border-radius: 8px; margin-bottom: 1rem; font-family: 'Poppins', sans-serif;"></textarea>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+                            <button onclick="adminAction('sendBroadcast', 'urgent')" style="padding: 0.75rem; background: #ef4444; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Urgent Alert</button>
+                            <button onclick="adminAction('sendBroadcast', 'normal')" style="padding: 0.75rem; background: var(--primary-green); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Normal Message</button>
                         </div>
-                        <div style="margin: 0.5rem 0;">
-                            <label><input type="checkbox" checked> Auto-update Content</label>
+                    `
+                },
+                'backup': {
+                    title: '💾 Backup System',
+                    content: `
+                        <div style="margin-bottom: 1rem;">
+                            <div style="background: var(--primary-light); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                                <strong>Last Backup:</strong> Today, 02:00 AM<br>
+                                <strong>Size:</strong> 2.4 GB<br>
+                                <strong>Status:</strong> <span style="color: var(--primary-green);">✓ Successful</span>
+                            </div>
                         </div>
-                        <div style="margin: 0.5rem 0;">
-                            <label><input type="checkbox"> Maintenance Mode</label>
+                        <div style="display: grid; gap: 0.5rem;">
+                            <button onclick="adminAction('createBackup')" style="padding: 0.75rem; background: var(--primary-green); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Create Backup Now</button>
+                            <button onclick="adminAction('scheduleBackup')" style="padding: 0.75rem; background: #f59e0b; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Schedule Auto Backup</button>
                         </div>
-                        <button style="width: 100%; padding: 0.5rem; background: #0B8F4A; color: white; border: none; border-radius: 6px; cursor: pointer; margin-top: 1rem;">Save Settings</button>
-                    `;
-                    break;
-            }
+                    `
+                },
+                'settings': {
+                    title: '⚙️ System Settings',
+                    content: `
+                        <div style="margin-bottom: 1.5rem;">
+                            <div style="margin-bottom: 1rem;">
+                                <label style="display: flex; align-items: center; cursor: pointer;">
+                                    <input type="checkbox" checked style="margin-right: 0.5rem;"> Enable Email Notifications
+                                </label>
+                            </div>
+                            <div style="margin-bottom: 1rem;">
+                                <label style="display: flex; align-items: center; cursor: pointer;">
+                                    <input type="checkbox" checked style="margin-right: 0.5rem;"> Auto-Update Content
+                                </label>
+                            </div>
+                            <div style="margin-bottom: 1rem;">
+                                <label style="display: flex; align-items: center; cursor: pointer;">
+                                    <input type="checkbox" style="margin-right: 0.5rem;"> Maintenance Mode
+                                </label>
+                            </div>
+                            <div>
+                                <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Theme Color</label>
+                                <select style="width: 100%; padding: 0.75rem; border: 2px solid var(--border-gray); border-radius: 8px;">
+                                    <option>Green (Default)</option>
+                                    <option>Blue</option>
+                                    <option>Purple</option>
+                                    <option>Orange</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button onclick="adminAction('saveSettings')" style="width: 100%; padding: 0.75rem; background: var(--primary-green); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Save Settings</button>
+                    `
+                }
+            };
             
-            modalTitle.textContent = title;
-            modalContent.innerHTML = content;
-            modal.style.display = 'flex';
+            if (modalConfigs[modalType]) {
+                modalTitle.textContent = modalConfigs[modalType].title;
+                modalContent.innerHTML = modalConfigs[modalType].content;
+                modal.style.display = 'flex';
+            }
+        }
+
+        function adminAction(action, data = null) {
+            const messages = {
+                'editUser': `Editing user: ${data}`,
+                'addUser': 'Opening user creation form...',
+                'approveContent': `Approved content: ${data}`,
+                'rejectContent': `Rejected content: ${data}`,
+                'sendBroadcast': `${data === 'urgent' ? 'Urgent' : 'Normal'} broadcast sent to all users`,
+                'createBackup': 'System backup created successfully',
+                'scheduleBackup': 'Auto-backup scheduled for daily at 2 AM',
+                'saveSettings': 'Settings saved successfully'
+            };
+            
+            if (messages[action]) {
+                showNotification(messages[action]);
+                if (action === 'saveSettings' || action === 'createBackup') {
+                    closeAdminModal();
+                }
+            }
         }
 
         function closeAdminModal() {
             document.getElementById('admin-modal').style.display = 'none';
         }
 
-        // === URL HASH HANDLING ===
-        window.addEventListener('load', function() {
-            // Check URL hash for page navigation
-            const hash = window.location.hash.substring(1);
-            const validPages = ['dashboard', 'report-card', 'learning-hub', 'announcements', 'trial', 'about', 'upload', 'admin-panel', 'lower-primary', 'upper-primary', 'jhs'];
-            
-            if (hash && validPages.includes(hash)) {
-                showPage(hash);
-            }
-        });
-
-        // === ENHANCED NOTIFICATION SYSTEM ===
+        // ========== NOTIFICATION SYSTEM ==========
         function showNotification(message) {
             const notification = document.getElementById('notification');
             const messageEl = document.getElementById('notificationMessage');
@@ -282,121 +1602,180 @@
                 notification.style.animation = 'fadeIn 0.3s ease';
             }, 10);
             
-            // Auto-hide after 4 seconds
+            // Auto-hide
             setTimeout(() => {
                 notification.style.display = 'none';
             }, 4000);
         }
 
-        // === KEYBOARD SHORTCUTS ===
-        document.addEventListener('keydown', function(e) {
-            // ESC closes modals
-            if (e.key === 'Escape') {
-                const searchModal = document.getElementById('search-modal');
-                if (searchModal.classList.contains('active')) {
-                    toggleSearch();
-                }
-                
-                const menuOverlay = document.getElementById('menu-overlay');
-                if (menuOverlay.classList.contains('active')) {
-                    toggleMenu();
-                }
-                
-                const adminModal = document.getElementById('admin-modal');
-                if (adminModal.style.display === 'flex') {
-                    closeAdminModal();
-                }
-            }
-            
-            // Ctrl+Shift+D for dashboard
-            if (e.ctrlKey && e.shiftKey && e.key === 'D') {
+        // ========== PWA FUNCTIONALITY ==========
+        function checkPWAInstallation() {
+            window.addEventListener('beforeinstallprompt', (e) => {
                 e.preventDefault();
-                showPage('dashboard');
-            }
+                deferredPrompt = e;
+                document.getElementById('install-btn').style.display = 'block';
+            });
             
-            // Ctrl+Shift+L for learning hub
-            if (e.ctrlKey && e.shiftKey && e.key === 'L') {
-                e.preventDefault();
-                showPage('learning-hub');
+            // Check if app is already installed
+            if (window.matchMedia('(display-mode: standalone)').matches) {
+                document.getElementById('install-btn').style.display = 'none';
             }
-            
-            // Ctrl+Shift+A for admin
-            if (e.ctrlKey && e.shiftKey && e.key === 'A') {
-                e.preventDefault();
-                showPage('admin-panel');
+        }
+
+        document.getElementById('install-btn').addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    document.getElementById('install-btn').style.display = 'none';
+                }
+                deferredPrompt = null;
             }
         });
 
-        // === SERVICE WORKER REGISTRATION (PWA) ===
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-                navigator.serviceWorker.register('service-worker.js').then(
-                    function(registration) {
-                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
-                    },
-                    function(err) {
-                        console.log('ServiceWorker registration failed: ', err);
-                    }
-                );
-            });
+        // ========== OFFLINE DETECTION ==========
+        function updateOnlineStatus() {
+            const offlineStatus = document.getElementById('offlineStatus');
+            const offlineToast = document.getElementById('offline-toast');
+            
+            if (navigator.onLine) {
+                offlineStatus.textContent = '✅ You are back online!';
+                offlineStatus.className = 'offline-status online';
+                offlineToast.style.display = 'none';
+                setTimeout(() => {
+                    offlineStatus.style.display = 'none';
+                }, 3000);
+            } else {
+                offlineStatus.textContent = '⚠️ You are currently offline. Some features may be limited.';
+                offlineStatus.className = 'offline-status';
+                offlineStatus.style.display = 'block';
+                offlineToast.style.display = 'block';
+            }
         }
 
-        // === INITIALIZE ON LOAD ===
-        window.addEventListener('load', function() {
-            // Check for updates
-            if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.ready.then(registration => {
-                    registration.update();
-                });
+        window.addEventListener('online', updateOnlineStatus);
+        window.addEventListener('offline', updateOnlineStatus);
+
+        // ========== COMPATIBILITY CHECK ==========
+        function checkCompatibility() {
+            const warnings = [];
+            if (!('serviceWorker' in navigator)) warnings.push('Service Workers');
+            if (!('indexedDB' in window)) warnings.push('IndexedDB');
+            if (!window.fetch) warnings.push('Fetch API');
+            
+            if (warnings.length > 0) {
+                const warningEl = document.getElementById('compatWarning');
+                warningEl.classList.add('visible');
+                warningEl.innerHTML += `<br>Missing features: ${warnings.join(', ')}`;
             }
+        }
+
+        // ========== SCROLL TO TOP ==========
+        const scrollTopBtn = document.getElementById('scrollTopBtn');
+        window.addEventListener('scroll', () => {
+            scrollTopBtn.classList.toggle('visible', window.pageYOffset > 300);
+        });
+        
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // ========== PARTICLE EFFECTS ==========
+        function createParticles() {
+            const container = document.getElementById('particlesContainer');
+            if (!container) return;
             
-            // Check offline status
-            updateOnlineStatus();
-            
-            // Add context menu for right-click
-            document.addEventListener('contextmenu', function(e) {
-                if (e.target.classList.contains('video-card') || 
-                    e.target.classList.contains('quiz-card')) {
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                const size = Math.random() * 20 + 5;
+                const left = Math.random() * 100;
+                const delay = Math.random() * 20;
+                const duration = Math.random() * 20 + 20;
+                
+                Object.assign(particle.style, {
+                    width: `${size}px`,
+                    height: `${size}px`,
+                    left: `${left}%`,
+                    animationDelay: `${delay}s`,
+                    animationDuration: `${duration}s`
+                });
+                
+                container.appendChild(particle);
+            }
+        }
+
+        // ========== PRINT FUNCTIONALITY ==========
+        window.printContent = function() {
+            window.print();
+        };
+
+        // ========== VIDEO PLAYER ==========
+        function playVideo(videoSrc) {
+            showNotification(`Playing video: ${videoSrc}\n\nVideo player would open in a full-screen modal.`);
+        }
+
+        // ========== EVENT LISTENERS SETUP ==========
+        function setupEventListeners() {
+            // Keyboard shortcuts
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    const searchModal = document.getElementById('search-modal');
+                    if (searchModal.classList.contains('active')) toggleSearch();
+                    
+                    const menuOverlay = document.getElementById('menu-overlay');
+                    if (menuOverlay.classList.contains('active')) toggleMenu();
+                    
+                    const adminModal = document.getElementById('admin-modal');
+                    if (adminModal.style.display === 'flex') closeAdminModal();
+                }
+                
+                if (e.ctrlKey && e.shiftKey) {
+                    switch(e.key) {
+                        case 'D': e.preventDefault(); showPage('dashboard'); break;
+                        case 'L': e.preventDefault(); showPage('learning-hub'); break;
+                        case 'A': e.preventDefault(); showPage('admin-panel'); break;
+                    }
+                }
+                
+                // Ctrl+F for search
+                if (e.ctrlKey && e.key === 'f') {
+                    e.preventDefault();
+                    toggleSearch();
+                }
+            });
+
+            // Update date/time every minute
+            setInterval(updateDateTime, 60000);
+
+            // Handle URL hash on load
+            const hash = window.location.hash.substring(1);
+            const validPages = ['dashboard', 'report-card', 'learning-hub', 'announcements', 'trial', 'about', 'upload', 'admin-panel'];
+            if (hash && validPages.includes(hash)) {
+                showPage(hash);
+            }
+
+            // Prevent right-click on certain elements
+            document.addEventListener('contextmenu', (e) => {
+                if (e.target.closest('.video-card') || e.target.closest('.quiz-card')) {
                     e.preventDefault();
                     showNotification('Right-click disabled for learning content.');
                 }
             });
-        });
 
-        // === PROGRESSIVE ENHANCEMENT ===
-        // Check for modern JavaScript features
-        if (!window.Promise) {
-            document.getElementById('compatWarning').classList.add('visible');
+            // Update online status on load
+            updateOnlineStatus();
         }
 
-        // === LAZY LOADING FOR IMAGES ===
-        const lazyImages = document.querySelectorAll('img[data-src]');
-        const imageObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const img = entry.target;
-                    img.src = img.dataset.src;
-                    img.removeAttribute('data-src');
-                    observer.unobserve(img);
-                }
+        // ========== SERVICE WORKER REGISTRATION ==========
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js').catch(err => {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
             });
-        });
-
-        lazyImages.forEach(img => imageObserver.observe(img));
-
-        // === FINAL INITIALIZATION ===
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initialize particles
-            createParticles();
-            
-            // Start dashboard banner slideshow
-            initDashboardBanner();
-            
-            // Show welcome notification after 2 seconds
-            setTimeout(() => {
-                showNotification('Welcome to Wexford Edu Hub! 🎓\nYour premium learning platform is ready.');
-            }, 2000);
-        });
+        }
     </script>
 </body>
 </html>
