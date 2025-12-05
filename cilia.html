@@ -1,0 +1,402 @@
+        function getTimeAgo(dateString) {
+            const postDate = new Date(dateString);
+            const now = new Date();
+            const seconds = Math.floor((now - postDate) / 1000);
+            
+            let interval = Math.floor(seconds / 31536000);
+            if (interval > 1) return interval + " years ago";
+            if (interval === 1) return interval + " year ago";
+            
+            interval = Math.floor(seconds / 2592000);
+            if (interval > 1) return interval + " months ago";
+            if (interval === 1) return interval + " month ago";
+            
+            interval = Math.floor(seconds / 86400);
+            if (interval > 1) return interval + " days ago";
+            if (interval === 1) return interval + " day ago";
+            
+            interval = Math.floor(seconds / 3600);
+            if (interval > 1) return interval + " hours ago";
+            if (interval === 1) return interval + " hour ago";
+            
+            interval = Math.floor(seconds / 60);
+            if (interval > 1) return interval + " minutes ago";
+            if (interval === 1) return interval + " minute ago";
+            
+            return Math.floor(seconds) + " seconds ago";
+        }
+
+        // Initialize Date/Time Display
+        updateDateTime();
+        setInterval(updateDateTime, 60000); // Update every minute
+
+        // === PAGE NAVIGATION FUNCTIONS ===
+        function showPage(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.menu-page, .tab-content, .admin-panel');
+            pages.forEach(page => page.classList.remove('active'));
+            
+            // Show selected page
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.classList.add('active');
+                
+                // Update URL hash
+                window.location.hash = pageId;
+                
+                // Update active tab button
+                const tabButtons = document.querySelectorAll('.tab-button');
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                
+                const correspondingBtn = document.getElementById(`btn-${pageId}`);
+                if (correspondingBtn) {
+                    correspondingBtn.classList.add('active');
+                }
+                
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        // Switch between grade tabs (Lower Primary, Upper Primary, JHS)
+        function switchTab(tabId) {
+            const tabs = ['lower-primary', 'upper-primary', 'jhs'];
+            tabs.forEach(tab => {
+                const tabElement = document.getElementById(tab);
+                if (tabElement) {
+                    tabElement.classList.remove('active');
+                }
+            });
+            
+            const targetTab = document.getElementById(tabId);
+            if (targetTab) {
+                targetTab.classList.add('active');
+                // Also show the learning hub page
+                showPage('learning-hub');
+                // Scroll to the tab content
+                setTimeout(() => {
+                    targetTab.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 300);
+            }
+        }
+
+        // === SEARCH FUNCTIONALITY ===
+        function toggleSearch() {
+            const searchModal = document.getElementById('search-modal');
+            searchModal.classList.toggle('active');
+            
+            if (searchModal.classList.contains('active')) {
+                document.getElementById('searchInput').focus();
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+        }
+
+        function closeSearchOnOverlay(event) {
+            if (event.target.classList.contains('search-modal')) {
+                toggleSearch();
+            }
+        }
+
+        function handleSearch(event) {
+            if (event.key === 'Enter') {
+                performSearch();
+            }
+        }
+
+        function performSearch() {
+            const searchTerm = document.getElementById('searchInput').value.trim();
+            if (searchTerm) {
+                showNotification(`Searching for: "${searchTerm}"\n\nSearch results would appear here in a real implementation.`);
+                // Close search modal
+                toggleSearch();
+            }
+        }
+
+        // === MENU FUNCTIONALITY ===
+        function toggleMenu() {
+            const menuOverlay = document.getElementById('menu-overlay');
+            menuOverlay.classList.toggle('active');
+            
+            if (menuOverlay.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+        }
+
+        function closeMenuOnOverlay(event) {
+            if (event.target.classList.contains('menu-overlay')) {
+                toggleMenu();
+            }
+        }
+
+        // === VIDEO PLAYER ===
+        function playVideo(videoSrc) {
+            showNotification(`Playing video: ${videoSrc}\n\nIn a real implementation, this would open a video player.`);
+        }
+
+        // === UPLOAD FORM HANDLING ===
+        function handleUpload(event) {
+            event.preventDefault();
+            const form = event.target;
+            const formData = new FormData(form);
+            
+            showNotification('✅ Video uploaded successfully!\n\nYour educational video has been submitted for review. It will be available to students once approved.');
+            
+            // Reset form
+            form.reset();
+            
+            // Return to dashboard
+            setTimeout(() => showPage('dashboard'), 2000);
+        }
+
+        // === ADMIN PANEL FUNCTIONS ===
+        function openAdminModal(modalType) {
+            const modal = document.getElementById('admin-modal');
+            const modalTitle = document.getElementById('admin-modal-title');
+            const modalContent = document.getElementById('admin-modal-content');
+            
+            let title = '';
+            let content = '';
+            
+            switch(modalType) {
+                case 'users':
+                    title = '👥 Manage Users';
+                    content = `
+                        <p>Manage user accounts and permissions:</p>
+                        <div style="margin: 1rem 0;">
+                            <input type="text" placeholder="Search users..." style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 6px; margin-bottom: 0.5rem;">
+                            <button style="width: 100%; padding: 0.5rem; background: #0B8F4A; color: white; border: none; border-radius: 6px; cursor: pointer;">Add New User</button>
+                        </div>
+                        <div style="max-height: 200px; overflow-y: auto;">
+                            <div style="padding: 0.5rem; border-bottom: 1px solid #eee;">Teacher Stephen</div>
+                            <div style="padding: 0.5rem; border-bottom: 1px solid #eee;">Admin Panin</div>
+                            <div style="padding: 0.5rem; border-bottom: 1px solid #eee;">Student Kwame</div>
+                        </div>
+                    `;
+                    break;
+                case 'content':
+                    title = '✅ Approve Content';
+                    content = `
+                        <p>Pending content for approval:</p>
+                        <div style="max-height: 200px; overflow-y: auto;">
+                            <div style="padding: 0.5rem; border-bottom: 1px solid #eee; display: flex; justify-content: space-between;">
+                                <span>Math Video by Teacher Ama</span>
+                                <button style="padding: 0.25rem 0.5rem; background: #0B8F4A; color: white; border: none; border-radius: 4px; cursor: pointer;">Approve</button>
+                            </div>
+                            <div style="padding: 0.5rem; border-bottom: 1px solid #eee; display: flex; justify-content: space-between;">
+                                <span>Science Quiz by Teacher Kofi</span>
+                                <button style="padding: 0.25rem 0.5rem; background: #0B8F4A; color: white; border: none; border-radius: 4px; cursor: pointer;">Approve</button>
+                            </div>
+                        </div>
+                    `;
+                    break;
+                case 'analytics':
+                    title = '📊 System Analytics';
+                    content = `
+                        <p>System performance metrics:</p>
+                        <div style="text-align: center; margin: 1rem 0;">
+                            <div style="font-size: 2rem; font-weight: bold; color: #0B8F4A;">98.2%</div>
+                            <div>Uptime</div>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div style="text-align: center;">
+                                <div style="font-size: 1.2rem; font-weight: bold;">428</div>
+                                <div>Active Users</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="font-size: 1.2rem; font-weight: bold;">42.8 GB</div>
+                                <div>Storage Used</div>
+                            </div>
+                        </div>
+                    `;
+                    break;
+                case 'broadcast':
+                    title = '📢 Broadcast Alert';
+                    content = `
+                        <p>Send message to all users:</p>
+                        <textarea placeholder="Enter broadcast message..." style="width: 100%; height: 100px; padding: 0.5rem; border: 1px solid #ddd; border-radius: 6px; margin-bottom: 0.5rem;"></textarea>
+                        <button style="width: 100%; padding: 0.5rem; background: #0B8F4A; color: white; border: none; border-radius: 6px; cursor: pointer;">Send Broadcast</button>
+                    `;
+                    break;
+                case 'backup':
+                    title = '💾 Backup System';
+                    content = `
+                        <p>System backup options:</p>
+                        <button style="width: 100%; padding: 0.5rem; background: #0B8F4A; color: white; border: none; border-radius: 6px; cursor: pointer; margin-bottom: 0.5rem;">Create Backup Now</button>
+                        <button style="width: 100%; padding: 0.5rem; background: #f59e0b; color: white; border: none; border-radius: 6px; cursor: pointer;">Schedule Auto Backup</button>
+                        <p style="font-size: 0.8rem; margin-top: 0.5rem; color: #666;">Last backup: Today, 02:00 AM</p>
+                    `;
+                    break;
+                case 'settings':
+                    title = '⚙️ System Settings';
+                    content = `
+                        <p>System configuration:</p>
+                        <div style="margin: 0.5rem 0;">
+                            <label><input type="checkbox" checked> Enable Notifications</label>
+                        </div>
+                        <div style="margin: 0.5rem 0;">
+                            <label><input type="checkbox" checked> Auto-update Content</label>
+                        </div>
+                        <div style="margin: 0.5rem 0;">
+                            <label><input type="checkbox"> Maintenance Mode</label>
+                        </div>
+                        <button style="width: 100%; padding: 0.5rem; background: #0B8F4A; color: white; border: none; border-radius: 6px; cursor: pointer; margin-top: 1rem;">Save Settings</button>
+                    `;
+                    break;
+            }
+            
+            modalTitle.textContent = title;
+            modalContent.innerHTML = content;
+            modal.style.display = 'flex';
+        }
+
+        function closeAdminModal() {
+            document.getElementById('admin-modal').style.display = 'none';
+        }
+
+        // === URL HASH HANDLING ===
+        window.addEventListener('load', function() {
+            // Check URL hash for page navigation
+            const hash = window.location.hash.substring(1);
+            const validPages = ['dashboard', 'report-card', 'learning-hub', 'announcements', 'trial', 'about', 'upload', 'admin-panel', 'lower-primary', 'upper-primary', 'jhs'];
+            
+            if (hash && validPages.includes(hash)) {
+                showPage(hash);
+            }
+        });
+
+        // === ENHANCED NOTIFICATION SYSTEM ===
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            const messageEl = document.getElementById('notificationMessage');
+            
+            messageEl.textContent = message;
+            notification.style.display = 'block';
+            
+            // Add animation
+            notification.style.animation = 'none';
+            setTimeout(() => {
+                notification.style.animation = 'fadeIn 0.3s ease';
+            }, 10);
+            
+            // Auto-hide after 4 seconds
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 4000);
+        }
+
+        // === KEYBOARD SHORTCUTS ===
+        document.addEventListener('keydown', function(e) {
+            // ESC closes modals
+            if (e.key === 'Escape') {
+                const searchModal = document.getElementById('search-modal');
+                if (searchModal.classList.contains('active')) {
+                    toggleSearch();
+                }
+                
+                const menuOverlay = document.getElementById('menu-overlay');
+                if (menuOverlay.classList.contains('active')) {
+                    toggleMenu();
+                }
+                
+                const adminModal = document.getElementById('admin-modal');
+                if (adminModal.style.display === 'flex') {
+                    closeAdminModal();
+                }
+            }
+            
+            // Ctrl+Shift+D for dashboard
+            if (e.ctrlKey && e.shiftKey && e.key === 'D') {
+                e.preventDefault();
+                showPage('dashboard');
+            }
+            
+            // Ctrl+Shift+L for learning hub
+            if (e.ctrlKey && e.shiftKey && e.key === 'L') {
+                e.preventDefault();
+                showPage('learning-hub');
+            }
+            
+            // Ctrl+Shift+A for admin
+            if (e.ctrlKey && e.shiftKey && e.key === 'A') {
+                e.preventDefault();
+                showPage('admin-panel');
+            }
+        });
+
+        // === SERVICE WORKER REGISTRATION (PWA) ===
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('service-worker.js').then(
+                    function(registration) {
+                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                    },
+                    function(err) {
+                        console.log('ServiceWorker registration failed: ', err);
+                    }
+                );
+            });
+        }
+
+        // === INITIALIZE ON LOAD ===
+        window.addEventListener('load', function() {
+            // Check for updates
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.ready.then(registration => {
+                    registration.update();
+                });
+            }
+            
+            // Check offline status
+            updateOnlineStatus();
+            
+            // Add context menu for right-click
+            document.addEventListener('contextmenu', function(e) {
+                if (e.target.classList.contains('video-card') || 
+                    e.target.classList.contains('quiz-card')) {
+                    e.preventDefault();
+                    showNotification('Right-click disabled for learning content.');
+                }
+            });
+        });
+
+        // === PROGRESSIVE ENHANCEMENT ===
+        // Check for modern JavaScript features
+        if (!window.Promise) {
+            document.getElementById('compatWarning').classList.add('visible');
+        }
+
+        // === LAZY LOADING FOR IMAGES ===
+        const lazyImages = document.querySelectorAll('img[data-src]');
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.src = img.dataset.src;
+                    img.removeAttribute('data-src');
+                    observer.unobserve(img);
+                }
+            });
+        });
+
+        lazyImages.forEach(img => imageObserver.observe(img));
+
+        // === FINAL INITIALIZATION ===
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize particles
+            createParticles();
+            
+            // Start dashboard banner slideshow
+            initDashboardBanner();
+            
+            // Show welcome notification after 2 seconds
+            setTimeout(() => {
+                showNotification('Welcome to Wexford Edu Hub! 🎓\nYour premium learning platform is ready.');
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
