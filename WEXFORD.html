@@ -4,25 +4,62 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wexford Edu Hub - Premium Learning Platform</title>
+    <meta name="description" content="Wexford Edu Hub — World-class learning platform that works 100% offline">
+    
+    <!-- PWA Tags -->
+    <meta name="theme-color" content="#0B8F4A">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Wexford Edu">
+    <link rel="apple-touch-icon" href="WEX LOGO.jpg">
+    <link rel="manifest" href="manifest.json">
+
+    <!-- Fonts & Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@300;400;500;600&family=Poppins:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+
+    <!-- External Libraries from first code -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;700;800&display=swap');
 
         :root {
-            --primary-green: #0B8F4A;
+            /* Enhanced Variables from first code */
+            --primary-green: #0B8F4A; /* Wexford Green */
             --primary-dark: #076838;
             --primary-light: #E8F5EE;
-            --accent-blue: #3B82F6;
-            --accent-purple: #8B5CF6;
-            --accent-orange: #F59E0B;
-            --accent-pink: #EC4899;
+            --secondary: #003366; /* Dark Blue from first code */
+            --accent: #FF6B00; /* Orange from first code */
             --white: #FFFFFF;
             --light-gray: #F8FAFC;
             --border-gray: #E2E8F0;
             --text-dark: #1E293B;
             --text-medium: #475569;
             --text-light: #94A3B8;
-            --gradient-primary: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
-            --gradient-hero: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gold: #FFD700;
+            --silver: #C0C0C0;
+            --bronze: #CD7F32;
+            --accent-purple: #8B5CF6;
+            --accent-blue: #3B82F6;
+            --accent-pink: #EC4899;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --success: #10b981;
+            --info: #3b82f6;
+            --primary: #0B8F4A;
+            --text: #1F2937;
+            --radius: 1.75rem;
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            
+            /* Enhanced App Variables */
+            --primary-green-light: #10b981;
+            --dark-green: #059669;
+            --light-bg: #f9fafb;
+            --border-color: #e5e7eb;
         }
 
         * {
@@ -32,179 +69,146 @@
         }
 
         body {
-            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Poppins', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             overflow-x: hidden;
         }
 
-        /* Animated Background Particles */
-        .bg-animation {
+        /* Loading Spinner from first code */
+        .loader-container {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            overflow: hidden;
-            z-index: 0;
+            background: rgba(255,255,255,0.95);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s, visibility 0.5s;
+        }
+        
+        .loader-container.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .classic-loader {
+            width: 48px;
+            height: 48px;
+            border: 5px solid var(--primary-green);
+            border-bottom-color: transparent;
+            border-radius: 50%;
+            display: inline-block;
+            animation: rotation 1s linear infinite;
+        }
+        
+        @keyframes rotation {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .loader-text {
+            position: absolute;
+            margin-top: 100px;
+            color: var(--text-dark);
+            font-size: 0.9rem;
+        }
+
+        /* Floating Particles from Third Code */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             pointer-events: none;
+            z-index: 0;
         }
 
         .particle {
             position: absolute;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(11, 143, 74, 0.08);
             border-radius: 50%;
-            animation: float 20s infinite;
+            animation: float 25s infinite linear;
         }
-
-        .particle:nth-child(1) { width: 80px; height: 80px; left: 10%; animation-delay: 0s; }
-        .particle:nth-child(2) { width: 60px; height: 60px; left: 30%; animation-delay: 2s; }
-        .particle:nth-child(3) { width: 100px; height: 100px; left: 50%; animation-delay: 4s; }
-        .particle:nth-child(4) { width: 70px; height: 70px; left: 70%; animation-delay: 6s; }
-        .particle:nth-child(5) { width: 90px; height: 90px; left: 85%; animation-delay: 8s; }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.3; }
-            90% { opacity: 0.3; }
-            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
         }
 
-        .app-container {
-            max-width: 480px;
-            margin: 0 auto;
-            background: var(--white);
-            min-height: 100vh;
-            position: relative;
-            box-shadow: 0 0 80px rgba(0, 0, 0, 0.4);
-            z-index: 1;
-        }
-
-        /* Premium Header with Animations */
-        header {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 255, 255, 0.95) 100%);
-            backdrop-filter: blur(20px);
-            padding: 1.5rem 1.25rem;
-            position: sticky;
+        /* Offline Status Indicator */
+        .offline-status {
+            position: fixed;
             top: 0;
-            z-index: 100;
-            border-bottom: 1px solid rgba(11, 143, 74, 0.1);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-            animation: slideDown 0.6s ease-out;
-        }
-
-        @keyframes slideDown {
-            from { transform: translateY(-100%); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        .header-content {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .logo-section {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            animation: fadeInLeft 0.8s ease-out;
-        }
-
-        @keyframes fadeInLeft {
-            from { transform: translateX(-30px); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-
-        .logo {
-            width: 56px;
-            height: 56px;
-            border-radius: 14px;
-            object-fit: cover;
-            box-shadow: 0 8px 24px rgba(11, 143, 74, 0.3);
-            border: 3px solid var(--primary-light);
-            transition: transform 0.3s ease;
-        }
-
-        .logo:hover {
-            transform: rotate(360deg) scale(1.1);
-        }
-
-        .title-section h1 {
-            font-size: 1.3rem;
-            font-weight: 800;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            line-height: 1.2;
-        }
-
-        .subtitle {
-            font-size: 0.75rem;
-            color: var(--primary-green);
+            left: 0;
+            right: 0;
+            background: #ff6b6b;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            z-index: 1000;
             font-weight: 600;
-            margin-top: 3px;
-            letter-spacing: 0.5px;
+            display: none;
         }
 
-        .header-actions {
-            display: flex;
-            gap: 0.75rem;
-            animation: fadeInRight 0.8s ease-out;
+        .offline-status.online {
+            background: var(--primary-green);
         }
 
-        @keyframes fadeInRight {
-            from { transform: translateX(30px); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-
-        .search-button, .menu-button {
-            background: var(--gradient-primary);
+        /* Scroll to Top Button from first code */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary-green);
+            color: white;
             border: none;
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 12px rgba(11, 143, 74, 0.3);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .search-button::before, .menu-button::before {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.2);
             border-radius: 50%;
-            transform: scale(0);
-            transition: transform 0.5s ease;
+            cursor: pointer;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            z-index: 99;
+        }
+        
+        .scroll-top.visible {
+            display: flex;
+        }
+        
+        .scroll-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            background: var(--dark-green);
+        }
+        
+        .scroll-top svg {
+            width: 24px;
+            height: 24px;
         }
 
-        .search-button:hover::before, .menu-button:hover::before {
-            transform: scale(2);
-        }
-
-        .search-button:hover, .menu-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 24px rgba(11, 143, 74, 0.4);
-        }
-
-        .search-button svg, .menu-button svg {
-            width: 22px;
-            height: 22px;
-            fill: var(--white);
-            position: relative;
-            z-index: 1;
-        }
-
-        /* Search Modal */
+        /* Search Modal from first code - enhanced */
         .search-modal {
+            display: none;
             position: fixed;
             top: 0;
             left: 0;
@@ -213,15 +217,23 @@
             background: rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(8px);
             z-index: 300;
-            display: none;
             align-items: flex-start;
             justify-content: center;
             padding-top: 2rem;
-            animation: fadeIn 0.3s ease;
         }
 
         .search-modal.active {
             display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
 
         .search-content {
@@ -235,8 +247,14 @@
         }
 
         @keyframes slideUp {
-            from { transform: translateY(50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
 
         .search-input {
@@ -255,24 +273,238 @@
             box-shadow: 0 0 0 4px var(--primary-light);
         }
 
-        /* Stats Banner */
+        .close-search {
+            margin-top: 1rem;
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--border-gray);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Compatibility Warning from first code */
+        .compat-warning {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+            display: none;
+            position: fixed;
+            top: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 480px;
+            z-index: 1000;
+        }
+        
+        .compat-warning.visible {
+            display: block;
+        }
+
+        /* Print Styles from first code */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            .print-content, .print-content * {
+                visibility: visible;
+            }
+            .print-content {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+            }
+            .no-print {
+                display: none !important;
+            }
+            header, footer, .scroll-top, .btn, nav {
+                display: none !important;
+            }
+        }
+
+        /* Enhanced 3D Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .app-container {
+            max-width: 480px;
+            margin: 0 auto;
+            background: var(--white);
+            min-height: 100vh;
+            position: relative;
+            box-shadow: 0 0 80px rgba(0, 0, 0, 0.4);
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        /* Premium Header with Glass Morphism */
+        header {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            padding: 1.5rem 1.25rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(11, 143, 74, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            animation: slideDown 0.6s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            object-fit: cover;
+            box-shadow: 0 8px 24px rgba(11, 143, 74, 0.3);
+            border: 3px solid var(--primary-light);
+            transition: transform 0.5s ease;
+        }
+
+        .logo:hover {
+            transform: rotate(360deg) scale(1.1);
+        }
+
+        .title-section h1 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 0.75rem;
+            color: var(--primary-green);
+            font-weight: 600;
+            margin-top: 3px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .search-button,
+        .menu-button {
+            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(11, 143, 74, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .search-button:hover,
+        .menu-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(11, 143, 74, 0.4);
+        }
+
+        .search-button svg,
+        .menu-button svg {
+            width: 22px;
+            height: 22px;
+            fill: var(--white);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%);
+            color: var(--white);
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            font-size: 0.7rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulse 2s ease infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        /* Enhanced Stats Banner */
         .stats-banner {
-            background: var(--gradient-primary);
+            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
             padding: 1.5rem;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 1rem;
-            animation: fadeIn 0.8s ease-out 0.3s backwards;
+            position: relative;
+            overflow: hidden;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        .stats-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.1)"/></svg>');
+            background-size: cover;
+            pointer-events: none;
         }
 
         .stat-item {
             text-align: center;
             color: var(--white);
+            position: relative;
+            z-index: 1;
         }
 
         .stat-number {
@@ -280,12 +512,7 @@
             font-weight: 800;
             display: block;
             margin-bottom: 0.25rem;
-            animation: countUp 2s ease-out;
-        }
-
-        @keyframes countUp {
-            from { transform: scale(0); }
-            to { transform: scale(1); }
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
 
         .stat-label {
@@ -300,7 +527,131 @@
             background: var(--light-gray);
         }
 
-        /* Welcome Banner with Animation */
+        /* Enhanced School Gallery Slideshow */
+        .school-gallery {
+            margin-bottom: 2rem;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            position: relative;
+            height: 300px;
+            animation: fadeInGallery 0.8s ease-out;
+        }
+
+        @keyframes fadeInGallery {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .gallery-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+
+        .gallery-slide.active {
+            opacity: 1;
+            z-index: 1;
+        }
+
+        .gallery-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            padding: 1.5rem;
+            z-index: 2;
+        }
+
+        .gallery-caption {
+            color: white;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .gallery-description {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.9rem;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+        }
+
+        .gallery-indicators {
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            display: flex;
+            gap: 0.5rem;
+            z-index: 3;
+        }
+
+        .gallery-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .gallery-indicator.active {
+            background: white;
+            width: 30px;
+            border-radius: 5px;
+        }
+
+        .gallery-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gallery-nav:hover {
+            background: rgba(255, 255, 255, 0.5);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .gallery-nav.prev {
+            left: 1rem;
+        }
+
+        .gallery-nav.next {
+            right: 1rem;
+        }
+
+        /* Enhanced Welcome Banner with 3D Effects */
         .welcome-banner {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             padding: 2rem 1.5rem;
@@ -311,11 +662,19 @@
             overflow: hidden;
             box-shadow: 0 10px 40px rgba(102, 126, 234, 0.4);
             animation: scaleIn 0.6s ease-out;
+            min-height: 200px;
+            perspective: 1000px;
         }
 
         @keyframes scaleIn {
-            from { transform: scale(0.9); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
+            from {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
 
         .welcome-banner::before {
@@ -324,34 +683,113 @@
             font-size: 8rem;
             right: -2rem;
             top: -2rem;
-            opacity: 0.1;
+            opacity: 0.15;
             animation: rotate 20s linear infinite;
         }
 
         @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
         }
 
-        .welcome-banner h2 {
+        .banner-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 2rem 1.5rem;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background-size: cover;
+            background-position: center;
+            transform-style: preserve-3d;
+        }
+
+        .banner-slide.active {
+            opacity: 1;
+            z-index: 1;
+        }
+
+        .banner-slide.text-slide {
+            background: transparent;
+        }
+
+        .banner-slide.image-slide {
+            background-size: cover;
+            background-position: center;
+        }
+
+        .banner-slide.image-slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.85) 0%, rgba(118, 75, 162, 0.85) 100%);
+            z-index: 0;
+        }
+
+        .banner-content {
+            position: relative;
+            z-index: 2;
+            transform: translateZ(20px);
+        }
+
+        .banner-slide h2 {
             font-size: 1.5rem;
             font-weight: 800;
             margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
         }
 
-        .welcome-banner p {
+        .banner-slide p {
             font-size: 0.95rem;
             opacity: 0.95;
             line-height: 1.5;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
 
-        /* Quick Actions */
+        .quote-author {
+            font-size: 0.85rem;
+            font-style: italic;
+            margin-top: 0.5rem;
+            opacity: 0.9;
+        }
+
+        /* Enhanced Date/Time Display */
+        .datetime-display {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            z-index: 10;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Enhanced Quick Actions */
         .quick-actions {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 1rem;
             margin-bottom: 2rem;
-            animation: fadeIn 0.8s ease-out 0.4s backwards;
         }
 
         .quick-action {
@@ -363,6 +801,20 @@
             border: 2px solid transparent;
             cursor: pointer;
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quick-action::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(11, 143, 74, 0.1) 0%, rgba(5, 168, 84, 0.1) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
         .quick-action:hover {
@@ -371,27 +823,39 @@
             border-color: var(--primary-green);
         }
 
+        .quick-action:hover::before {
+            opacity: 1;
+        }
+
         .quick-action-icon {
             font-size: 2rem;
             margin-bottom: 0.5rem;
             display: block;
             animation: bounce 2s ease infinite;
+            position: relative;
+            z-index: 1;
         }
 
         @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
         }
 
         .quick-action-label {
             font-size: 0.75rem;
             font-weight: 600;
             color: var(--text-dark);
+            position: relative;
+            z-index: 1;
         }
 
-        /* Grade Header with Premium Look */
+        /* Enhanced Grade Header */
         .grade-header {
-            background: var(--gradient-primary);
+            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
             color: var(--white);
             padding: 1.5rem 1.75rem;
             border-radius: 20px;
@@ -401,12 +865,7 @@
             box-shadow: 0 10px 40px rgba(11, 143, 74, 0.3);
             position: relative;
             overflow: hidden;
-            animation: slideInRight 0.6s ease-out;
-        }
-
-        @keyframes slideInRight {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+            text-align: center;
         }
 
         .grade-header::before {
@@ -421,9 +880,112 @@
             animation: pulse 3s ease infinite;
         }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 0.1; }
-            50% { transform: scale(1.2); opacity: 0.2; }
+        /* Enhanced Progress Section */
+        .progress-section {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .progress-title {
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .progress-percentage {
+            font-weight: 800;
+            color: var(--primary-green);
+            font-size: 1.25rem;
+        }
+
+        .progress-bar-container {
+            height: 12px;
+            background: var(--border-gray);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
+            border-radius: 20px;
+            transition: width 1.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        /* Enhanced Achievement Badges */
+        .achievements {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+        }
+
+        .achievement-badge {
+            min-width: 70px;
+            text-align: center;
+            position: relative;
+        }
+
+        .achievement-icon {
+            font-size: 2.5rem;
+            display: block;
+            margin-bottom: 0.25rem;
+            transition: all 0.3s ease;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+        }
+
+        .achievement-badge:hover .achievement-icon {
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        .achievement-label {
+            font-size: 0.7rem;
+            color: var(--text-medium);
+            font-weight: 600;
         }
 
         /* Enhanced Subject Sections */
@@ -435,21 +997,29 @@
             margin-bottom: 1.75rem;
             border: 1px solid var(--border-gray);
             transition: all 0.4s ease;
-            animation: fadeInUp 0.6s ease-out backwards;
+            position: relative;
+            overflow: hidden;
         }
 
-        .subject-section:nth-child(1) { animation-delay: 0.1s; }
-        .subject-section:nth-child(2) { animation-delay: 0.2s; }
-        .subject-section:nth-child(3) { animation-delay: 0.3s; }
-
-        @keyframes fadeInUp {
-            from { transform: translateY(30px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+        .subject-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
+            transform: scaleY(0);
+            transition: transform 0.4s ease;
         }
 
         .subject-section:hover {
             transform: translateY(-8px);
             box-shadow: 0 16px 48px rgba(0, 0, 0, 0.12);
+        }
+
+        .subject-section:hover::before {
+            transform: scaleY(1);
         }
 
         .subject-header {
@@ -460,21 +1030,14 @@
             display: flex;
             align-items: center;
             gap: 0.75rem;
-            position: relative;
         }
 
         .subject-header::before {
             content: '';
             width: 5px;
             height: 32px;
-            background: var(--gradient-primary);
+            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
             border-radius: 4px;
-            animation: expandHeight 0.6s ease-out;
-        }
-
-        @keyframes expandHeight {
-            from { height: 0; }
-            to { height: 32px; }
         }
 
         .subject-badge {
@@ -487,7 +1050,7 @@
             font-weight: 700;
         }
 
-        /* Premium Video Grid */
+        /* Enhanced Video Grid */
         .video-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -503,7 +1066,7 @@
             text-decoration: none;
             color: inherit;
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.4s ease;
             position: relative;
         }
 
@@ -514,20 +1077,19 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: var(--gradient-primary);
+            background: linear-gradient(135deg, rgba(11, 143, 74, 0.1) 0%, rgba(5, 168, 84, 0.1) 100%);
             opacity: 0;
             transition: opacity 0.3s ease;
-            z-index: 1;
-        }
-
-        .video-card:hover::before {
-            opacity: 0.1;
         }
 
         .video-card:hover {
             transform: translateY(-8px) scale(1.02);
             box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
             border-color: var(--primary-green);
+        }
+
+        .video-card:hover::before {
+            opacity: 1;
         }
 
         .video-thumbnail {
@@ -564,7 +1126,7 @@
         .video-info {
             padding: 1rem;
             position: relative;
-            z-index: 2;
+            z-index: 1;
         }
 
         .video-title {
@@ -572,10 +1134,6 @@
             font-weight: 700;
             color: var(--text-dark);
             margin-bottom: 0.5rem;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
             line-height: 1.4;
         }
 
@@ -593,119 +1151,23 @@
             font-size: 1rem;
         }
 
-        /* Video Player Enhancement */
-        video {
-            width: 100%;
-            border-radius: 16px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
-            margin-bottom: 1rem;
-        }
-
-        /* Progress Bar */
-        .progress-section {
-            background: var(--white);
-            padding: 1.5rem;
-            border-radius: 16px;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
-            animation: fadeIn 0.8s ease-out 0.5s backwards;
-        }
-
-        .progress-header {
-            display: flex;
-            justify-content: space-between;
+        /* Enhanced Coming Soon Badge */
+        .coming-soon {
+            display: inline-flex;
             align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .progress-title {
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--white);
+            border-radius: 30px;
+            font-size: 0.95rem;
             font-weight: 700;
-            color: var(--text-dark);
+            margin: 1rem 0;
+            box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+            animation: pulse 2s ease infinite;
         }
 
-        .progress-percentage {
-            font-weight: 800;
-            color: var(--primary-green);
-            font-size: 1.25rem;
-        }
-
-        .progress-bar-container {
-            height: 12px;
-            background: var(--border-gray);
-            border-radius: 20px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .progress-bar-fill {
-            height: 100%;
-            background: var(--gradient-primary);
-            border-radius: 20px;
-            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .progress-bar-fill::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-            animation: shimmer 2s infinite;
-        }
-
-        @keyframes shimmer {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-
-        /* Achievement Badges */
-        .achievements {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1.5rem;
-            overflow-x: auto;
-            padding-bottom: 0.5rem;
-        }
-
-        .achievement-badge {
-            min-width: 70px;
-            text-align: center;
-            animation: popIn 0.6s ease-out backwards;
-        }
-
-        .achievement-badge:nth-child(1) { animation-delay: 0.6s; }
-        .achievement-badge:nth-child(2) { animation-delay: 0.7s; }
-        .achievement-badge:nth-child(3) { animation-delay: 0.8s; }
-        .achievement-badge:nth-child(4) { animation-delay: 0.9s; }
-
-        @keyframes popIn {
-            from { transform: scale(0); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-
-        .achievement-icon {
-            font-size: 2.5rem;
-            display: block;
-            margin-bottom: 0.25rem;
-            filter: grayscale(0);
-            transition: all 0.3s ease;
-        }
-
-        .achievement-badge:hover .achievement-icon {
-            transform: scale(1.2) rotate(10deg);
-        }
-
-        .achievement-label {
-            font-size: 0.7rem;
-            color: var(--text-medium);
-            font-weight: 600;
-        }
-
-        /* Premium Side Menu */
+        /* Enhanced Side Menu - Updated with new features from first code */
         .menu-overlay {
             position: fixed;
             top: 0;
@@ -735,7 +1197,7 @@
             background: var(--white);
             box-shadow: 0 0 60px rgba(0, 0, 0, 0.3);
             transform: translateX(-100%);
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.4s ease;
             z-index: 201;
             overflow-y: auto;
         }
@@ -746,7 +1208,7 @@
 
         .menu-header {
             padding: 2.5rem 2rem;
-            background: var(--gradient-primary);
+            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
             color: var(--white);
             position: relative;
             overflow: hidden;
@@ -794,11 +1256,6 @@
             padding: 1.5rem 0;
         }
 
-        .menu-list li {
-            position: relative;
-            overflow: hidden;
-        }
-
         .menu-list li a {
             display: flex;
             align-items: center;
@@ -810,31 +1267,52 @@
             transition: all 0.3s ease;
             border-left: 4px solid transparent;
             position: relative;
+            overflow: hidden;
         }
 
         .menu-list li a::before {
             content: '';
             position: absolute;
-            left: 0;
             top: 0;
+            left: 0;
+            right: 0;
             bottom: 0;
-            width: 0;
-            background: var(--primary-light);
-            transition: width 0.3s ease;
-            z-index: -1;
-        }
-
-        .menu-list li a:hover::before {
-            width: 100%;
+            background: linear-gradient(135deg, rgba(11, 143, 74, 0.1) 0%, rgba(5, 168, 84, 0.1) 100%);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
         }
 
         .menu-list li a:hover {
-            color: var(--primary-green);
+            background: var(--primary-light);
             border-left-color: var(--primary-green);
+            color: var(--primary-green);
             padding-left: 2.5rem;
         }
 
-        /* Bottom Navigation Premium */
+        .menu-list li a:hover::before {
+            transform: translateX(0);
+        }
+
+        .menu-contact {
+            padding: 2rem;
+            border-top: 1px solid var(--border-gray);
+            margin-top: auto;
+        }
+
+        .menu-contact h4 {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+
+        .menu-contact p {
+            font-size: 0.8rem;
+            color: var(--text-medium);
+            line-height: 1.6;
+        }
+
+        /* Enhanced Bottom Navigation */
         nav {
             position: fixed;
             bottom: 0;
@@ -847,12 +1325,6 @@
             border-top: 1px solid var(--border-gray);
             box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.12);
             z-index: 100;
-            animation: slideUpNav 0.6s ease-out;
-        }
-
-        @keyframes slideUpNav {
-            from { transform: translateX(-50%) translateY(100%); }
-            to { transform: translateX(-50%) translateY(0); }
         }
 
         .nav-buttons {
@@ -876,7 +1348,21 @@
             font-weight: 700;
             border-radius: 14px;
             transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
             position: relative;
+            overflow: hidden;
+        }
+
+        .tab-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(11, 143, 74, 0.1) 0%, rgba(5, 168, 84, 0.1) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
         .tab-button svg {
@@ -889,6 +1375,10 @@
             background: var(--primary-light);
         }
 
+        .tab-button.active::before {
+            opacity: 1;
+        }
+
         .tab-button.active svg {
             transform: scale(1.15);
         }
@@ -896,26 +1386,9 @@
         .tab-button:hover:not(.active) {
             color: var(--text-medium);
             background: var(--light-gray);
-            transform: translateY(-2px);
         }
 
-        /* Coming Soon Badge */
-        .coming-soon {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1.5rem;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: var(--white);
-            border-radius: 30px;
-            font-size: 0.95rem;
-            font-weight: 700;
-            margin: 1rem 0;
-            box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
-            animation: pulse 2s ease infinite;
-        }
-
-        /* Upload Form Premium */
+        /* Enhanced Upload Form */
         .upload-form {
             display: flex;
             flex-direction: column;
@@ -924,9 +1397,23 @@
             background: var(--white);
             border-radius: 20px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            position: relative;
+            overflow: hidden;
         }
 
-        .upload-form input, .upload-form select {
+        .upload-form::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
+        }
+
+        .upload-form input,
+        .upload-form select,
+        .upload-form textarea {
             padding: 1.125rem 1.25rem;
             border: 2px solid var(--border-gray);
             border-radius: 14px;
@@ -936,16 +1423,17 @@
             transition: all 0.3s ease;
         }
 
-        .upload-form input:focus, .upload-form select:focus {
+        .upload-form input:focus,
+        .upload-form select:focus,
+        .upload-form textarea:focus {
             outline: none;
             border-color: var(--primary-green);
             box-shadow: 0 0 0 4px var(--primary-light);
-            transform: translateY(-2px);
         }
 
         .upload-form button {
             padding: 1.25rem;
-            background: var(--gradient-primary);
+            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
             color: var(--white);
             border: none;
             border-radius: 14px;
@@ -954,6 +1442,7 @@
             cursor: pointer;
             transition: all 0.4s ease;
             box-shadow: 0 8px 24px rgba(11, 143, 74, 0.3);
+            font-family: 'Poppins', sans-serif;
             position: relative;
             overflow: hidden;
         }
@@ -961,19 +1450,13 @@
         .upload-form button::before {
             content: '';
             position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: width 0.6s ease, height 0.6s ease;
-        }
-
-        .upload-form button:hover::before {
-            width: 300px;
-            height: 300px;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
         .upload-form button:hover {
@@ -981,7 +1464,11 @@
             box-shadow: 0 16px 40px rgba(11, 143, 74, 0.4);
         }
 
-        /* Footer Premium */
+        .upload-form button:hover::before {
+            opacity: 1;
+        }
+
+        /* Enhanced Footer */
         footer {
             padding: 2rem 1.5rem;
             text-align: center;
@@ -990,86 +1477,481 @@
             background: var(--white);
             border-top: 1px solid var(--border-gray);
             font-weight: 600;
+            position: relative;
+            overflow: hidden;
         }
 
-        /* Tab Content Transitions */
-        .tab-content, .menu-page {
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
+        }
+
+        /* Content Visibility */
+        .tab-content,
+        .menu-page,
+        .admin-panel {
             display: none;
         }
 
-        .tab-content.active, .menu-page.active {
+        .tab-content.active,
+        .menu-page.active,
+        .admin-panel.active {
             display: block;
             animation: fadeInContent 0.5s ease-out;
         }
 
         @keyframes fadeInContent {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        /* Notification Badge */
-        .notification-badge {
+        /* New Features from first code: Interactive Quiz Cards */
+        .quiz-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .quiz-card::before {
+            content: '';
             position: absolute;
-            top: -5px;
-            right: -5px;
-            background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%);
-            color: var(--white);
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            font-size: 0.7rem;
-            font-weight: 800;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(11, 143, 74, 0.05) 0%, rgba(5, 168, 84, 0.05) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .quiz-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+            border-color: var(--primary-green);
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .quiz-card:hover::before {
+            opacity: 1;
+        }
+
+        .quiz-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .quiz-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.875rem;
+            color: var(--text-light);
+        }
+
+        /* New Features: Student Leaderboard */
+        .leaderboard {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+        }
+
+        .leaderboard-header {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .leaderboard-item {
             display: flex;
             align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 8px rgba(255, 107, 107, 0.5);
-            animation: pulse 2s ease infinite;
-        }
-
-        /* Loading Animation */
-        .loading-spinner {
-            width: 50px;
-            height: 50px;
-            border: 4px solid var(--border-gray);
-            border-top: 4px solid var(--primary-green);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 2rem auto;
-        }
-
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        /* Tooltip */
-        .tooltip {
-            position: relative;
-        }
-
-        .tooltip::after {
-            content: attr(data-tooltip);
-            position: absolute;
-            bottom: 100%;
-            left: 50%;
-            transform: translateX(-50%) translateY(-5px);
-            background: var(--text-dark);
-            color: var(--white);
-            padding: 0.5rem 0.75rem;
-            border-radius: 8px;
-            font-size: 0.75rem;
-            white-space: nowrap;
-            opacity: 0;
-            pointer-events: none;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-gray);
             transition: all 0.3s ease;
         }
 
-        .tooltip:hover::after {
-            opacity: 1;
-            transform: translateX(-50%) translateY(-10px);
+        .leaderboard-item:last-child {
+            border-bottom: none;
         }
 
-        /* Responsive Adjustments */
+        .leaderboard-item:hover {
+            background: var(--primary-light);
+            border-radius: 8px;
+        }
+
+        .leaderboard-rank {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-right: 1rem;
+        }
+
+        .rank-1 {
+            background: var(--gold);
+            color: var(--text-dark);
+        }
+
+        .rank-2 {
+            background: var(--silver);
+            color: var(--text-dark);
+        }
+
+        .rank-3 {
+            background: var(--bronze);
+            color: var(--text-dark);
+        }
+
+        .rank-other {
+            background: var(--light-gray);
+            color: var(--text-medium);
+        }
+
+        .leaderboard-name {
+            flex: 1;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .leaderboard-score {
+            font-weight: 700;
+            color: var(--primary-green);
+        }
+
+        /* ====== ADMIN PANEL STYLES ====== */
+        .admin-panel {
+            display: none;
+            padding: 1.5rem 1.25rem 120px;
+            background: var(--light-gray);
+        }
+        .admin-panel.active { display: block; animation: fadeInContent 0.5s ease-out; }
+        .admin-header {
+            text-align: center;
+            padding: 2rem 1rem;
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            border-radius: 20px;
+            color: white;
+            margin-bottom: 2rem;
+            box-shadow: 0 15px 40px rgba(30, 58, 138, 0.4);
+        }
+        .admin-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+        }
+        .admin-header p { opacity: 0.9; font-weight: 500; }
+        .admin-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.2rem;
+            margin: 2rem 0;
+        }
+        .admin-stat {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 18px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        .admin-stat:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary-green);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+        }
+        .admin-stat-value {
+            font-size: 2.4rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #0B8F4A, #05A854);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .admin-stat-label { font-size: 0.9rem; color: var(--text-medium); margin-top: 0.5rem; }
+        .admin-actions {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.2rem;
+            margin: 2rem 0;
+        }
+        .admin-action {
+            background: white;
+            padding: 1.8rem 1rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.07);
+            transition: all 0.35s ease;
+            cursor: pointer;
+        }
+        .admin-action:hover {
+            transform: translateY(-12px) scale(1.05);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.2);
+        }
+        .admin-action i {
+            font-size: 2.8rem;
+            margin-bottom: 0.8rem;
+            background: linear-gradient(135deg, #0B8F4A, #05A854);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .admin-action span {
+            display: block;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--text-dark);
+        }
+        .admin-section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.7rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin: 2.5rem 0 1.5rem;
+            padding-left: 1rem;
+            position: relative;
+        }
+        .admin-section-title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 7px;
+            height: 38px;
+            background: linear-gradient(135deg, #0B8F4A, #05A854);
+            border-radius: 4px;
+        }
+        .admin-report {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 18px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.07);
+            margin-bottom: 1.5rem;
+        }
+        .admin-report-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .admin-report-title {
+            font-weight: 800;
+            font-size: 1.1rem;
+        }
+        .admin-report-value {
+            font-weight: 800;
+            color: var(--primary-green);
+            font-size: 1.3rem;
+        }
+        .admin-activity {
+            background: var(--primary-light);
+            padding: 1rem;
+            border-radius: 14px;
+            margin: 0.5rem 0;
+            font-size: 0.9rem;
+            border-left: 4px solid var(--primary-green);
+        }
+        /* End Admin Panel Styles */
+
+        /* ====== NEW PAGES FROM FIRST CODE ====== */
+        /* Report Card System Page */
+        .report-card-page {
+            padding: 1.5rem 1.25rem 120px;
+            background: var(--light-gray);
+        }
+
+        .report-card-container {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .report-card-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid var(--primary-light);
+        }
+
+        .report-card-header h2 {
+            color: var(--primary-green);
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .report-card-actions {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .report-card-action {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .report-card-action:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.15);
+            border-color: var(--primary-green);
+        }
+
+        .report-card-action i {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-green);
+        }
+
+        .report-card-action h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .report-card-action p {
+            font-size: 0.85rem;
+            color: var(--text-medium);
+        }
+
+        /* Dashboard Page from first code */
+        .dashboard-page {
+            padding: 1.5rem 1.25rem 120px;
+            background: var(--light-gray);
+        }
+
+        .dashboard-features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .dashboard-feature {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dashboard-feature:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.15);
+        }
+
+        .dashboard-feature i {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-green), var(--primary-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .dashboard-feature h3 {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        /* PWA Install Button */
+        #install-btn {
+            position: fixed;
+            bottom: 90px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary-green);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            border: none;
+            font-weight: 700;
+            box-shadow: 0 10px 30px rgba(11, 143, 74, 0.4);
+            z-index: 9999;
+            display: none;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #install-btn:hover {
+            transform: translateX(-50%) scale(1.05);
+            box-shadow: 0 15px 40px rgba(11, 143, 74, 0.6);
+        }
+
+        /* Offline Toast */
+        #offline-toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #dc2626;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            z-index: 9999;
+            display: none;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Notification from first code */
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary-green);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            z-index: 1000;
+            display: none;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            font-weight: 600;
+        }
+
+        /* Responsive */
         @media (max-width: 380px) {
             .video-grid {
                 grid-template-columns: 1fr;
@@ -1077,15 +1959,15 @@
             .quick-actions {
                 grid-template-columns: repeat(2, 1fr);
             }
-            .tab-button span {
-                font-size: 0.65rem;
+            .dashboard-features {
+                grid-template-columns: 1fr;
             }
-            .stat-number {
-                font-size: 1.5rem;
+            .report-card-actions {
+                grid-template-columns: 1fr;
             }
         }
 
-        /* Scrollbar Styling */
+        /* Custom Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
         }
@@ -1098,7 +1980,1445 @@
             background: var(--primary-green);
             border-radius: 10px;
         }
+    </style>
+</head>
+<body>
+    <!-- Loading Spinner from first code -->
+    <div id="loader" class="loader-container">
+        <div>
+            <span class="classic-loader"></span>
+            <div class="loader-text">Loading Wexford Digital Platform...</div>
+        </div>
+    </div>
 
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--primary-dark);
+    <!-- Compatibility Warning from first code -->
+    <div id="compatWarning" class="compat-warning">
+        <strong>⚠️ Browser Compatibility Notice:</strong> Some features may not be available in your browser.
+    </div>
+
+    <!-- Offline Status Indicator -->
+    <div class="offline-status" id="offlineStatus">
+        ⚠️ You are currently offline. Some features may be limited.
+    </div>
+
+    <!-- Floating Particles from Third Code -->
+    <div class="particles" id="particlesContainer"></div>
+
+    <!-- Animated Background -->
+    <div class="bg-animation">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <!-- Scroll to Top Button from first code -->
+    <button id="scrollTopBtn" class="scroll-top no-print" title="Back to top">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z" fill="currentColor"/>
+        </svg>
+    </button>
+
+    <!-- Notification from first code -->
+    <div id="notification" class="notification">
+        <div id="notificationMessage"></div>
+    </div>
+
+    <div class="app-container">
+        <!-- Header -->
+        <header>
+            <div class="header-content">
+                <div class="logo-section">
+                    <img src="WEX LOGO.jpg" alt="Wexford Logo" class="logo">
+                    <div class="title-section">
+                        <h1>Wexford Edu Hub</h1>
+                        <p class="subtitle">Innovation, Technology & Discipline</p>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button class="search-button" onclick="toggleSearch()">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="11" cy="11" r="8" fill="none" stroke="currentColor" stroke-width="2"/>
+                            <path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </button>
+                    <button class="menu-button" onclick="toggleMenu()">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/>
+                        </svg>
+                        <span class="notification-badge">3</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Search Modal -->
+        <div id="search-modal" class="search-modal" onclick="closeSearchOnOverlay(event)">
+            <div class="search-content">
+                <h3 style="margin-bottom: 1rem; font-weight: 800; color: var(--text-dark);">🔍 Search Wexford Platform</h3>
+                <input type="text" class="search-input" placeholder="Search for students, courses, or features..." id="searchInput" onkeyup="handleSearch(event)">
+                <button class="close-search" onclick="toggleSearch()">Close (ESC)</button>
+            </div>
+        </div>
+
+        <!-- Stats Banner -->
+        <div class="stats-banner">
+            <div class="stat-item">
+                <span class="stat-number">150+</span>
+                <span class="stat-label">Videos</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">12</span>
+                <span class="stat-label">Subjects</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">500+</span>
+                <span class="stat-label">Students</span>
+            </div>
+        </div>
+
+        <!-- Side Menu - Updated with new features from first code -->
+        <div id="menu-overlay" class="menu-overlay" onclick="closeMenuOnOverlay(event)">
+            <div class="side-menu">
+                <div class="menu-header">
+                    <h3>Navigation Menu</h3>
+                    <button class="menu-close" onclick="toggleMenu()">✕</button>
+                </div>
+                <ul class="menu-list">
+                    <li><a href="#" onclick="showPage('dashboard'); toggleMenu()">
+                        🏠 Dashboard
+                    </a></li>
+                    <li><a href="#" onclick="showPage('report-card'); toggleMenu()">
+                        📊 Report Card System
+                    </a></li>
+                    <li><a href="#" onclick="showPage('announcements'); toggleMenu()">
+                        📢 Announcements
+                    </a></li>
+                    <li><a href="https://stephen-daniels.github.io/PANIN.com/Staff.html" target="_blank" onclick="toggleMenu()">
+                        👥 Staff Directory
+                    </a></li>
+                    <li><a href="https://stephen-daniels.github.io/PANIN.com/Student.html" target="_blank" onclick="toggleMenu()">
+                        👥 Student Profile
+                    </a></li>
+                    <li><a href="https://stephen-daniels.github.io/PANIN.com/Con.html" target="_blank" onclick="toggleMenu()">
+                        👥 Staff Forum
+                    </a></li>
+                    <li><a href="https://stephen-daniels.github.io/PANIN.com/PTA.html" target="_blank" onclick="toggleMenu()">
+                        👥 PTA Forum
+                    </a></li>
+                    <li><a href="#" onclick="showPage('trial'); toggleMenu()">
+                        📝 Trial Questions
+                    </a></li>
+                    <li><a href="#" onclick="showPage('about'); toggleMenu()">
+                        ℹ️ About Us
+                    </a></li>
+                    <li><a href="#" onclick="showPage('admin-panel'); toggleMenu()">
+                        🛡️ Admin Panel
+                    </a></li>
+                    <li><a href="https://www.ck12.org/c/arithmetic/add-whole-numbers/?by=ck12&difficulty=all#all&noback=true" target="_blank" onclick="toggleMenu()">
+                        🔗 External Resources
+                    </a></li>
+                    <li><a href="#" onclick="showPage('upload'); toggleMenu()">
+                        📤 Upload Content
+                    </a></li>
+                </ul>
+                
+                <div class="menu-contact">
+                    <h4>📞 Contact Us</h4>
+                    <p>
+                        Email: info@wexfordedu.com<br>
+                        Phone: +233241204078<br>
+                        Location: Abuakwa, Manyhia
+                    </p>
+                    <button style="margin-top: 1rem; width: 100%; padding: 0.75rem; background: var(--primary-green); color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: 600;" onclick="printContent()">
+                        <i class="fas fa-print"></i> Print Current Page
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <main>
+            <!-- Dashboard Page from first code -->
+            <div id="dashboard" class="menu-page active">
+                <div class="welcome-banner">
+                    <div class="datetime-display" id="datetime-display"></div>
+                    
+                    <div class="banner-slide text-slide active" id="slide-1">
+                        <div class="banner-content">
+                            <h2>Welcome to Wexford Digital Platform! 👋</h2>
+                            <p>Your all-in-one solution for academic management and learning</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-features">
+                    <div class="dashboard-feature" onclick="showPage('report-card')">
+                        <i class="fas fa-file-alt"></i>
+                        <h3>Digital Report Card</h3>
+                        <p>Generate and manage professional report cards</p>
+                    </div>
+                    <div class="dashboard-feature" onclick="switchTab('lower-primary')">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h3>Learning Hub</h3>
+                        <p>Access premium educational resources</p>
+                    </div>
+                    <div class="dashboard-feature" onclick="showPage('trial')">
+                        <i class="fas fa-book"></i>
+                        <h3>Course Library</h3>
+                        <p>Browse educational courses</p>
+                    </div>
+                    <div class="dashboard-feature" onclick="showPage('admin-panel')">
+                        <i class="fas fa-cogs"></i>
+                        <h3>Admin Panel</h3>
+                        <p>System management tools</p>
+                    </div>
+                </div>
+
+                <div class="stats-banner" style="border-radius: 16px; margin: 2rem 0;">
+                    <div class="stat-item">
+                        <span class="stat-number">27+</span>
+                        <span class="stat-label">Students</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">8</span>
+                        <span class="stat-label">Subjects</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">300+</span>
+                        <span class="stat-label">Contacts</span>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <div class="quick-action" onclick="switchTab('lower-primary')">
+                        <span class="quick-action-icon">🎨</span>
+                        <span class="quick-action-label">Primary</span>
+                    </div>
+                    <div class="quick-action" onclick="switchTab('jhs')">
+                        <span class="quick-action-icon">🎓</span>
+                        <span class="quick-action-label">JHS</span>
+                    </div>
+                    <div class="quick-action" onclick="showPage('trial')">
+                        <span class="quick-action-icon">📝</span>
+                        <span class="quick-action-label">Quizzes</span>
+                    </div>
+                    <div class="quick-action" onclick="showPage('upload')">
+                        <span class="quick-action-icon">📤</span>
+                        <span class="quick-action-label">Upload</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Report Card System Page -->
+            <div id="report-card" class="menu-page">
+                <div class="grade-header" style="background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);">
+                    📊 Report Card System
+                </div>
+
+                <div class="report-card-container">
+                    <div class="report-card-header">
+                        <h2>Digital Report Card Management</h2>
+                        <p>Generate, manage, and send professional report cards</p>
+                    </div>
+
+                    <div class="report-card-actions">
+                        <div class="report-card-action" onclick="showNotification('Generate Report Card feature would open here')">
+                            <i class="fas fa-file-alt"></i>
+                            <h3>Generate Report Card</h3>
+                            <p>Create new report cards for students</p>
+                        </div>
+                        <div class="report-card-action" onclick="showNotification('Manage Report Cards feature would open here')">
+                            <i class="fas fa-tasks"></i>
+                            <h3>Manage Report Cards</h3>
+                            <p>View and edit existing report cards</p>
+                        </div>
+                        <div class="report-card-action" onclick="showNotification('Bulk Send feature would open here')">
+                            <i class="fas fa-paper-plane"></i>
+                            <h3>Bulk Send</h3>
+                            <p>Send to 300+ contacts at once</p>
+                        </div>
+                        <div class="report-card-action" onclick="showNotification('Analytics feature would open here')">
+                            <i class="fas fa-chart-bar"></i>
+                            <h3>Analytics</h3>
+                            <p>View performance statistics</p>
+                        </div>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 2rem; padding: 1.5rem; background: var(--primary-light); border-radius: 12px;">
+                        <h3 style="color: var(--primary-green); margin-bottom: 0.5rem;">✨ Key Features</h3>
+                        <p style="color: var(--text-medium); font-size: 0.9rem;">
+                            • Email, SMS, and WhatsApp integration<br>
+                            • Professional templates<br>
+                            • Offline capability<br>
+                            • Bulk processing<br>
+                            • Secure data management
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- School Gallery Slideshow -->
+            <div class="school-gallery">
+                <!-- Gallery Slides... (keeping original gallery content) -->
+                <div class="gallery-slide active" id="gallery-1">
+                    <img src="Eva.jpg" alt="School Campus">
+                    <div class="gallery-overlay">
+                        <div class="gallery-caption">🏫 Our Beautiful Campus</div>
+                        <div class="gallery-description">Modern facilities for quality education</div>
+                    </div>
+                </div>
+
+                <div class="gallery-slide" id="gallery-2">
+                    <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1200&q=80" alt="Students Learning">
+                    <div class="gallery-overlay">
+                        <div class="gallery-caption">📚 Interactive Classrooms</div>
+                        <div class="gallery-description">Engaging learning experiences for all students</div>
+                    </div>
+                </div>
+
+                <div class="gallery-slide" id="gallery-3">
+                    <img src="bs2.jpg" alt="Computer Lab">
+                    <div class="gallery-overlay">
+                        <div class="gallery-caption">Sports</div>
+                        <div class="gallery-description">State-of-the-art technology for digital learning</div>
+                    </div>
+                </div>
+
+                <div class="gallery-slide" id="gallery-4">
+                    <img src="https://stephen-daniels.github.io/PANIN.com/PICS.html/pics/IMG-20251114-WA0056.jpg" alt="Library">
+                    <div class="gallery-overlay">
+                        <div class="gallery-caption">📖 Staff</div>
+                        <div class="gallery-description">Extensive collection of books and resources</div>
+                    </div>
+                </div>
+
+                <div class="gallery-slide" id="gallery-5">
+                    <img src="BS6.jpg" alt="Sports Field">
+                    <div class="gallery-overlay">
+                        <div class="gallery-caption">⚽ Sports Facilities</div>
+                        <div class="gallery-description">Promoting physical fitness and teamwork</div>
+                    </div>
+                </div>
+                
+                <div class="gallery-slide" id="gallery-6">
+                    <img src="Wor.jpg" alt="Sports Field">
+                    <div class="gallery-overlay">
+                        <div class="gallery-caption">⚽ Moment of worship</div>
+                        <div class="gallery-description">When our praises go up, His presence comes down</div>
+                    </div>
+                </div>
+                
+                <div class="gallery-slide" id="gallery-7">
+                    <img src="quiz.jpg" alt="Sports Field">
+                    <div class="gallery-overlay">
+                        <div class="gallery-caption">⚽Inter class quiz</div>
+                        <div class="gallery-description">Promoting physical fitness and teamwork</div>
+                    </div>
+                </div>
+
+                <!-- Navigation Buttons -->
+                <button class="gallery-nav prev" onclick="changeGallerySlide(-1)">‹</button>
+                <button class="gallery-nav next" onclick="changeGallerySlide(1)">›</button>
+
+                <!-- Indicators -->
+                <div class="gallery-indicators">
+                    <span class="gallery-indicator active" onclick="setGallerySlide(0)"></span>
+                    <span class="gallery-indicator" onclick="setGallerySlide(1)"></span>
+                    <span class="gallery-indicator" onclick="setGallerySlide(2)"></span>
+                    <span class="gallery-indicator" onclick="setGallerySlide(3)"></span>
+                    <span class="gallery-indicator" onclick="setGallerySlide(4)"></span>
+                    <span class="gallery-indicator" onclick="setGallerySlide(5)"></span>
+                    <span class="gallery-indicator" onclick="setGallerySlide(6)"></span>
+                </div>
+            </div>
+
+            <!-- Lower Primary Tab -->
+            <div id="lower-primary" class="tab-content">
+                <div class="grade-header">🎨 Lower Primary (Grades 1-3)</div>
+
+                <!-- Progress Section -->
+                <div class="progress-section">
+                    <div class="progress-header">
+                        <span class="progress-title">📊 Your Progress</span>
+                        <span class="progress-percentage">65%</span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" style="width: 65%;"></div>
+                    </div>
+                    <div class="achievements">
+                        <div class="achievement-badge">
+                            <span class="achievement-icon">🏆</span>
+                            <span class="achievement-label">Champion</span>
+                        </div>
+                        <div class="achievement-badge">
+                            <span class="achievement-icon">⭐</span>
+                            <span class="achievement-label">Star</span>
+                        </div>
+                        <div class="achievement-badge">
+                            <span class="achievement-icon">🎯</span>
+                            <span class="achievement-label">Achiever</span>
+                        </div>
+                        <div class="achievement-badge">
+                            <span class="achievement-icon">🔥</span>
+                            <span class="achievement-label">Streak</span>
+                        </div>
+                    </div>
+                </div>
+
+                <section class="subject-section">
+                    <h3 class="subject-header">
+                        📊 Maths Resources
+                        <span class="subject-badge">8 Videos</span>
+                    </h3>
+                    <div class="video-grid">
+                        <a href="https://www.youtube.com/watch?v=11eckLmJEMw&list=RD11eckLmJEMw&start_radio=1" class="video-card" target="_blank">
+                            <div class="video-thumbnail" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
+                            <div class="video-info">
+                                <p class="video-title">Counting Shapes</p>
+                                <p class="video-lesson">Lesson 1.2</p>
+                            </div>
+                        </a>
+                        <a href="https://www.youtube.com/watch?v=NybHckSEQBI" class="video-card" target="_blank">
+                            <div class="video-thumbnail" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"></div>
+                            <div class="video-info">
+                                <p class="video-title">Addition Basics</p>
+                                <p class="video-lesson">Lesson 2.1</p>
+                            </div>
+                        </a>
+                    </div>
+                </section>
+
+                <section class="subject-section">
+                    <h3 class="subject-header">
+                        📚 English Resources
+                        <span class="subject-badge">5 Videos</span>
+                    </h3>
+                    <div class="video-grid">
+                        <a href="https://www.youtube.com/watch?v=-4CL3Xn-ycw&list=PL0HMo9RIVkoxyScPHjfleUL7q8Z3hOxqn" class="video-card" target="_blank">
+                            <div class="video-thumbnail" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);"></div>
+                            <div class="video-info">
+                                <p class="video-title">Phonics: 'Sh' Sound</p>
+                                <p class="video-lesson">Unit 3</p>
+                            </div>
+                        </a>
+                    </div>
+                </section>
+
+                <section class="subject-section">
+                    <h3 class="subject-header">
+                        🔬 Science Resources
+                        <span class="subject-badge">6 Videos</span>
+                    </h3>
+                    <div class="video-grid">
+                        <a href="https://www.youtube.com/watch?v=AVC-426M6V0" class="video-card" target="_blank">
+                            <div class="video-thumbnail" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);"></div>
+                            <div class="video-info">
+                                <p class="video-title">The Water Cycle</p>
+                                <p class="video-lesson">Module 4</p>
+                            </div>
+                        </a>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Upper Primary Tab -->
+            <div id="upper-primary" class="tab-content">
+                <div class="grade-header">📖 Upper Primary (Grades 4-6)</div>
+                
+                <div class="progress-section">
+                    <div class="progress-header">
+                        <span class="progress-title">📊 Your Progress</span>
+                        <span class="progress-percentage">45%</span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" style="width: 45%;"></div>
+                    </div>
+                </div>
+
+                <section class="subject-section">
+                    <h3 class="subject-header">
+                        📊 Maths Resources
+                        <span class="subject-badge">12 Videos</span>
+                    </h3>
+                    <div class="video-grid">
+                        <div class="video-card" onclick="playVideo('new.mp4')">
+                            <video controls style="width: 100%; height: 120px; object-fit: cover; border-radius: 0;">
+                                <source src="new.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-info">
+                                <p class="video-title">Math Fundamentals</p>
+                                <p class="video-lesson">Lesson 5.1</p>
+                            </div>
+                        </div>
+                        <div class="video-card" onclick="playVideo('multi-base.mp4')">
+                            <video controls style="width: 100%; height: 120px; object-fit: cover; border-radius: 0;">
+                                <source src="multi-base.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-info">
+                                <p class="video-title">Multi-Base Numbers</p>
+                                <p class="video-lesson">Lesson 5.2</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="subject-section">
+                    <h3 class="subject-header">
+                        📚 English Resources
+                        <span class="subject-badge">Coming Soon</span>
+                    </h3>
+                    <span class="coming-soon">📅 New content arriving soon!</span>
+                </section>
+
+                <section class="subject-section">
+                    <h3 class="subject-header">
+                        🔬 Science Resources
+                        <span class="subject-badge">Coming Soon</span>
+                    </h3>
+                    <span class="coming-soon">📅 Exciting experiments on the way!</span>
+                </section>
+            </div>
+
+            <!-- JHS Tab -->
+            <div id="jhs" class="tab-content">
+                <div class="grade-header">🎓 JHS (Junior High School)</div>
+                
+                <div class="progress-section">
+                    <div class="progress-header">
+                        <span class="progress-title">📊 Your Progress</span>
+                        <span class="progress-percentage">30%</span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" style="width: 30%;"></div>
+                    </div>
+                </div>
+
+                <section class="subject-section">
+                    <h3 class="subject-header">
+                        📊 Mathematics
+                        <span class="subject-badge">Coming Soon</span>
+                    </h3>
+                    <span class="coming-soon">📅 Advanced math lessons launching soon!</span>
+                </section>
+
+                <section class="subject-section">
+                    <h3 class="subject-header">
+                        📚 English Language
+                        <span class="subject-badge">Coming Soon</span>
+                    </h3>
+                    <span class="coming-soon">📅 Grammar and composition videos incoming!</span>
+                </section>
+
+                <section class="subject-section">
+                    <h3 class="subject-header">
+                        🔬 Integrated Science
+                        <span class="subject-badge">Coming Soon</span>
+                    </h3>
+                    <span class="coming-soon">📅 Lab experiments and theory videos coming!</span>
+                </section>
+            </div>
+
+            <!-- Announcements Page -->
+            <div id="announcements" class="menu-page">
+                <div class="grade-header" style="background: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);">📢 School Announcements</div>
+                
+                <section class="subject-section">
+                    <h3 class="subject-header">🔔 Latest Updates</h3>
+                    
+                    <div style="display: grid; gap: 1.25rem;">
+                        <!-- Announcement 1 -->
+                        <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 1.5rem; border-radius: 16px; color: white; box-shadow: 0 4px 16px rgba(240, 147, 251, 0.3);">
+                            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
+                                <span style="font-size: 2rem;">📅</span>
+                                <div>
+                                    <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.25rem;">Upcoming Examinations</h4>
+                                    <p style="font-size: 0.75rem; opacity: 0.9;">Posted 1 day ago</p>
+                                </div>
+                            </div>
+                            <p style="font-size: 0.9rem; line-height: 1.6; opacity: 0.95;">
+                                Wishing You Success in the Upcoming Exams<br>​Dear Students,</br>
+                                ​As your upcoming examinations draw near, we want to extend our very best wishes. It is always a pleasure to see you all achieve flying colors in your academic pursuit, and we have full faith in your ability to perform exceptionally well.
+                                ​Key Reminders
+                                ​Please use this final period before the exams to ensure you have taken care of the following essential administrative items:
+                                ​Financial Clearance: Kindly settle any outstanding school fees and printing fees immediately. Only students who are financially cleared will be allowed to sit for the examinations.
+                                ​Health and Preparation: Please prepare adequately for all your subjects. More importantly, ensure you are of good health throughout this period. A well-rested mind and body are your best tools for success.
+                                ​We encourage you to manage your time wisely, study smart, and remain focused. We are here to support you.
+                                ​Good luck as the exams begin!
+                            </p>
+                        </div>
+
+                        <!-- Announcement 2 -->
+                        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 1.5rem; border-radius: 16px; color: white; box-shadow: 0 4px 16px rgba(102, 126, 234, 0.3);">
+                            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
+                                <span style="font-size: 2rem;">🎉</span>
+                                <div>
+                                    <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.25rem;">New Video Content Available!</h4>
+                                    <p style="font-size: 0.75rem; opacity: 0.9;">Posted 2 hours ago</p>
+                                </div>
+                            </div>
+                            <p style="font-size: 0.9rem; line-height: 1.6; opacity: 0.95;">
+                                We've just added 15 new educational videos across Mathematics, Science, and English subjects. Check them out in your respective grade sections!
+                            </p>
+                        </div>
+                      
+                        <!-- Announcement 3 -->
+                        <div style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); padding: 1.5rem; border-radius: 16px; color: white; box-shadow: 0 4px 16px rgba(250, 112, 154, 0.3);">
+                            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
+                                <span style="font-size: 2rem;">⏰</span>
+                                <div>
+                                    <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.25rem;">Extended Library Hours</h4>
+                                    <p style="font-size: 0.75rem; opacity: 0.9;">Posted 3 days ago</p>
+                                </div>
+                            </div>
+                            <p style="font-size: 0.9rem; line-height: 1.6; opacity: 0.95;">
+                                The digital library is now accessible 24/7! Access all educational resources anytime from home. Login credentials have been sent to parents via SMS.
+                            </p>
+                        </div>
+
+                        <!-- Announcement 4 -->
+                        <div style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%); padding: 1.5rem; border-radius: 16px; color: white; box-shadow: 0 4px 16px rgba(48, 207, 208, 0.3);">
+                            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
+                                <span style="font-size: 2rem;">🏆</span>
+                                <div>
+                                    <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.25rem;">Student Achievement Awards</h4>
+                                    <p style="font-size: 0.75rem; opacity: 0.9;">Posted 5 days ago</p>
+                                </div>
+                            </div>
+                            <p style="font-size: 0.9rem; line-height: 1.6; opacity: 0.95;">
+                                Congratulations to all students who achieved 100% completion on their learning modules! Awards ceremony scheduled for Friday at 2 PM in the school hall.
+                            </p>
+                        </div>
+
+                        <!-- Announcement 5 -->
+                        <div style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); padding: 1.5rem; border-radius: 16px; color: white; box-shadow: 0 4px 16px rgba(17, 153, 142, 0.3);">
+                            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
+                                <span style="font-size: 2rem;">💻</span>
+                                <div>
+                                    <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.25rem;">ICT Workshop Registration Open</h4>
+                                    <p style="font-size: 0.75rem; opacity: 0.9;">Posted 1 week ago</p>
+                                </div>
+                            </div>
+                            <p style="font-size: 0.9rem; line-height: 1.6; opacity: 0.95;">
+                                Free coding workshop for upper primary and JHS students starts next month. Limited spaces available. Register through the school office or contact your class teacher.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Important Notice Section -->
+                <section class="subject-section" style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(220, 38, 38, 0.1) 100%); border-left: 4px solid #ef4444;">
+                    <h3 class="subject-header" style="color: #dc2626;">
+                        ⚠️ Important Notice
+                    </h3>
+                    <p style="color: var(--text-dark); line-height: 1.6; font-weight: 500;">
+                        <strong>School Resumption:</strong> All students are expected to resume classes on Monday, January 20th, 2025. Please ensure all fees are settled before resumption. Contact the administration office for any inquiries.
+                    </p>
+                </section>
+            </div>
+
+            <!-- Trial Questions Page -->
+            <div id="trial" class="menu-page">
+                <div class="grade-header" style="background: linear-gradient(135deg, #3B82F6 0%, #8B5CF6 100%);">📝 Trial Questions & Quizzes</div>
+                
+                <section class="subject-section">
+                    <h3 class="subject-header">🎯 Practice Makes Perfect</h3>
+                    <p style="color: var(--text-medium); line-height: 1.6; margin-bottom: 1.5rem;">
+                        Test your knowledge with our comprehensive collection of practice questions and interactive quizzes designed to help you excel in your examinations.
+                    </p>
+                    
+                    <div style="display: grid; gap: 1rem;">
+                        <a href="https://stephen-daniels.github.io/PANIN.com/wexquiz.html" target="_blank" class="quiz-card">
+                            <h4 class="quiz-title">📐 Mathematics Quiz</h4>
+                            <div class="quiz-meta">
+                                <span>20 Questions</span>
+                                <span>30 Minutes</span>
+                            </div>
+                        </a>
+                        
+                        <a href="https://stephen-daniels.github.io/PANIN.com/wexquiz.html" target="_blank" class="quiz-card">
+                            <h4 class="quiz-title">📖 English Quiz</h4>
+                            <div class="quiz-meta">
+                                <span>15 Questions</span>
+                                <span>25 Minutes</span>
+                            </div>
+                        </a>
+                        
+                        <a href="https://stephen-daniels.github.io/PANIN.com/wexquiz.html" target="_blank" class="quiz-card">
+                            <h4 class="quiz-title">🔬 Science Quiz</h4>
+                            <div class="quiz-meta">
+                                <span>18 Questions</span>
+                                <span>28 Minutes</span>
+                            </div>
+                        </a>
+                    </div>
+                </section>
+
+                <!-- Student Leaderboard -->
+                <section class="subject-section">
+                    <h3 class="subject-header">🏆 Student Leaderboard</h3>
+                    <div class="leaderboard">
+                        <div class="leaderboard-header">Top Performers This Week</div>
+                        <div class="leaderboard-item">
+                            <div class="leaderboard-rank rank-1">1</div>
+                            <div class="leaderboard-name">Kwame Mensah</div>
+                            <div class="leaderboard-score">98%</div>
+                        </div>
+                        <div class="leaderboard-item">
+                            <div class="leaderboard-rank rank-2">2</div>
+                            <div class="leaderboard-name">Ama Osei</div>
+                            <div class="leaderboard-score">95%</div>
+                        </div>
+                        <div class="leaderboard-item">
+                            <div class="leaderboard-rank rank-3">3</div>
+                            <div class="leaderboard-name">Kofi Asante</div>
+                            <div class="leaderboard-score">92%</div>
+                        </div>
+                        <div class="leaderboard-item">
+                            <div class="leaderboard-rank rank-other">4</div>
+                            <div class="leaderboard-name">Esi Boateng</div>
+                            <div class="leaderboard-score">89%</div>
+                        </div>
+                        <div class="leaderboard-item">
+                            <div class="leaderboard-rank rank-other">5</div>
+                            <div class="leaderboard-name">Yaw Appiah</div>
+                            <div class="leaderboard-score">87%</div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- About Page -->
+            <div id="about" class="menu-page">
+                <div class="grade-header" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">ℹ️ About Wexford Edu Hub</div>
+                
+                <section class="subject-section">
+                    <h3 class="subject-header">🎯 Our Mission</h3>
+                    <p style="color: var(--text-medium); line-height: 1.8; margin-bottom: 1.5rem;">
+                        Welcome to Wexford Edu Hub - a cutting-edge digital learning platform revolutionizing education through technology, innovation, and discipline. We serve as a central communication and information hub for students, parents, and staff.
+                        <br>
+                    <h4>📞 Contact Us</h4>
+                    <p>
+                        Email: info@wexfordedu.com<br>
+                        Phone: +233241204078<br>
+                        Location: Abuakwa, Manyhia
+                    </p>
+                </br>       </p>
+                    
+                    <h3 class="subject-header">✨ What We Offer</h3>
+                    <div style="display: grid; gap: 1rem; margin-bottom: 1.5rem;">
+                        <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: var(--light-gray); border-radius: 12px;">
+                            <span style="font-size: 2rem;">📹</span>
+                            <div>
+                                <h4 style="font-weight: 700; margin-bottom: 0.25rem;">Video Library</h4>
+                                <p style="font-size: 0.875rem; color: var(--text-medium);">Comprehensive collection of educational videos</p>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: var(--light-gray); border-radius: 12px;">
+                            <span style="font-size: 2rem;">📝</span>
+                            <div>
+                                <h4 style="font-weight: 700; margin-bottom: 0.25rem;">Interactive Quizzes</h4>
+                                <p style="font-size: 0.875rem; color: var(--text-medium);">Test your knowledge with practice questions</p>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: var(--light-gray); border-radius: 12px;">
+                            <span style="font-size: 2rem;">📊</span>
+                            <div>
+                                <h4 style="font-weight: 700; margin-bottom: 0.25rem;">Progress Tracking</h4>
+                                <p style="font-size: 0.875rem; color: var(--text-medium);">Monitor your learning journey</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h3 class="subject-header">🏆 Our Values</h3>
+                    <p style="color: var(--text-medium); line-height: 1.8;">
+                        <strong>Innovation:</strong> Embracing technology for better learning<br>
+                        <strong>Technology:</strong> Leveraging digital tools for education<br>
+                        <strong>Discipline:</strong> Building character through consistent effort
+                    </p>
+                </section>
+            </div>
+
+            <!-- Upload Page -->
+            <div id="upload" class="menu-page">
+                <div class="grade-header" style="background: linear-gradient(135deg, #ee0979 0%, #ff6a00 100%);">📤 Upload Video Resource</div>
+                
+                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 1.5rem; border-radius: 16px; margin-bottom: 1.5rem; color: white;">
+                    <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">🎬 Share Your Knowledge</h3>
+                    <p style="font-size: 0.875rem; opacity: 0.95;">Upload educational videos to help students learn and grow. Your contributions make a difference!</p>
+                </div>
+                
+                <form class="upload-form" onsubmit="handleUpload(event)">
+                    <input type="text" placeholder="📌 Video Title" required>
+                    <input type="url" placeholder="🔗 Video Link (URL)" required>
+                    <select required>
+                        <option value="">🎯 Select Grade Level...</option>
+                        <option>Lower Primary (1-3)</option>
+                        <option>Upper Primary (4-6)</option>
+                        <option>JHS (7-9)</option>
+                    </select>
+                    <select required>
+                        <option value="">📚 Select Subject...</option>
+                        <option>Mathematics</option>
+                        <option>English Language</option>
+                        <option>Science</option>
+                        <option>Social Studies</option>
+                        <option>ICT</option>
+                        <option>Creative Arts</option>
+                    </select>
+                    <textarea placeholder="📝 Video Description (Optional)" rows="3" style="resize: vertical;"></textarea>
+                    <button type="submit">🚀 Submit Video Link</button>
+                </form>
+            </div>
+
+            <!-- ADMIN PANEL PAGE -->
+            <div id="admin-panel" class="admin-panel">
+                <div class="admin-header">
+                    <h1>Admin Dashboard</h1>
+                    <p>Panin Sarfo • System Administrator</p>
+                </div>
+
+                <div class="admin-stats">
+                    <div class="admin-stat">
+                        <div class="admin-stat-value">512</div>
+                        <div class="admin-stat-label">Total Students</div>
+                    </div>
+                    <div class="admin-stat">
+                        <div class="admin-stat-value">48</div>
+                        <div class="admin-stat-label">Active Teachers</div>
+                    </div>
+                    <div class="admin-stat">
+                        <div class="admin-stat-value">1,284</div>
+                        <div class="admin-stat-label">Total Resources</div>
+                    </div>
+                    <div class="admin-stat">
+                        <div class="admin-stat-value">98.2%</div>
+                        <div class="admin-stat-label">System Uptime</div>
+                    </div>
+                </div>
+
+                <h2 class="admin-section-title">Control Center</h2>
+                <div class="admin-actions">
+                    <div class="admin-action" onclick="openAdminModal('users')">
+                        <i class="fas fa-users-cog"></i>
+                        <span>Manage Users</span>
+                    </div>
+                    <div class="admin-action" onclick="openAdminModal('content')">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Approve Content</span>
+                    </div>
+                    <div class="admin-action" onclick="openAdminModal('analytics')">
+                        <i class="fas fa-chart-pie"></i>
+                        <span>Analytics</span>
+                    </div>
+                    <div class="admin-action" onclick="openAdminModal('broadcast')">
+                        <i class="fas fa-broadcast-tower"></i>
+                        <span>Broadcast Alert</span>
+                    </div>
+                    <div class="admin-action" onclick="openAdminModal('backup')">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <span>Backup System</span>
+                    </div>
+                    <div class="admin-action" onclick="openAdminModal('settings')">
+                        <i class="fas fa-cogs"></i>
+                        <span>System Settings</span>
+                    </div>
+                </div>
+
+                <h2 class="admin-section-title">System Reports</h2>
+                <div class="admin-report">
+                    <div class="admin-report-header">
+                        <div class="admin-report-title">Daily Active Users</div>
+                        <div class="admin-report-value">428</div>
+                    </div>
+                    <div style="height:8px; background:#e0e0e0; border-radius:4px; overflow:hidden;">
+                        <div style="width:88%; height:100%; background:linear-gradient(90deg,#0B8F4A,#05A854);"></div>
+                    </div>
+                </div>
+                <div class="admin-report">
+                    <div class="admin-report-header">
+                        <div class="admin-report-title">Storage Used</div>
+                        <div class="admin-report-value">42.8 GB</div>
+                    </div>
+                    <div style="height:8px; background:#e0e0e0; border-radius:4px; overflow:hidden;">
+                        <div style="width:71%; height:100%; background:linear-gradient(90deg,#f59e0b,#f97316);"></div>
+                    </div>
+                </div>
+
+                <h2 class="admin-section-title">Recent Activity</h2>
+                <div class="admin-activity">Teacher Stephen uploaded 5 new videos</div>
+                <div class="admin-activity">Parent portal login spike detected (+32%)</div>
+                <div class="admin-activity">System backup completed successfully</div>
+                <div class="admin-activity">New announcement posted by Admin</div>
+                <div class="admin-activity">12 pending content approvals</div>
+                
+                <!-- Admin Modal -->
+                <div id="admin-modal" class="admin-modal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 1000; justify-content: center; align-items: center;">
+                    <div style="background: white; padding: 2rem; border-radius: 20px; max-width: 400px; width: 90%;">
+                        <h3 id="admin-modal-title" style="margin-bottom: 1rem;"></h3>
+                        <div id="admin-modal-content"></div>
+                        <button onclick="closeAdminModal()" style="margin-top: 1rem; padding: 0.5rem 1rem; background: #0B8F4A; color: white; border: none; border-radius: 8px; cursor: pointer;">Close</button>
+                    </div>
+                </div>
+            </div>
+            <!-- End Admin Panel -->
+        </main>
+        
+        <!-- Footer -->
+        <footer>
+            <div style="margin-bottom: 0.5rem;">
+                <strong style="color: var(--primary-green);">Wexford Edu Hub</strong> - Empowering Education Through Technology
+            </div>
+            <div style="font-size: 0.75rem;">
+                © 2025 PANIN SARFO — Designed with ❤️ for excellence in education
+            </div>
+        </footer>
+    </div>
+
+        <!-- Bottom Navigation -->
+        <nav>
+            <div class="nav-buttons">
+                <button id="btn-dashboard" class="tab-button active" onclick="showPage('dashboard')">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><path d="M9 22V12h6v10"/>
+                    </svg>
+                    <span>Dashboard</span>
+                </button>
+                <button id="btn-report-card" class="tab-button" onclick="showPage('report-card')">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/>
+                    </svg>
+                    <span>Report Card</span>
+                </button>
+                <button id="btn-lower-primary" class="tab-button" onclick="switchTab('lower-primary')">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 3v18h18"/><path d="M18 17l-3-3-4 4-5-5-3 3"/>
+                    </svg>
+                    <span>Learning</span>
+                </button>
+                <button id="btn-upload" class="tab-button" onclick="showPage('upload')">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 9l5-5 5 5M12 4v12"/>
+                    </svg>
+                    <span>Upload</span>
+                </button>
+            </div>
+        </nav>
+
+    <!-- Install Button (PWA) -->
+    <button id="install-btn">Install Wexford App</button>
+
+    <!-- Offline Toast -->
+    <div id="offline-toast">Offline Mode — Learning Never Stops!</div>
+
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 900,
+            easing: 'ease-out-cubic',
+            once: true
+        });
+
+        // === ENHANCED FUNCTIONALITY FROM FIRST CODE ===
+        
+        // Browser Compatibility Check from first code
+        (function checkCompatibility() {
+            const warnings = [];
+            
+            if (!('serviceWorker' in navigator)) {
+                console.warn('Service Worker not supported - offline features limited');
+                warnings.push('Service Workers');
+            }
+            
+            if (!('indexedDB' in window)) {
+                console.warn('IndexedDB not supported - local storage features limited');
+                warnings.push('IndexedDB');
+            }
+            
+            if (!window.fetch) {
+                console.warn('Fetch API not supported');
+                warnings.push('Fetch API');
+            }
+            
+            if (warnings.length > 0) {
+                const warningEl = document.getElementById('compatWarning');
+                warningEl.classList.add('visible');
+                warningEl.innerHTML += '<br>Missing features: ' + warnings.join(', ');
+            }
+        })();
+
+        // Loading Spinner from first code
+        window.addEventListener('load', function() {
+            const loader = document.getElementById('loader');
+            loader.classList.add('hidden');
+            setTimeout(() => {
+                loader.style.display = 'none';
+            }, 500);
+            
+            // Initialize particles from first code
+            createParticles();
+        });
+
+        // Create particles from first code
+        function createParticles() {
+            const particlesContainer = document.getElementById('particlesContainer');
+            if (!particlesContainer) return;
+            
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // Random properties
+                const size = Math.random() * 20 + 5;
+                const left = Math.random() * 100;
+                const animationDelay = Math.random() * 20;
+                const animationDuration = Math.random() * 20 + 20;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${left}%`;
+                particle.style.animationDelay = `${animationDelay}s`;
+                particle.style.animationDuration = `${animationDuration}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
         }
+
+        // Scroll to Top Button from first code
+        const scrollTopBtn = document.getElementById('scrollTopBtn');
+        
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+        });
+        
+        scrollTopBtn.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Notification system from first code
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            const messageEl = document.getElementById('notificationMessage');
+            
+            messageEl.textContent = message;
+            notification.style.display = 'block';
+            
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+
+        // Print Function from first code
+        window.printContent = function() {
+            window.print();
+        };
+
+        // Enhanced Search from first code
+        function performSearch() {
+            const searchTerm = document.getElementById('searchInput').value;
+            if (searchTerm.trim()) {
+                showNotification(`Searching for: "${searchTerm}"\n\nIn a real implementation, this would search through:\n- Student records\n- Course content\n- System features\n- Help documentation`);
+                toggleSearch();
+            }
+        }
+
+        // Keyboard Navigation from first code
+        document.addEventListener('keydown', function(e) {
+            // ESC closes modals
+            if (e.key === 'Escape') {
+                const modal = document.getElementById('search-modal');
+                if (modal.classList.contains('active')) {
+                    toggleSearch();
+                }
+            }
+            
+            // Ctrl+S focuses search
+            if (e.ctrlKey && e.key === 's') {
+                e.preventDefault();
+                toggleSearch();
+            }
+        });
+
+        // Smooth Scroll for Navigation Links from first code
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Update Online Status
+        function updateOnlineStatus() {
+            const offlineStatus = document.getElementById('offlineStatus');
+            if (navigator.onLine) {
+                offlineStatus.textContent = '✅ You are back online!';
+                offlineStatus.className = 'offline-status online';
+                setTimeout(() => {
+                    offlineStatus.style.display = 'none';
+                }, 3000);
+            } else {
+                offlineStatus.textContent = '⚠️ You are currently offline. Some features may be limited.';
+                offlineStatus.className = 'offline-status';
+                offlineStatus.style.display = 'block';
+            }
+        }
+
+        // === PWA INSTALL ===
+        let deferredPrompt;
+        const installBtn = document.getElementById('install-btn');
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installBtn.style.display = 'block';
+        });
+        installBtn.addEventListener('click', () => {
+            installBtn.style.display = 'none';
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
+        });
+
+        // === OFFLINE DETECTION ===
+        window.addEventListener('offline', () => {
+            document.getElementById('offline-toast').style.display = 'block';
+            setTimeout(() => document.getElementById('offline-toast').style.display = 'none', 6000);
+            updateOnlineStatus();
+        });
+        window.addEventListener('online', () => {
+            document.getElementById('offline-toast').style.display = 'none';
+            updateOnlineStatus();
+        });
+
+        // Gallery Slideshow Variables
+        let currentGallerySlide = 0;
+        const totalGallerySlides = 7;
+
+        // Gallery Slideshow Functions
+        function showGallerySlide(index) {
+            const slides = document.querySelectorAll('.gallery-slide');
+            const indicators = document.querySelectorAll('.gallery-indicator');
+            
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active');
+                if (i === index) {
+                    slide.classList.add('active');
+                }
+            });
+
+            indicators.forEach((indicator, i) => {
+                indicator.classList.remove('active');
+                if (i === index) {
+                    indicator.classList.add('active');
+                }
+            });
+        }
+
+        function changeGallerySlide(direction) {
+            currentGallerySlide += direction;
+            if (currentGallerySlide < 0) {
+                currentGallerySlide = totalGallerySlides - 1;
+            } else if (currentGallerySlide >= totalGallerySlides) {
+                currentGallerySlide = 0;
+            }
+            showGallerySlide(currentGallerySlide);
+        }
+
+        function setGallerySlide(index) {
+            currentGallerySlide = index;
+            showGallerySlide(currentGallerySlide);
+        }
+
+        function autoAdvanceGallery() {
+            currentGallerySlide = (currentGallerySlide + 1) % totalGallerySlides;
+            showGallerySlide(currentGallerySlide);
+        }
+
+        // Auto-advance gallery every 4 seconds
+        setInterval(autoAdvanceGallery, 4000);
+
+        // Current Slide Index for Banner
+        let currentSlide = 0;
+        const totalSlides = 7;
+
+        // Update Date/Time Display
+        function updateDateTime() {
+            const now = new Date();
+            const options = { 
+                weekday: 'short', 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            const dateTimeString = now.toLocaleDateString('en-US', options);
+            const displayElement = document.getElementById('datetime-display');
+            if (displayElement) {
+                displayElement.textContent = dateTimeString;
+            }
+        }
+
+        // Calculate Time Ago
+        function getTimeAgo(dateString) {
+            const postDate = new Date(dateString);
+            const now = new Date();
+            const diffMs = now - postDate;
+            const diffMins = Math.floor(diffMs / 60000);
+            const diffHours = Math.floor(diffMs / 3600000);
+            const diffDays = Math.floor(diffMs / 86400000);
+            const diffWeeks = Math.floor(diffMs / 604800000);
+
+            if (diffMins < 1) return 'Just now';
+            if (diffMins < 60) return `${diffMins} minute${diffMins > 1 ? 's' : ''} ago`;
+            if (diffHours < 24) return `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`;
+            if (diffDays < 7) return `${diffDays} day${diffDays > 1 ? 's' : ''} ago`;
+            if (diffWeeks < 4) return `${diffWeeks} week${diffWeeks > 1 ? 's' : ''} ago`;
+            
+            return postDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        }
+
+        // Update All Announcement Times
+        function updateAnnouncementTimes() {
+            const announcementTimes = document.querySelectorAll('.announcement-time');
+            announcementTimes.forEach(element => {
+                const dateString = element.getAttribute('data-date');
+                if (dateString) {
+                    element.textContent = 'Posted ' + getTimeAgo(dateString);
+                }
+            });
+        }
+
+        // Banner Slideshow
+        function showSlide(index) {
+            const slides = document.querySelectorAll('.banner-slide');
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active');
+                if (i === index) {
+                    slide.classList.add('active');
+                }
+            });
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            showSlide(currentSlide);
+        }
+
+        // Auto-advance banner every 10 seconds
+        setInterval(nextSlide, 5000);
+
+        // Tab Switching - Enhanced to handle new pages
+        function switchTab(tabName) {
+            document.querySelectorAll('.menu-page').forEach(page => page.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.admin-panel').forEach(panel => panel.classList.remove('active'));
+            document.querySelectorAll('.tab-button').forEach(button => button.classList.remove('active'));
+
+            const activeContent = document.getElementById(tabName);
+            if (activeContent) activeContent.classList.add('active');
+
+            const activeButton = document.getElementById('btn-' + tabName);
+            if (activeButton) activeButton.classList.add('active');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Show Menu Pages - Enhanced
+        function showPage(pageName) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.menu-page').forEach(page => page.classList.remove('active'));
+            document.querySelectorAll('.admin-panel').forEach(panel => panel.classList.remove('active'));
+            document.querySelectorAll('.tab-button').forEach(button => button.classList.remove('active'));
+
+            const activePage = document.getElementById(pageName);
+            if (activePage) activePage.classList.add('active');
+            
+            const activeButton = document.getElementById('btn-' + pageName);
+            if (activeButton) activeButton.classList.add('active');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Toggle Menu
+        function toggleMenu() {
+            document.getElementById('menu-overlay').classList.toggle('active');
+        }
+
+        // Close Menu on Overlay Click
+        function closeMenuOnOverlay(event) {
+            if (event.target.id === 'menu-overlay') toggleMenu();
+        }
+
+        // Toggle Search Modal
+        function toggleSearch() {
+            const modal = document.getElementById('search-modal');
+            modal.classList.toggle('active');
+            if (modal.classList.contains('active')) {
+                setTimeout(() => modal.querySelector('.search-input').focus(), 100);
+            }
+        }
+
+        // Close Search on Overlay Click
+        function closeSearchOnOverlay(event) {
+            if (event.target.id === 'search-modal') toggleSearch();
+        }
+
+        // Handle Search
+        function handleSearch(event) {
+            const query = event.target.value.toLowerCase();
+            if (event.key === 'Enter' && query) {
+                performSearch();
+            }
+        }
+
+        // Handle Upload Form
+        function handleUpload(event) {
+            event.preventDefault();
+            const button = event.target.querySelector('button');
+            const originalText = button.innerHTML;
+            button.innerHTML = '✅ Uploaded Successfully!';
+            button.style.background = 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)';
+            
+            setTimeout(() => {
+                button.innerHTML = originalText;
+                button.style.background = 'linear-gradient(135deg, #0B8F4A 0%, #05A854 100%)';
+                event.target.reset();
+                showNotification('🎉 Video uploaded successfully!\n\nIn production, this would save to the database.');
+            }, 2000);
+        }
+
+        // Start Quiz Function - Now opens the quiz platform
+        function startQuiz(subject) {
+            window.open('https://stephen-daniels.github.io/PANIN.com/wexquiz.html', '_blank');
+        }
+
+        // Play Video Function
+        function playVideo(videoSrc) {
+            showNotification('Playing video: ' + videoSrc + '\n\nIn production, this would open the video player.');
+        }
+
+        // Admin Panel Functions
+        function openAdminModal(type) {
+            const modal = document.getElementById('admin-modal');
+            const title = document.getElementById('admin-modal-title');
+            const content = document.getElementById('admin-modal-content');
+            
+            const modals = {
+                'users': {
+                    title: 'Manage Users',
+                    content: '<p>User management interface would appear here.</p><button style="padding: 0.5rem 1rem; background: #0B8F4A; color: white; border: none; border-radius: 8px; margin: 0.5rem 0; cursor: pointer;">Add New User</button><br><button style="padding: 0.5rem 1rem; background: #f59e0b; color: white; border: none; border-radius: 8px; margin: 0.5rem 0; cursor: pointer;">Edit Permissions</button>'
+                },
+                'content': {
+                    title: 'Approve Content',
+                    content: '<p>12 items pending approval</p><ul style="margin: 1rem 0; padding-left: 1.5rem;"><li>Math Video - Grade 4</li><li>Science Quiz - JHS</li><li>English Worksheet</li></ul>'
+                },
+                'analytics': {
+                    title: 'Analytics Dashboard',
+                    content: '<p>Platform Statistics:</p><ul style="margin: 1rem 0; padding-left: 1.5rem;"><li>Active Users: 428</li><li>Total Views: 12,847</li><li>Completion Rate: 78%</li></ul>'
+                },
+                'broadcast': {
+                    title: 'Broadcast Message',
+                    content: '<textarea placeholder="Enter broadcast message..." style="width: 100%; height: 100px; padding: 0.5rem; margin: 0.5rem 0; border: 1px solid #ccc; border-radius: 8px;"></textarea><button style="padding: 0.5rem 1rem; background: #0B8F4A; color: white; border: none; border-radius: 8px; cursor: pointer;">Send Broadcast</button>'
+                },
+                'backup': {
+                    title: 'System Backup',
+                    content: '<p>Last Backup: Today, 02:30 AM</p><button style="padding: 0.5rem 1rem; background: #0B8F4A; color: white; border: none; border-radius: 8px; margin: 0.5rem 0; cursor: pointer;">Backup Now</button><br><button style="padding: 0.5rem 1rem; background: #f59e0b; color: white; border: none; border-radius: 8px; margin: 0.5rem 0; cursor: pointer;">Restore Backup</button>'
+                },
+                'settings': {
+                    title: 'System Settings',
+                    content: '<p>Platform Configuration:</p><ul style="margin: 1rem 0; padding-left: 1.5rem;"><li><label><input type="checkbox" checked> Enable Uploads</label></li><li><label><input type="checkbox" checked> Enable Comments</label></li><li><label><input type="checkbox"> Maintenance Mode</label></li></ul>'
+                }
+            };
+            
+            if (modals[type]) {
+                title.textContent = modals[type].title;
+                content.innerHTML = modals[type].content;
+                modal.style.display = 'flex';
+            }
+        }
+
+        function closeAdminModal() {
+            document.getElementById('admin-modal').style.display = 'none';
+        }
+
+        // Cache important resources for offline use
+        function cacheResources() {
+            if ('caches' in window) {
+                caches.open('wexford-edu-v1').then(cache => {
+                    return cache.addAll([
+                        '/',
+                        'WEX LOGO.jpg',
+                        'Eva.jpg',
+                        'bs2.jpg',
+                        'BS6.jpg',
+                        'quiz.jpg',
+                        'Wor.jpg',
+                        'new.mp4',
+                        'multi-base.mp4'
+                    ]);
+                });
+            }
+        }
+
+        // Initialize
+        window.onload = () => {
+            showPage('dashboard');
+            updateDateTime();
+            updateAnnouncementTimes();
+            updateOnlineStatus();
+            
+            // Set up event listeners for online/offline status
+            window.addEventListener('online', updateOnlineStatus);
+            window.addEventListener('offline', updateOnlineStatus);
+            
+            // Cache resources for offline use
+            cacheResources();
+            
+            // Update date/time every minute
+            setInterval(updateDateTime, 60000);
+            
+            // Update announcement times every minute
+            setInterval(updateAnnouncementTimes, 60000);
+        };
+
+        // Service Worker Registration for PWA (Embedded - No Extra File Needed)
+        if ('serviceWorker' in navigator) {
+            const swCode = `
+                const CACHE = 'wexford-v25';
+                const files = [
+                    '/', 'index.html',
+                    'WEX LOGO.jpg','Eva.jpg','bs2.jpg','BS6.jpg','Wor.jpg','quiz.jpg',
+                    'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;700;800;900&display=swap',
+                    'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
+                    'https://unpkg.com/aos@2.3.1/dist/aos.css',
+                    'https://unpkg.com/aos@2.3.1/dist/aos.js'
+                ];
+                self.addEventListener('install', e => e.waitUntil(caches.open(CACHE).then(c => c.addAll(files)).then(() => self.skipWaiting())));
+                self.addEventListener('fetch', e => {
+                    e.respondWith(caches.match(e.request).then(r => r || fetch(e.request).catch(() => caches.match('index.html'))));
+                });
+            `;
+            const blob = new Blob([swCode], {type: 'application/javascript'});
+            const url = URL.createObjectURL(blob);
+            navigator.serviceWorker.register(url);
+        }
+    </script>
+</body>
+</html>
