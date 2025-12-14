@@ -28,7 +28,6 @@
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;700;800&display=swap');
 
         :root {
-            /* Enhanced Variables */
             --primary-green: #0B8F4A;
             --primary-dark: #076838;
             --primary-light: #E8F5EE;
@@ -651,7 +650,7 @@
             right: 1rem;
         }
 
-        /* Enhanced Welcome Banner with 10 Powerful Quotes */
+        /* Enhanced Welcome Banner with 3D Effects */
         .welcome-banner {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             padding: 2rem 1.5rem;
@@ -767,8 +766,6 @@
             font-style: italic;
             margin-top: 0.5rem;
             opacity: 0.9;
-            text-align: right;
-            color: rgba(255, 255, 255, 0.9);
         }
 
         /* Enhanced Date/Time Display */
@@ -1416,39 +1413,72 @@
             transform: translateX(-50%);
             width: 100%;
             max-width: 480px;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(15px);
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
             border-top: 1px solid var(--border-gray);
-            padding: 0.5rem;
+            box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.12);
+            z-index: 100;
+        }
+
+        .nav-buttons {
             display: flex;
             justify-content: space-around;
-            z-index: 100;
-            border-radius: 20px 20px 0 0;
-            box-shadow: 0 -5px 20px rgba(0,0,0,0.05);
+            padding: 0.75rem 0.5rem;
         }
+
         .tab-button {
-            background: none;
-            border: none;
+            flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
-            font-size: 0.7rem;
+            justify-content: center;
+            padding: 0.75rem;
+            border: none;
+            background: transparent;
             color: var(--text-light);
-            font-weight: 600;
-            padding: 0.5rem;
             cursor: pointer;
-            flex: 1;
-            border-radius: 12px;
-            transition: all 0.3s;
+            font-size: 0.7rem;
+            font-weight: 700;
+            border-radius: 14px;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+            position: relative;
+            overflow: hidden;
         }
+
+        .tab-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(11, 143, 74, 0.1) 0%, rgba(5, 168, 84, 0.1) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .tab-button svg {
+            margin-bottom: 0.375rem;
+            transition: all 0.3s ease;
+        }
+
         .tab-button.active {
             color: var(--primary-green);
-            transform: translateY(-5px);
+            background: var(--primary-light);
         }
-        .tab-button svg {
-            width: 24px;
-            height: 24px;
-            margin-bottom: 4px;
+
+        .tab-button.active::before {
+            opacity: 1;
+        }
+
+        .tab-button.active svg {
+            transform: scale(1.15);
+        }
+
+        .tab-button:hover:not(.active) {
+            color: var(--text-medium);
+            background: var(--light-gray);
         }
 
         /* Enhanced Upload Form */
@@ -2267,14 +2297,6 @@
     </style>
 </head>
 <body>
-    <!-- Loading Spinner -->
-    <div id="loader" class="loader-container">
-        <div>
-            <span class="classic-loader"></span>
-            <div class="loader-text">Loading Wexford Digital Platform...</div>
-        </div>
-    </div>
-
     <!-- Compatibility Warning -->
     <div id="compatWarning" class="compat-warning">
         <strong>⚠️ Browser Compatibility Notice:</strong> Some features may not be available in your browser.
@@ -2285,16 +2307,12 @@
         ⚠️ You are currently offline. Some features may be limited.
     </div>
 
-    <!-- Floating Particles -->
-    <div class="particles" id="particlesContainer"></div>
-
-    <!-- Animated Background -->
-    <div class="bg-animation">
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
+    <!-- Floating Particles from Third Code -->
+    <div class="particles">
+        <div class="particle" style="width:90px;height:90px;left:10%;animation-delay:0s;"></div>
+        <div class="particle" style="width:70px;height:70px;left:35%;animation-delay:6s;"></div>
+        <div class="particle" style="width:110px;height:110px;left:70%;animation-delay:12s;"></div>
+        <div class="particle" style="width:80px;height:80px;left:85%;animation-delay:18s;"></div>
     </div>
 
     <!-- Scroll to Top Button -->
@@ -2358,6 +2376,15 @@
         </div>
     </div>
 
+    <!-- Animated Background -->
+    <div class="bg-animation">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
     <div class="app-container">
         <!-- Header -->
         <header>
@@ -2395,7 +2422,7 @@
             </div>
         </div>
 
-        <!-- Side Menu -->
+        <!-- Side Menu - Updated with Admin Panel -->
         <div id="menu-overlay" class="menu-overlay" onclick="closeMenuOnOverlay(event)">
             <div class="side-menu">
                 <div class="menu-header">
@@ -2415,7 +2442,7 @@
                     <li><a href="#" onclick="switchTab('jhs'); toggleMenu()">
                         🎓 Junior High
                     </a></li>
-                    <li><a href="#" onclick="switchTab('ict-skills'); toggleMenu()">
+                    <li><a href="#" onclick="showPage('ict-skills'); toggleMenu()">
                         💻 ICT Skills
                     </a></li>
                     <li><a href="#" onclick="showPage('report-card'); toggleMenu()">
@@ -2427,17 +2454,33 @@
                     <li><a href="https://stephen-daniels.github.io/PANIN.com/Staff.html" target="_blank" onclick="toggleMenu()">
                         👥 Staff Directory
                     </a></li>
+                    <li><a href="https://stephen-daniels.github.io/PANIN.com/Student.html" target="_blank" onclick="toggleMenu()">
+                        👥 Student Profile
+                    </a></li>
+                    <li><a href="https://stephen-daniels.github.io/PANIN.com/Con.html" target="_blank" onclick="toggleMenu()">
+                        👥 Staff Forum
+                    </a></li>
+                    <li><a href="https://stephen-daniels.github.io/PANIN.com/PTA.html" target="_blank" onclick="toggleMenu()">
+                        👥 PTA Forum
+                    </a></li>
                     <li><a href="#" onclick="showPage('trial'); toggleMenu()">
                         📝 Trial Questions
                     </a></li>
                     <li><a href="#" onclick="showPage('about'); toggleMenu()">
                         ℹ️ About Us
                     </a></li>
+                    <!-- Updated Admin Panel Link -->
                     <li><a href="#" onclick="showPage('admin-panel'); toggleMenu()">
                         🛡️ Admin Panel
                     </a></li>
                     <li><a href="#" onclick="toggleChat(); toggleMenu()">
                         💬 Live Support
+                    </a></li>
+                    <li><a href="https://www.ck12.org/c/arithmetic/add-whole-numbers/?by=ck12&difficulty=all#all&noback=true" target="_blank" onclick="toggleMenu()">
+                        🔗 External Resources
+                    </a></li>
+                    <li><a href="#" onclick="showPage('upload'); toggleMenu()">
+                        📤 Upload Content
                     </a></li>
                 </ul>
                 
@@ -2457,7 +2500,7 @@
 
         <main>
             <!-- Dashboard Page -->
-            <div id="dashboard" class="menu-page active">
+            <div id="dashboard" class="menu-page">
                 <!-- Welcome Banner with 10 Powerful Quotes -->
                 <div class="welcome-banner">
                     <div class="datetime-display" id="datetime-display"></div>
@@ -2567,36 +2610,208 @@
                     </div>
                     
                     <!-- ICT Skills -->
-                    <div class="dashboard-feature feat-ict" onclick="switchTab('ict-skills')">
+                    <div class="dashboard-feature feat-ict" onclick="showPage('ict-skills')">
                         <i class="fas fa-laptop-code"></i>
                         <h3>ICT Skills</h3>
                         <p>Word, Excel, PPT</p>
                     </div>
                 </div>
 
-                <!-- School Gallery -->
-                <div class="school-gallery fade-in-up" style="animation-delay: 0.2s;">
-                    <div class="gallery-slide active"><img src="Eva.jpg" alt="Campus"><div class="gallery-overlay"><h3>🏫 Beautiful Campus</h3></div></div>
-                    <div class="gallery-slide"><img src="bs2.jpg" alt="Lab"><div class="gallery-overlay"><h3>💻 ICT Lab</h3></div></div>
-                    <div class="gallery-slide"><img src="BS6.jpg" alt="Sports"><div class="gallery-overlay"><h3>⚽ Sports Day</h3></div></div>
+                <!-- Stats Banner -->
+                <div class="stats-banner">
+                    <div class="stat-item">
+                        <span class="stat-number">150+</span>
+                        <span class="stat-label">Videos</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">12</span>
+                        <span class="stat-label">Subjects</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">500+</span>
+                        <span class="stat-label">Students</span>
+                    </div>
+                </div>
+
+                <!-- School Gallery Slideshow -->
+                <div class="school-gallery">
+                    <!-- Gallery Slide 1 -->
+                    <div class="gallery-slide active" id="gallery-1">
+                        <img src="Eva.jpg" alt="School Campus">
+                        <div class="gallery-overlay">
+                            <div class="gallery-caption">🏫 Our Beautiful Campus</div>
+                            <div class="gallery-description">Modern facilities for quality education</div>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Slide 2 -->
+                    <div class="gallery-slide" id="gallery-2">
+                        <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1200&q=80" alt="Students Learning">
+                        <div class="gallery-overlay">
+                            <div class="gallery-caption">📚 Interactive Classrooms</div>
+                            <div class="gallery-description">Engaging learning experiences for all students</div>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Slide 3 -->
+                    <div class="gallery-slide" id="gallery-3">
+                        <img src="bs2.jpg" alt="Computer Lab">
+                        <div class="gallery-overlay">
+                            <div class="gallery-caption">Sports</div>
+                            <div class="gallery-description">State-of-the-art technology for digital learning</div>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Slide 4 -->
+                    <div class="gallery-slide" id="gallery-4">
+                        <img src="https://stephen-daniels.github.io/PANIN.com/PICS.html/pics/IMG-20251114-WA0056.jpg" alt="Library">
+                        <div class="gallery-overlay">
+                            <div class="gallery-caption">📖 Staff</div>
+                            <div class="gallery-description">Extensive collection of books and resources</div>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Slide 5 -->
+                    <div class="gallery-slide" id="gallery-5">
+                        <img src="BS6.jpg" alt="Sports Field">
+                        <div class="gallery-overlay">
+                            <div class="gallery-caption">⚽ Sports Facilities</div>
+                            <div class="gallery-description">Promoting physical fitness and teamwork</div>
+                        </div>
+                    </div>
                     
-                    <!-- Gallery Navigation -->
+                    <!-- Gallery Slide 6 -->
+                    <div class="gallery-slide" id="gallery-6">
+                        <img src="Wor.jpg" alt="Sports Field">
+                        <div class="gallery-overlay">
+                            <div class="gallery-caption">⚽ Moment of worship</div>
+                            <div class="gallery-description">When our praises go up, His presence comes down</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Gallery Slide 7 -->
+                    <div class="gallery-slide" id="gallery-7">
+                        <img src="quiz.jpg" alt="Sports Field">
+                        <div class="gallery-overlay">
+                            <div class="gallery-caption">⚽Inter class quiz</div>
+                            <div class="gallery-description">Promoting physical fitness and teamwork</div>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Slide 8 -->
+                    <div class="gallery-slide" id="gallery-8">
+                        <img src="https://stephen-daniels.github.io/PANIN.com/PICS.html/pics/IMG-20251114-WA0044.jpg" alt="Library">
+                        <div class="gallery-overlay">
+                            <div class="gallery-caption">⚽ Sports Facilities</div>
+                            <div class="gallery-description">Promoting physical fitness and teamwork</div>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Slide 9 -->
+                    <div class="gallery-slide" id="gallery-9">
+                        <img src="https://stephen-daniels.github.io/PANIN.com/PICS.html/pics/IMG-20251114-WA0015.jpg" alt="Library">
+                        <div class="gallery-overlay">
+                            <div class="gallery-caption">⚽ Sports Facilities</div>
+                            <div class="gallery-description">Promoting physical fitness and teamwork</div>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Slide 10 -->
+                    <div class="gallery-slide" id="gallery-10">
+                        <img src="https://stephen-daniels.github.io/PANIN.com/PICS.html/pics/IMG-20251114-WA0020.jpg" alt="Library">
+                        <div class="gallery-overlay">
+                            <div class="gallery-caption">⚽ Sports Facilities</div>
+                            <div class="gallery-description">Promoting physical fitness and teamwork</div>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Slide 11 -->
+                    <div class="gallery-slide" id="gallery-11">
+                        <img src="https://stephen-daniels.github.io/PANIN.com/PICS.html/pics/IMG-20251114-WA0025.jpg" alt="Library">
+                        <div class="gallery-overlay">
+                            <div class="gallery-caption">⚽ Sports Facilities</div>
+                            <div class="gallery-description">Promoting physical fitness and teamwork</div>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Slide 12 -->
+                    <div class="gallery-slide" id="gallery-12">
+                        <img src="https://stephen-daniels.github.io/PANIN.com/PICS.html/pics/IMG-20251114-WA0028.jpg" alt="Library">
+                        <div class="gallery-overlay">
+                            <div class="gallery-caption">⚽ Sports Facilities</div>
+                            <div class="gallery-description">Promoting physical fitness and teamwork</div>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Slide 13 -->
+                    <div class="gallery-slide" id="gallery-13">
+                        <img src="https://stephen-daniels.github.io/PANIN.com/PICS.html/pics/IMG-20251114-WA0041.jpg" alt="Library">
+                        <div class="gallery-overlay">
+                            <div class="gallery-caption">⚽ Sports Facilities</div>
+                            <div class="gallery-description">Promoting physical fitness and teamwork</div>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Slide 14 -->
+                    <div class="gallery-slide" id="gallery-14">
+                        <img src="https://stephen-daniels.github.io/PANIN.com/PICS.html/pics/IMG-20251114-WA0044.jpg" alt="Library">
+                        <div class="gallery-overlay">
+                            <div class="gallery-caption">⚽ Sports Facilities</div>
+                            <div class="gallery-description">Promoting physical fitness and teamwork</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Gallery Slide 15 -->
+                    <div class="gallery-slide" id="gallery-15">
+                        <img src="https://stephen-daniels.github.io/PANIN.com/PICS.html/pics/IMG-20251114-WA0019.jpg" alt="Library">
+                        <div class="gallery-overlay">
+                            <div class="gallery-caption">⚽ Sports Facilities</div>
+                            <div class="gallery-description">Promoting physical fitness and teamwork</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Navigation Buttons -->
                     <button class="gallery-nav prev" onclick="changeGallerySlide(-1)">‹</button>
                     <button class="gallery-nav next" onclick="changeGallerySlide(1)">›</button>
-                    
+
                     <!-- Indicators -->
                     <div class="gallery-indicators">
                         <span class="gallery-indicator active" onclick="setGallerySlide(0)"></span>
                         <span class="gallery-indicator" onclick="setGallerySlide(1)"></span>
                         <span class="gallery-indicator" onclick="setGallerySlide(2)"></span>
+                        <span class="gallery-indicator" onclick="setGallerySlide(3)"></span>
+                        <span class="gallery-indicator" onclick="setGallerySlide(4)"></span>
+                        <span class="gallery-indicator" onclick="setGallerySlide(5)"></span>
+                        <span class="gallery-indicator" onclick="setGallerySlide(6)"></span>
+                        <span class="gallery-indicator" onclick="setGallerySlide(7)"></span>
+                        <span class="gallery-indicator" onclick="setGallerySlide(8)"></span>
+                        <span class="gallery-indicator" onclick="setGallerySlide(9)"></span>
+                        <span class="gallery-indicator" onclick="setGallerySlide(10)"></span>
+                        <span class="gallery-indicator" onclick="setGallerySlide(11)"></span>
+                        <span class="gallery-indicator" onclick="setGallerySlide(12)"></span>
+                        <span class="gallery-indicator" onclick="setGallerySlide(13)"></span>
+                        <span class="gallery-indicator" onclick="setGallerySlide(14)"></span>
                     </div>
                 </div>
 
-                <!-- Stats Banner -->
-                <div class="stats-banner fade-in-up" style="background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%); padding: 1.5rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; border-radius: 16px; margin: 2rem 0; color: white; text-align: center; animation-delay: 0.3s;">
-                    <div><span class="stat-number" style="font-size: 1.5rem; font-weight: 800;">150+</span><span class="stat-label">Lessons</span></div>
-                    <div><span class="stat-number" style="font-size: 1.5rem; font-weight: 800;">12</span><span class="stat-label">Subjects</span></div>
-                    <div><span class="stat-number" style="font-size: 1.5rem; font-weight: 800;">500+</span><span class="stat-label">Students</span></div>
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <div class="quick-action" onclick="switchTab('lower-primary')">
+                        <span class="quick-action-icon">🎨</span>
+                        <span class="quick-action-label">Primary</span>
+                    </div>
+                    <div class="quick-action" onclick="switchTab('jhs')">
+                        <span class="quick-action-icon">🎓</span>
+                        <span class="quick-action-label">JHS</span>
+                    </div>
+                    <div class="quick-action" onclick="showPage('trial')">
+                        <span class="quick-action-icon">📝</span>
+                        <span class="quick-action-label">Quizzes</span>
+                    </div>
+                    <div class="quick-action" onclick="showPage('upload')">
+                        <span class="quick-action-icon">📤</span>
+                        <span class="quick-action-label">Upload</span>
+                    </div>
                 </div>
 
                 <!-- Social Media Section -->
@@ -2612,18 +2827,89 @@
             </div>
 
             <!-- Lower Primary Tab -->
-            <div id="lower-primary" class="tab-content">
+            <div id="lower-primary" class="tab-content active">
                 <div class="grade-header">🎨 Lower Primary (Grades 1-3)</div>
-                <section class="subject-section fade-in-up">
-                    <h3 class="subject-header">📊 Maths Resources <span class="subject-badge">8 Videos</span></h3>
+
+                <!-- Progress Section -->
+                <div class="progress-section">
+                    <div class="progress-header">
+                        <span class="progress-title">📊 Your Progress</span>
+                        <span class="progress-percentage">65%</span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" style="width: 65%;"></div>
+                    </div>
+                    <div class="achievements">
+                        <div class="achievement-badge">
+                            <span class="achievement-icon">🏆</span>
+                            <span class="achievement-label">Champion</span>
+                        </div>
+                        <div class="achievement-badge">
+                            <span class="achievement-icon">⭐</span>
+                            <span class="achievement-label">Star</span>
+                        </div>
+                        <div class="achievement-badge">
+                            <span class="achievement-icon">🎯</span>
+                            <span class="achievement-label">Achiever</span>
+                        </div>
+                        <div class="achievement-badge">
+                            <span class="achievement-icon">🔥</span>
+                            <span class="achievement-label">Streak</span>
+                        </div>
+                    </div>
+                </div>
+
+                <section class="subject-section">
+                    <h3 class="subject-header">
+                        📊 Maths Resources
+                        <span class="subject-badge">8 Videos</span>
+                    </h3>
                     <div class="video-grid">
-                        <a href="https://www.youtube.com/watch?v=11eckLmJEMw" class="video-card" target="_blank">
-                            <div class="video-thumbnail" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"><i class="fas fa-calculator"></i></div>
-                            <div class="video-info"><p class="video-title">Counting Shapes</p><p class="video-lesson">Lesson 1.2</p></div>
+                        <a href="https://www.youtube.com/watch?v=11eckLmJEMw&list=RD11eckLmJEMw&start_radio=1" class="video-card" target="_blank">
+                            <div class="video-thumbnail" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
+                            <div class="video-info">
+                                <p class="video-title">Counting Shapes</p>
+                                <p class="video-lesson">Lesson 1.2</p>
+                            </div>
                         </a>
                         <a href="https://www.youtube.com/watch?v=NybHckSEQBI" class="video-card" target="_blank">
-                            <div class="video-thumbnail" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"><i class="fas fa-plus-circle"></i></div>
-                            <div class="video-info"><p class="video-title">Addition Basics</p><p class="video-lesson">Lesson 2.1</p></div>
+                            <div class="video-thumbnail" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"></div>
+                            <div class="video-info">
+                                <p class="video-title">Addition Basics</p>
+                                <p class="video-lesson">Lesson 2.1</p>
+                            </div>
+                        </a>
+                    </div>
+                </section>
+
+                <section class="subject-section">
+                    <h3 class="subject-header">
+                        📚 English Resources
+                        <span class="subject-badge">5 Videos</span>
+                    </h3>
+                    <div class="video-grid">
+                        <a href="https://www.youtube.com/watch?v=-4CL3Xn-ycw&list=PL0HMo9RIVkoxyScPHjfleUL7q8Z3hOxqn" class="video-card" target="_blank">
+                            <div class="video-thumbnail" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);"></div>
+                            <div class="video-info">
+                                <p class="video-title">Phonics: 'Sh' Sound</p>
+                                <p class="video-lesson">Unit 3</p>
+                            </div>
+                        </a>
+                    </div>
+                </section>
+
+                <section class="subject-section">
+                    <h3 class="subject-header">
+                        🔬 Science Resources
+                        <span class="subject-badge">6 Videos</span>
+                    </h3>
+                    <div class="video-grid">
+                        <a href="https://www.youtube.com/watch?v=AVC-426M6V0" class="video-card" target="_blank">
+                            <div class="video-thumbnail" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);"></div>
+                            <div class="video-info">
+                                <p class="video-title">The Water Cycle</p>
+                                <p class="video-lesson">Module 4</p>
+                            </div>
                         </a>
                     </div>
                 </section>
@@ -2631,34 +2917,103 @@
 
             <!-- Upper Primary Tab -->
             <div id="upper-primary" class="tab-content">
-                <div class="grade-header" style="background: linear-gradient(135deg, #0284C7 0%, #2563EB 100%);">📖 Upper Primary (Grades 4-6)</div>
-                <section class="subject-section fade-in-up">
-                    <h3 class="subject-header">🔬 Integrated Science <span class="subject-badge">Active</span></h3>
+                <div class="grade-header">📖 Upper Primary (Grades 4-6)</div>
+                
+                <div class="progress-section">
+                    <div class="progress-header">
+                        <span class="progress-title">📊 Your Progress</span>
+                        <span class="progress-percentage">45%</span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" style="width: 45%;"></div>
+                    </div>
+                </div>
+
+                <section class="subject-section">
+                    <h3 class="subject-header">
+                        📊 Maths Resources
+                        <span class="subject-badge">12 Videos</span>
+                    </h3>
                     <div class="video-grid">
-                        <div class="video-card">
-                            <div class="video-thumbnail" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);"><i class="fas fa-leaf"></i></div>
-                            <div class="video-info"><p class="video-title">Photosynthesis</p><p class="video-lesson">Grade 5 Science</p></div>
+                        <div class="video-card" onclick="playVideo('new.mp4')">
+                            <video controls style="width: 100%; height: 120px; object-fit: cover; border-radius: 0;">
+                                <source src="new.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-info">
+                                <p class="video-title">Math Fundamentals</p>
+                                <p class="video-lesson">Lesson 5.1</p>
+                            </div>
+                        </div>
+                        <div class="video-card" onclick="playVideo('multi-base.mp4')">
+                            <video controls style="width: 100%; height: 120px; object-fit: cover; border-radius: 0;">
+                                <source src="multi-base.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-info">
+                                <p class="video-title">Multi-Base Numbers</p>
+                                <p class="video-lesson">Lesson 5.2</p>
+                            </div>
                         </div>
                     </div>
+                </section>
+
+                <section class="subject-section">
+                    <h3 class="subject-header">
+                        📚 English Resources
+                        <span class="subject-badge">Coming Soon</span>
+                    </h3>
+                    <span class="coming-soon">📅 New content arriving soon!</span>
+                </section>
+
+                <section class="subject-section">
+                    <h3 class="subject-header">
+                        🔬 Science Resources
+                        <span class="subject-badge">Coming Soon</span>
+                    </h3>
+                    <span class="coming-soon">📅 Exciting experiments on the way!</span>
                 </section>
             </div>
 
             <!-- JHS Tab -->
             <div id="jhs" class="tab-content">
-                <div class="grade-header" style="background: linear-gradient(135deg, #D97706 0%, #B45309 100%);">🎓 Junior High School</div>
-                <section class="subject-section fade-in-up">
-                    <h3 class="subject-header">📚 English Language</h3>
-                    <div class="video-grid">
-                        <div class="video-card">
-                            <div class="video-thumbnail" style="background: linear-gradient(45deg, #11998e, #38ef7d);"><i class="fas fa-pen-nib"></i></div>
-                            <div class="video-info"><p class="video-title">Essay Structure</p><p class="video-lesson">Composition</p></div>
-                        </div>
+                <div class="grade-header">🎓 JHS (Junior High School)</div>
+                
+                <div class="progress-section">
+                    <div class="progress-header">
+                        <span class="progress-title">📊 Your Progress</span>
+                        <span class="progress-percentage">30%</span>
                     </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" style="width: 30%;"></div>
+                    </div>
+                </div>
+
+                <section class="subject-section">
+                    <h3 class="subject-header">
+                        📊 Mathematics
+                        <span class="subject-badge">Coming Soon</span>
+                    </h3>
+                    <span class="coming-soon">📅 Advanced math lessons launching soon!</span>
+                </section>
+
+                <section class="subject-section">
+                    <h3 class="subject-header">
+                        📚 English Language
+                        <span class="subject-badge">Coming Soon</span>
+                    </h3>
+                    <span class="coming-soon">📅 Grammar and composition videos incoming!</span>
+                </section>
+
+                <section class="subject-section">
+                    <h3 class="subject-header">
+                        🔬 Integrated Science
+                        <span class="subject-badge">Coming Soon</span>
+                    </h3>
+                    <span class="coming-soon">📅 Lab experiments and theory videos coming!</span>
                 </section>
             </div>
 
             <!-- ICT Skills Tab -->
-            <div id="ict-skills" class="tab-content">
+            <div id="ict-skills" class="menu-page">
                 <div class="grade-header" style="background: linear-gradient(135deg, #6610f2 0%, #d63384 100%);">💻 Computer School</div>
                 
                 <section class="subject-section fade-in-up">
@@ -2778,7 +3133,13 @@
                             </div>
                             <p style="font-size: 0.9rem; line-height: 1.6; opacity: 0.95;">
                                 Wishing You Success in the Upcoming Exams<br>​Dear Students,</br>
-                                ​As your upcoming examinations draw near, we want to extend our very best wishes.
+                                ​As your upcoming examinations draw near, we want to extend our very best wishes. It is always a pleasure to see you all achieve flying colors in your academic pursuit, and we have full faith in your ability to perform exceptionally well.
+                                ​Key Reminders
+                                ​Please use this final period before the exams to ensure you have taken care of the following essential administrative items:
+                                ​Financial Clearance: Kindly settle any outstanding school fees and printing fees immediately. Only students who are financially cleared will be allowed to sit for the examinations.
+                                ​Health and Preparation: Please prepare adequately for all your subjects. More importantly, ensure you are of good health throughout this period. A well-rested mind and body are your best tools for success.
+                                ​We encourage you to manage your time wisely, study smart, and remain focused. We are here to support you.
+                                ​Good luck as the exams begin!
                             </p>
                         </div>
 
@@ -2795,7 +3156,59 @@
                                 We've just added 15 new educational videos across Mathematics, Science, and English subjects. Check them out in your respective grade sections!
                             </p>
                         </div>
+
+                        <!-- Announcement 3 -->
+                        <div style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); padding: 1.5rem; border-radius: 16px; color: white; box-shadow: 0 4px 16px rgba(250, 112, 154, 0.3);">
+                            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
+                                <span style="font-size: 2rem;">⏰</span>
+                                <div>
+                                    <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.25rem;">Extended Library Hours</h4>
+                                    <p style="font-size: 0.75rem; opacity: 0.9;">Posted 3 days ago</p>
+                                </div>
+                            </div>
+                            <p style="font-size: 0.9rem; line-height: 1.6; opacity: 0.95;">
+                                The digital library is now accessible 24/7! Access all educational resources anytime from home. Login credentials have been sent to parents via SMS.
+                            </p>
+                        </div>
+
+                        <!-- Announcement 4 -->
+                        <div style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%); padding: 1.5rem; border-radius: 16px; color: white; box-shadow: 0 4px 16px rgba(48, 207, 208, 0.3);">
+                            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
+                                <span style="font-size: 2rem;">🏆</span>
+                                <div>
+                                    <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.25rem;">Student Achievement Awards</h4>
+                                    <p style="font-size: 0.75rem; opacity: 0.9;">Posted 5 days ago</p>
+                                </div>
+                            </div>
+                            <p style="font-size: 0.9rem; line-height: 1.6; opacity: 0.95;">
+                                Congratulations to all students who achieved 100% completion on their learning modules! Awards ceremony scheduled for Friday at 2 PM in the school hall.
+                            </p>
+                        </div>
+
+                        <!-- Announcement 5 -->
+                        <div style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); padding: 1.5rem; border-radius: 16px; color: white; box-shadow: 0 4px 16px rgba(17, 153, 142, 0.3);">
+                            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
+                                <span style="font-size: 2rem;">💻</span>
+                                <div>
+                                    <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.25rem;">ICT Workshop Registration Open</h4>
+                                    <p style="font-size: 0.75rem; opacity: 0.9;">Posted 1 week ago</p>
+                                </div>
+                            </div>
+                            <p style="font-size: 0.9rem; line-height: 1.6; opacity: 0.95;">
+                                Free coding workshop for upper primary and JHS students starts next month. Limited spaces available. Register through the school office or contact your class teacher.
+                            </p>
+                        </div>
                     </div>
+                </section>
+
+                <!-- Important Notice Section -->
+                <section class="subject-section" style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(220, 38, 38, 0.1) 100%); border-left: 4px solid #ef4444;">
+                    <h3 class="subject-header" style="color: #dc2626;">
+                        ⚠️ Important Notice
+                    </h3>
+                    <p style="color: var(--text-dark); line-height: 1.6; font-weight: 500;">
+                        <strong>School Resumption:</strong> All students are expected to resume classes on Monday, January 20th, 2025. Please ensure all fees are settled before resumption. Contact the administration office for any inquiries.
+                    </p>
                 </section>
             </div>
 
@@ -2806,7 +3219,7 @@
                 <section class="subject-section">
                     <h3 class="subject-header">🎯 Practice Makes Perfect</h3>
                     <p style="color: var(--text-medium); line-height: 1.6; margin-bottom: 1.5rem;">
-                        Test your knowledge with our comprehensive collection of practice questions and interactive quizzes.
+                        Test your knowledge with our comprehensive collection of practice questions and interactive quizzes designed to help you excel in your examinations.
                     </p>
                     
                     <div style="display: grid; gap: 1rem;">
@@ -2825,6 +3238,47 @@
                                 <span>25 Minutes</span>
                             </div>
                         </a>
+                        
+                        <a href="https://stephen-daniels.github.io/PANIN.com/wexquiz.html" target="_blank" class="quiz-card">
+                            <h4 class="quiz-title">🔬 Science Quiz</h4>
+                            <div class="quiz-meta">
+                                <span>18 Questions</span>
+                                <span>28 Minutes</span>
+                            </div>
+                        </a>
+                    </div>
+                </section>
+
+                <!-- Student Leaderboard -->
+                <section class="subject-section">
+                    <h3 class="subject-header">🏆 Student Leaderboard</h3>
+                    <div class="leaderboard">
+                        <div class="leaderboard-header">Top Performers This Week</div>
+                        <div class="leaderboard-item">
+                            <div class="leaderboard-rank rank-1">1</div>
+                            <div class="leaderboard-name">Kwame Mensah</div>
+                            <div class="leaderboard-score">98%</div>
+                        </div>
+                        <div class="leaderboard-item">
+                            <div class="leaderboard-rank rank-2">2</div>
+                            <div class="leaderboard-name">Ama Osei</div>
+                            <div class="leaderboard-score">95%</div>
+                        </div>
+                        <div class="leaderboard-item">
+                            <div class="leaderboard-rank rank-3">3</div>
+                            <div class="leaderboard-name">Kofi Asante</div>
+                            <div class="leaderboard-score">92%</div>
+                        </div>
+                        <div class="leaderboard-item">
+                            <div class="leaderboard-rank rank-other">4</div>
+                            <div class="leaderboard-name">Esi Boateng</div>
+                            <div class="leaderboard-score">89%</div>
+                        </div>
+                        <div class="leaderboard-item">
+                            <div class="leaderboard-rank rank-other">5</div>
+                            <div class="leaderboard-name">Yaw Appiah</div>
+                            <div class="leaderboard-score">87%</div>
+                        </div>
                     </div>
                 </section>
             </div>
@@ -2836,35 +3290,85 @@
                 <section class="subject-section">
                     <h3 class="subject-header">🎯 Our Mission</h3>
                     <p style="color: var(--text-medium); line-height: 1.8; margin-bottom: 1.5rem;">
-                        Welcome to Wexford Edu Hub - a cutting-edge digital learning platform revolutionizing education through technology, innovation, and discipline.
-                    </p>
-                    
-                    <h3 class="subject-header">📞 Contact Us</h3>
+                        Welcome to Wexford Edu Hub - a cutting-edge digital learning platform revolutionizing education through technology, innovation, and discipline. We serve as a central communication and information hub for students, parents, and staff.
+                        <br>
+                    <h4>📞 Contact Us</h4>
                     <p>
                         Email: info@wexfordedu.com<br>
                         Phone: +233241204078<br>
                         Location: Abuakwa, Manyhia
+                    </p>
+                </br>       </p>
+                    
+                    <h3 class="subject-header">✨ What We Offer</h3>
+                    <div style="display: grid; gap: 1rem; margin-bottom: 1.5rem;">
+                        <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: var(--light-gray); border-radius: 12px;">
+                            <span style="font-size: 2rem;">📹</span>
+                            <div>
+                                <h4 style="font-weight: 700; margin-bottom: 0.25rem;">Video Library</h4>
+                                <p style="font-size: 0.875rem; color: var(--text-medium);">Comprehensive collection of educational videos</p>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: var(--light-gray); border-radius: 12px;">
+                            <span style="font-size: 2rem;">📝</span>
+                            <div>
+                                <h4 style="font-weight: 700; margin-bottom: 0.25rem;">Interactive Quizzes</h4>
+                                <p style="font-size: 0.875rem; color: var(--text-medium);">Test your knowledge with practice questions</p>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: var(--light-gray); border-radius: 12px;">
+                            <span style="font-size: 2rem;">📊</span>
+                            <div>
+                                <h4 style="font-weight: 700; margin-bottom: 0.25rem;">Progress Tracking</h4>
+                                <p style="font-size: 0.875rem; color: var(--text-medium);">Monitor your learning journey</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h3 class="subject-header">🏆 Our Values</h3>
+                    <p style="color: var(--text-medium); line-height: 1.8;">
+                        <strong>Innovation:</strong> Embracing technology for better learning<br>
+                        <strong>Technology:</strong> Leveraging digital tools for education<br>
+                        <strong>Discipline:</strong> Building character through consistent effort
                     </p>
                 </section>
             </div>
 
             <!-- Upload Page -->
             <div id="upload" class="menu-page">
-                <div class="grade-header" style="background: #ef4444;">📤 Upload Resources</div>
-                <form style="background: white; padding: 2rem; border-radius: 16px; display: flex; flex-direction: column; gap: 1rem;">
-                    <input type="text" placeholder="Video Title" style="padding: 1rem; border: 1px solid #ccc; border-radius: 8px;">
-                    <select style="padding: 1rem; border: 1px solid #ccc; border-radius: 8px;">
-                        <option>Select Level</option>
-                        <option>Lower Primary</option>
-                        <option>Upper Primary</option>
-                        <option>JHS</option>
-                        <option>ICT</option>
+                <div class="grade-header" style="background: linear-gradient(135deg, #ee0979 0%, #ff6a00 100%);">📤 Upload Video Resource</div>
+                
+                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 1.5rem; border-radius: 16px; margin-bottom: 1.5rem; color: white;">
+                    <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">🎬 Share Your Knowledge</h3>
+                    <p style="font-size: 0.875rem; opacity: 0.95;">Upload educational videos to help students learn and grow. Your contributions make a difference!</p>
+                </div>
+                
+                <form class="upload-form" onsubmit="handleUpload(event)">
+                    <input type="text" placeholder="📌 Video Title" required>
+                    <input type="url" placeholder="🔗 Video Link (URL)" required>
+                    <select required>
+                        <option value="">🎯 Select Grade Level...</option>
+                        <option>Lower Primary (1-3)</option>
+                        <option>Upper Primary (4-6)</option>
+                        <option>JHS (7-9)</option>
                     </select>
-                    <button style="padding: 1rem; background: var(--primary-green); color: white; border: none; border-radius: 8px; font-weight: bold;">Upload Content</button>
+                    <select required>
+                        <option value="">📚 Select Subject...</option>
+                        <option>Mathematics</option>
+                        <option>English Language</option>
+                        <option>Science</option>
+                        <option>Social Studies</option>
+                        <option>ICT</option>
+                        <option>Creative Arts</option>
+                    </select>
+                    <textarea placeholder="📝 Video Description (Optional)" rows="3" style="resize: vertical;"></textarea>
+                    <button type="submit">🚀 Submit Video Link</button>
                 </form>
             </div>
 
-            <!-- ADMIN PANEL PAGE -->
+            <!-- NEW: ADMIN PANEL PAGE -->
             <div id="admin-panel" class="admin-panel">
                 <div class="admin-header">
                     <h1>Admin Dashboard</h1>
@@ -2917,29 +3421,86 @@
                         <span>System Settings</span>
                     </div>
                 </div>
+
+                <h2 class="admin-section-title">System Reports</h2>
+                <div class="admin-report">
+                    <div class="admin-report-header">
+                        <div class="admin-report-title">Daily Active Users</div>
+                        <div class="admin-report-value">428</div>
+                    </div>
+                    <div style="height:8px; background:#e0e0e0; border-radius:4px; overflow:hidden;">
+                        <div style="width:88%; height:100%; background:linear-gradient(90deg,#0B8F4A,#05A854);"></div>
+                    </div>
+                </div>
+                <div class="admin-report">
+                    <div class="admin-report-header">
+                        <div class="admin-report-title">Storage Used</div>
+                        <div class="admin-report-value">42.8 GB</div>
+                    </div>
+                    <div style="height:8px; background:#e0e0e0; border-radius:4px; overflow:hidden;">
+                        <div style="width:71%; height:100%; background:linear-gradient(90deg,#f59e0b,#f97316);"></div>
+                    </div>
+                </div>
+
+                <h2 class="admin-section-title">Recent Activity</h2>
+                <div class="admin-activity">Teacher Stephen uploaded 5 new videos</div>
+                <div class="admin-activity">Parent portal login spike detected (+32%)</div>
+                <div class="admin-activity">System backup completed successfully</div>
+                <div class="admin-activity">New announcement posted by Admin</div>
+                <div class="admin-activity">12 pending content approvals</div>
+                
+                <!-- Admin Modal -->
+                <div id="admin-modal" class="admin-modal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 1000; justify-content: center; align-items: center;">
+                    <div style="background: white; padding: 2rem; border-radius: 20px; max-width: 400px; width: 90%;">
+                        <h3 id="admin-modal-title" style="margin-bottom: 1rem;"></h3>
+                        <div id="admin-modal-content"></div>
+                        <button onclick="closeAdminModal()" style="margin-top: 1rem; padding: 0.5rem 1rem; background: #0B8F4A; color: white; border: none; border-radius: 8px; cursor: pointer;">Close</button>
+                    </div>
+                </div>
             </div>
+            <!-- End Admin Panel -->
         </main>
+        
+        <!-- Footer -->
+        <footer>
+            <div style="margin-bottom: 0.5rem;">
+                <strong style="color: var(--primary-green);">Wexford Edu Hub</strong> - Empowering Education Through Technology
+            </div>
+            <div style="font-size: 0.75rem;">
+                © 2025 PANIN SARFO — Designed with ❤️ for excellence in education
+            </div>
+        </footer>
+    </div>
 
         <!-- Bottom Navigation -->
         <nav>
-            <button id="btn-dashboard" class="tab-button active" onclick="showPage('dashboard')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><path d="M9 22V12h6v10"/></svg>
-                <span>Home</span>
-            </button>
-            <button id="btn-lower-primary" class="tab-button" onclick="switchTab('lower-primary')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
-                <span>Lower</span>
-            </button>
-            <button id="btn-upper-primary" class="tab-button" onclick="switchTab('upper-primary')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-                <span>Upper</span>
-            </button>
-            <button id="btn-jhs" class="tab-button" onclick="switchTab('jhs')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
-                <span>JHS</span>
-            </button>
+            <div class="nav-buttons">
+                <button id="btn-dashboard" class="tab-button" onclick="showPage('dashboard')">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 3v18h18"/><path d="M18 17l-3-3-4 4-5-5-3 3"/>
+                    </svg>
+                    <span>Home</span>
+                </button>
+                <button id="btn-lower-primary" class="tab-button active" onclick="switchTab('lower-primary')">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 3v18h18"/><path d="M18 17l-3-3-4 4-5-5-3 3"/>
+                    </svg>
+                    <span>Lwr Primary</span>
+                </button>
+                <button id="btn-upper-primary" class="tab-button" onclick="switchTab('upper-primary')">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h16a2 2 0 012 2v14z"/>
+                    </svg>
+                    <span>Upr Primary</span>
+                </button>
+                <button id="btn-jhs" class="tab-button" onclick="switchTab('jhs')">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
+                    </svg>
+                    <span>JHS</span>
+                </button>
+            </div>
         </nav>
-    </div>
 
     <!-- Install Button (PWA) -->
     <button id="install-btn">Install Wexford App</button>
@@ -2992,23 +3553,7 @@
             setTimeout(() => {
                 loader.style.display = 'none';
             }, 500);
-            
-            // Initialize particles
-            createParticles();
         });
-
-        // Create particles
-        function createParticles() {
-            const pContainer = document.getElementById('particlesContainer');
-            for(let i=0; i<20; i++) {
-                let p = document.createElement('div');
-                p.className = 'particle';
-                p.style.left = Math.random()*100 + '%';
-                p.style.width = p.style.height = (Math.random()*20+5)+'px';
-                p.style.animationDuration = (Math.random()*20+10)+'s';
-                pContainer.appendChild(p);
-            }
-        }
 
         // Scroll to Top Button
         const scrollTopBtn = document.getElementById('scrollTopBtn');
@@ -3129,8 +3674,7 @@
 
         // Gallery Slideshow Variables
         let currentGallerySlide = 0;
-        const gallerySlides = document.querySelectorAll('.gallery-slide');
-        const totalGallerySlides = gallerySlides.length;
+        const totalGallerySlides = 15;
 
         // Gallery Slideshow Functions
         function showGallerySlide(index) {
@@ -3181,7 +3725,7 @@
         let quoteSlideInterval;
 
         function showQuoteSlide(index) {
-            const slides = document.querySelectorAll('.banner-slide');
+            const slides = document.querySelectorAll('.banner-slide.text-slide');
             slides.forEach((slide, i) => {
                 slide.classList.remove('active');
                 if (i === index) {
@@ -3212,9 +3756,61 @@
         }
         setInterval(updateDateTime, 60000); updateDateTime();
 
+        // Calculate Time Ago
+        function getTimeAgo(dateString) {
+            const postDate = new Date(dateString);
+            const now = new Date();
+            const diffMs = now - postDate;
+            const diffMins = Math.floor(diffMs / 60000);
+            const diffHours = Math.floor(diffMs / 3600000);
+            const diffDays = Math.floor(diffMs / 86400000);
+            const diffWeeks = Math.floor(diffMs / 604800000);
+
+            if (diffMins < 1) return 'Just now';
+            if (diffMins < 60) return `${diffMins} minute${diffMins > 1 ? 's' : ''} ago`;
+            if (diffHours < 24) return `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`;
+            if (diffDays < 7) return `${diffDays} day${diffDays > 1 ? 's' : ''} ago`;
+            if (diffWeeks < 4) return `${diffWeeks} week${diffWeeks > 1 ? 's' : ''} ago`;
+            
+            return postDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        }
+
+        // Update All Announcement Times
+        function updateAnnouncementTimes() {
+            const announcementTimes = document.querySelectorAll('.announcement-time');
+            announcementTimes.forEach(element => {
+                const dateString = element.getAttribute('data-date');
+                if (dateString) {
+                    element.textContent = 'Posted ' + getTimeAgo(dateString);
+                }
+            });
+        }
+
+        // Banner Slideshow
+        let currentSlide = 0;
+        const totalSlides = 7;
+
+        function showSlide(index) {
+            const slides = document.querySelectorAll('.banner-slide');
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active');
+                if (i === index) {
+                    slide.classList.add('active');
+                }
+            });
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            showSlide(currentSlide);
+        }
+
+        // Auto-advance banner every 10 seconds
+        setInterval(nextSlide, 5000);
+
         // Navigation
         function showPage(pageId) {
-            document.querySelectorAll('.menu-page, .tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.menu-page, .tab-content, .admin-panel').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.tab-button').forEach(el => el.classList.remove('active'));
             
             const page = document.getElementById(pageId);
@@ -3256,6 +3852,32 @@
             if (event.key === 'Enter' && query) {
                 performSearch();
             }
+        }
+
+        // Handle Upload Form
+        function handleUpload(event) {
+            event.preventDefault();
+            const button = event.target.querySelector('button');
+            const originalText = button.innerHTML;
+            button.innerHTML = '✅ Uploaded Successfully!';
+            button.style.background = 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)';
+            
+            setTimeout(() => {
+                button.innerHTML = originalText;
+                button.style.background = 'linear-gradient(135deg, #0B8F4A 0%, #05A854 100%)';
+                event.target.reset();
+                alert('🎉 Video uploaded successfully!\n\nIn production, this would save to the database.');
+            }, 2000);
+        }
+
+        // Start Quiz Function - Now opens the quiz platform
+        function startQuiz(subject) {
+            window.open('https://stephen-daniels.github.io/PANIN.com/wexquiz.html', '_blank');
+        }
+
+        // Play Video Function
+        function playVideo(videoSrc) {
+            alert('Playing video: ' + videoSrc + '\n\nIn production, this would open the video player.');
         }
 
         // === CHAT SYSTEM ===
@@ -3432,7 +4054,7 @@
                         Welcome to Wexford Support! How can we help you today?
                     </div>
                     <div class="message developer">
-                        <div class="message-sender">Developer</div>
+                        <div class="message-sender">PANIN</div>
                         Hello! I'm Panin, I'm here to assist you. Feel free to ask any questions about the platform.
                         <div class="message-time">Just now</div>
                     </div>
@@ -3561,30 +4183,15 @@
             document.getElementById('admin-modal').style.display = 'none';
         }
 
-        // Create admin modal element if it doesn't exist
-        if (!document.getElementById('admin-modal')) {
-            const adminModal = document.createElement('div');
-            adminModal.id = 'admin-modal';
-            adminModal.className = 'admin-modal';
-            adminModal.innerHTML = `
-                <div style="background: white; padding: 2rem; border-radius: 20px; max-width: 400px; width: 90%;">
-                    <h3 id="admin-modal-title" style="margin-bottom: 1rem;"></h3>
-                    <div id="admin-modal-content"></div>
-                    <button onclick="closeAdminModal()" style="margin-top: 1rem; padding: 0.5rem 1rem; background: #0B8F4A; color: white; border: none; border-radius: 8px; cursor: pointer;">Close</button>
-                </div>
-            `;
-            adminModal.style.cssText = 'display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 1000; justify-content: center; align-items: center;';
-            document.body.appendChild(adminModal);
-        }
-
         // PWA offline check
         window.addEventListener('offline', () => document.getElementById('offlineStatus').style.display='block');
         window.addEventListener('online', () => document.getElementById('offlineStatus').style.display='none');
 
         // Initialize everything when page loads
         window.onload = () => {
-            showPage('dashboard');
+            switchTab('lower-primary');
             updateDateTime();
+            updateAnnouncementTimes();
             updateOnlineStatus();
             initChat();
             
@@ -3594,6 +4201,9 @@
             
             // Update date/time every minute
             setInterval(updateDateTime, 60000);
+            
+            // Update announcement times every minute
+            setInterval(updateAnnouncementTimes, 60000);
             
             // Auto-advance quote slideshow
             startQuoteSlideshow();
