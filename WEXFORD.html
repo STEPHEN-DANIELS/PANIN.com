@@ -19,7 +19,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@300;400;500;600&family=Poppins:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
 
-    <!-- External Libraries from first code -->
+    <!-- External Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
@@ -28,12 +28,12 @@
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;700;800&display=swap');
 
         :root {
-            /* Enhanced Variables from first code */
-            --primary-green: #0B8F4A; /* Wexford Green */
+            /* Enhanced Variables */
+            --primary-green: #0B8F4A;
             --primary-dark: #076838;
             --primary-light: #E8F5EE;
-            --secondary: #003366; /* Dark Blue from first code */
-            --accent: #FF6B00; /* Orange from first code */
+            --secondary: #003366;
+            --accent: #FF6B00;
             --white: #FFFFFF;
             --light-gray: #F8FAFC;
             --border-gray: #E2E8F0;
@@ -75,7 +75,7 @@
             overflow-x: hidden;
         }
 
-        /* Loading Spinner from first code */
+        /* Loading Spinner */
         .loader-container {
             position: fixed;
             top: 0;
@@ -117,7 +117,7 @@
             font-size: 0.9rem;
         }
 
-        /* Floating Particles from Third Code */
+        /* Floating Particles */
         .particles {
             position: fixed;
             top: 0;
@@ -171,7 +171,7 @@
             background: var(--primary-green);
         }
 
-        /* Scroll to Top Button from first code */
+        /* Scroll to Top Button */
         .scroll-top {
             position: fixed;
             bottom: 30px;
@@ -206,7 +206,7 @@
             height: 24px;
         }
 
-        /* Search Modal from first code - enhanced */
+        /* Search Modal */
         .search-modal {
             display: none;
             position: fixed;
@@ -285,7 +285,7 @@
             font-family: 'Poppins', sans-serif;
         }
 
-        /* Compatibility Warning from first code */
+        /* Compatibility Warning */
         .compat-warning {
             background: #fef3c7;
             border-left: 4px solid #f59e0b;
@@ -306,7 +306,7 @@
             display: block;
         }
 
-        /* Print Styles from first code */
+        /* Print Styles */
         @media print {
             body * {
                 visibility: hidden;
@@ -853,6 +853,55 @@
             z-index: 1;
         }
 
+        /* Dashboard Features from first code */
+        .dashboard-features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        .dashboard-feature {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+        .dashboard-feature:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.15);
+            border-color: var(--primary-green);
+        }
+        .dashboard-feature i {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+            padding: 12px;
+            border-radius: 12px;
+        }
+        
+        /* Icon Themes from first code */
+        .feat-lower i { background: #E8F5EE; color: #0B8F4A; }
+        .feat-upper i { background: #E0F2FE; color: #0284C7; }
+        .feat-jhs i { background: #FEF3C7; color: #D97706; }
+        .feat-report i { background: #F3E8FF; color: #9333EA; }
+        .feat-ict i { background: #EBE4FF; color: #6610f2; } /* New ICT Style from first code */
+
+        .dashboard-feature h3 {
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+            color: var(--text-dark);
+            font-weight: 700;
+        }
+        .dashboard-feature p {
+            font-size: 0.7rem;
+            color: var(--text-medium);
+            line-height: 1.4;
+        }
+
         /* Enhanced Grade Header */
         .grade-header {
             background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
@@ -1167,7 +1216,53 @@
             animation: pulse 2s ease infinite;
         }
 
-        /* Enhanced Side Menu - Updated with new features from first code */
+        /* Social Media Section from first code */
+        .social-connect {
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.5);
+        }
+        .social-connect h4 {
+            color: var(--text-dark);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.8rem;
+        }
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+        .social-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            text-decoration: none;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        }
+        .social-icon:hover {
+            transform: scale(1.15) rotate(5deg);
+        }
+        
+        .bg-instagram { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); }
+        .bg-twitter { background: #000000; }
+        .bg-facebook { background: #1877F2; }
+        .bg-whatsapp { background: #25D366; }
+
+        /* Enhanced Side Menu */
         .menu-overlay {
             position: fixed;
             top: 0;
@@ -1312,7 +1407,7 @@
             line-height: 1.6;
         }
 
-        /* Enhanced Bottom Navigation */
+        /* Bottom Navigation from first code */
         nav {
             position: fixed;
             bottom: 0;
@@ -1320,72 +1415,39 @@
             transform: translateX(-50%);
             width: 100%;
             max-width: 480px;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
             border-top: 1px solid var(--border-gray);
-            box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.12);
-            z-index: 100;
-        }
-
-        .nav-buttons {
+            padding: 0.5rem;
             display: flex;
             justify-content: space-around;
-            padding: 0.75rem 0.5rem;
+            z-index: 100;
+            border-radius: 20px 20px 0 0;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.05);
         }
-
         .tab-button {
-            flex: 1;
+            background: none;
+            border: none;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            padding: 0.75rem;
-            border: none;
-            background: transparent;
-            color: var(--text-light);
-            cursor: pointer;
             font-size: 0.7rem;
-            font-weight: 700;
-            border-radius: 14px;
-            transition: all 0.3s ease;
-            font-family: 'Poppins', sans-serif;
-            position: relative;
-            overflow: hidden;
+            color: var(--text-light);
+            font-weight: 600;
+            padding: 0.5rem;
+            cursor: pointer;
+            flex: 1;
+            border-radius: 12px;
+            transition: all 0.3s;
         }
-
-        .tab-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(11, 143, 74, 0.1) 0%, rgba(5, 168, 84, 0.1) 100%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .tab-button svg {
-            margin-bottom: 0.375rem;
-            transition: all 0.3s ease;
-        }
-
         .tab-button.active {
             color: var(--primary-green);
-            background: var(--primary-light);
+            transform: translateY(-5px);
         }
-
-        .tab-button.active::before {
-            opacity: 1;
-        }
-
-        .tab-button.active svg {
-            transform: scale(1.15);
-        }
-
-        .tab-button:hover:not(.active) {
-            color: var(--text-medium);
-            background: var(--light-gray);
+        .tab-button svg {
+            width: 24px;
+            height: 24px;
+            margin-bottom: 4px;
         }
 
         /* Enhanced Upload Form */
@@ -1516,7 +1578,14 @@
             }
         }
 
-        /* New Features from first code: Interactive Quiz Cards */
+        /* Animation Classes from first code */
+        .fade-in-up { animation: fadeInUp 0.6s ease-out forwards; opacity: 0; transform: translateY(20px); }
+        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+
+        /* Utilities from first code */
+        .hidden { display: none !important; }
+
+        /* New Features: Interactive Quiz Cards */
         .quiz-card {
             background: var(--white);
             border-radius: 16px;
@@ -1851,48 +1920,6 @@
             color: var(--text-medium);
         }
 
-        /* Dashboard Page from first code */
-        .dashboard-page {
-            padding: 1.5rem 1.25rem 120px;
-            background: var(--light-gray);
-        }
-
-        .dashboard-features {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-            margin: 2rem 0;
-        }
-
-        .dashboard-feature {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 16px;
-            text-align: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .dashboard-feature:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 32px rgba(0,0,0,0.15);
-        }
-
-        .dashboard-feature i {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--primary-green), var(--primary-dark));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .dashboard-feature h3 {
-            font-size: 1rem;
-            margin-bottom: 0.5rem;
-            color: var(--text-dark);
-        }
-
         /* PWA Install Button */
         #install-btn {
             position: fixed;
@@ -1935,7 +1962,7 @@
             font-family: 'Poppins', sans-serif;
         }
 
-        /* Notification from first code */
+        /* Notification */
         .notification {
             position: fixed;
             bottom: 20px;
@@ -1983,8 +2010,15 @@
     </style>
 </head>
 <body>
-   
-    <!-- Compatibility Warning from first code -->
+    <!-- Loading Spinner -->
+    <div id="loader" class="loader-container">
+        <div>
+            <span class="classic-loader"></span>
+            <div class="loader-text">Loading Wexford Digital Platform...</div>
+        </div>
+    </div>
+
+    <!-- Compatibility Warning -->
     <div id="compatWarning" class="compat-warning">
         <strong>⚠️ Browser Compatibility Notice:</strong> Some features may not be available in your browser.
     </div>
@@ -1994,7 +2028,7 @@
         ⚠️ You are currently offline. Some features may be limited.
     </div>
 
-    <!-- Floating Particles from Third Code -->
+    <!-- Floating Particles -->
     <div class="particles" id="particlesContainer"></div>
 
     <!-- Animated Background -->
@@ -2006,14 +2040,14 @@
         <div class="particle"></div>
     </div>
 
-    <!-- Scroll to Top Button from first code -->
+    <!-- Scroll to Top Button -->
     <button id="scrollTopBtn" class="scroll-top no-print" title="Back to top">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z" fill="currentColor"/>
         </svg>
     </button>
 
-    <!-- Notification from first code -->
+    <!-- Notification -->
     <div id="notification" class="notification">
         <div id="notificationMessage"></div>
     </div>
@@ -2055,23 +2089,7 @@
             </div>
         </div>
 
-        <!-- Stats Banner -->
-        <div class="stats-banner">
-            <div class="stat-item">
-                <span class="stat-number">150+</span>
-                <span class="stat-label">Videos</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number">12</span>
-                <span class="stat-label">Subjects</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number">500+</span>
-                <span class="stat-label">Students</span>
-            </div>
-        </div>
-
-        <!-- Side Menu - Updated with new features from first code -->
+        <!-- Side Menu - Updated with new features -->
         <div id="menu-overlay" class="menu-overlay" onclick="closeMenuOnOverlay(event)">
             <div class="side-menu">
                 <div class="menu-header">
@@ -2082,14 +2100,23 @@
                     <li><a href="#" onclick="showPage('dashboard'); toggleMenu()">
                         🏠 Dashboard
                     </a></li>
+                    <li><a href="#" onclick="switchTab('ict-skills'); toggleMenu()">
+                        <i class="fas fa-laptop"></i> ICT Skills
+                    </a></li>
                     <li><a href="#" onclick="showPage('report-card'); toggleMenu()">
                         📊 Report Card System
                     </a></li>
+                    <li><a href="#" onclick="showPage('upload'); toggleMenu()">
+                        <i class="fas fa-cloud-upload-alt"></i> Upload
+                    </a></li>
+                    <li><a href="https://stephen-daniels.github.io/PANIN.com/Staff.html" target="_blank">
+                        <i class="fas fa-users"></i> Staff
+                    </a></li>
+                    <li><a href="#" onclick="showPage('about'); toggleMenu()">
+                        <i class="fas fa-info-circle"></i> About
+                    </a></li>
                     <li><a href="#" onclick="showPage('announcements'); toggleMenu()">
                         📢 Announcements
-                    </a></li>
-                    <li><a href="https://stephen-daniels.github.io/PANIN.com/Staff.html" target="_blank" onclick="toggleMenu()">
-                        👥 Staff Directory
                     </a></li>
                     <li><a href="https://stephen-daniels.github.io/PANIN.com/Student.html" target="_blank" onclick="toggleMenu()">
                         👥 Student Profile
@@ -2103,17 +2130,11 @@
                     <li><a href="#" onclick="showPage('trial'); toggleMenu()">
                         📝 Trial Questions
                     </a></li>
-                    <li><a href="#" onclick="showPage('about'); toggleMenu()">
-                        ℹ️ About Us
-                    </a></li>
                     <li><a href="#" onclick="showPage('admin-panel'); toggleMenu()">
                         🛡️ Admin Panel
                     </a></li>
                     <li><a href="https://www.ck12.org/c/arithmetic/add-whole-numbers/?by=ck12&difficulty=all#all&noback=true" target="_blank" onclick="toggleMenu()">
                         🔗 External Resources
-                    </a></li>
-                    <li><a href="#" onclick="showPage('upload'); toggleMenu()">
-                        📤 Upload Content
                     </a></li>
                 </ul>
                 
@@ -2132,79 +2153,189 @@
         </div>
 
         <main>
-            <!-- Dashboard Page from first code -->
+            <!-- Dashboard Page -->
             <div id="dashboard" class="menu-page active">
-                <div class="welcome-banner">
+                <div class="welcome-banner fade-in-up">
                     <div class="datetime-display" id="datetime-display"></div>
-                    
-                    <div class="banner-slide text-slide active" id="slide-1">
-                        <div class="banner-content">
-                            <h2>Welcome to Wexford Digital Platform! 👋</h2>
-                            <p>Your all-in-one solution for academic management and learning</p>
-                        </div>
+                    <div class="banner-content">
+                        <h2>Welcome Back! 👋</h2>
+                        <p>Select your learning level below to access premium resources.</p>
                     </div>
                 </div>
 
-                <div class="dashboard-features">
-                    <div class="dashboard-feature" onclick="showPage('report-card')">
-                        <i class="fas fa-file-alt"></i>
-                        <h3>Digital Report Card</h3>
-                        <p>Generate and manage professional report cards</p>
+                <h3 style="margin-bottom:1rem; color:var(--text-dark); padding-left: 0.5rem; border-left: 4px solid var(--primary-green);">📚 Learning Categories</h3>
+                <div class="dashboard-features fade-in-up" style="animation-delay: 0.1s;">
+                    <div class="dashboard-feature feat-lower" onclick="switchTab('lower-primary')">
+                        <i class="fas fa-shapes"></i>
+                        <h3>Lower Primary</h3>
+                        <p>Grades 1 - 3</p>
                     </div>
-                    <div class="dashboard-feature" onclick="switchTab('lower-primary')">
+                    <div class="dashboard-feature feat-upper" onclick="switchTab('upper-primary')">
+                        <i class="fas fa-book-reader"></i>
+                        <h3>Upper Primary</h3>
+                        <p>Grades 4 - 6</p>
+                    </div>
+                    <div class="dashboard-feature feat-jhs" onclick="switchTab('jhs')">
                         <i class="fas fa-graduation-cap"></i>
-                        <h3>Learning Hub</h3>
-                        <p>Access premium educational resources</p>
+                        <h3>Junior High</h3>
+                        <p>JHS 1 - 3</p>
                     </div>
-                    <div class="dashboard-feature" onclick="showPage('trial')">
-                        <i class="fas fa-book"></i>
-                        <h3>Course Library</h3>
-                        <p>Browse educational courses</p>
-                    </div>
-                    <div class="dashboard-feature" onclick="showPage('admin-panel')">
-                        <i class="fas fa-cogs"></i>
-                        <h3>Admin Panel</h3>
-                        <p>System management tools</p>
+                    <div class="dashboard-feature feat-ict" onclick="switchTab('ict-skills')">
+                        <i class="fas fa-laptop-code"></i>
+                        <h3>ICT Skills</h3>
+                        <p>Word, Excel, PPT</p>
                     </div>
                 </div>
 
-                <div class="stats-banner" style="border-radius: 16px; margin: 2rem 0;">
-                    <div class="stat-item">
-                        <span class="stat-number">27+</span>
-                        <span class="stat-label">Students</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number">8</span>
-                        <span class="stat-label">Subjects</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number">300+</span>
-                        <span class="stat-label">Contacts</span>
+                <!-- School Gallery from first code -->
+                <div class="school-gallery fade-in-up" style="animation-delay: 0.2s;">
+                    <div class="gallery-slide active"><img src="Eva.jpg" alt="Campus"><div class="gallery-overlay"><h3>🏫 Beautiful Campus</h3></div></div>
+                    <div class="gallery-slide"><img src="bs2.jpg" alt="Lab"><div class="gallery-overlay"><h3>💻 ICT Lab</h3></div></div>
+                    <div class="gallery-slide"><img src="BS6.jpg" alt="Sports"><div class="gallery-overlay"><h3>⚽ Sports Day</h3></div></div>
+                    
+                    <!-- Gallery Navigation -->
+                    <button class="gallery-nav prev" onclick="changeGallerySlide(-1)">‹</button>
+                    <button class="gallery-nav next" onclick="changeGallerySlide(1)">›</button>
+                    
+                    <!-- Indicators -->
+                    <div class="gallery-indicators">
+                        <span class="gallery-indicator active" onclick="setGallerySlide(0)"></span>
+                        <span class="gallery-indicator" onclick="setGallerySlide(1)"></span>
+                        <span class="gallery-indicator" onclick="setGallerySlide(2)"></span>
                     </div>
                 </div>
 
-                <!-- Quick Actions -->
-                <div class="quick-actions">
-                    <div class="quick-action" onclick="switchTab('lower-primary')">
-                        <span class="quick-action-icon">🎨</span>
-                        <span class="quick-action-label">Primary</span>
-                    </div>
-                    <div class="quick-action" onclick="switchTab('jhs')">
-                        <span class="quick-action-icon">🎓</span>
-                        <span class="quick-action-label">JHS</span>
-                    </div>
-                    <div class="quick-action" onclick="showPage('trial')">
-                        <span class="quick-action-icon">📝</span>
-                        <span class="quick-action-label">Quizzes</span>
-                    </div>
-                    <div class="quick-action" onclick="showPage('upload')">
-                        <span class="quick-action-icon">📤</span>
-                        <span class="quick-action-label">Upload</span>
+                <!-- Stats Banner from first code -->
+                <div class="stats-banner fade-in-up" style="background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%); padding: 1.5rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; border-radius: 16px; margin: 2rem 0; color: white; text-align: center; animation-delay: 0.3s;">
+                    <div><span class="stat-number" style="font-size: 1.5rem; font-weight: 800;">150+</span><span class="stat-label">Lessons</span></div>
+                    <div><span class="stat-number" style="font-size: 1.5rem; font-weight: 800;">12</span><span class="stat-label">Subjects</span></div>
+                    <div><span class="stat-number" style="font-size: 1.5rem; font-weight: 800;">500+</span><span class="stat-label">Students</span></div>
+                </div>
+
+                <!-- Social Media Section from first code -->
+                <div class="social-connect fade-in-up">
+                    <h4>Connect With Wexford</h4>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon bg-instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon bg-twitter"><i class="fab fa-x-twitter"></i></a>
+                        <a href="#" class="social-icon bg-facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon bg-whatsapp"><i class="fab fa-whatsapp"></i></a>
                     </div>
                 </div>
             </div>
 
-            <!-- Report Card System Page -->
+            <!-- Lower Primary Tab from first code -->
+            <div id="lower-primary" class="tab-content">
+                <div class="grade-header">🎨 Lower Primary (Grades 1-3)</div>
+                <section class="subject-section fade-in-up">
+                    <h3 class="subject-header">📊 Maths Resources <span class="subject-badge">8 Videos</span></h3>
+                    <div class="video-grid">
+                        <a href="https://www.youtube.com/watch?v=11eckLmJEMw" class="video-card" target="_blank">
+                            <div class="video-thumbnail" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"><i class="fas fa-calculator"></i></div>
+                            <div class="video-info"><p class="video-title">Counting Shapes</p><p class="video-lesson">Lesson 1.2</p></div>
+                        </a>
+                        <a href="https://www.youtube.com/watch?v=NybHckSEQBI" class="video-card" target="_blank">
+                            <div class="video-thumbnail" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"><i class="fas fa-plus-circle"></i></div>
+                            <div class="video-info"><p class="video-title">Addition Basics</p><p class="video-lesson">Lesson 2.1</p></div>
+                        </a>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Upper Primary Tab from first code -->
+            <div id="upper-primary" class="tab-content">
+                <div class="grade-header" style="background: linear-gradient(135deg, #0284C7 0%, #2563EB 100%);">📖 Upper Primary (Grades 4-6)</div>
+                <section class="subject-section fade-in-up">
+                    <h3 class="subject-header">🔬 Integrated Science <span class="subject-badge">Active</span></h3>
+                    <div class="video-grid">
+                        <div class="video-card">
+                            <div class="video-thumbnail" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);"><i class="fas fa-leaf"></i></div>
+                            <div class="video-info"><p class="video-title">Photosynthesis</p><p class="video-lesson">Grade 5 Science</p></div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- JHS Tab from first code -->
+            <div id="jhs" class="tab-content">
+                <div class="grade-header" style="background: linear-gradient(135deg, #D97706 0%, #B45309 100%);">🎓 Junior High School</div>
+                <section class="subject-section fade-in-up">
+                    <h3 class="subject-header">📚 English Language</h3>
+                    <div class="video-grid">
+                        <div class="video-card">
+                            <div class="video-thumbnail" style="background: linear-gradient(45deg, #11998e, #38ef7d);"><i class="fas fa-pen-nib"></i></div>
+                            <div class="video-info"><p class="video-title">Essay Structure</p><p class="video-lesson">Composition</p></div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- ICT Skills Tab from first code -->
+            <div id="ict-skills" class="tab-content">
+                <div class="grade-header" style="background: linear-gradient(135deg, #6610f2 0%, #d63384 100%);">💻 Computer School</div>
+                
+                <section class="subject-section fade-in-up">
+                    <h3 class="subject-header" style="color:#2b579a;"><i class="fas fa-file-word"></i> Microsoft Word</h3>
+                    <div class="video-grid">
+                        <div class="video-card">
+                            <div class="video-thumbnail" style="background: #2b579a;"><i class="fas fa-file-word"></i></div>
+                            <div class="video-info">
+                                <p class="video-title">Intro to MS Word</p>
+                                <p class="video-lesson">Interface & Typing</p>
+                            </div>
+                        </div>
+                        <div class="video-card">
+                            <div class="video-thumbnail" style="background: #2b579a;"><i class="fas fa-paragraph"></i></div>
+                            <div class="video-info">
+                                <p class="video-title">Formatting Text</p>
+                                <p class="video-lesson">Fonts & Colors</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="subject-section fade-in-up" style="animation-delay: 0.1s;">
+                    <h3 class="subject-header" style="color:#d24726;"><i class="fas fa-file-powerpoint"></i> PowerPoint</h3>
+                    <div class="video-grid">
+                        <div class="video-card">
+                            <div class="video-thumbnail" style="background: #d24726;"><i class="fas fa-file-powerpoint"></i></div>
+                            <div class="video-info">
+                                <p class="video-title">Creating Slides</p>
+                                <p class="video-lesson">Basic Design</p>
+                            </div>
+                        </div>
+                        <div class="video-card">
+                            <div class="video-thumbnail" style="background: #d24726;"><i class="fas fa-magic"></i></div>
+                            <div class="video-info">
+                                <p class="video-title">Animations</p>
+                                <p class="video-lesson">Transitions & Effects</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="subject-section fade-in-up" style="animation-delay: 0.2s;">
+                    <h3 class="subject-header" style="color:#217346;"><i class="fas fa-file-excel"></i> Microsoft Excel</h3>
+                    <div class="video-grid">
+                        <div class="video-card">
+                            <div class="video-thumbnail" style="background: #217346;"><i class="fas fa-table"></i></div>
+                            <div class="video-info">
+                                <p class="video-title">Cells & Rows</p>
+                                <p class="video-lesson">Getting Started</p>
+                            </div>
+                        </div>
+                        <div class="video-card">
+                            <div class="video-thumbnail" style="background: #217346;"><i class="fas fa-calculator"></i></div>
+                            <div class="video-info">
+                                <p class="video-title">Basic Formulas</p>
+                                <p class="video-lesson">Sum & Average</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Report Card System Page from second code -->
             <div id="report-card" class="menu-page">
                 <div class="grade-header" style="background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);">
                     📊 Report Card System
@@ -2252,268 +2383,7 @@
                 </div>
             </div>
 
-            <!-- School Gallery Slideshow -->
-            <div class="school-gallery">
-                <!-- Gallery Slides... (keeping original gallery content) -->
-                <div class="gallery-slide active" id="gallery-1">
-                    <img src="Eva.jpg" alt="School Campus">
-                    <div class="gallery-overlay">
-                        <div class="gallery-caption">🏫 Our Beautiful Campus</div>
-                        <div class="gallery-description">Modern facilities for quality education</div>
-                    </div>
-                </div>
-
-                <div class="gallery-slide" id="gallery-2">
-                    <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1200&q=80" alt="Students Learning">
-                    <div class="gallery-overlay">
-                        <div class="gallery-caption">📚 Interactive Classrooms</div>
-                        <div class="gallery-description">Engaging learning experiences for all students</div>
-                    </div>
-                </div>
-
-                <div class="gallery-slide" id="gallery-3">
-                    <img src="bs2.jpg" alt="Computer Lab">
-                    <div class="gallery-overlay">
-                        <div class="gallery-caption">Sports</div>
-                        <div class="gallery-description">State-of-the-art technology for digital learning</div>
-                    </div>
-                </div>
-
-                <div class="gallery-slide" id="gallery-4">
-                    <img src="https://stephen-daniels.github.io/PANIN.com/PICS.html/pics/IMG-20251114-WA0056.jpg" alt="Library">
-                    <div class="gallery-overlay">
-                        <div class="gallery-caption">📖 Staff</div>
-                        <div class="gallery-description">Extensive collection of books and resources</div>
-                    </div>
-                </div>
-
-                <div class="gallery-slide" id="gallery-5">
-                    <img src="BS6.jpg" alt="Sports Field">
-                    <div class="gallery-overlay">
-                        <div class="gallery-caption">⚽ Sports Facilities</div>
-                        <div class="gallery-description">Promoting physical fitness and teamwork</div>
-                    </div>
-                </div>
-                
-                <div class="gallery-slide" id="gallery-6">
-                    <img src="Wor.jpg" alt="Sports Field">
-                    <div class="gallery-overlay">
-                        <div class="gallery-caption">⚽ Moment of worship</div>
-                        <div class="gallery-description">When our praises go up, His presence comes down</div>
-                    </div>
-                </div>
-                
-                <div class="gallery-slide" id="gallery-7">
-                    <img src="quiz.jpg" alt="Sports Field">
-                    <div class="gallery-overlay">
-                        <div class="gallery-caption">⚽Inter class quiz</div>
-                        <div class="gallery-description">Promoting physical fitness and teamwork</div>
-                    </div>
-                </div>
-
-                <!-- Navigation Buttons -->
-                <button class="gallery-nav prev" onclick="changeGallerySlide(-1)">‹</button>
-                <button class="gallery-nav next" onclick="changeGallerySlide(1)">›</button>
-
-                <!-- Indicators -->
-                <div class="gallery-indicators">
-                    <span class="gallery-indicator active" onclick="setGallerySlide(0)"></span>
-                    <span class="gallery-indicator" onclick="setGallerySlide(1)"></span>
-                    <span class="gallery-indicator" onclick="setGallerySlide(2)"></span>
-                    <span class="gallery-indicator" onclick="setGallerySlide(3)"></span>
-                    <span class="gallery-indicator" onclick="setGallerySlide(4)"></span>
-                    <span class="gallery-indicator" onclick="setGallerySlide(5)"></span>
-                    <span class="gallery-indicator" onclick="setGallerySlide(6)"></span>
-                </div>
-            </div>
-
-            <!-- Lower Primary Tab -->
-            <div id="lower-primary" class="tab-content">
-                <div class="grade-header">🎨 Lower Primary (Grades 1-3)</div>
-
-                <!-- Progress Section -->
-                <div class="progress-section">
-                    <div class="progress-header">
-                        <span class="progress-title">📊 Your Progress</span>
-                        <span class="progress-percentage">65%</span>
-                    </div>
-                    <div class="progress-bar-container">
-                        <div class="progress-bar-fill" style="width: 65%;"></div>
-                    </div>
-                    <div class="achievements">
-                        <div class="achievement-badge">
-                            <span class="achievement-icon">🏆</span>
-                            <span class="achievement-label">Champion</span>
-                        </div>
-                        <div class="achievement-badge">
-                            <span class="achievement-icon">⭐</span>
-                            <span class="achievement-label">Star</span>
-                        </div>
-                        <div class="achievement-badge">
-                            <span class="achievement-icon">🎯</span>
-                            <span class="achievement-label">Achiever</span>
-                        </div>
-                        <div class="achievement-badge">
-                            <span class="achievement-icon">🔥</span>
-                            <span class="achievement-label">Streak</span>
-                        </div>
-                    </div>
-                </div>
-
-                <section class="subject-section">
-                    <h3 class="subject-header">
-                        📊 Maths Resources
-                        <span class="subject-badge">8 Videos</span>
-                    </h3>
-                    <div class="video-grid">
-                        <a href="https://www.youtube.com/watch?v=11eckLmJEMw&list=RD11eckLmJEMw&start_radio=1" class="video-card" target="_blank">
-                            <div class="video-thumbnail" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
-                            <div class="video-info">
-                                <p class="video-title">Counting Shapes</p>
-                                <p class="video-lesson">Lesson 1.2</p>
-                            </div>
-                        </a>
-                        <a href="https://www.youtube.com/watch?v=NybHckSEQBI" class="video-card" target="_blank">
-                            <div class="video-thumbnail" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"></div>
-                            <div class="video-info">
-                                <p class="video-title">Addition Basics</p>
-                                <p class="video-lesson">Lesson 2.1</p>
-                            </div>
-                        </a>
-                    </div>
-                </section>
-
-                <section class="subject-section">
-                    <h3 class="subject-header">
-                        📚 English Resources
-                        <span class="subject-badge">5 Videos</span>
-                    </h3>
-                    <div class="video-grid">
-                        <a href="https://www.youtube.com/watch?v=-4CL3Xn-ycw&list=PL0HMo9RIVkoxyScPHjfleUL7q8Z3hOxqn" class="video-card" target="_blank">
-                            <div class="video-thumbnail" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);"></div>
-                            <div class="video-info">
-                                <p class="video-title">Phonics: 'Sh' Sound</p>
-                                <p class="video-lesson">Unit 3</p>
-                            </div>
-                        </a>
-                    </div>
-                </section>
-
-                <section class="subject-section">
-                    <h3 class="subject-header">
-                        🔬 Science Resources
-                        <span class="subject-badge">6 Videos</span>
-                    </h3>
-                    <div class="video-grid">
-                        <a href="https://www.youtube.com/watch?v=AVC-426M6V0" class="video-card" target="_blank">
-                            <div class="video-thumbnail" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);"></div>
-                            <div class="video-info">
-                                <p class="video-title">The Water Cycle</p>
-                                <p class="video-lesson">Module 4</p>
-                            </div>
-                        </a>
-                    </div>
-                </section>
-            </div>
-
-            <!-- Upper Primary Tab -->
-            <div id="upper-primary" class="tab-content">
-                <div class="grade-header">📖 Upper Primary (Grades 4-6)</div>
-                
-                <div class="progress-section">
-                    <div class="progress-header">
-                        <span class="progress-title">📊 Your Progress</span>
-                        <span class="progress-percentage">45%</span>
-                    </div>
-                    <div class="progress-bar-container">
-                        <div class="progress-bar-fill" style="width: 45%;"></div>
-                    </div>
-                </div>
-
-                <section class="subject-section">
-                    <h3 class="subject-header">
-                        📊 Maths Resources
-                        <span class="subject-badge">12 Videos</span>
-                    </h3>
-                    <div class="video-grid">
-                        <div class="video-card" onclick="playVideo('new.mp4')">
-                            <video controls style="width: 100%; height: 120px; object-fit: cover; border-radius: 0;">
-                                <source src="new.mp4" type="video/mp4">
-                            </video>
-                            <div class="video-info">
-                                <p class="video-title">Math Fundamentals</p>
-                                <p class="video-lesson">Lesson 5.1</p>
-                            </div>
-                        </div>
-                        <div class="video-card" onclick="playVideo('multi-base.mp4')">
-                            <video controls style="width: 100%; height: 120px; object-fit: cover; border-radius: 0;">
-                                <source src="multi-base.mp4" type="video/mp4">
-                            </video>
-                            <div class="video-info">
-                                <p class="video-title">Multi-Base Numbers</p>
-                                <p class="video-lesson">Lesson 5.2</p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <section class="subject-section">
-                    <h3 class="subject-header">
-                        📚 English Resources
-                        <span class="subject-badge">Coming Soon</span>
-                    </h3>
-                    <span class="coming-soon">📅 New content arriving soon!</span>
-                </section>
-
-                <section class="subject-section">
-                    <h3 class="subject-header">
-                        🔬 Science Resources
-                        <span class="subject-badge">Coming Soon</span>
-                    </h3>
-                    <span class="coming-soon">📅 Exciting experiments on the way!</span>
-                </section>
-            </div>
-
-            <!-- JHS Tab -->
-            <div id="jhs" class="tab-content">
-                <div class="grade-header">🎓 JHS (Junior High School)</div>
-                
-                <div class="progress-section">
-                    <div class="progress-header">
-                        <span class="progress-title">📊 Your Progress</span>
-                        <span class="progress-percentage">30%</span>
-                    </div>
-                    <div class="progress-bar-container">
-                        <div class="progress-bar-fill" style="width: 30%;"></div>
-                    </div>
-                </div>
-
-                <section class="subject-section">
-                    <h3 class="subject-header">
-                        📊 Mathematics
-                        <span class="subject-badge">Coming Soon</span>
-                    </h3>
-                    <span class="coming-soon">📅 Advanced math lessons launching soon!</span>
-                </section>
-
-                <section class="subject-section">
-                    <h3 class="subject-header">
-                        📚 English Language
-                        <span class="subject-badge">Coming Soon</span>
-                    </h3>
-                    <span class="coming-soon">📅 Grammar and composition videos incoming!</span>
-                </section>
-
-                <section class="subject-section">
-                    <h3 class="subject-header">
-                        🔬 Integrated Science
-                        <span class="subject-badge">Coming Soon</span>
-                    </h3>
-                    <span class="coming-soon">📅 Lab experiments and theory videos coming!</span>
-                </section>
-            </div>
-
-            <!-- Announcements Page -->
+            <!-- Announcements Page from second code -->
             <div id="announcements" class="menu-page">
                 <div class="grade-header" style="background: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);">📢 School Announcements</div>
                 
@@ -2555,63 +2425,11 @@
                                 We've just added 15 new educational videos across Mathematics, Science, and English subjects. Check them out in your respective grade sections!
                             </p>
                         </div>
-                      
-                        <!-- Announcement 3 -->
-                        <div style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); padding: 1.5rem; border-radius: 16px; color: white; box-shadow: 0 4px 16px rgba(250, 112, 154, 0.3);">
-                            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
-                                <span style="font-size: 2rem;">⏰</span>
-                                <div>
-                                    <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.25rem;">Extended Library Hours</h4>
-                                    <p style="font-size: 0.75rem; opacity: 0.9;">Posted 3 days ago</p>
-                                </div>
-                            </div>
-                            <p style="font-size: 0.9rem; line-height: 1.6; opacity: 0.95;">
-                                The digital library is now accessible 24/7! Access all educational resources anytime from home. Login credentials have been sent to parents via SMS.
-                            </p>
-                        </div>
-
-                        <!-- Announcement 4 -->
-                        <div style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%); padding: 1.5rem; border-radius: 16px; color: white; box-shadow: 0 4px 16px rgba(48, 207, 208, 0.3);">
-                            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
-                                <span style="font-size: 2rem;">🏆</span>
-                                <div>
-                                    <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.25rem;">Student Achievement Awards</h4>
-                                    <p style="font-size: 0.75rem; opacity: 0.9;">Posted 5 days ago</p>
-                                </div>
-                            </div>
-                            <p style="font-size: 0.9rem; line-height: 1.6; opacity: 0.95;">
-                                Congratulations to all students who achieved 100% completion on their learning modules! Awards ceremony scheduled for Friday at 2 PM in the school hall.
-                            </p>
-                        </div>
-
-                        <!-- Announcement 5 -->
-                        <div style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); padding: 1.5rem; border-radius: 16px; color: white; box-shadow: 0 4px 16px rgba(17, 153, 142, 0.3);">
-                            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
-                                <span style="font-size: 2rem;">💻</span>
-                                <div>
-                                    <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.25rem;">ICT Workshop Registration Open</h4>
-                                    <p style="font-size: 0.75rem; opacity: 0.9;">Posted 1 week ago</p>
-                                </div>
-                            </div>
-                            <p style="font-size: 0.9rem; line-height: 1.6; opacity: 0.95;">
-                                Free coding workshop for upper primary and JHS students starts next month. Limited spaces available. Register through the school office or contact your class teacher.
-                            </p>
-                        </div>
                     </div>
-                </section>
-
-                <!-- Important Notice Section -->
-                <section class="subject-section" style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(220, 38, 38, 0.1) 100%); border-left: 4px solid #ef4444;">
-                    <h3 class="subject-header" style="color: #dc2626;">
-                        ⚠️ Important Notice
-                    </h3>
-                    <p style="color: var(--text-dark); line-height: 1.6; font-weight: 500;">
-                        <strong>School Resumption:</strong> All students are expected to resume classes on Monday, January 20th, 2025. Please ensure all fees are settled before resumption. Contact the administration office for any inquiries.
-                    </p>
                 </section>
             </div>
 
-            <!-- Trial Questions Page -->
+            <!-- Trial Questions Page from second code -->
             <div id="trial" class="menu-page">
                 <div class="grade-header" style="background: linear-gradient(135deg, #3B82F6 0%, #8B5CF6 100%);">📝 Trial Questions & Quizzes</div>
                 
@@ -2647,42 +2465,9 @@
                         </a>
                     </div>
                 </section>
-
-                <!-- Student Leaderboard -->
-                <section class="subject-section">
-                    <h3 class="subject-header">🏆 Student Leaderboard</h3>
-                    <div class="leaderboard">
-                        <div class="leaderboard-header">Top Performers This Week</div>
-                        <div class="leaderboard-item">
-                            <div class="leaderboard-rank rank-1">1</div>
-                            <div class="leaderboard-name">Kwame Mensah</div>
-                            <div class="leaderboard-score">98%</div>
-                        </div>
-                        <div class="leaderboard-item">
-                            <div class="leaderboard-rank rank-2">2</div>
-                            <div class="leaderboard-name">Ama Osei</div>
-                            <div class="leaderboard-score">95%</div>
-                        </div>
-                        <div class="leaderboard-item">
-                            <div class="leaderboard-rank rank-3">3</div>
-                            <div class="leaderboard-name">Kofi Asante</div>
-                            <div class="leaderboard-score">92%</div>
-                        </div>
-                        <div class="leaderboard-item">
-                            <div class="leaderboard-rank rank-other">4</div>
-                            <div class="leaderboard-name">Esi Boateng</div>
-                            <div class="leaderboard-score">89%</div>
-                        </div>
-                        <div class="leaderboard-item">
-                            <div class="leaderboard-rank rank-other">5</div>
-                            <div class="leaderboard-name">Yaw Appiah</div>
-                            <div class="leaderboard-score">87%</div>
-                        </div>
-                    </div>
-                </section>
             </div>
 
-            <!-- About Page -->
+            <!-- About Page from second code -->
             <div id="about" class="menu-page">
                 <div class="grade-header" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">ℹ️ About Wexford Edu Hub</div>
                 
@@ -2690,84 +2475,34 @@
                     <h3 class="subject-header">🎯 Our Mission</h3>
                     <p style="color: var(--text-medium); line-height: 1.8; margin-bottom: 1.5rem;">
                         Welcome to Wexford Edu Hub - a cutting-edge digital learning platform revolutionizing education through technology, innovation, and discipline. We serve as a central communication and information hub for students, parents, and staff.
-                        <br>
-                    <h4>📞 Contact Us</h4>
+                    </p>
+                    
+                    <h3 class="subject-header">📞 Contact Us</h3>
                     <p>
                         Email: info@wexfordedu.com<br>
                         Phone: +233241204078<br>
                         Location: Abuakwa, Manyhia
                     </p>
-                </br>       </p>
-                    
-                    <h3 class="subject-header">✨ What We Offer</h3>
-                    <div style="display: grid; gap: 1rem; margin-bottom: 1.5rem;">
-                        <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: var(--light-gray); border-radius: 12px;">
-                            <span style="font-size: 2rem;">📹</span>
-                            <div>
-                                <h4 style="font-weight: 700; margin-bottom: 0.25rem;">Video Library</h4>
-                                <p style="font-size: 0.875rem; color: var(--text-medium);">Comprehensive collection of educational videos</p>
-                            </div>
-                        </div>
-                        
-                        <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: var(--light-gray); border-radius: 12px;">
-                            <span style="font-size: 2rem;">📝</span>
-                            <div>
-                                <h4 style="font-weight: 700; margin-bottom: 0.25rem;">Interactive Quizzes</h4>
-                                <p style="font-size: 0.875rem; color: var(--text-medium);">Test your knowledge with practice questions</p>
-                            </div>
-                        </div>
-                        
-                        <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: var(--light-gray); border-radius: 12px;">
-                            <span style="font-size: 2rem;">📊</span>
-                            <div>
-                                <h4 style="font-weight: 700; margin-bottom: 0.25rem;">Progress Tracking</h4>
-                                <p style="font-size: 0.875rem; color: var(--text-medium);">Monitor your learning journey</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <h3 class="subject-header">🏆 Our Values</h3>
-                    <p style="color: var(--text-medium); line-height: 1.8;">
-                        <strong>Innovation:</strong> Embracing technology for better learning<br>
-                        <strong>Technology:</strong> Leveraging digital tools for education<br>
-                        <strong>Discipline:</strong> Building character through consistent effort
-                    </p>
                 </section>
             </div>
 
-            <!-- Upload Page -->
+            <!-- Upload Page from first code -->
             <div id="upload" class="menu-page">
-                <div class="grade-header" style="background: linear-gradient(135deg, #ee0979 0%, #ff6a00 100%);">📤 Upload Video Resource</div>
-                
-                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 1.5rem; border-radius: 16px; margin-bottom: 1.5rem; color: white;">
-                    <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">🎬 Share Your Knowledge</h3>
-                    <p style="font-size: 0.875rem; opacity: 0.95;">Upload educational videos to help students learn and grow. Your contributions make a difference!</p>
-                </div>
-                
-                <form class="upload-form" onsubmit="handleUpload(event)">
-                    <input type="text" placeholder="📌 Video Title" required>
-                    <input type="url" placeholder="🔗 Video Link (URL)" required>
-                    <select required>
-                        <option value="">🎯 Select Grade Level...</option>
-                        <option>Lower Primary (1-3)</option>
-                        <option>Upper Primary (4-6)</option>
-                        <option>JHS (7-9)</option>
-                    </select>
-                    <select required>
-                        <option value="">📚 Select Subject...</option>
-                        <option>Mathematics</option>
-                        <option>English Language</option>
-                        <option>Science</option>
-                        <option>Social Studies</option>
+                <div class="grade-header" style="background: #ef4444;">📤 Upload Resources</div>
+                <form style="background: white; padding: 2rem; border-radius: 16px; display: flex; flex-direction: column; gap: 1rem;">
+                    <input type="text" placeholder="Video Title" style="padding: 1rem; border: 1px solid #ccc; border-radius: 8px;">
+                    <select style="padding: 1rem; border: 1px solid #ccc; border-radius: 8px;">
+                        <option>Select Level</option>
+                        <option>Lower Primary</option>
+                        <option>Upper Primary</option>
+                        <option>JHS</option>
                         <option>ICT</option>
-                        <option>Creative Arts</option>
                     </select>
-                    <textarea placeholder="📝 Video Description (Optional)" rows="3" style="resize: vertical;"></textarea>
-                    <button type="submit">🚀 Submit Video Link</button>
+                    <button style="padding: 1rem; background: var(--primary-green); color: white; border: none; border-radius: 8px; font-weight: bold;">Upload Content</button>
                 </form>
             </div>
 
-            <!-- ADMIN PANEL PAGE -->
+            <!-- ADMIN PANEL PAGE from second code -->
             <div id="admin-panel" class="admin-panel">
                 <div class="admin-header">
                     <h1>Admin Dashboard</h1>
@@ -2820,86 +2555,29 @@
                         <span>System Settings</span>
                     </div>
                 </div>
-
-                <h2 class="admin-section-title">System Reports</h2>
-                <div class="admin-report">
-                    <div class="admin-report-header">
-                        <div class="admin-report-title">Daily Active Users</div>
-                        <div class="admin-report-value">428</div>
-                    </div>
-                    <div style="height:8px; background:#e0e0e0; border-radius:4px; overflow:hidden;">
-                        <div style="width:88%; height:100%; background:linear-gradient(90deg,#0B8F4A,#05A854);"></div>
-                    </div>
-                </div>
-                <div class="admin-report">
-                    <div class="admin-report-header">
-                        <div class="admin-report-title">Storage Used</div>
-                        <div class="admin-report-value">42.8 GB</div>
-                    </div>
-                    <div style="height:8px; background:#e0e0e0; border-radius:4px; overflow:hidden;">
-                        <div style="width:71%; height:100%; background:linear-gradient(90deg,#f59e0b,#f97316);"></div>
-                    </div>
-                </div>
-
-                <h2 class="admin-section-title">Recent Activity</h2>
-                <div class="admin-activity">Teacher Stephen uploaded 5 new videos</div>
-                <div class="admin-activity">Parent portal login spike detected (+32%)</div>
-                <div class="admin-activity">System backup completed successfully</div>
-                <div class="admin-activity">New announcement posted by Admin</div>
-                <div class="admin-activity">12 pending content approvals</div>
-                
-                <!-- Admin Modal -->
-                <div id="admin-modal" class="admin-modal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 1000; justify-content: center; align-items: center;">
-                    <div style="background: white; padding: 2rem; border-radius: 20px; max-width: 400px; width: 90%;">
-                        <h3 id="admin-modal-title" style="margin-bottom: 1rem;"></h3>
-                        <div id="admin-modal-content"></div>
-                        <button onclick="closeAdminModal()" style="margin-top: 1rem; padding: 0.5rem 1rem; background: #0B8F4A; color: white; border: none; border-radius: 8px; cursor: pointer;">Close</button>
-                    </div>
-                </div>
             </div>
-            <!-- End Admin Panel -->
         </main>
-        
-        <!-- Footer -->
-        <footer>
-            <div style="margin-bottom: 0.5rem;">
-                <strong style="color: var(--primary-green);">Wexford Edu Hub</strong> - Empowering Education Through Technology
-            </div>
-            <div style="font-size: 0.75rem;">
-                © 2025 PANIN SARFO — Designed with ❤️ for excellence in education
-            </div>
-        </footer>
-    </div>
 
-        <!-- Bottom Navigation -->
+        <!-- Bottom Navigation from first code -->
         <nav>
-            <div class="nav-buttons">
-                <button id="btn-dashboard" class="tab-button active" onclick="showPage('dashboard')">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><path d="M9 22V12h6v10"/>
-                    </svg>
-                    <span>Dashboard</span>
-                </button>
-                <button id="btn-report-card" class="tab-button" onclick="showPage('report-card')">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/>
-                    </svg>
-                    <span>Report Card</span>
-                </button>
-                <button id="btn-lower-primary" class="tab-button" onclick="switchTab('lower-primary')">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M3 3v18h18"/><path d="M18 17l-3-3-4 4-5-5-3 3"/>
-                    </svg>
-                    <span>Learning</span>
-                </button>
-                <button id="btn-upload" class="tab-button" onclick="showPage('upload')">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 9l5-5 5 5M12 4v12"/>
-                    </svg>
-                    <span>Upload</span>
-                </button>
-            </div>
+            <button id="btn-dashboard" class="tab-button active" onclick="showPage('dashboard')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><path d="M9 22V12h6v10"/></svg>
+                <span>Home</span>
+            </button>
+            <button id="btn-lower-primary" class="tab-button" onclick="switchTab('lower-primary')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                <span>Lower</span>
+            </button>
+            <button id="btn-upper-primary" class="tab-button" onclick="switchTab('upper-primary')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+                <span>Upper</span>
+            </button>
+            <button id="btn-jhs" class="tab-button" onclick="switchTab('jhs')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                <span>JHS</span>
+            </button>
         </nav>
+    </div>
 
     <!-- Install Button (PWA) -->
     <button id="install-btn">Install Wexford App</button>
@@ -2917,9 +2595,9 @@
             once: true
         });
 
-        // === ENHANCED FUNCTIONALITY FROM FIRST CODE ===
+        // === ENHANCED FUNCTIONALITY ===
         
-        // Browser Compatibility Check from first code
+        // Browser Compatibility Check
         (function checkCompatibility() {
             const warnings = [];
             
@@ -2945,7 +2623,7 @@
             }
         })();
 
-        // Loading Spinner from first code
+        // Loading Spinner
         window.addEventListener('load', function() {
             const loader = document.getElementById('loader');
             loader.classList.add('hidden');
@@ -2953,36 +2631,24 @@
                 loader.style.display = 'none';
             }, 500);
             
-            // Initialize particles from first code
+            // Initialize particles
             createParticles();
         });
 
         // Create particles from first code
         function createParticles() {
-            const particlesContainer = document.getElementById('particlesContainer');
-            if (!particlesContainer) return;
-            
-            for (let i = 0; i < 50; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                
-                // Random properties
-                const size = Math.random() * 20 + 5;
-                const left = Math.random() * 100;
-                const animationDelay = Math.random() * 20;
-                const animationDuration = Math.random() * 20 + 20;
-                
-                particle.style.width = `${size}px`;
-                particle.style.height = `${size}px`;
-                particle.style.left = `${left}%`;
-                particle.style.animationDelay = `${animationDelay}s`;
-                particle.style.animationDuration = `${animationDuration}s`;
-                
-                particlesContainer.appendChild(particle);
+            const pContainer = document.getElementById('particlesContainer');
+            for(let i=0; i<20; i++) {
+                let p = document.createElement('div');
+                p.className = 'particle';
+                p.style.left = Math.random()*100 + '%';
+                p.style.width = p.style.height = (Math.random()*20+5)+'px';
+                p.style.animationDuration = (Math.random()*20+10)+'s';
+                pContainer.appendChild(p);
             }
         }
 
-        // Scroll to Top Button from first code
+        // Scroll to Top Button
         const scrollTopBtn = document.getElementById('scrollTopBtn');
         
         window.addEventListener('scroll', function() {
@@ -3000,7 +2666,7 @@
             });
         });
 
-        // Notification system from first code
+        // Notification system
         function showNotification(message) {
             const notification = document.getElementById('notification');
             const messageEl = document.getElementById('notificationMessage');
@@ -3013,12 +2679,12 @@
             }, 3000);
         }
 
-        // Print Function from first code
+        // Print Function
         window.printContent = function() {
             window.print();
         };
 
-        // Enhanced Search from first code
+        // Enhanced Search
         function performSearch() {
             const searchTerm = document.getElementById('searchInput').value;
             if (searchTerm.trim()) {
@@ -3027,7 +2693,7 @@
             }
         }
 
-        // Keyboard Navigation from first code
+        // Keyboard Navigation
         document.addEventListener('keydown', function(e) {
             // ESC closes modals
             if (e.key === 'Escape') {
@@ -3044,7 +2710,7 @@
             }
         });
 
-        // Smooth Scroll for Navigation Links from first code
+        // Smooth Scroll for Navigation Links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -3101,7 +2767,8 @@
 
         // Gallery Slideshow Variables
         let currentGallerySlide = 0;
-        const totalGallerySlides = 7;
+        const gallerySlides = document.querySelectorAll('.gallery-slide');
+        const totalGallerySlides = gallerySlides.length;
 
         // Gallery Slideshow Functions
         function showGallerySlide(index) {
@@ -3146,134 +2813,54 @@
         // Auto-advance gallery every 4 seconds
         setInterval(autoAdvanceGallery, 4000);
 
-        // Current Slide Index for Banner
-        let currentSlide = 0;
-        const totalSlides = 7;
-
-        // Update Date/Time Display
+        // Date Display from first code
         function updateDateTime() {
             const now = new Date();
-            const options = { 
-                weekday: 'short', 
-                year: 'numeric', 
-                month: 'short', 
-                day: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
-            };
-            const dateTimeString = now.toLocaleDateString('en-US', options);
-            const displayElement = document.getElementById('datetime-display');
-            if (displayElement) {
-                displayElement.textContent = dateTimeString;
+            const dateStr = now.toLocaleDateString('en-US', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
+            const el = document.getElementById('datetime-display');
+            if (el) el.textContent = dateStr;
+        }
+        setInterval(updateDateTime, 60000); updateDateTime();
+
+        // Navigation from first code
+        function showPage(pageId) {
+            document.querySelectorAll('.menu-page, .tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-button').forEach(el => el.classList.remove('active'));
+            
+            const page = document.getElementById(pageId);
+            if (page) page.classList.add('active');
+            
+            // Highlight button (Check for exact match or generic sections)
+            const btn = document.getElementById('btn-' + pageId);
+            if (btn) btn.classList.add('active');
+            
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        function switchTab(tabId) {
+            showPage(tabId);
+        }
+
+        // UI Toggles from first code
+        function toggleMenu() { 
+            document.getElementById('menu-overlay').classList.toggle('active'); 
+        }
+        
+        function toggleSearch() { 
+            document.getElementById('search-modal').classList.toggle('active');
+            if (document.getElementById('search-modal').classList.contains('active')) {
+                document.getElementById('searchInput').focus();
             }
         }
 
-        // Calculate Time Ago
-        function getTimeAgo(dateString) {
-            const postDate = new Date(dateString);
-            const now = new Date();
-            const diffMs = now - postDate;
-            const diffMins = Math.floor(diffMs / 60000);
-            const diffHours = Math.floor(diffMs / 3600000);
-            const diffDays = Math.floor(diffMs / 86400000);
-            const diffWeeks = Math.floor(diffMs / 604800000);
-
-            if (diffMins < 1) return 'Just now';
-            if (diffMins < 60) return `${diffMins} minute${diffMins > 1 ? 's' : ''} ago`;
-            if (diffHours < 24) return `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`;
-            if (diffDays < 7) return `${diffDays} day${diffDays > 1 ? 's' : ''} ago`;
-            if (diffWeeks < 4) return `${diffWeeks} week${diffWeeks > 1 ? 's' : ''} ago`;
-            
-            return postDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-        }
-
-        // Update All Announcement Times
-        function updateAnnouncementTimes() {
-            const announcementTimes = document.querySelectorAll('.announcement-time');
-            announcementTimes.forEach(element => {
-                const dateString = element.getAttribute('data-date');
-                if (dateString) {
-                    element.textContent = 'Posted ' + getTimeAgo(dateString);
-                }
-            });
-        }
-
-        // Banner Slideshow
-        function showSlide(index) {
-            const slides = document.querySelectorAll('.banner-slide');
-            slides.forEach((slide, i) => {
-                slide.classList.remove('active');
-                if (i === index) {
-                    slide.classList.add('active');
-                }
-            });
-        }
-
-        function nextSlide() {
-            currentSlide = (currentSlide + 1) % totalSlides;
-            showSlide(currentSlide);
-        }
-
-        // Auto-advance banner every 10 seconds
-        setInterval(nextSlide, 5000);
-
-        // Tab Switching - Enhanced to handle new pages
-        function switchTab(tabName) {
-            document.querySelectorAll('.menu-page').forEach(page => page.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.admin-panel').forEach(panel => panel.classList.remove('active'));
-            document.querySelectorAll('.tab-button').forEach(button => button.classList.remove('active'));
-
-            const activeContent = document.getElementById(tabName);
-            if (activeContent) activeContent.classList.add('active');
-
-            const activeButton = document.getElementById('btn-' + tabName);
-            if (activeButton) activeButton.classList.add('active');
-
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // Show Menu Pages - Enhanced
-        function showPage(pageName) {
-            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.menu-page').forEach(page => page.classList.remove('active'));
-            document.querySelectorAll('.admin-panel').forEach(panel => panel.classList.remove('active'));
-            document.querySelectorAll('.tab-button').forEach(button => button.classList.remove('active'));
-
-            const activePage = document.getElementById(pageName);
-            if (activePage) activePage.classList.add('active');
-            
-            const activeButton = document.getElementById('btn-' + pageName);
-            if (activeButton) activeButton.classList.add('active');
-
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // Toggle Menu
-        function toggleMenu() {
-            document.getElementById('menu-overlay').classList.toggle('active');
-        }
-
-        // Close Menu on Overlay Click
         function closeMenuOnOverlay(event) {
             if (event.target.id === 'menu-overlay') toggleMenu();
         }
 
-        // Toggle Search Modal
-        function toggleSearch() {
-            const modal = document.getElementById('search-modal');
-            modal.classList.toggle('active');
-            if (modal.classList.contains('active')) {
-                setTimeout(() => modal.querySelector('.search-input').focus(), 100);
-            }
-        }
-
-        // Close Search on Overlay Click
         function closeSearchOnOverlay(event) {
             if (event.target.id === 'search-modal') toggleSearch();
         }
 
-        // Handle Search
         function handleSearch(event) {
             const query = event.target.value.toLowerCase();
             if (event.key === 'Enter' && query) {
@@ -3281,33 +2868,7 @@
             }
         }
 
-        // Handle Upload Form
-        function handleUpload(event) {
-            event.preventDefault();
-            const button = event.target.querySelector('button');
-            const originalText = button.innerHTML;
-            button.innerHTML = '✅ Uploaded Successfully!';
-            button.style.background = 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)';
-            
-            setTimeout(() => {
-                button.innerHTML = originalText;
-                button.style.background = 'linear-gradient(135deg, #0B8F4A 0%, #05A854 100%)';
-                event.target.reset();
-                showNotification('🎉 Video uploaded successfully!\n\nIn production, this would save to the database.');
-            }, 2000);
-        }
-
-        // Start Quiz Function - Now opens the quiz platform
-        function startQuiz(subject) {
-            window.open('https://stephen-daniels.github.io/PANIN.com/wexquiz.html', '_blank');
-        }
-
-        // Play Video Function
-        function playVideo(videoSrc) {
-            showNotification('Playing video: ' + videoSrc + '\n\nIn production, this would open the video player.');
-        }
-
-        // Admin Panel Functions
+        // Admin Panel Functions from second code
         function openAdminModal(type) {
             const modal = document.getElementById('admin-modal');
             const title = document.getElementById('admin-modal-title');
@@ -3351,47 +2912,41 @@
             document.getElementById('admin-modal').style.display = 'none';
         }
 
-        // Cache important resources for offline use
-        function cacheResources() {
-            if ('caches' in window) {
-                caches.open('wexford-edu-v1').then(cache => {
-                    return cache.addAll([
-                        '/',
-                        'WEX LOGO.jpg',
-                        'Eva.jpg',
-                        'bs2.jpg',
-                        'BS6.jpg',
-                        'quiz.jpg',
-                        'Wor.jpg',
-                        'new.mp4',
-                        'multi-base.mp4'
-                    ]);
-                });
-            }
+        // Create admin modal element if it doesn't exist
+        if (!document.getElementById('admin-modal')) {
+            const adminModal = document.createElement('div');
+            adminModal.id = 'admin-modal';
+            adminModal.className = 'admin-modal';
+            adminModal.innerHTML = `
+                <div style="background: white; padding: 2rem; border-radius: 20px; max-width: 400px; width: 90%;">
+                    <h3 id="admin-modal-title" style="margin-bottom: 1rem;"></h3>
+                    <div id="admin-modal-content"></div>
+                    <button onclick="closeAdminModal()" style="margin-top: 1rem; padding: 0.5rem 1rem; background: #0B8F4A; color: white; border: none; border-radius: 8px; cursor: pointer;">Close</button>
+                </div>
+            `;
+            adminModal.style.cssText = 'display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 1000; justify-content: center; align-items: center;';
+            document.body.appendChild(adminModal);
         }
+
+        // PWA offline check from first code
+        window.addEventListener('offline', () => document.getElementById('offlineStatus').style.display='block');
+        window.addEventListener('online', () => document.getElementById('offlineStatus').style.display='none');
 
         // Initialize
         window.onload = () => {
             showPage('dashboard');
             updateDateTime();
-            updateAnnouncementTimes();
             updateOnlineStatus();
             
             // Set up event listeners for online/offline status
             window.addEventListener('online', updateOnlineStatus);
             window.addEventListener('offline', updateOnlineStatus);
             
-            // Cache resources for offline use
-            cacheResources();
-            
             // Update date/time every minute
             setInterval(updateDateTime, 60000);
-            
-            // Update announcement times every minute
-            setInterval(updateAnnouncementTimes, 60000);
         };
 
-        // Service Worker Registration for PWA (Embedded - No Extra File Needed)
+        // Service Worker Registration for PWA
         if ('serviceWorker' in navigator) {
             const swCode = `
                 const CACHE = 'wexford-v25';
