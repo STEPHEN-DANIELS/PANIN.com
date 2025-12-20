@@ -12,11 +12,17 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Wexford Edu">
     <link rel="apple-touch-icon" href="WEX LOGO.jpg">
+    <link rel="manifest" href="manifest.json">
 
     <!-- Fonts & Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@300;400;500;600&family=Poppins:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+
+    <!-- External Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;700;800&display=swap');
@@ -25,6 +31,8 @@
             --primary-green: #0B8F4A;
             --primary-dark: #076838;
             --primary-light: #E8F5EE;
+            --secondary: #003366;
+            --accent: #FF6B00;
             --white: #FFFFFF;
             --light-gray: #F8FAFC;
             --border-gray: #E2E8F0;
@@ -37,11 +45,20 @@
             --accent-purple: #8B5CF6;
             --accent-blue: #3B82F6;
             --accent-pink: #EC4899;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --success: #10b981;
+            --info: #3b82f6;
             --primary: #0B8F4A;
-            --accent: #FFD700;
             --text: #1F2937;
             --radius: 1.75rem;
             --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            
+            /* Enhanced App Variables */
+            --primary-green-light: #10b981;
+            --dark-green: #059669;
+            --light-bg: #f9fafb;
+            --border-color: #e5e7eb;
         }
 
         * {
@@ -57,7 +74,150 @@
             overflow-x: hidden;
         }
 
-        /* Floating Particles from Third Code */
+        /* Welcome Image Overlay */
+        .welcome-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .welcome-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .welcome-image-container {
+            max-width: 600px;
+            width: 90%;
+            margin-bottom: 30px;
+            animation: floatImage 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes floatImage {
+            0% {
+                transform: translateY(0px);
+            }
+            100% {
+                transform: translateY(-15px);
+            }
+        }
+
+        .welcome-image {
+            width: 100%;
+            height: auto;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(11, 143, 74, 0.5);
+            border: 4px solid var(--primary-green);
+        }
+
+        .welcome-message {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+            backdrop-filter: blur(20px);
+            padding: 2.5rem;
+            border-radius: 20px;
+            max-width: 600px;
+            width: 90%;
+            border: 2px solid rgba(11, 143, 74, 0.3);
+            margin-bottom: 30px;
+            animation: fadeInUp 0.8s ease-out 0.5s both;
+        }
+
+        .welcome-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .welcome-subtitle {
+            font-size: 1.2rem;
+            color: var(--white);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .encouragement-message {
+            font-size: 1.1rem;
+            font-style: italic;
+            color: #FFD700;
+            margin: 1.5rem 0;
+            padding: 1rem;
+            border-left: 4px solid #FFD700;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .welcome-close-btn {
+            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(11, 143, 74, 0.4);
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .welcome-close-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(11, 143, 74, 0.6);
+        }
+
+        .auto-close-timer {
+            margin-top: 20px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .timer-progress {
+            width: 100px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .timer-progress-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
+            border-radius: 2px;
+            transition: width 1s linear;
+        }
+
+        /* Floating Particles */
         .particles {
             position: fixed;
             top: 0;
@@ -111,7 +271,164 @@
             background: var(--primary-green);
         }
 
-        /* Premium 3D Background */
+        /* Scroll to Top Button */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary-green);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            z-index: 99;
+        }
+        
+        .scroll-top.visible {
+            display: flex;
+        }
+        
+        .scroll-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            background: var(--dark-green);
+        }
+        
+        .scroll-top svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* Search Modal */
+        .search-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            z-index: 300;
+            align-items: flex-start;
+            justify-content: center;
+            padding-top: 2rem;
+        }
+
+        .search-modal.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .search-content {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 2rem;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.4s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            border: 2px solid var(--border-gray);
+            border-radius: 12px;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-green);
+            box-shadow: 0 0 0 4px var(--primary-light);
+        }
+
+        .close-search {
+            margin-top: 1rem;
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--border-gray);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Compatibility Warning */
+        .compat-warning {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+            display: none;
+            position: fixed;
+            top: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 480px;
+            z-index: 1000;
+        }
+        
+        .compat-warning.visible {
+            display: block;
+        }
+
+        /* Print Styles */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            .print-content, .print-content * {
+                visibility: visible;
+            }
+            .print-content {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+            }
+            .no-print {
+                display: none !important;
+            }
+            header, footer, .scroll-top, .btn, nav {
+                display: none !important;
+            }
+        }
+
+        /* Enhanced 3D Background */
         .bg-animation {
             position: fixed;
             top: 0;
@@ -123,8 +440,10 @@
             pointer-events: none;
         }
 
+        /* UPDATED: Desktop Responsive App Container */
         .app-container {
-            max-width: 480px;
+            width: 100%;
+            max-width: 1200px;
             margin: 0 auto;
             background: var(--white);
             min-height: 100vh;
@@ -132,6 +451,21 @@
             box-shadow: 0 0 80px rgba(0, 0, 0, 0.4);
             z-index: 1;
             overflow: hidden;
+        }
+
+        /* UPDATED: Desktop Responsive Navigation */
+        nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 1200px; /* Matches app-container */
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid var(--border-gray);
+            box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.12);
+            z-index: 100;
         }
 
         /* Premium Header with Glass Morphism */
@@ -258,85 +592,6 @@
             50% {
                 transform: scale(1.1);
             }
-        }
-
-        /* Enhanced Search Modal */
-        .search-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(8px);
-            z-index: 300;
-            align-items: flex-start;
-            justify-content: center;
-            padding-top: 2rem;
-        }
-
-        .search-modal.active {
-            display: flex;
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        .search-content {
-            background: var(--white);
-            border-radius: 20px;
-            padding: 2rem;
-            width: 90%;
-            max-width: 400px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            animation: slideUp 0.4s ease-out;
-        }
-
-        @keyframes slideUp {
-            from {
-                transform: translateY(50px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 1rem 1.25rem;
-            border: 2px solid var(--border-gray);
-            border-radius: 12px;
-            font-size: 1rem;
-            font-family: 'Poppins', sans-serif;
-            transition: all 0.3s ease;
-        }
-
-        .search-input:focus {
-            outline: none;
-            border-color: var(--primary-green);
-            box-shadow: 0 0 0 4px var(--primary-light);
-        }
-
-        .close-search {
-            margin-top: 1rem;
-            width: 100%;
-            padding: 0.75rem;
-            background: var(--border-gray);
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: 600;
-            font-family: 'Poppins', sans-serif;
         }
 
         /* Enhanced Stats Banner */
@@ -513,7 +768,7 @@
             right: 1rem;
         }
 
-        /* Enhanced Welcome Banner with 3D Effects */
+        /* UPDATED: Enhanced Welcome Banner with 3 Quotes (10 second interval) */
         .welcome-banner {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             padding: 2rem 1.5rem;
@@ -526,6 +781,9 @@
             animation: scaleIn 0.6s ease-out;
             min-height: 200px;
             perspective: 1000px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         @keyframes scaleIn {
@@ -562,73 +820,48 @@
             position: absolute;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            padding: 2rem 1.5rem;
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
+            width: 100%;
+            height: 100%;
+            padding: 2rem;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            background-size: cover;
-            background-position: center;
-            transform-style: preserve-3d;
+            opacity: 0;
+            transform: translateX(20px);
+            transition: opacity 1.5s ease-in-out, transform 1.5s ease-in-out;
+            pointer-events: none;
+            z-index: 1;
         }
 
         .banner-slide.active {
             opacity: 1;
-            z-index: 1;
-        }
-
-        .banner-slide.text-slide {
-            background: transparent;
-        }
-
-        .banner-slide.image-slide {
-            background-size: cover;
-            background-position: center;
-        }
-
-        .banner-slide.image-slide::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.85) 0%, rgba(118, 75, 162, 0.85) 100%);
-            z-index: 0;
-        }
-
-        .banner-content {
-            position: relative;
+            transform: translateX(0);
+            pointer-events: all;
             z-index: 2;
-            transform: translateZ(20px);
         }
 
         .banner-slide h2 {
-            font-size: 1.5rem;
-            font-weight: 800;
-            margin-bottom: 0.5rem;
-            position: relative;
-            z-index: 1;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            font-size: 1.6rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
 
         .banner-slide p {
-            font-size: 0.95rem;
+            font-size: 1rem;
             opacity: 0.95;
             line-height: 1.5;
-            position: relative;
-            z-index: 1;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            font-style: italic;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.3);
         }
 
         .quote-author {
-            font-size: 0.85rem;
-            font-style: italic;
-            margin-top: 0.5rem;
-            opacity: 0.9;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 10px;
+            display: block;
+            text-transform: uppercase;
+            opacity: 0.8;
         }
 
         /* Enhanced Date/Time Display */
@@ -713,6 +946,54 @@
             color: var(--text-dark);
             position: relative;
             z-index: 1;
+        }
+
+        /* Dashboard Features */
+        .dashboard-features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        .dashboard-feature {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+        .dashboard-feature:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.15);
+            border-color: var(--primary-green);
+        }
+        .dashboard-feature i {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+            padding: 12px;
+            border-radius: 12px;
+        }
+        
+        /* Icon Themes */
+        .feat-lower i { background: #E8F5EE; color: #0B8F4A; }
+        .feat-upper i { background: #E0F2FE; color: #0284C7; }
+        .feat-jhs i { background: #FEF3C7; color: #D97706; }
+        .feat-ict i { background: #EBE4FF; color: #6610f2; }
+
+        .dashboard-feature h3 {
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+            color: var(--text-dark);
+            font-weight: 700;
+        }
+        .dashboard-feature p {
+            font-size: 0.7rem;
+            color: var(--text-medium);
+            line-height: 1.4;
         }
 
         /* Enhanced Grade Header */
@@ -1029,6 +1310,52 @@
             animation: pulse 2s ease infinite;
         }
 
+        /* Social Media Section */
+        .social-connect {
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.5);
+        }
+        .social-connect h4 {
+            color: var(--text-dark);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.8rem;
+        }
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+        .social-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            text-decoration: none;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        }
+        .social-icon:hover {
+            transform: scale(1.15) rotate(5deg);
+        }
+        
+        .bg-instagram { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); }
+        .bg-twitter { background: #000000; }
+        .bg-facebook { background: #1877F2; }
+        .bg-whatsapp { background: #25D366; }
+
         /* Enhanced Side Menu */
         .menu-overlay {
             position: fixed;
@@ -1174,21 +1501,7 @@
             line-height: 1.6;
         }
 
-        /* Enhanced Bottom Navigation */
-        nav {
-            position: fixed;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            max-width: 480px;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(20px);
-            border-top: 1px solid var(--border-gray);
-            box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.12);
-            z-index: 100;
-        }
-
+        /* Bottom Navigation */
         .nav-buttons {
             display: flex;
             justify-content: space-around;
@@ -1378,7 +1691,14 @@
             }
         }
 
-        /* New Features: Interactive Quiz Cards */
+        /* Animation Classes */
+        .fade-in-up { animation: fadeInUp 0.6s ease-out forwards; opacity: 0; transform: translateY(20px); }
+        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+
+        /* Utilities */
+        .hidden { display: none !important; }
+
+        /* Interactive Quiz Cards */
         .quiz-card {
             background: var(--white);
             border-radius: 16px;
@@ -1433,7 +1753,7 @@
             color: var(--text-light);
         }
 
-        /* New Features: Student Leaderboard */
+        /* Student Leaderboard */
         .leaderboard {
             background: var(--white);
             border-radius: 16px;
@@ -1644,6 +1964,74 @@
         }
         /* End Admin Panel Styles */
 
+        /* ====== REPORT CARD SYSTEM ====== */
+        .report-card-page {
+            padding: 1.5rem 1.25rem 120px;
+            background: var(--light-gray);
+        }
+
+        .report-card-container {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .report-card-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid var(--primary-light);
+        }
+
+        .report-card-header h2 {
+            color: var(--primary-green);
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .report-card-actions {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .report-card-action {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .report-card-action:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.15);
+            border-color: var(--primary-green);
+        }
+
+        .report-card-action i {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-green);
+        }
+
+        .report-card-action h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .report-card-action p {
+            font-size: 0.85rem;
+            color: var(--text-medium);
+        }
+
         /* PWA Install Button */
         #install-btn {
             position: fixed;
@@ -1686,6 +2074,273 @@
             font-family: 'Poppins', sans-serif;
         }
 
+        /* Notification */
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary-green);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            z-index: 1000;
+            display: none;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            font-weight: 600;
+        }
+
+        /* ====== CHAT BOX STYLES ====== */
+        .chat-button {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(11, 143, 74, 0.4);
+            z-index: 998;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chat-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 30px rgba(11, 143, 74, 0.6);
+        }
+
+        .chat-button .badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #ff6b6b;
+            color: white;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            font-size: 12px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chat-container {
+            position: fixed;
+            bottom: 170px;
+            right: 20px;
+            width: 350px;
+            height: 500px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chat-container.active {
+            display: flex;
+            animation: slideUp 0.3s ease;
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
+            color: white;
+            padding: 1.2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-header h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .chat-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background 0.3s;
+        }
+
+        .chat-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 1.2rem;
+            overflow-y: auto;
+            background: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 10px 15px;
+            border-radius: 18px;
+            margin-bottom: 5px;
+            word-wrap: break-word;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.user {
+            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 5px;
+        }
+
+        .message.developer {
+            background: #e9ecef;
+            color: #212529;
+            align-self: flex-start;
+            border-bottom-left-radius: 5px;
+        }
+
+        .message.system {
+            background: #fff3cd;
+            color: #856404;
+            align-self: center;
+            font-size: 0.8rem;
+            padding: 8px 12px;
+            border-radius: 10px;
+            max-width: 90%;
+            text-align: center;
+        }
+
+        .message-time {
+            font-size: 0.7rem;
+            opacity: 0.7;
+            margin-top: 5px;
+            text-align: right;
+        }
+
+        .message-sender {
+            font-weight: bold;
+            font-size: 0.8rem;
+            margin-bottom: 3px;
+        }
+
+        .chat-input-container {
+            padding: 1rem;
+            background: white;
+            border-top: 1px solid #e9ecef;
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            outline: none;
+            transition: border 0.3s;
+        }
+
+        .chat-input:focus {
+            border-color: #0B8F4A;
+        }
+
+        .send-button {
+            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s;
+        }
+
+        .send-button:hover {
+            transform: scale(1.05);
+        }
+
+        .chat-status {
+            padding: 8px 12px;
+            font-size: 0.8rem;
+            text-align: center;
+            background: #f8f9fa;
+            color: #6c757d;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .typing-indicator {
+            display: none;
+            padding: 10px;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .typing-indicator span {
+            width: 8px;
+            height: 8px;
+            background: #6c757d;
+            border-radius: 50%;
+            animation: typing 1.5s infinite ease-in-out;
+        }
+
+        .typing-indicator span:nth-child(1) { animation-delay: 0s; }
+        .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typing {
+            0%, 100% { transform: translateY(0); opacity: 0.5; }
+            50% { transform: translateY(-5px); opacity: 1; }
+        }
+
+        /* Admin Chat Controls */
+        .admin-chat-controls {
+            display: none;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .admin-chat-controls.active {
+            display: block;
+        }
+
+        .admin-chat-select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+
         /* Responsive */
         @media (max-width: 380px) {
             .video-grid {
@@ -1693,6 +2348,18 @@
             }
             .quick-actions {
                 grid-template-columns: repeat(2, 1fr);
+            }
+            .dashboard-features {
+                grid-template-columns: 1fr;
+            }
+            .report-card-actions {
+                grid-template-columns: 1fr;
+            }
+            .chat-container {
+                width: 300px;
+                height: 450px;
+                right: 10px;
+                bottom: 150px;
             }
         }
 
@@ -1709,9 +2376,104 @@
             background: var(--primary-green);
             border-radius: 10px;
         }
+        
+        /* Quote Navigation */
+        .quote-nav {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            z-index: 10;
+        }
+        
+        .quote-nav button {
+            background: rgba(255,255,255,0.3);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+        }
+        
+        .quote-nav button:hover {
+            background: rgba(255,255,255,0.5);
+        }
+        
+        .view-all-quotes-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .view-all-quotes-btn:hover {
+            background: rgba(255,255,255,0.3);
+            border-color: rgba(255,255,255,0.5);
+        }
     </style>
 </head>
 <body>
+    <!-- Welcome Image Overlay -->
+    <div id="welcomeOverlay" class="welcome-overlay">
+        <div class="welcome-image-container">
+            <img src="PAN.jpeg" alt="Welcome to Wexford Edu Hub" class="welcome-image" onerror="this.src='https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&q=80'">
+        </div>
+        
+        <div class="welcome-message">
+            <h1 class="welcome-title">Welcome to Wexford Edu Hub! 🎓</h1>
+            <p class="welcome-subtitle">
+                Your premier destination for world-class education that works 100% offline.<br>
+                Innovation, Technology & Discipline - Empowering the next generation of leaders.
+            </p>
+            
+            <div class="encouragement-message">
+                "Every expert was once a beginner. Start your learning journey today - you have the potential to achieve greatness!"
+            </div>
+            
+            <button class="welcome-close-btn" onclick="closeWelcomeOverlay()">
+                <span>🚀 Begin Learning Journey</span>
+            </button>
+        </div>
+        
+        <div class="auto-close-timer">
+            <span>Auto-closes in:</span>
+            <div class="timer-progress">
+                <div class="timer-progress-fill" id="timerProgress"></div>
+            </div>
+            <span id="timerCount">2:00</span>
+        </div>
+    </div>
+
+    <!-- Compatibility Warning -->
+    <div id="compatWarning" class="compat-warning">
+        <strong>⚠️ Browser Compatibility Notice:</strong> Some features may not be available in your browser.
+    </div>
+
+    <!-- Offline Status Indicator -->
+    <div class="offline-status" id="offlineStatus">
+        ⚠️ You are currently offline. Some features may be limited.
+    </div>
+
     <!-- Floating Particles from Third Code -->
     <div class="particles">
         <div class="particle" style="width:90px;height:90px;left:10%;animation-delay:0s;"></div>
@@ -1720,9 +2482,65 @@
         <div class="particle" style="width:80px;height:80px;left:85%;animation-delay:18s;"></div>
     </div>
 
-    <!-- Offline Status Indicator -->
-    <div class="offline-status" id="offlineStatus">
-        ⚠️ You are currently offline. Some features may be limited.
+    <!-- Scroll to Top Button -->
+    <button id="scrollTopBtn" class="scroll-top no-print" title="Back to top">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z" fill="currentColor"/>
+        </svg>
+    </button>
+
+    <!-- Notification -->
+    <div id="notification" class="notification">
+        <div id="notificationMessage"></div>
+    </div>
+
+    <!-- Chat Button -->
+    <button class="chat-button" onclick="toggleChat()">
+        💬
+        <span class="badge" id="unreadCount">0</span>
+    </button>
+
+    <!-- Chat Container -->
+    <div id="chatContainer" class="chat-container">
+        <div class="chat-header">
+            <h3>💬 Live Support</h3>
+            <button class="chat-close" onclick="toggleChat()">×</button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="message system">
+                Welcome to Wexford Support! How can we help you today?
+            </div>
+            <div class="message developer">
+                <div class="message-sender">Developer</div>
+                Hello! I'm here to assist you. Feel free to ask any questions about the platform.
+                <div class="message-time">Just now</div>
+            </div>
+        </div>
+        
+        <!-- Admin Controls (Visible only to developer) -->
+        <div id="adminChatControls" class="admin-chat-controls">
+            <select class="admin-chat-select" id="adminUserSelect">
+                <option value="all">💬 Message All Users</option>
+                <option value="user1">👤 User: Kwame Mensah</option>
+                <option value="user2">👤 User: Ama Osei</option>
+                <option value="user3">👤 User: Kofi Asante</option>
+            </select>
+        </div>
+        
+        <div class="typing-indicator" id="typingIndicator">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="chat-input-container">
+            <input type="text" class="chat-input" id="chatInput" placeholder="Type your message..." onkeypress="handleChatInput(event)">
+            <button class="send-button" onclick="sendMessage()">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+        <div class="chat-status" id="chatStatus">
+            <span id="connectionStatus">🟢 Connected</span> • <span id="userCount">1 user online</span>
+        </div>
     </div>
 
     <!-- Animated Background -->
@@ -1765,25 +2583,9 @@
         <!-- Search Modal -->
         <div id="search-modal" class="search-modal" onclick="closeSearchOnOverlay(event)">
             <div class="search-content">
-                <h3 style="margin-bottom: 1rem; font-weight: 800; color: var(--text-dark);">🔍 Search Resources</h3>
-                <input type="text" class="search-input" placeholder="Search for videos, subjects, lessons..." onkeyup="handleSearch(event)">
-                <button class="close-search" onclick="toggleSearch()">Close</button>
-            </div>
-        </div>
-
-        <!-- Stats Banner -->
-        <div class="stats-banner">
-            <div class="stat-item">
-                <span class="stat-number">150+</span>
-                <span class="stat-label">Videos</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number">12</span>
-                <span class="stat-label">Subjects</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number">500+</span>
-                <span class="stat-label">Students</span>
+                <h3 style="margin-bottom: 1rem; font-weight: 800; color: var(--text-dark);">🔍 Search Wexford Platform</h3>
+                <input type="text" class="search-input" placeholder="Search for students, courses, or features..." id="searchInput" onkeyup="handleSearch(event)">
+                <button class="close-search" onclick="toggleSearch()">Close (ESC)</button>
             </div>
         </div>
 
@@ -1795,6 +2597,24 @@
                     <button class="menu-close" onclick="toggleMenu()">✕</button>
                 </div>
                 <ul class="menu-list">
+                    <li><a href="#" onclick="showPage('dashboard'); toggleMenu()">
+                        🏠 Dashboard
+                    </a></li>
+                    <li><a href="#" onclick="switchTab('lower-primary'); toggleMenu()">
+                        🎨 Lower Primary
+                    </a></li>
+                    <li><a href="#" onclick="switchTab('upper-primary'); toggleMenu()">
+                        📖 Upper Primary
+                    </a></li>
+                    <li><a href="#" onclick="switchTab('jhs'); toggleMenu()">
+                        🎓 Junior High
+                    </a></li>
+                    <li><a href="#" onclick="showPage('ict-skills'); toggleMenu()">
+                        💻 ICT Skills
+                    </a></li>
+                    <li><a href="#" onclick="showPage('report-card'); toggleMenu()">
+                        📊 Report Card System
+                    </a></li>
                     <li><a href="#" onclick="showPage('announcements'); toggleMenu()">
                         📢 Announcements
                     </a></li>
@@ -1803,10 +2623,11 @@
                     </a></li>
                     <li><a href="https://stephen-daniels.github.io/PANIN.com/Student.html" target="_blank" onclick="toggleMenu()">
                         👥 Student Profile
-                         </a></li>
+                    </a></li>
                     <li><a href="https://stephen-daniels.github.io/PANIN.com/Con.html" target="_blank" onclick="toggleMenu()">
                         👥 Staff Forum
-                        <li><a href="https://stephen-daniels.github.io/PANIN.com/PTA.html" target="_blank" onclick="toggleMenu()">
+                    </a></li>
+                    <li><a href="https://stephen-daniels.github.io/PANIN.com/PTA.html" target="_blank" onclick="toggleMenu()">
                         👥 PTA Forum
                     </a></li>
                     <li><a href="#" onclick="showPage('trial'); toggleMenu()">
@@ -1818,6 +2639,9 @@
                     <!-- Updated Admin Panel Link -->
                     <li><a href="#" onclick="showPage('admin-panel'); toggleMenu()">
                         🛡️ Admin Panel
+                    </a></li>
+                    <li><a href="#" onclick="toggleChat(); toggleMenu()">
+                        💬 Live Support
                     </a></li>
                     <li><a href="https://www.ck12.org/c/arithmetic/add-whole-numbers/?by=ck12&difficulty=all#all&noback=true" target="_blank" onclick="toggleMenu()">
                         🔗 External Resources
@@ -1834,255 +2658,260 @@
                         Phone: +233241204078<br>
                         Location: Abuakwa, Manyhia
                     </p>
+                    <button style="margin-top: 1rem; width: 100%; padding: 0.75rem; background: var(--primary-green); color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: 600;" onclick="printContent()">
+                        <i class="fas fa-print"></i> Print Current Page
+                    </button>
                 </div>
             </div>
         </div>
 
         <main>
-            <!-- School Gallery Slideshow -->
-            <div class="school-gallery">
-                <!-- Gallery Slide 1 -->
-                <div class="gallery-slide active" id="gallery-1">
-                    <img src="Eva.jpg" alt="School Campus">
-                    <div class="gallery-overlay">
-                        <div class="gallery-caption">🏫 Our Beautiful Campus</div>
-                        <div class="gallery-description">Modern facilities for quality education</div>
+            <!-- Dashboard Page -->
+            <div id="dashboard" class="menu-page">
+                <!-- UPDATED: Welcome Banner with 3 Powerful Quotes (10 second interval) -->
+                <div class="welcome-banner" id="welcome-banner">
+                    <div class="datetime-display" id="datetime-display"></div>
+                    
+                    <!-- Quote slides will be dynamically added here -->
+                </div>
+
+                <h3 style="margin-bottom:1rem; color:var(--text-dark); padding-left: 0.5rem; border-left: 4px solid var(--primary-green);">📚 Learning Categories</h3>
+                <div class="dashboard-features fade-in-up" style="animation-delay: 0.1s;">
+                    <!-- Lower Primary -->
+                    <div class="dashboard-feature feat-lower" onclick="switchTab('lower-primary')">
+                        <i class="fas fa-shapes"></i>
+                        <h3>Lower Primary</h3>
+                        <p>Grades 1 - 3</p>
+                    </div>
+                    
+                    <!-- Upper Primary -->
+                    <div class="dashboard-feature feat-upper" onclick="switchTab('upper-primary')">
+                        <i class="fas fa-book-reader"></i>
+                        <h3>Upper Primary</h3>
+                        <p>Grades 4 - 6</p>
+                    </div>
+                    
+                    <!-- Junior High -->
+                    <div class="dashboard-feature feat-jhs" onclick="switchTab('jhs')">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h3>Junior High</h3>
+                        <p>JHS 1 - 3</p>
+                    </div>
+                    
+                    <!-- ICT Skills -->
+                    <div class="dashboard-feature feat-ict" onclick="showPage('ict-skills')">
+                        <i class="fas fa-laptop-code"></i>
+                        <h3>ICT Skills</h3>
+                        <p>Word, Excel, PPT</p>
                     </div>
                 </div>
 
-                <!-- Gallery Slide 2 -->
-                <div class="gallery-slide" id="gallery-2">
-                    <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1200&q=80" alt="Students Learning">
-                    <div class="gallery-overlay">
-                        <div class="gallery-caption">📚 Interactive Classrooms</div>
-                        <div class="gallery-description">Engaging learning experiences for all students</div>
+                <!-- Stats Banner -->
+                <div class="stats-banner">
+                    <div class="stat-item">
+                        <span class="stat-number">150+</span>
+                        <span class="stat-label">Videos</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">12</span>
+                        <span class="stat-label">Subjects</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">500+</span>
+                        <span class="stat-label">Students</span>
                     </div>
                 </div>
 
-                <!-- Gallery Slide 3 -->
-                <div class="gallery-slide" id="gallery-3">
-                    <img src="bs2.jpg" alt="Computer Lab">
-                    <div class="gallery-overlay">
-                        <div class="gallery-caption">Sports</div>
-                        <div class="gallery-description">State-of-the-art technology for digital learning</div>
+                <!-- School Gallery Slideshow -->
+                <div class="school-gallery">
+                    <!-- Gallery Slide 1 -->
+                    <div class="gallery-slide active" id="gallery-1">
+                        <img src="Eva.jpg" alt="School Campus">
+                        <div class="gallery-overlay">
+                            <div class="gallery-caption">🏫 Our Beautiful Campus</div>
+                            <div class="gallery-description">Modern facilities for quality education</div>
+                        </div>
                     </div>
-                </div>
 
-                <!-- Gallery Slide 4 -->
-                <div class="gallery-slide" id="gallery-4">
-                    <img src="https://stephen-daniels.github.io/PANIN.com/PICS.html/pics/IMG-20251114-WA0056.jpg" alt="Library">
-                    <div class="gallery-overlay">
-                        <div class="gallery-caption">📖 Staff</div>
-                        <div class="gallery-description">Extensive collection of books and resources</div>
+                    <!-- Gallery Slide 2 -->
+                    <div class="gallery-slide" id="gallery-2">
+                        <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1200&q=80" alt="Students Learning">
+                        <div class="gallery-overlay">
+                            <div class="gallery-caption">📚 Interactive Classrooms</div>
+                            <div class="gallery-description">Engaging learning experiences for all students</div>
+                        </div>
                     </div>
-                </div>
 
-                <!-- Gallery Slide 5 -->
-                <div class="gallery-slide" id="gallery-5">
-                    <img src="BS6.jpg" alt="Sports Field">
-                    <div class="gallery-overlay">
-                        <div class="gallery-caption">⚽ Sports Facilities</div>
-                        <div class="gallery-description">Promoting physical fitness and teamwork</div>
+                    <!-- Gallery Slide 3 -->
+                    <div class="gallery-slide" id="gallery-3">
+                        <img src="bs2.jpg" alt="Computer Lab">
+                        <div class="gallery-overlay">
+                            <div class="gallery-caption">Sports</div>
+                            <div class="gallery-description">State-of-the-art technology for digital learning</div>
+                        </div>
                     </div>
+
+                    <!-- Gallery Slide 4 -->
+                    <div class="gallery-slide" id="gallery-4">
+                        <img src="https://stephen-daniels.github.io/PANIN.com/PICS.html/pics/IMG-20251114-WA0056.jpg" alt="Library">
+                        <div class="gallery-overlay">
+                            <div class="gallery-caption">📖 Staff</div>
+                            <div class="gallery-description">Extensive collection of books and resources</div>
+                        </div>
                     </div>
-                
+
+                    <!-- Gallery Slide 5 -->
+                    <div class="gallery-slide" id="gallery-5">
+                        <img src="BS6.jpg" alt="Sports Field">
+                        <div class="gallery-overlay">
+                            <div class="gallery-caption">⚽ Sports Facilities</div>
+                            <div class="gallery-description">Promoting physical fitness and teamwork</div>
+                        </div>
+                    </div>
+                    
                     <!-- Gallery Slide 6 -->
-                <div class="gallery-slide" id="gallery-6">
-                    <img src="Wor.jpg" alt="Sports Field">
-                    <div class="gallery-overlay">
-                        <div class="gallery-caption">⚽ Moment of worship</div>
-                        <div class="gallery-description">When our praises go up, His presence comes down</div>
+                    <div class="gallery-slide" id="gallery-6">
+                        <img src="Wor.jpg" alt="Sports Field">
+                        <div class="gallery-overlay">
+                            <div class="gallery-caption">⚽ Moment of worship</div>
+                            <div class="gallery-description">When our praises go up, His presence comes down</div>
+                        </div>
                     </div>
-                </div>
-                
-            <!-- Gallery Slide 7 -->
-                <div class="gallery-slide" id="gallery-7">
-                    <img src="quiz.jpg" alt="Sports Field">
-                    <div class="gallery-overlay">
-                        <div class="gallery-caption">⚽Inter class quiz</div>
-                        <div class="gallery-description">Promoting physical fitness and teamwork</div>
+                    
+                    <!-- Gallery Slide 7 -->
+                    <div class="gallery-slide" id="gallery-7">
+                        <img src="quiz.jpg" alt="Sports Field">
+                        <div class="gallery-overlay">
+                            <div class="gallery-caption">⚽Inter class quiz</div>
+                            <div class="gallery-description">Promoting physical fitness and teamwork</div>
+                        </div>
                     </div>
-                </div>
 
-                  <!-- Gallery Slide 8 -->
-                <div class="gallery-slide" id="gallery-8">
-                    <img src="https://stephen-daniels.github.io/PANIN.com/PICS.html/pics/IMG-20251114-WA0044.jpg" alt="Library">
-                    <div class="gallery-overlay">
-                        <div class="gallery-caption">⚽ Sports Facilities</div>
-                        <div class="gallery-description">Promoting physical fitness and teamwork</div>
+                    <!-- Gallery Slide 8 -->
+                    <div class="gallery-slide" id="gallery-8">
+                        <img src="https://stephen-daniels.github.io/PANIN.com/PICS.html/pics/IMG-20251114-WA0044.jpg" alt="Library">
+                        <div class="gallery-overlay">
+                            <div class="gallery-caption">⚽ Sports Facilities</div>
+                            <div class="gallery-description">Promoting physical fitness and teamwork</div>
+                        </div>
                     </div>
-                </div>
 
                     <!-- Gallery Slide 9 -->
-                <div class="gallery-slide" id="gallery-9">
-                    <img src="https://stephen-daniels.github.io/PANIN.com/PICS.html/pics/IMG-20251114-WA0015.jpg" alt="Library">
-                    <div class="gallery-overlay">
-                        <div class="gallery-caption">⚽ Sports Facilities</div>
-                        <div class="gallery-description">Promoting physical fitness and teamwork</div>
+                    <div class="gallery-slide" id="gallery-9">
+                        <img src="https://stephen-daniels.github.io/PANIN.com/PICS.html/pics/IMG-20251114-WA0015.jpg" alt="Library">
+                        <div class="gallery-overlay">
+                            <div class="gallery-caption">⚽ Sports Facilities</div>
+                            <div class="gallery-description">Promoting physical fitness and teamwork</div>
+                        </div>
                     </div>
-                </div>
 
                     <!-- Gallery Slide 10 -->
-                <div class="gallery-slide" id="gallery-10">
-                    <img src="https://stephen-daniels.github.io/PANIN.com/PICS.html/pics/IMG-20251114-WA0020.jpg" alt="Library">
-                    <div class="gallery-overlay">
-                        <div class="gallery-caption">⚽ Sports Facilities</div>
-                        <div class="gallery-description">Promoting physical fitness and teamwork</div>
+                    <div class="gallery-slide" id="gallery-10">
+                        <img src="https://stephen-daniels.github.io/PANIN.com/PICS.html/pics/IMG-20251114-WA0020.jpg" alt="Library">
+                        <div class="gallery-overlay">
+                            <div class="gallery-caption">⚽ Sports Facilities</div>
+                            <div class="gallery-description">Promoting physical fitness and teamwork</div>
+                        </div>
                     </div>
-                </div>
 
                     <!-- Gallery Slide 11 -->
-                <div class="gallery-slide" id="gallery-11">
-                    <img src="https://stephen-daniels.github.io/PANIN.com/PICS.html/pics/IMG-20251114-WA0025.jpg" alt="Library">
-                    <div class="gallery-overlay">
-                        <div class="gallery-caption">⚽ Sports Facilities</div>
-                        <div class="gallery-description">Promoting physical fitness and teamwork</div>
+                    <div class="gallery-slide" id="gallery-11">
+                        <img src="https://stephen-daniels.github.io/PANIN.com/PICS.html/pics/IMG-20251114-WA0025.jpg" alt="Library">
+                        <div class="gallery-overlay">
+                            <div class="gallery-caption">⚽ Sports Facilities</div>
+                            <div class="gallery-description">Promoting physical fitness and teamwork</div>
+                        </div>
                     </div>
-                </div>
 
                     <!-- Gallery Slide 12 -->
-                <div class="gallery-slide" id="gallery-12">
-                    <img src="https://stephen-daniels.github.io/PANIN.com/PICS.html/pics/IMG-20251114-WA0028.jpg" alt="Library">
-                    <div class="gallery-overlay">
-                        <div class="gallery-caption">⚽ Sports Facilities</div>
-                        <div class="gallery-description">Promoting physical fitness and teamwork</div>
+                    <div class="gallery-slide" id="gallery-12">
+                        <img src="https://stephen-daniels.github.io/PANIN.com/PICS.html/pics/IMG-20251114-WA0028.jpg" alt="Library">
+                        <div class="gallery-overlay">
+                            <div class="gallery-caption">⚽ Sports Facilities</div>
+                            <div class="gallery-description">Promoting physical fitness and teamwork</div>
+                        </div>
                     </div>
-                </div>
 
                     <!-- Gallery Slide 13 -->
-                <div class="gallery-slide" id="gallery-13">
-                    <img src="https://stephen-daniels.github.io/PANIN.com/PICS.html/pics/IMG-20251114-WA0041.jpg" alt="Library">
-                    <div class="gallery-overlay">
-                        <div class="gallery-caption">⚽ Sports Facilities</div>
-                        <div class="gallery-description">Promoting physical fitness and teamwork</div>
+                    <div class="gallery-slide" id="gallery-13">
+                        <img src="https://stephen-daniels.github.io/PANIN.com/PICS.html/pics/IMG-20251114-WA0041.jpg" alt="Library">
+                        <div class="gallery-overlay">
+                            <div class="gallery-caption">⚽ Sports Facilities</div>
+                            <div class="gallery-description">Promoting physical fitness and teamwork</div>
+                        </div>
                     </div>
-                </div>
 
                     <!-- Gallery Slide 14 -->
-                <div class="gallery-slide" id="gallery-14">
-                    <img src="https://stephen-daniels.github.io/PANIN.com/PICS.html/pics/IMG-20251114-WA0044.jpg.jpg" alt="Library">
-                    <div class="gallery-overlay">
-                        <div class="gallery-caption">⚽ Sports Facilities</div>
-                        <div class="gallery-description">Promoting physical fitness and teamwork</div>
+                    <div class="gallery-slide" id="gallery-14">
+                        <img src="https://stephen-daniels.github.io/PANIN.com/PICS.html/pics/IMG-20251114-WA0044.jpg" alt="Library">
+                        <div class="gallery-overlay">
+                            <div class="gallery-caption">⚽ Sports Facilities</div>
+                            <div class="gallery-description">Promoting physical fitness and teamwork</div>
+                        </div>
                     </div>
-                </div>
-                
+                    
                     <!-- Gallery Slide 15 -->
-                <div class="gallery-slide" id="gallery-15">
-                    <img src="https://stephen-daniels.github.io/PANIN.com/PICS.html/pics/IMG-20251114-WA0019.jpg" alt="Library">
-                    <div class="gallery-overlay">
-                        <div class="gallery-caption">⚽ Sports Facilities</div>
-                        <div class="gallery-description">Promoting physical fitness and teamwork</div>
+                    <div class="gallery-slide" id="gallery-15">
+                        <img src="https://stephen-daniels.github.io/PANIN.com/PICS.html/pics/IMG-20251114-WA0019.jpg" alt="Library">
+                        <div class="gallery-overlay">
+                            <div class="gallery-caption">⚽ Sports Facilities</div>
+                            <div class="gallery-description">Promoting physical fitness and teamwork</div>
+                        </div>
                     </div>
-                </div>
-                
-                <!-- Navigation Buttons -->
-                <button class="gallery-nav prev" onclick="changeGallerySlide(-1)">‹</button>
-                <button class="gallery-nav next" onclick="changeGallerySlide(1)">›</button>
+                    
+                    <!-- Navigation Buttons -->
+                    <button class="gallery-nav prev" onclick="changeGallerySlide(-1)">‹</button>
+                    <button class="gallery-nav next" onclick="changeGallerySlide(1)">›</button>
 
-                <!-- Indicators -->
-                <div class="gallery-indicators">
-                    <span class="gallery-indicator active" onclick="setGallerySlide(0)"></span>
-                    <span class="gallery-indicator" onclick="setGallerySlide(1)"></span>
-                    <span class="gallery-indicator" onclick="setGallerySlide(2)"></span>
-                    <span class="gallery-indicator" onclick="setGallerySlide(3)"></span>
-                    <span class="gallery-indicator" onclick="setGallerySlide(4)"></span>
-                    <span class="gallery-indicator" onclick="setGallerySlide(5)"></span>
-                    <span class="gallery-indicator" onclick="setGallerySlide(6)"></span>
-                    <span class="gallery-indicator" onclick="setGallerySlide(7)"></span>
-                    <span class="gallery-indicator" onclick="setGallerySlide(8)"></span>
-                    <span class="gallery-indicator" onclick="setGallerySlide(9)"></span>
-                    <span class="gallery-indicator" onclick="setGallerySlide(10)"></span>
-                    <span class="gallery-indicator" onclick="setGallerySlide(11)"></span>
-                    <span class="gallery-indicator" onclick="setGallerySlide(12)"></span>
-                    <span class="gallery-indicator" onclick="setGallerySlide(13)"></span>
-                    <span class="gallery-indicator" onclick="setGallerySlide(14)"></span>
-                    <span class="gallery-indicator" onclick="setGallerySlide(15)"></span>
-                </div>
-            </div>
-
-            <!-- Welcome Banner with Slideshow -->
-            <div class="welcome-banner">
-                <div class="datetime-display" id="datetime-display"></div>
-                
-                <!-- Slide 1: Welcome -->
-                <div class="banner-slide text-slide active" id="slide-1">
-                    <div class="banner-content">
-                        <h2>Welcome Back! 👋</h2>
-                        <p>Continue your learning journey with our latest resources and interactive lessons</p>
+                    <!-- Indicators -->
+                    <div class="gallery-indicators">
+                        <span class="gallery-indicator active" onclick="setGallerySlide(0)"></span>
+                        <span class="gallery-indicator" onclick="setGallerySlide(1)"></span>
+                        <span class="gallery-indicator" onclick="setGallerySlide(2)"></span>
+                        <span class="gallery-indicator" onclick="setGallerySlide(3)"></span>
+                        <span class="gallery-indicator" onclick="setGallerySlide(4)"></span>
+                        <span class="gallery-indicator" onclick="setGallerySlide(5)"></span>
+                        <span class="gallery-indicator" onclick="setGallerySlide(6)"></span>
+                        <span class="gallery-indicator" onclick="setGallerySlide(7)"></span>
+                        <span class="gallery-indicator" onclick="setGallerySlide(8)"></span>
+                        <span class="gallery-indicator" onclick="setGallerySlide(9)"></span>
+                        <span class="gallery-indicator" onclick="setGallerySlide(10)"></span>
+                        <span class="gallery-indicator" onclick="setGallerySlide(11)"></span>
+                        <span class="gallery-indicator" onclick="setGallerySlide(12)"></span>
+                        <span class="gallery-indicator" onclick="setGallerySlide(13)"></span>
+                        <span class="gallery-indicator" onclick="setGallerySlide(14)"></span>
                     </div>
                 </div>
 
-                <!-- Slide 2: Educational Image 1 - Students Learning -->
-                <div class="banner-slide image-slide" id="slide-2" style="background-image: url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&q=80');">
-                    <div class="banner-content">
-                        <h2>📚 Collaborative Learning</h2>
-                        <p>Join thousands of students in interactive study sessions and group discussions</p>
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <div class="quick-action" onclick="switchTab('lower-primary')">
+                        <span class="quick-action-icon">🎨</span>
+                        <span class="quick-action-label">Primary</span>
+                    </div>
+                    <div class="quick-action" onclick="switchTab('jhs')">
+                        <span class="quick-action-icon">🎓</span>
+                        <span class="quick-action-label">JHS</span>
+                    </div>
+                    <div class="quick-action" onclick="showPage('trial')">
+                        <span class="quick-action-icon">📝</span>
+                        <span class="quick-action-label">Quizzes</span>
+                    </div>
+                    <div class="quick-action" onclick="showPage('upload')">
+                        <span class="quick-action-icon">📤</span>
+                        <span class="quick-action-label">Upload</span>
                     </div>
                 </div>
 
-                <!-- Slide 3: Educational Image 2 - Technology in Education -->
-                <div class="banner-slide image-slide" id="slide-3" style="background-image: url('https://images.unsplash.com/photo-1509062522246-3755977927d7?w=800&q=80');">
-                    <div class="banner-content">
-                        <h2>💻 Digital Learning</h2>
-                        <p>Access cutting-edge educational technology and resources anytime, anywhere</p>
+                <!-- Social Media Section -->
+                <div class="social-connect fade-in-up">
+                    <h4>Connect With Wexford</h4>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon bg-instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon bg-twitter"><i class="fab fa-x-twitter"></i></a>
+                        <a href="#" class="social-icon bg-facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon bg-whatsapp"><i class="fab fa-whatsapp"></i></a>
                     </div>
-                </div>
-
-                <!-- Slide 4: Quote 1 -->
-                <div class="banner-slide text-slide" id="slide-4">
-                    <div class="banner-content">
-                        <h2>💡 Words of Wisdom</h2>
-                        <p>"Education is the most powerful weapon which you can use to change the world."</p>
-                        <p class="quote-author">— Nelson Mandela</p>
-                    </div>
-                </div>
-
-                <!-- Slide 5: Quote 2 -->
-                <div class="banner-slide text-slide" id="slide-5">
-                    <div class="banner-content">
-                        <h2>🎯 Stay Motivated</h2>
-                        <p>"The only way to do great work is to love what you do. Keep learning, keep growing!"</p>
-                        <p class="quote-author">— Steve Jobs</p>
-                    </div>
-                </div>
-
-                <!-- Slide 6: Quote 3 -->
-                <div class="banner-slide text-slide" id="slide-6">
-                    <div class="banner-content">
-                        <h2>⭐ Success Through Effort</h2>
-                        <p>"Success is not final, failure is not fatal: it is the courage to continue that counts."</p>
-                        <p class="quote-author">— Winston Churchill</p>
-                    </div>
-                </div>
-
-                <!-- Slide 7: Quote 4 -->
-                <div class="banner-slide text-slide" id="slide-7">
-                    <div class="banner-content">
-                        <h2>🌟 Dream Big</h2>
-                        <p>"The future belongs to those who believe in the beauty of their dreams."</p>
-                        <p class="quote-author">— Eleanor Roosevelt</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Quick Actions -->
-            <div class="quick-actions">
-                <div class="quick-action" onclick="switchTab('lower-primary')">
-                    <span class="quick-action-icon">🎨</span>
-                    <span class="quick-action-label">Primary</span>
-                </div>
-                <div class="quick-action" onclick="switchTab('jhs')">
-                    <span class="quick-action-icon">🎓</span>
-                    <span class="quick-action-label">JHS</span>
-                </div>
-                <div class="quick-action" onclick="showPage('trial')">
-                    <span class="quick-action-icon">📝</span>
-                    <span class="quick-action-label">Quizzes</span>
-                </div>
-                <div class="quick-action" onclick="showPage('upload')">
-                    <span class="quick-action-icon">📤</span>
-                    <span class="quick-action-label">Upload</span>
                 </div>
             </div>
 
@@ -2272,6 +3101,108 @@
                 </section>
             </div>
 
+            <!-- ICT Skills Tab -->
+            <div id="ict-skills" class="menu-page">
+                <div class="grade-header" style="background: linear-gradient(135deg, #6610f2 0%, #d63384 100%);">💻 Computer School</div>
+                
+                <section class="subject-section fade-in-up">
+                    <h3 class="subject-header" style="color:#2b579a;"><i class="fas fa-file-word"></i> Microsoft Word</h3>
+                    <div class="video-grid">
+                        <div class="video-card">
+                            <div class="video-thumbnail" style="background: #2b579a;"><i class="fas fa-file-word"></i></div>
+                            <div class="video-info">
+                                <p class="video-title">Intro to MS Word</p>
+                                <p class="video-lesson">Interface & Typing</p>
+                            </div>
+                        </div>
+                        <div class="video-card">
+                            <div class="video-thumbnail" style="background: #2b579a;"><i class="fas fa-paragraph"></i></div>
+                            <div class="video-info">
+                                <p class="video-title">Formatting Text</p>
+                                <p class="video-lesson">Fonts & Colors</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="subject-section fade-in-up" style="animation-delay: 0.1s;">
+                    <h3 class="subject-header" style="color:#d24726;"><i class="fas fa-file-powerpoint"></i> PowerPoint</h3>
+                    <div class="video-grid">
+                        <div class="video-card">
+                            <div class="video-thumbnail" style="background: #d24726;"><i class="fas fa-file-powerpoint"></i></div>
+                            <div class="video-info">
+                                <p class="video-title">Creating Slides</p>
+                                <p class="video-lesson">Basic Design</p>
+                            </div>
+                        </div>
+                        <div class="video-card">
+                            <div class="video-thumbnail" style="background: #d24726;"><i class="fas fa-magic"></i></div>
+                            <div class="video-info">
+                                <p class="video-title">Animations</p>
+                                <p class="video-lesson">Transitions & Effects</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="subject-section fade-in-up" style="animation-delay: 0.2s;">
+                    <h3 class="subject-header" style="color:#217346;"><i class="fas fa-file-excel"></i> Microsoft Excel</h3>
+                    <div class="video-grid">
+                        <div class="video-card">
+                            <div class="video-thumbnail" style="background: #217346;"><i class="fas fa-table"></i></div>
+                            <div class="video-info">
+                                <p class="video-title">Cells & Rows</p>
+                                <p class="video-lesson">Getting Started</p>
+                            </div>
+                        </div>
+                        <div class="video-card">
+                            <div class="video-thumbnail" style="background: #217346;"><i class="fas fa-calculator"></i></div>
+                            <div class="video-info">
+                                <p class="video-title">Basic Formulas</p>
+                                <p class="video-lesson">Sum & Average</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Report Card System Page -->
+            <div id="report-card" class="menu-page">
+                <div class="grade-header" style="background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);">
+                    📊 Report Card System
+                </div>
+
+                <div class="report-card-container">
+                    <div class="report-card-header">
+                        <h2>Digital Report Card Management</h2>
+                        <p>Generate, manage, and send professional report cards</p>
+                    </div>
+
+                    <div class="report-card-actions">
+                        <div class="report-card-action" onclick="showNotification('Generate Report Card feature would open here')">
+                            <i class="fas fa-file-alt"></i>
+                            <h3>Generate Report Card</h3>
+                            <p>Create new report cards for students</p>
+                        </div>
+                        <div class="report-card-action" onclick="showNotification('Manage Report Cards feature would open here')">
+                            <i class="fas fa-tasks"></i>
+                            <h3>Manage Report Cards</h3>
+                            <p>View and edit existing report cards</p>
+                        </div>
+                        <div class="report-card-action" onclick="showNotification('Bulk Send feature would open here')">
+                            <i class="fas fa-paper-plane"></i>
+                            <h3>Bulk Send</h3>
+                            <p>Send to 300+ contacts at once</p>
+                        </div>
+                        <div class="report-card-action" onclick="showNotification('Analytics feature would open here')">
+                            <i class="fas fa-chart-bar"></i>
+                            <h3>Analytics</h3>
+                            <p>View performance statistics</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Announcements Page -->
             <div id="announcements" class="menu-page">
                 <div class="grade-header" style="background: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);">📢 School Announcements</div>
@@ -2280,7 +3211,7 @@
                     <h3 class="subject-header">🔔 Latest Updates</h3>
                     
                     <div style="display: grid; gap: 1.25rem;">
-                          <!-- Announcement 1 -->
+                        <!-- Announcement 1 -->
                         <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 1.5rem; border-radius: 16px; color: white; box-shadow: 0 4px 16px rgba(240, 147, 251, 0.3);">
                             <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
                                 <span style="font-size: 2rem;">📅</span>
@@ -2290,15 +3221,14 @@
                                 </div>
                             </div>
                             <p style="font-size: 0.9rem; line-height: 1.6; opacity: 0.95;">
-                                Wishing You Success in the Upcoming Exams
-<br>​Dear Students,</br>
-​As your upcoming examinations draw near, we want to extend our very best wishes. It is always a pleasure to see you all achieve flying colors in your academic pursuit, and we have full faith in your ability to perform exceptionally well.
-​Key Reminders
-​Please use this final period before the exams to ensure you have taken care of the following essential administrative items:
-​Financial Clearance: Kindly settle any outstanding school fees and printing fees immediately. Only students who are financially cleared will be allowed to sit for the examinations.
-​Health and Preparation: Please prepare adequately for all your subjects. More importantly, ensure you are of good health throughout this period. A well-rested mind and body are your best tools for success.
-​We encourage you to manage your time wisely, study smart, and remain focused. We are here to support you.
-​Good luck as the exams begin!
+                                Wishing You Success in the Upcoming Exams<br>​Dear Students,</br>
+                                ​As your upcoming examinations draw near, we want to extend our very best wishes. It is always a pleasure to see you all achieve flying colors in your academic pursuit, and we have full faith in your ability to perform exceptionally well.
+                                ​Key Reminders
+                                ​Please use this final period before the exams to ensure you have taken care of the following essential administrative items:
+                                ​Financial Clearance: Kindly settle any outstanding school fees and printing fees immediately. Only students who are financially cleared will be allowed to sit for the examinations.
+                                ​Health and Preparation: Please prepare adequately for all your subjects. More importantly, ensure you are of good health throughout this period. A well-rested mind and body are your best tools for success.
+                                ​We encourage you to manage your time wisely, study smart, and remain focused. We are here to support you.
+                                ​Good luck as the exams begin!
                             </p>
                         </div>
 
@@ -2316,7 +3246,6 @@
                             </p>
                         </div>
 
-                      
                         <!-- Announcement 3 -->
                         <div style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); padding: 1.5rem; border-radius: 16px; color: white; box-shadow: 0 4px 16px rgba(250, 112, 154, 0.3);">
                             <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
@@ -2630,11 +3559,16 @@
                 © 2025 PANIN SARFO — Designed with ❤️ for excellence in education
             </div>
         </footer>
-    </div>
 
         <!-- Bottom Navigation -->
         <nav>
             <div class="nav-buttons">
+                <button id="btn-dashboard" class="tab-button" onclick="showPage('dashboard')">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 3v18h18"/><path d="M18 17l-3-3-4 4-5-5-3 3"/>
+                    </svg>
+                    <span>Home</span>
+                </button>
                 <button id="btn-lower-primary" class="tab-button active" onclick="switchTab('lower-primary')">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M3 3v18h18"/><path d="M18 17l-3-3-4 4-5-5-3 3"/>
@@ -2653,14 +3587,9 @@
                     </svg>
                     <span>JHS</span>
                 </button>
-                <button id="btn-upload" class="tab-button" onclick="showPage('upload')">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 9l5-5 5 5M12 4v12"/>
-                    </svg>
-                    <span>Upload</span>
-                </button>
             </div>
         </nav>
+    </div>
 
     <!-- Install Button (PWA) -->
     <button id="install-btn">Install Wexford App</button>
@@ -2670,6 +3599,7 @@
 
     <!-- AOS Animation Library -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
     <script>
         // Initialize AOS
         AOS.init({
@@ -2678,34 +3608,630 @@
             once: true
         });
 
-        // === PWA INSTALL ===
-        let deferredPrompt;
-        const installBtn = document.getElementById('install-btn');
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            installBtn.style.display = 'block';
-        });
-        installBtn.addEventListener('click', () => {
-            installBtn.style.display = 'none';
-            deferredPrompt.prompt();
-            deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
+        // === WELCOME OVERLAY SYSTEM ===
+        let welcomeTimer;
+        let welcomeSeconds = 120; // 2 minutes
+
+        function showWelcomeOverlay() {
+            const overlay = document.getElementById('welcomeOverlay');
+            if (!overlay) return;
+            
+            // Show overlay
+            setTimeout(() => {
+                overlay.classList.add('active');
+                document.body.style.overflow = 'hidden'; // Prevent scrolling
+            }, 500);
+            
+            // Start countdown timer
+            startWelcomeTimer();
+        }
+
+        function closeWelcomeOverlay() {
+            const overlay = document.getElementById('welcomeOverlay');
+            if (!overlay) return;
+            
+            // Remove overlay
+            overlay.classList.remove('active');
+            document.body.style.overflow = ''; // Restore scrolling
+            
+            // Clear timer
+            clearInterval(welcomeTimer);
+            
+            // Show notification
+            showNotification('Welcome to Wexford Edu Hub! Enjoy your learning journey. 🎓');
+        }
+
+        function startWelcomeTimer() {
+            const timerCount = document.getElementById('timerCount');
+            const timerProgress = document.getElementById('timerProgress');
+            
+            // Reset timer
+            welcomeSeconds = 120;
+            
+            welcomeTimer = setInterval(() => {
+                welcomeSeconds--;
+                
+                // Update timer display
+                const minutes = Math.floor(welcomeSeconds / 60);
+                const seconds = welcomeSeconds % 60;
+                timerCount.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+                
+                // Update progress bar
+                const progressPercent = ((120 - welcomeSeconds) / 120) * 100;
+                timerProgress.style.width = `${progressPercent}%`;
+                
+                // Auto-close when timer reaches 0
+                if (welcomeSeconds <= 0) {
+                    closeWelcomeOverlay();
+                }
+            }, 1000);
+        }
+
+        // Show welcome overlay when page loads
+        window.addEventListener('load', function() {
+            // Show after a brief delay for better UX
+            setTimeout(showWelcomeOverlay, 1000);
         });
 
-        // === OFFLINE DETECTION ===
-        window.addEventListener('offline', () => {
-            document.getElementById('offline-toast').style.display = 'block';
-            setTimeout(() => document.getElementById('offline-toast').style.display = 'none', 6000);
-        });
-        window.addEventListener('online', () => {
-            document.getElementById('offline-toast').style.display = 'none';
+        // Close with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const overlay = document.getElementById('welcomeOverlay');
+                if (overlay && overlay.classList.contains('active')) {
+                    closeWelcomeOverlay();
+                }
+            }
         });
 
-        // Gallery Slideshow Variables
+        // Also close if clicking outside the content
+        document.getElementById('welcomeOverlay').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeWelcomeOverlay();
+            }
+        });
+
+        // Make function globally available
+        window.closeWelcomeOverlay = closeWelcomeOverlay;
+
+        // === COMPLETED FUNCTIONS ===
+        
+        // UI Toggles - COMPLETED
+        function toggleMenu() { 
+            document.getElementById('menu-overlay').classList.toggle('active');
+        }
+
+        function closeMenuOnOverlay(event) {
+            if (event.target.id === 'menu-overlay') {
+                toggleMenu();
+            }
+        }
+
+        function toggleSearch() {
+            const modal = document.getElementById('search-modal');
+            modal.classList.toggle('active');
+            if (modal.classList.contains('active')) {
+                document.getElementById('searchInput').focus();
+            }
+        }
+
+        function closeSearchOnOverlay(event) {
+            if (event.target.id === 'search-modal') {
+                toggleSearch();
+            }
+        }
+
+        function handleSearch(event) {
+            if (event.key === 'Enter') {
+                performSearch();
+            }
+        }
+
+        // === QUOTE MANAGEMENT SYSTEM ===
+        class QuoteManager {
+            constructor() {
+                this.quotes = [];
+                this.loadQuotes();
+            }
+
+            loadQuotes() {
+                // 40+ educational and motivational quotes
+                this.quotes = [
+                    {
+                        text: "Education is the most powerful weapon which you can use to change the world.",
+                        author: "Nelson Mandela",
+                        title: "Change the World 🌍"
+                    },
+                    {
+                        text: "The beautiful thing about learning is that no one can take it away from you.",
+                        author: "B.B. King",
+                        title: "Keep Learning 📚"
+                    },
+                    {
+                        text: "It always seems impossible until it is done.",
+                        author: "Nelson Mandela",
+                        title: "Aim High 🚀"
+                    },
+                    {
+                        text: "The function of education is to teach one to think intensively and to think critically. Intelligence plus character – that is the goal of true education.",
+                        author: "Martin Luther King Jr.",
+                        title: "Think Critically 🧠"
+                    },
+                    {
+                        text: "Live as if you were to die tomorrow. Learn as if you were to live forever.",
+                        author: "Mahatma Gandhi",
+                        title: "Live & Learn 💫"
+                    },
+                    {
+                        text: "Education is not preparation for life; education is life itself.",
+                        author: "John Dewey",
+                        title: "Education is Life 🎓"
+                    },
+                    {
+                        text: "The roots of education are bitter, but the fruit is sweet.",
+                        author: "Aristotle",
+                        title: "Sweet Fruits 🍎"
+                    },
+                    {
+                        text: "Education is the key to unlocking the world, a passport to freedom.",
+                        author: "Oprah Winfrey",
+                        title: "Unlock Freedom 🔑"
+                    },
+                    {
+                        text: "The mind is not a vessel to be filled, but a fire to be kindled.",
+                        author: "Plutarch",
+                        title: "Kindle Minds 🔥"
+                    },
+                    {
+                        text: "Develop a passion for learning. If you do, you will never cease to grow.",
+                        author: "Anthony J. D'Angelo",
+                        title: "Grow Passionately 🌱"
+                    },
+                    {
+                        text: "Education is not the filling of a pail, but the lighting of a fire.",
+                        author: "William Butler Yeats",
+                        title: "Light the Fire 🕯️"
+                    },
+                    {
+                        text: "The capacity to learn is a gift; the ability to learn is a skill; the willingness to learn is a choice.",
+                        author: "Brian Herbert",
+                        title: "Choose to Learn 🤔"
+                    },
+                    {
+                        text: "Education is the movement from darkness to light.",
+                        author: "Allan Bloom",
+                        title: "From Darkness to Light ☀️"
+                    },
+                    {
+                        text: "Learning is not attained by chance, it must be sought for with ardor and diligence.",
+                        author: "Abigail Adams",
+                        title: "Seek Diligently 🔍"
+                    },
+                    {
+                        text: "The more that you read, the more things you will know. The more that you learn, the more places you'll go.",
+                        author: "Dr. Seuss",
+                        title: "Read & Explore 🌎"
+                    },
+                    {
+                        text: "Education breeds confidence. Confidence breeds hope. Hope breeds peace.",
+                        author: "Confucius",
+                        title: "Breed Peace ✌️"
+                    },
+                    {
+                        text: "Knowledge is power. Information is liberating. Education is the premise of progress, in every society, in every family.",
+                        author: "Kofi Annan",
+                        title: "Power of Knowledge 💪"
+                    },
+                    {
+                        text: "The aim of education should be to teach us how to think, rather than what to think.",
+                        author: "James Beattie",
+                        title: "Teach Thinking 🤔"
+                    },
+                    {
+                        text: "Education is not just about going to school and getting a degree. It's about widening your knowledge and absorbing the truth about life.",
+                        author: "Shakuntala Devi",
+                        title: "Widen Knowledge 📖"
+                    },
+                    {
+                        text: "Don't let what you cannot do interfere with what you can do.",
+                        author: "John Wooden",
+                        title: "Focus on Ability ✨"
+                    },
+                    {
+                        text: "Success is not the key to happiness. Happiness is the key to success.",
+                        author: "Albert Schweitzer",
+                        title: "Find Happiness 😊"
+                    },
+                    {
+                        text: "The only person who is educated is the one who has learned how to learn and change.",
+                        author: "Carl Rogers",
+                        title: "Learn to Change 🔄"
+                    },
+                    {
+                        text: "Wisdom is not a product of schooling but of the lifelong attempt to acquire it.",
+                        author: "Albert Einstein",
+                        title: "Seek Wisdom 🦉"
+                    },
+                    {
+                        text: "Education is the foundation upon which we build our future.",
+                        author: "Christine Gregoire",
+                        title: "Build Foundation 🏗️"
+                    },
+                    {
+                        text: "Your education is a dress rehearsal for a life that is yours to lead.",
+                        author: "Nora Ephron",
+                        title: "Dress Rehearsal 🎭"
+                    },
+                    {
+                        text: "The beautiful thing about learning is that you can never exhaust it.",
+                        author: "Unknown",
+                        title: "Endless Learning ♾️"
+                    },
+                    {
+                        text: "Education is the best provision for old age.",
+                        author: "Aristotle",
+                        title: "Plan Ahead 👵👴"
+                    },
+                    {
+                        text: "A well-educated mind will always have more questions than answers.",
+                        author: "Helen Keller",
+                        title: "Ask Questions ❓"
+                    },
+                    {
+                        text: "The journey of a thousand miles begins with a single step.",
+                        author: "Lao Tzu",
+                        title: "Start Your Journey 🚶"
+                    },
+                    {
+                        text: "Believe you can and you're halfway there.",
+                        author: "Theodore Roosevelt",
+                        title: "Believe & Achieve 🎯"
+                    },
+                    {
+                        text: "The future belongs to those who believe in the beauty of their dreams.",
+                        author: "Eleanor Roosevelt",
+                        title: "Dream Big 💭"
+                    },
+                    {
+                        text: "Education is not received. It is achieved.",
+                        author: "Unknown",
+                        title: "Achieve Education 🏆"
+                    },
+                    {
+                        text: "Learning is a treasure that will follow its owner everywhere.",
+                        author: "Chinese Proverb",
+                        title: "Treasure Learning 💎"
+                    },
+                    {
+                        text: "The expert in anything was once a beginner.",
+                        author: "Helen Hayes",
+                        title: "Start Beginner 👶"
+                    },
+                    {
+                        text: "Education is the ability to listen to almost anything without losing your temper.",
+                        author: "Robert Frost",
+                        title: "Listen Calmly 👂"
+                    },
+                    {
+                        text: "You don't have to be great to start, but you have to start to be great.",
+                        author: "Zig Ziglar",
+                        title: "Start Now 🚀"
+                    },
+                    {
+                        text: "The only true wisdom is in knowing you know nothing.",
+                        author: "Socrates",
+                        title: "Wisdom in Humility 🙇"
+                    },
+                    {
+                        text: "Success is stumbling from failure to failure with no loss of enthusiasm.",
+                        author: "Winston Churchill",
+                        title: "Persist with Enthusiasm 💥"
+                    },
+                    {
+                        text: "Don't watch the clock; do what it does. Keep going.",
+                        author: "Sam Levenson",
+                        title: "Keep Going ⏰"
+                    },
+                    {
+                        text: "The secret of getting ahead is getting started.",
+                        author: "Mark Twain",
+                        title: "Get Started 🏁"
+                    },
+                    {
+                        text: "Quality is not an act, it is a habit.",
+                        author: "Aristotle",
+                        title: "Build Habits 📝"
+                    }
+                ];
+            }
+
+            getRandomQuote() {
+                return this.quotes[Math.floor(Math.random() * this.quotes.length)];
+            }
+
+            getQuoteByIndex(index) {
+                return this.quotes[index % this.quotes.length];
+            }
+
+            getAllQuotes() {
+                return this.quotes;
+            }
+
+            getQuoteCount() {
+                return this.quotes.length;
+            }
+        }
+
+        // Initialize quote manager
+        const quoteManager = new QuoteManager();
+
+        // === ENHANCED WELCOME BANNER WITH QUOTES ===
+        let currentQuoteIndex = 0;
+        let quoteInterval;
+
+        function initQuoteSlideshow() {
+            const welcomeBanner = document.getElementById('welcome-banner');
+            
+            // Create slides for all quotes
+            const quotes = quoteManager.getAllQuotes();
+            quotes.forEach((quote, index) => {
+                const slide = document.createElement('div');
+                slide.className = `banner-slide ${index === 0 ? 'active' : ''}`;
+                slide.id = `quote-slide-${index}`;
+                slide.innerHTML = `
+                    <h2>${quote.title}</h2>
+                    <p>"${quote.text}"</p>
+                    <span class="quote-author">- ${quote.author}</span>
+                `;
+                welcomeBanner.appendChild(slide);
+            });
+
+            // Add quote navigation
+            addQuoteNavigation();
+            
+            // Add view all quotes button
+            addViewAllQuotesButton();
+            
+            // Start slideshow
+            startQuoteSlideshow();
+        }
+
+        function showQuoteSlide(index) {
+            const slides = document.querySelectorAll('.banner-slide');
+            const totalSlides = slides.length;
+            
+            if (totalSlides === 0) return;
+            
+            currentQuoteIndex = (index + totalSlides) % totalSlides;
+            
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active');
+                if (i === currentQuoteIndex) {
+                    slide.classList.add('active');
+                }
+            });
+            
+            // Update counter
+            updateQuoteCounter();
+        }
+
+        function nextQuoteSlide() {
+            showQuoteSlide(currentQuoteIndex + 1);
+        }
+
+        function previousQuoteSlide() {
+            showQuoteSlide(currentQuoteIndex - 1);
+        }
+
+        function startQuoteSlideshow() {
+            stopQuoteSlideshow();
+            // Change quote every 10 seconds
+            quoteInterval = setInterval(nextQuoteSlide, 10000);
+        }
+
+        function stopQuoteSlideshow() {
+            if (quoteInterval) {
+                clearInterval(quoteInterval);
+                quoteInterval = null;
+            }
+        }
+
+        function addQuoteNavigation() {
+            const welcomeBanner = document.getElementById('welcome-banner');
+            
+            // Create navigation container
+            const nav = document.createElement('div');
+            nav.className = 'quote-nav';
+            
+            // Create previous button
+            const prevBtn = document.createElement('button');
+            prevBtn.innerHTML = '◀';
+            prevBtn.onclick = (e) => {
+                e.stopPropagation();
+                previousQuoteSlide();
+                startQuoteSlideshow();
+            };
+            
+            // Create pause/play button
+            const playBtn = document.createElement('button');
+            playBtn.innerHTML = '⏸';
+            playBtn.onclick = (e) => {
+                e.stopPropagation();
+                if (quoteInterval) {
+                    stopQuoteSlideshow();
+                    playBtn.innerHTML = '▶';
+                } else {
+                    startQuoteSlideshow();
+                    playBtn.innerHTML = '⏸';
+                }
+            };
+            
+            // Create quote counter
+            const counter = document.createElement('div');
+            counter.innerHTML = `Quote: <span id="quote-counter">1</span>/${quoteManager.getQuoteCount()}`;
+            
+            // Create next button
+            const nextBtn = document.createElement('button');
+            nextBtn.innerHTML = '▶';
+            nextBtn.onclick = (e) => {
+                e.stopPropagation();
+                nextQuoteSlide();
+                startQuoteSlideshow();
+            };
+            
+            // Add to navigation
+            nav.appendChild(prevBtn);
+            nav.appendChild(playBtn);
+            nav.appendChild(counter);
+            nav.appendChild(nextBtn);
+            welcomeBanner.appendChild(nav);
+        }
+
+        function updateQuoteCounter() {
+            const counter = document.getElementById('quote-counter');
+            if (counter) {
+                counter.textContent = currentQuoteIndex + 1;
+            }
+        }
+
+        function addViewAllQuotesButton() {
+            const welcomeBanner = document.getElementById('welcome-banner');
+            
+            const button = document.createElement('button');
+            button.className = 'view-all-quotes-btn';
+            button.innerHTML = '📚 View All Quotes';
+            button.onclick = showAllQuotesModal;
+            welcomeBanner.appendChild(button);
+        }
+
+        function showAllQuotesModal() {
+            const modal = document.createElement('div');
+            modal.id = 'quotes-modal';
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0,0,0,0.9);
+                backdrop-filter: blur(20px);
+                z-index: 9999;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                padding: 20px;
+                overflow-y: auto;
+            `;
+            
+            const content = document.createElement('div');
+            content.style.cssText = `
+                background: var(--white);
+                border-radius: 20px;
+                padding: 2rem;
+                max-width: 800px;
+                width: 100%;
+                max-height: 80vh;
+                overflow-y: auto;
+                box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            `;
+            
+            const header = document.createElement('div');
+            header.style.cssText = `
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 2rem;
+                padding-bottom: 1rem;
+                border-bottom: 2px solid var(--primary-light);
+            `;
+            
+            header.innerHTML = `
+                <h2 style="color: var(--primary-green); font-size: 1.8rem;">
+                    📚 ${quoteManager.getQuoteCount()} Inspirational Quotes
+                </h2>
+                <button onclick="closeQuotesModal()" style="
+                    background: var(--primary-green);
+                    color: white;
+                    border: none;
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    cursor: pointer;
+                    font-size: 1.5rem;
+                ">×</button>
+            `;
+            
+            const quotesGrid = document.createElement('div');
+            quotesGrid.style.cssText = `
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+                gap: 1.5rem;
+                margin-top: 1rem;
+            `;
+            
+            quoteManager.getAllQuotes().forEach((quote, index) => {
+                const quoteCard = document.createElement('div');
+                quoteCard.style.cssText = `
+                    background: ${index === currentQuoteIndex ? 'var(--primary-light)' : 'var(--light-gray)'};
+                    padding: 1.5rem;
+                    border-radius: 16px;
+                    border-left: 4px solid var(--primary-green);
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+                    transition: all 0.3s ease;
+                    cursor: pointer;
+                `;
+                quoteCard.onmouseenter = () => quoteCard.style.transform = 'translateY(-5px)';
+                quoteCard.onmouseleave = () => quoteCard.style.transform = 'translateY(0)';
+                quoteCard.onclick = () => {
+                    showQuoteSlide(index);
+                    closeQuotesModal();
+                    startQuoteSlideshow();
+                };
+                
+                quoteCard.innerHTML = `
+                    <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px;">
+                        <span style="
+                            background: var(--primary-green);
+                            color: white;
+                            width: 30px;
+                            height: 30px;
+                            border-radius: 50%;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            font-weight: bold;
+                            flex-shrink: 0;
+                        ">${index + 1}</span>
+                        <h3 style="color: var(--text-dark); font-size: 1.1rem; margin: 0;">${quote.title}</h3>
+                    </div>
+                    <p style="color: var(--text-medium); font-style: italic; margin: 10px 0; line-height: 1.6;">
+                        "${quote.text}"
+                    </p>
+                    <p style="color: var(--primary-green); font-weight: 600; text-align: right; margin-top: 10px;">
+                        - ${quote.author}
+                    </p>
+                `;
+                
+                quotesGrid.appendChild(quoteCard);
+            });
+            
+            content.appendChild(header);
+            content.appendChild(quotesGrid);
+            modal.appendChild(content);
+            document.body.appendChild(modal);
+        }
+
+        function closeQuotesModal() {
+            const modal = document.getElementById('quotes-modal');
+            if (modal) {
+                modal.remove();
+            }
+        }
+
+        // === GALLERY SLIDESHOW FUNCTIONS ===
         let currentGallerySlide = 0;
-        const totalGallerySlides = 19;
+        const totalGallerySlides = 15;
 
-        // Gallery Slideshow Functions
         function showGallerySlide(index) {
             const slides = document.querySelectorAll('.gallery-slide');
             const indicators = document.querySelectorAll('.gallery-indicator');
@@ -2748,212 +4274,109 @@
         // Auto-advance gallery every 4 seconds
         setInterval(autoAdvanceGallery, 4000);
 
-        // Current Slide Index for Banner
-        let currentSlide = 0;
-        const totalSlides = 7;
-
-        // Update Date/Time Display
-        function updateDateTime() {
-            const now = new Date();
-            const options = { 
-                weekday: 'short', 
-                year: 'numeric', 
-                month: 'short', 
-                day: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
-            };
-            const dateTimeString = now.toLocaleDateString('en-US', options);
-            const displayElement = document.getElementById('datetime-display');
-            if (displayElement) {
-                displayElement.textContent = dateTimeString;
-            }
-        }
-
-        // Calculate Time Ago
-        function getTimeAgo(dateString) {
-            const postDate = new Date(dateString);
-            const now = new Date();
-            const diffMs = now - postDate;
-            const diffMins = Math.floor(diffMs / 60000);
-            const diffHours = Math.floor(diffMs / 3600000);
-            const diffDays = Math.floor(diffMs / 86400000);
-            const diffWeeks = Math.floor(diffMs / 604800000);
-
-            if (diffMins < 1) return 'Just now';
-            if (diffMins < 60) return `${diffMins} minute${diffMins > 1 ? 's' : ''} ago`;
-            if (diffHours < 24) return `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`;
-            if (diffDays < 7) return `${diffDays} day${diffDays > 1 ? 's' : ''} ago`;
-            if (diffWeeks < 4) return `${diffWeeks} week${diffWeeks > 1 ? 's' : ''} ago`;
+        // === BROWSER COMPATIBILITY CHECK ===
+        (function checkCompatibility() {
+            const warnings = [];
             
-            return postDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-        }
-
-        // Update All Announcement Times
-        function updateAnnouncementTimes() {
-            const announcementTimes = document.querySelectorAll('.announcement-time');
-            announcementTimes.forEach(element => {
-                const dateString = element.getAttribute('data-date');
-                if (dateString) {
-                    element.textContent = 'Posted ' + getTimeAgo(dateString);
-                }
-            });
-        }
-
-        // Banner Slideshow
-        function showSlide(index) {
-            const slides = document.querySelectorAll('.banner-slide');
-            slides.forEach((slide, i) => {
-                slide.classList.remove('active');
-                if (i === index) {
-                    slide.classList.add('active');
-                }
-            });
-        }
-
-        function nextSlide() {
-            currentSlide = (currentSlide + 1) % totalSlides;
-            showSlide(currentSlide);
-        }
-
-        // Auto-advance banner every 10 seconds
-        setInterval(nextSlide, 5000);
-
-        // Tab Switching
-        function switchTab(tabName) {
-            document.querySelectorAll('.menu-page').forEach(page => page.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.admin-panel').forEach(panel => panel.classList.remove('active'));
-            document.querySelectorAll('.tab-button').forEach(button => button.classList.remove('active'));
-
-            const activeContent = document.getElementById(tabName);
-            if (activeContent) activeContent.classList.add('active');
-
-            const activeButton = document.getElementById('btn-' + tabName);
-            if (activeButton) activeButton.classList.add('active');
-
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // Show Menu Pages
-        function showPage(pageName) {
-            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.menu-page').forEach(page => page.classList.remove('active'));
-            document.querySelectorAll('.admin-panel').forEach(panel => panel.classList.remove('active'));
-            document.querySelectorAll('.tab-button').forEach(button => button.classList.remove('active'));
-
-            const activePage = document.getElementById(pageName);
-            if (activePage) activePage.classList.add('active');
+            if (!('serviceWorker' in navigator)) {
+                console.warn('Service Worker not supported - offline features limited');
+                warnings.push('Service Workers');
+            }
             
-            const activeButton = document.getElementById('btn-' + pageName);
-            if (activeButton) activeButton.classList.add('active');
-
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // Toggle Menu
-        function toggleMenu() {
-            document.getElementById('menu-overlay').classList.toggle('active');
-        }
-
-        // Close Menu on Overlay Click
-        function closeMenuOnOverlay(event) {
-            if (event.target.id === 'menu-overlay') toggleMenu();
-        }
-
-        // Toggle Search Modal
-        function toggleSearch() {
-            const modal = document.getElementById('search-modal');
-            modal.classList.toggle('active');
-            if (modal.classList.contains('active')) {
-                setTimeout(() => modal.querySelector('.search-input').focus(), 100);
+            if (!('indexedDB' in window)) {
+                console.warn('IndexedDB not supported - local storage features limited');
+                warnings.push('IndexedDB');
             }
-        }
-
-        // Close Search on Overlay Click
-        function closeSearchOnOverlay(event) {
-            if (event.target.id === 'search-modal') toggleSearch();
-        }
-
-        // Handle Search
-        function handleSearch(event) {
-            const query = event.target.value.toLowerCase();
-            if (event.key === 'Enter' && query) {
-                alert('🔍 Searching for: ' + query + '\n\nSearch functionality will be fully implemented in production!');
+            
+            if (!window.fetch) {
+                console.warn('Fetch API not supported');
+                warnings.push('Fetch API');
             }
-        }
+            
+            if (warnings.length > 0) {
+                const warningEl = document.getElementById('compatWarning');
+                warningEl.classList.add('visible');
+                warningEl.innerHTML += '<br>Missing features: ' + warnings.join(', ');
+            }
+        })();
 
-        // Handle Upload Form
-        function handleUpload(event) {
-            event.preventDefault();
-            const button = event.target.querySelector('button');
-            const originalText = button.innerHTML;
-            button.innerHTML = '✅ Uploaded Successfully!';
-            button.style.background = 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)';
+        // === PAGE LOAD ===
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                switchTab('lower-primary');
+                initQuoteSlideshow();
+            }, 300);
+        });
+
+        // Scroll to Top Button
+        const scrollTopBtn = document.getElementById('scrollTopBtn');
+        
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+        });
+        
+        scrollTopBtn.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Notification system
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            const messageEl = document.getElementById('notificationMessage');
+            
+            messageEl.textContent = message;
+            notification.style.display = 'block';
             
             setTimeout(() => {
-                button.innerHTML = originalText;
-                button.style.background = 'linear-gradient(135deg, #0B8F4A 0%, #05A854 100%)';
-                event.target.reset();
-                alert('🎉 Video uploaded successfully!\n\nIn production, this would save to the database.');
-            }, 2000);
+                notification.style.display = 'none';
+            }, 3000);
         }
 
-        // Start Quiz Function - Now opens the quiz platform
-        function startQuiz(subject) {
-            window.open('https://stephen-daniels.github.io/PANIN.com/wexquiz.html', '_blank');
-        }
+        // Print Function
+        window.printContent = function() {
+            window.print();
+        };
 
-        // Play Video Function
-        function playVideo(videoSrc) {
-            alert('Playing video: ' + videoSrc + '\n\nIn production, this would open the video player.');
-        }
-
-        // Admin Panel Functions
-        function openAdminModal(type) {
-            const modal = document.getElementById('admin-modal');
-            const title = document.getElementById('admin-modal-title');
-            const content = document.getElementById('admin-modal-content');
-            
-            const modals = {
-                'users': {
-                    title: 'Manage Users',
-                    content: '<p>User management interface would appear here.</p><button style="padding: 0.5rem 1rem; background: #0B8F4A; color: white; border: none; border-radius: 8px; margin: 0.5rem 0; cursor: pointer;">Add New User</button><br><button style="padding: 0.5rem 1rem; background: #f59e0b; color: white; border: none; border-radius: 8px; margin: 0.5rem 0; cursor: pointer;">Edit Permissions</button>'
-                },
-                'content': {
-                    title: 'Approve Content',
-                    content: '<p>12 items pending approval</p><ul style="margin: 1rem 0; padding-left: 1.5rem;"><li>Math Video - Grade 4</li><li>Science Quiz - JHS</li><li>English Worksheet</li></ul>'
-                },
-                'analytics': {
-                    title: 'Analytics Dashboard',
-                    content: '<p>Platform Statistics:</p><ul style="margin: 1rem 0; padding-left: 1.5rem;"><li>Active Users: 428</li><li>Total Views: 12,847</li><li>Completion Rate: 78%</li></ul>'
-                },
-                'broadcast': {
-                    title: 'Broadcast Message',
-                    content: '<textarea placeholder="Enter broadcast message..." style="width: 100%; height: 100px; padding: 0.5rem; margin: 0.5rem 0; border: 1px solid #ccc; border-radius: 8px;"></textarea><button style="padding: 0.5rem 1rem; background: #0B8F4A; color: white; border: none; border-radius: 8px; cursor: pointer;">Send Broadcast</button>'
-                },
-                'backup': {
-                    title: 'System Backup',
-                    content: '<p>Last Backup: Today, 02:30 AM</p><button style="padding: 0.5rem 1rem; background: #0B8F4A; color: white; border: none; border-radius: 8px; margin: 0.5rem 0; cursor: pointer;">Backup Now</button><br><button style="padding: 0.5rem 1rem; background: #f59e0b; color: white; border: none; border-radius: 8px; margin: 0.5rem 0; cursor: pointer;">Restore Backup</button>'
-                },
-                'settings': {
-                    title: 'System Settings',
-                    content: '<p>Platform Configuration:</p><ul style="margin: 1rem 0; padding-left: 1.5rem;"><li><label><input type="checkbox" checked> Enable Uploads</label></li><li><label><input type="checkbox" checked> Enable Comments</label></li><li><label><input type="checkbox"> Maintenance Mode</label></li></ul>'
-                }
-            };
-            
-            if (modals[type]) {
-                title.textContent = modals[type].title;
-                content.innerHTML = modals[type].content;
-                modal.style.display = 'flex';
+        // Search function
+        function performSearch() {
+            const searchTerm = document.getElementById('searchInput').value;
+            if (searchTerm.trim()) {
+                showNotification(`Searching for: "${searchTerm}"\n\nIn a real implementation, this would search through:\n- Student records\n- Course content\n- System features\n- Help documentation`);
+                toggleSearch();
             }
         }
 
-        function closeAdminModal() {
-            document.getElementById('admin-modal').style.display = 'none';
-        }
+        // Keyboard Navigation
+        document.addEventListener('keydown', function(e) {
+            // ESC closes modals
+            if (e.key === 'Escape') {
+                const modal = document.getElementById('search-modal');
+                if (modal.classList.contains('active')) {
+                    toggleSearch();
+                }
+                closeQuotesModal();
+                closeAdminModal();
+                const overlay = document.getElementById('welcomeOverlay');
+                if (overlay && overlay.classList.contains('active')) {
+                    closeWelcomeOverlay();
+                }
+            }
+            
+            // Ctrl+S focuses search
+            if (e.ctrlKey && e.key === 's') {
+                e.preventDefault();
+                toggleSearch();
+            }
+        });
 
-        // Offline Functionality
+        // Update Online Status
         function updateOnlineStatus() {
             const offlineStatus = document.getElementById('offlineStatus');
             if (navigator.onLine) {
@@ -2969,67 +4392,272 @@
             }
         }
 
-        // Cache important resources for offline use
-        function cacheResources() {
-            if ('caches' in window) {
-                caches.open('wexford-edu-v1').then(cache => {
-                    return cache.addAll([
-                        '/',
-                        'WEX LOGO.jpg',
-                        'Eva.jpg',
-                        'bs2.jpg',
-                        'BS6.jpg',
-                        'quiz.jpg',
-                        'Wor.jpg',
-                        'new.mp4',
-                        'multi-base.mp4'
-                    ]);
-                });
+        // PWA Install
+        let deferredPrompt;
+        const installBtn = document.getElementById('install-btn');
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installBtn.style.display = 'block';
+        });
+        installBtn.addEventListener('click', () => {
+            installBtn.style.display = 'none';
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
+        });
+
+        // Offline Detection
+        window.addEventListener('offline', () => {
+            document.getElementById('offline-toast').style.display = 'block';
+            setTimeout(() => document.getElementById('offline-toast').style.display = 'none', 6000);
+            updateOnlineStatus();
+        });
+        window.addEventListener('online', () => {
+            document.getElementById('offline-toast').style.display = 'none';
+            updateOnlineStatus();
+        });
+
+        // Date Display
+        function updateDateTime() {
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('en-US', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
+            const el = document.getElementById('datetime-display');
+            if (el) el.textContent = dateStr;
+        }
+        setInterval(updateDateTime, 60000); updateDateTime();
+
+        // Navigation
+        function showPage(pageId) {
+            document.querySelectorAll('.menu-page, .tab-content, .admin-panel').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-button').forEach(el => el.classList.remove('active'));
+            
+            const page = document.getElementById(pageId);
+            if (page) page.classList.add('active');
+            
+            // Highlight button (Check for exact match or generic sections)
+            const btn = document.getElementById('btn-' + pageId);
+            if (btn) btn.classList.add('active');
+            
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        function switchTab(tabId) {
+            showPage(tabId);
+        }
+
+        // Video player function
+        function playVideo(videoSrc) {
+            showNotification(`Playing video: ${videoSrc}\n\nIn a real implementation, this would open a video player.`);
+        }
+
+        // Upload form handler
+        function handleUpload(event) {
+            event.preventDefault();
+            showNotification('Video link submitted successfully! Thank you for contributing to Wexford Edu Hub.');
+            event.target.reset();
+        }
+
+        // === ADMIN PANEL FUNCTIONS ===
+        function openAdminModal(type) {
+            const modal = document.getElementById('admin-modal');
+            const title = document.getElementById('admin-modal-title');
+            const content = document.getElementById('admin-modal-content');
+            
+            const modals = {
+                'users': {
+                    title: '👥 User Management',
+                    html: `
+                        <div style="margin-bottom: 1rem;">
+                            <h4>Manage System Users</h4>
+                            <select style="width: 100%; padding: 10px; margin-bottom: 10px;">
+                                <option>All Users (512)</option>
+                                <option>Students (480)</option>
+                                <option>Teachers (48)</option>
+                                <option>Parents (300+)</option>
+                            </select>
+                            <button onclick="showNotification('User management would open here')" style="width: 100%; padding: 10px; background: var(--primary-green); color: white; border: none; border-radius: 8px; margin-top: 10px;">Open User Manager</button>
+                        </div>
+                    `
+                },
+                'content': {
+                    title: '✅ Content Approval',
+                    html: `
+                        <div style="margin-bottom: 1rem;">
+                            <h4>Pending Approvals: 12</h4>
+                            <p>New videos uploaded by teachers:</p>
+                            <ul style="margin: 10px 0; padding-left: 20px;">
+                                <li>Math Lesson - Grade 5</li>
+                                <li>Science Experiment - JHS 2</li>
+                                <li>English Grammar - Grade 4</li>
+                            </ul>
+                            <button onclick="showNotification('Content approved successfully')" style="width: 100%; padding: 10px; background: var(--primary-green); color: white; border: none; border-radius: 8px; margin-top: 10px;">Approve All</button>
+                        </div>
+                    `
+                },
+                'analytics': {
+                    title: '📊 System Analytics',
+                    html: `
+                        <div style="margin-bottom: 1rem;">
+                            <h4>Platform Statistics</h4>
+                            <div style="display: grid; gap: 10px; margin: 10px 0;">
+                                <div>Daily Active Users: <strong>428</strong></div>
+                                <div>Total Video Views: <strong>12,847</strong></div>
+                                <div>Quiz Completions: <strong>3,284</strong></div>
+                                <div>Storage Used: <strong>42.8 GB</strong></div>
+                            </div>
+                            <button onclick="showNotification('Analytics report generated')" style="width: 100%; padding: 10px; background: var(--primary-green); color: white; border: none; border-radius: 8px; margin-top: 10px;">Generate Report</button>
+                        </div>
+                    `
+                },
+                'broadcast': {
+                    title: '📢 Broadcast Message',
+                    html: `
+                        <div style="margin-bottom: 1rem;">
+                            <h4>Send Announcement</h4>
+                            <input type="text" placeholder="Message title" style="width: 100%; padding: 10px; margin-bottom: 10px;">
+                            <textarea placeholder="Message content" style="width: 100%; padding: 10px; margin-bottom: 10px; height: 100px;"></textarea>
+                            <select style="width: 100%; padding: 10px; margin-bottom: 10px;">
+                                <option>All Users</option>
+                                <option>Students Only</option>
+                                <option>Parents Only</option>
+                                <option>Staff Only</option>
+                            </select>
+                            <button onclick="showNotification('Broadcast sent to all users')" style="width: 100%; padding: 10px; background: var(--primary-green); color: white; border: none; border-radius: 8px; margin-top: 10px;">Send Broadcast</button>
+                        </div>
+                    `
+                },
+                'backup': {
+                    title: '💾 System Backup',
+                    html: `
+                        <div style="margin-bottom: 1rem;">
+                            <h4>Backup & Restore</h4>
+                            <p>Last backup: 2 hours ago</p>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0;">
+                                <button onclick="showNotification('Backup started successfully')" style="padding: 10px; background: var(--primary-green); color: white; border: none; border-radius: 8px;">Backup Now</button>
+                                <button onclick="showNotification('Restore process started')" style="padding: 10px; background: var(--warning); color: white; border: none; border-radius: 8px;">Restore</button>
+                            </div>
+                        </div>
+                    `
+                },
+                'settings': {
+                    title: '⚙️ System Settings',
+                    html: `
+                        <div style="margin-bottom: 1rem;">
+                            <h4>Platform Configuration</h4>
+                            <div style="display: grid; gap: 10px;">
+                                <label><input type="checkbox"> Maintenance Mode</label>
+                                <label><input type="checkbox" checked> Email Notifications</label>
+                                <label><input type="checkbox" checked> Auto-backup</label>
+                                <label><input type="checkbox"> Debug Mode</label>
+                            </div>
+                            <button onclick="showNotification('Settings saved successfully')" style="width: 100%; padding: 10px; background: var(--primary-green); color: white; border: none; border-radius: 8px; margin-top: 10px;">Save Settings</button>
+                        </div>
+                    `
+                }
+            };
+            
+            if (modals[type]) {
+                title.textContent = modals[type].title;
+                content.innerHTML = modals[type].html;
+                modal.style.display = 'flex';
             }
         }
 
-        // Initialize
-        window.onload = () => {
-            switchTab('lower-primary');
-            updateDateTime();
-            updateAnnouncementTimes();
-            updateOnlineStatus();
-            
-            // Set up event listeners for online/offline status
-            window.addEventListener('online', updateOnlineStatus);
-            window.addEventListener('offline', updateOnlineStatus);
-            
-            // Cache resources for offline use
-            cacheResources();
-            
-            // Update date/time every minute
-            setInterval(updateDateTime, 60000);
-            
-            // Update announcement times every minute
-            setInterval(updateAnnouncementTimes, 60000);
-        };
-
-        // Service Worker Registration for PWA (Embedded - No Extra File Needed)
-        if ('serviceWorker' in navigator) {
-            const swCode = `
-                const CACHE = 'wexford-v25';
-                const files = [
-                    '/', 'index.html',
-                    'WEX LOGO.jpg','Eva.jpg','bs2.jpg','BS6.jpg','Wor.jpg','quiz.jpg',
-                    'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;700;800;900&display=swap',
-                    'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
-                    'https://unpkg.com/aos@2.3.1/dist/aos.css',
-                    'https://unpkg.com/aos@2.3.1/dist/aos.js'
-                ];
-                self.addEventListener('install', e => e.waitUntil(caches.open(CACHE).then(c => c.addAll(files)).then(() => self.skipWaiting())));
-                self.addEventListener('fetch', e => {
-                    e.respondWith(caches.match(e.request).then(r => r || fetch(e.request).catch(() => caches.match('index.html'))));
-                });
-            `;
-            const blob = new Blob([swCode], {type: 'application/javascript'});
-            const url = URL.createObjectURL(blob);
-            navigator.serviceWorker.register(url);
+        function closeAdminModal() {
+            document.getElementById('admin-modal').style.display = 'none';
         }
+
+        // === CHAT SYSTEM ===
+        let chatMessages = [];
+        let unreadCount = 0;
+
+        function toggleChat() {
+            const chatContainer = document.getElementById('chatContainer');
+            chatContainer.classList.toggle('active');
+            
+            if (chatContainer.classList.contains('active')) {
+                unreadCount = 0;
+                document.getElementById('unreadCount').textContent = '0';
+            }
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (message) {
+                addMessage(message, 'user');
+                input.value = '';
+                
+                // Auto-reply from developer
+                setTimeout(() => {
+                    const replies = [
+                        "GLORIOUS ONE! You are dear to Jesus Christ. If you do not yet know Him as your personal Savior, I would be blessed for you to repeat this after me: <br>Lord Jesus, I accept you into my heart, be the Lord of my life, and let your face shine upon me.</br> THANK YOU FOR ACCEPTING ME.AMEN! ",
+                        "Welcome to the family of Christ, stay blessed. Type Next for any assistance.",
+                        "I'm Panin, I'm here to help! How can I assist you today?",
+                        "That's a great question! Let me check that for you.",
+                        "I understand your concern. Here's what I suggest...",
+                        "Thank you for reaching out! I'll look into that right away.",
+                        "Is there anything specific you're having trouble with?",
+                        "I can help you with that. Could you provide more details?",
+                        "I've noted your issue and will get back to you soon.",
+                        "Have you tried checking the tutorials section?",
+                        "Let me guide you through the solution step by step.",
+                        "I appreciate your feedback! We're always improving."
+                    ];
+                    const randomReply = replies[Math.floor(Math.random() * replies.length)];
+                    addMessage(randomReply, 'developer');
+                }, 1000);
+            }
+        }
+
+        function addMessage(text, sender) {
+            const messagesContainer = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+            
+            const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            
+            messageDiv.innerHTML = `
+                <div class="message-sender">${sender === 'user' ? 'You' : 'PANIN'}</div>
+                <div>${text}</div>
+                <div class="message-time">${time}</div>
+            `;
+            
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            
+            // Update unread count if chat is closed
+            if (!document.getElementById('chatContainer').classList.contains('active') && sender === 'developer') {
+                unreadCount++;
+                document.getElementById('unreadCount').textContent = unreadCount;
+            }
+        }
+
+        function handleChatInput(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        // Make functions globally available
+        window.showAllQuotesModal = showAllQuotesModal;
+        window.closeQuotesModal = closeQuotesModal;
+        window.openAdminModal = openAdminModal;
+        window.closeAdminModal = closeAdminModal;
+        window.toggleChat = toggleChat;
+        window.sendMessage = sendMessage;
+        window.handleChatInput = handleChatInput;
+        window.showPage = showPage;
+        window.switchTab = switchTab;
+        window.toggleMenu = toggleMenu;
+        window.toggleSearch = toggleSearch;
+        window.printContent = printContent;
+        window.playVideo = playVideo;
+        window.handleUpload = handleUpload;
+        window.performSearch = performSearch;
+        window.changeGallerySlide = changeGallerySlide;
+        window.setGallerySlide = setGallerySlide;
     </script>
 </body>
 </html>
