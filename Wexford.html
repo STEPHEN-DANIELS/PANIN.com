@@ -2433,36 +2433,54 @@
     </style>
 </head>
 <body>
-    <!-- Welcome Image Overlay -->
-    <div id="welcomeOverlay" class="welcome-overlay">
+ <!-- Welcome Image Overlay - CIRCULAR IMAGE VERSION -->
+<div id="welcomeOverlay" class="welcome-overlay">
+    <div class="welcome-decorations">
+        <div class="welcome-decoration">🎓</div>
+        <div class="welcome-decoration">📚</div>
+        <div class="welcome-decoration">🌟</div>
+    </div>
+    
+    <div class="welcome-content-container">
         <div class="welcome-image-container">
-            <img src="PAN.jpeg" alt="Welcome to Wexford Edu Hub" class="welcome-image" onerror="this.src='https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&q=80'">
+            <div class="welcome-image-circle">
+                <img src="PAN.jpeg" alt="Welcome to Wexford Edu Hub" class="welcome-image" onerror="this.src='https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&q=80'">
+            </div>
         </div>
         
-        <div class="welcome-message">
-            <h1 class="welcome-title">Welcome to Wexford Edu Hub! 🎓</h1>
-            <p class="welcome-subtitle">
-                Your premier destination for world-class education that works 100% offline.<br>
-                Innovation, Technology & Discipline - Empowering the next generation of leaders.
-            </p>
-            
-            <div class="encouragement-message">
-                "Every expert was once a beginner. Start your learning journey today - you have the potential to achieve greatness!"
+        <div class="welcome-message-container">
+            <div class="welcome-message-box">
+                <h1 class="welcome-title">Welcome to Wexford Edu Hub! 🎓</h1>
+                <p class="welcome-subtitle">
+                    Your premier destination for world-class education that works 100% offline.<br>
+                    Innovation, Technology & Discipline - Empowering the next generation of leaders.
+                </p>
+                
+                <div class="encouragement-message">
+                    Every expert was once a beginner. Start your learning journey today - you have the potential to achieve greatness!
+                </div>
+                
+                <div class="welcome-actions">
+                    <button class="welcome-close-btn" onclick="closeWelcomeOverlay()">
+                        <span>🚀 Begin Learning Journey</span>
+                    </button>
+                    
+                    <div class="auto-close-timer">
+                        <span>Auto-closes in:</span>
+                        <div class="timer-progress">
+                            <div class="timer-progress-fill" id="timerProgress"></div>
+                        </div>
+                        <span id="timerCount">2:00</span>
+                    </div>
+                </div>
+                
+                <div class="welcome-quote">
+                    "Education is the most powerful weapon which you can use to change the world." - Nelson Mandela
+                </div>
             </div>
-            
-            <button class="welcome-close-btn" onclick="closeWelcomeOverlay()">
-                <span>🚀 Begin Learning Journey</span>
-            </button>
-        </div>
-        
-        <div class="auto-close-timer">
-            <span>Auto-closes in:</span>
-            <div class="timer-progress">
-                <div class="timer-progress-fill" id="timerProgress"></div>
-            </div>
-            <span id="timerCount">2:00</span>
         </div>
     </div>
+</div>
 
     <!-- Compatibility Warning -->
     <div id="compatWarning" class="compat-warning">
