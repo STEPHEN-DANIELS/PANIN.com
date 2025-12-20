@@ -74,148 +74,264 @@
             overflow-x: hidden;
         }
 
-        /* Welcome Image Overlay */
+        /* ====== WELCOME OVERLAY STYLES ====== */
         .welcome-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.95);
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 10000;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
-            z-index: 9999;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.5s ease, visibility 0.5s ease;
+            justify-content: center;
             padding: 20px;
-            text-align: center;
         }
 
-        .welcome-overlay.active {
-            opacity: 1;
-            visibility: visible;
+        .welcome-decorations {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
         }
 
-        .welcome-image-container {
-            max-width: 600px;
-            width: 90%;
-            margin-bottom: 30px;
-            animation: floatImage 3s ease-in-out infinite alternate;
+        .welcome-decoration {
+            font-size: 24px;
+            opacity: 0.6;
+            animation: float 3s ease-in-out infinite;
         }
 
-        @keyframes floatImage {
-            0% {
-                transform: translateY(0px);
-            }
-            100% {
-                transform: translateY(-15px);
-            }
+        .welcome-decoration:nth-child(2) { animation-delay: 0.5s; }
+        .welcome-decoration:nth-child(3) { animation-delay: 1s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
-        .welcome-image {
+        /* Chat Message Styles */
+        .chat-message-container {
             width: 100%;
-            height: auto;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(11, 143, 74, 0.5);
-            border: 4px solid var(--primary-green);
+            max-width: 600px;
+            background: transparent;
         }
 
-        .welcome-message {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
-            backdrop-filter: blur(20px);
-            padding: 2.5rem;
+        .chat-message {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .message-avatar {
+            flex-shrink: 0;
+        }
+
+        .avatar-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid #4a90e2;
+            box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .avatar-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .message-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .message-bubble {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
             border-radius: 20px;
-            max-width: 600px;
-            width: 90%;
-            border: 2px solid rgba(11, 143, 74, 0.3);
-            margin-bottom: 30px;
-            animation: fadeInUp 0.8s ease-out 0.5s both;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .message-bubble::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #4a90e2, #67b26f, #f8e71c);
+            border-radius: 20px 20px 0 0;
+        }
+
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .message-sender {
+            font-weight: bold;
+            color: #fff;
+            font-size: 16px;
+        }
+
+        .message-time {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 12px;
+        }
+
+        .message-text {
+            color: #fff;
+            line-height: 1.6;
         }
 
         .welcome-title {
-            font-size: 2.5rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 1rem;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            color: #4a90e2;
+            font-size: 22px;
+            margin-bottom: 15px;
+            font-weight: bold;
         }
 
         .welcome-subtitle {
-            font-size: 1.2rem;
-            color: var(--white);
-            margin-bottom: 1.5rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 20px;
             line-height: 1.6;
-            opacity: 0.9;
         }
 
         .encouragement-message {
-            font-size: 1.1rem;
+            background: rgba(74, 144, 226, 0.15);
+            border-left: 4px solid #4a90e2;
+            padding: 12px 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+            color: #fff;
             font-style: italic;
-            color: #FFD700;
-            margin: 1.5rem 0;
-            padding: 1rem;
-            border-left: 4px solid #FFD700;
-            background: rgba(255, 215, 0, 0.1);
-            border-radius: 10px;
+        }
+
+        .welcome-quote {
+            color: rgba(255, 255, 255, 0.8);
+            font-style: italic;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        .message-actions {
+            margin-top: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
         }
 
         .welcome-close-btn {
-            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
+            background: linear-gradient(135deg, #4a90e2 0%, #67b26f 100%);
             color: white;
             border: none;
-            padding: 1rem 2.5rem;
-            font-size: 1.1rem;
-            font-weight: 700;
+            padding: 14px 28px;
             border-radius: 50px;
+            font-size: 16px;
+            font-weight: bold;
             cursor: pointer;
-            margin-top: 1rem;
             transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(11, 143, 74, 0.4);
-            font-family: 'Poppins', sans-serif;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .welcome-close-btn:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 15px 40px rgba(11, 143, 74, 0.6);
-        }
-
-        .auto-close-timer {
-            margin-top: 20px;
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 0.9rem;
+            box-shadow: 0 4px 15px rgba(74, 144, 226, 0.4);
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
+            width: 100%;
+        }
+
+        .welcome-close-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(74, 144, 226, 0.6);
+        }
+
+        .welcome-close-btn:active {
+            transform: translateY(0);
+        }
+
+        .auto-close-timer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 14px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
         }
 
         .timer-progress {
             width: 100px;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 2px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
             overflow: hidden;
-            position: relative;
         }
 
         .timer-progress-fill {
-            position: absolute;
-            top: 0;
-            left: 0;
             height: 100%;
-            background: linear-gradient(135deg, #0B8F4A 0%, #05A854 100%);
-            border-radius: 2px;
-            transition: width 1s linear;
+            background: linear-gradient(90deg, #4a90e2, #67b26f);
+            width: 100%;
+            border-radius: 3px;
+            animation: progress 120s linear forwards;
         }
+
+        @keyframes progress {
+            from { width: 100%; }
+            to { width: 0%; }
+        }
+
+        /* Responsive Design for Welcome Overlay */
+        @media (max-width: 768px) {
+            .chat-message {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            
+            .message-avatar {
+                margin-bottom: 15px;
+            }
+            
+            .avatar-circle {
+                width: 80px;
+                height: 80px;
+            }
+            
+            .message-header {
+                flex-direction: column;
+                gap: 5px;
+            }
+            
+            .message-bubble {
+                padding: 20px;
+            }
+            
+            .welcome-title {
+                font-size: 20px;
+            }
+        }
+        /* ====== END WELCOME OVERLAY STYLES ====== */
 
         /* Floating Particles */
         .particles {
@@ -2433,54 +2549,64 @@
     </style>
 </head>
 <body>
- <!-- Welcome Image Overlay - CIRCULAR IMAGE VERSION -->
-<div id="welcomeOverlay" class="welcome-overlay">
-    <div class="welcome-decorations">
-        <div class="welcome-decoration">🎓</div>
-        <div class="welcome-decoration">📚</div>
-        <div class="welcome-decoration">🌟</div>
-    </div>
-    
-    <div class="welcome-content-container">
-        <div class="welcome-image-container">
-            <div class="welcome-image-circle">
-                <img src="PAN.jpeg" alt="Welcome to Wexford Edu Hub" class="welcome-image" onerror="this.src='https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&q=80'">
-            </div>
+    <!-- Welcome Overlay - Chat Message Style with Circular Image -->
+    <div id="welcomeOverlay" class="welcome-overlay">
+        <div class="welcome-decorations">
+            <div class="welcome-decoration">🎓</div>
+            <div class="welcome-decoration">📚</div>
+            <div class="welcome-decoration">🌟</div>
         </div>
         
-        <div class="welcome-message-container">
-            <div class="welcome-message-box">
-                <h1 class="welcome-title">Welcome to Wexford Edu Hub! 🎓</h1>
-                <p class="welcome-subtitle">
-                    Your premier destination for world-class education that works 100% offline.<br>
-                    Innovation, Technology & Discipline - Empowering the next generation of leaders.
-                </p>
-                
-                <div class="encouragement-message">
-                    Every expert was once a beginner. Start your learning journey today - you have the potential to achieve greatness!
-                </div>
-                
-                <div class="welcome-actions">
-                    <button class="welcome-close-btn" onclick="closeWelcomeOverlay()">
-                        <span>🚀 Begin Learning Journey</span>
-                    </button>
-                    
-                    <div class="auto-close-timer">
-                        <span>Auto-closes in:</span>
-                        <div class="timer-progress">
-                            <div class="timer-progress-fill" id="timerProgress"></div>
-                        </div>
-                        <span id="timerCount">2:00</span>
+        <div class="chat-message-container">
+            <!-- Chat message with image -->
+            <div class="chat-message">
+                <div class="message-avatar">
+                    <div class="avatar-circle">
+                        <img src="PAN.jpeg" alt="Wexford Edu Hub" class="avatar-image" onerror="this.src='https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=200&q=80'">
                     </div>
                 </div>
                 
-                <div class="welcome-quote">
-                    "Education is the most powerful weapon which you can use to change the world." - Nelson Mandela
+                <div class="message-content">
+                    <div class="message-bubble">
+                        <div class="message-header">
+                            <span class="message-sender">Wexford Edu Hub</span>
+                            <span class="message-time">Now</span>
+                        </div>
+                        
+                        <div class="message-text">
+                            <h3 class="welcome-title">Welcome to Wexford Edu Hub! 🎓</h3>
+                            <p class="welcome-subtitle">
+                                Your premier destination for world-class education that works 100% offline.<br>
+                                Innovation, Technology & Discipline - Empowering the next generation of leaders.
+                            </p>
+                            
+                            <div class="encouragement-message">
+                                Every expert was once a beginner. Start your learning journey today - you have the potential to achieve greatness!
+                            </div>
+                            
+                            <div class="welcome-quote">
+                                "Education is the most powerful weapon which you can use to change the world." - Nelson Mandela
+                            </div>
+                        </div>
+                        
+                        <div class="message-actions">
+                            <button class="welcome-close-btn" onclick="closeWelcomeOverlay()">
+                                <span>🚀 Begin Learning Journey</span>
+                            </button>
+                            
+                            <div class="auto-close-timer">
+                                <span>Auto-closes in:</span>
+                                <div class="timer-progress">
+                                    <div class="timer-progress-fill" id="timerProgress"></div>
+                                </div>
+                                <span id="timerCount">2:00</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
     <!-- Compatibility Warning -->
     <div id="compatWarning" class="compat-warning">
@@ -3626,90 +3752,52 @@
             once: true
         });
 
-        // === WELCOME OVERLAY SYSTEM ===
-        let welcomeTimer;
-        let welcomeSeconds = 120; // 2 minutes
-
-        function showWelcomeOverlay() {
-            const overlay = document.getElementById('welcomeOverlay');
-            if (!overlay) return;
-            
-            // Show overlay
-            setTimeout(() => {
-                overlay.classList.add('active');
-                document.body.style.overflow = 'hidden'; // Prevent scrolling
-            }, 500);
-            
-            // Start countdown timer
-            startWelcomeTimer();
-        }
+        // === WELCOME OVERLAY FUNCTIONS ===
+        let timerSeconds = 120;
+        let timerInterval;
 
         function closeWelcomeOverlay() {
             const overlay = document.getElementById('welcomeOverlay');
-            if (!overlay) return;
+            overlay.style.opacity = '0';
+            overlay.style.transform = 'scale(0.95)';
             
-            // Remove overlay
-            overlay.classList.remove('active');
-            document.body.style.overflow = ''; // Restore scrolling
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 300);
             
-            // Clear timer
-            clearInterval(welcomeTimer);
-            
-            // Show notification
-            showNotification('Welcome to Wexford Edu Hub! Enjoy your learning journey. 🎓');
-        }
-
-        function startWelcomeTimer() {
-            const timerCount = document.getElementById('timerCount');
-            const timerProgress = document.getElementById('timerProgress');
-            
-            // Reset timer
-            welcomeSeconds = 120;
-            
-            welcomeTimer = setInterval(() => {
-                welcomeSeconds--;
-                
-                // Update timer display
-                const minutes = Math.floor(welcomeSeconds / 60);
-                const seconds = welcomeSeconds % 60;
-                timerCount.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
-                
-                // Update progress bar
-                const progressPercent = ((120 - welcomeSeconds) / 120) * 100;
-                timerProgress.style.width = `${progressPercent}%`;
-                
-                // Auto-close when timer reaches 0
-                if (welcomeSeconds <= 0) {
-                    closeWelcomeOverlay();
-                }
-            }, 1000);
-        }
-
-        // Show welcome overlay when page loads
-        window.addEventListener('load', function() {
-            // Show after a brief delay for better UX
-            setTimeout(showWelcomeOverlay, 1000);
-        });
-
-        // Close with Escape key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                const overlay = document.getElementById('welcomeOverlay');
-                if (overlay && overlay.classList.contains('active')) {
-                    closeWelcomeOverlay();
-                }
+            // Cleanup timer
+            if (timerInterval) {
+                clearInterval(timerInterval);
             }
-        });
+        }
 
-        // Also close if clicking outside the content
-        document.getElementById('welcomeOverlay').addEventListener('click', function(e) {
-            if (e.target === this) {
+        function updateWelcomeTimer() {
+            if (timerSeconds <= 0) {
                 closeWelcomeOverlay();
+                return;
             }
-        });
+            
+            timerSeconds--;
+            const minutes = Math.floor(timerSeconds / 60);
+            const seconds = timerSeconds % 60;
+            document.getElementById('timerCount').textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            
+            const progressPercent = (timerSeconds / 120) * 100;
+            document.getElementById('timerProgress').style.width = `${progressPercent}%`;
+        }
 
-        // Make function globally available
-        window.closeWelcomeOverlay = closeWelcomeOverlay;
+        // Initialize welcome overlay
+        function initWelcomeOverlay() {
+            // Start timer
+            timerInterval = setInterval(updateWelcomeTimer, 1000);
+            
+            // Close overlay if clicked outside
+            document.getElementById('welcomeOverlay').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeWelcomeOverlay();
+                }
+            });
+        }
 
         // === COMPLETED FUNCTIONS ===
         
@@ -4323,6 +4411,7 @@
             setTimeout(() => {
                 switchTab('lower-primary');
                 initQuoteSlideshow();
+                initWelcomeOverlay(); // Initialize welcome overlay
             }, 300);
         });
 
@@ -4381,10 +4470,6 @@
                 }
                 closeQuotesModal();
                 closeAdminModal();
-                const overlay = document.getElementById('welcomeOverlay');
-                if (overlay && overlay.classList.contains('active')) {
-                    closeWelcomeOverlay();
-                }
             }
             
             // Ctrl+S focuses search
@@ -4610,18 +4695,20 @@
                 // Auto-reply from developer
                 setTimeout(() => {
                     const replies = [
-                        "GLORIOUS ONE! You are dear to Jesus Christ. If you do not yet know Him as your personal Savior, I would be blessed for you to repeat this after me: <br>Lord Jesus, I accept you into my heart, be the Lord of my life, and let your face shine upon me.</br> THANK YOU FOR ACCEPTING ME.AMEN! ",
-                        "Welcome to the family of Christ, stay blessed. Type Next for any assistance.",
-                        "I'm Panin, I'm here to help! How can I assist you today?",
-                        "That's a great question! Let me check that for you.",
-                        "I understand your concern. Here's what I suggest...",
-                        "Thank you for reaching out! I'll look into that right away.",
-                        "Is there anything specific you're having trouble with?",
-                        "I can help you with that. Could you provide more details?",
-                        "I've noted your issue and will get back to you soon.",
-                        "Have you tried checking the tutorials section?",
-                        "Let me guide you through the solution step by step.",
-                        "I appreciate your feedback! We're always improving."
+                "GLORIOUS ONE! You are dear to Jesus Christ. If you do not yet know Him as your personal Savior, I would be blessed for you to repeat this after me: <br>Lord Jesus, I accept you into my heart, be the Lord of my life, and let your face shine upon me.</br> THANK YOU FOR ACCEPTING ME.AMEN! ",
+                "Welcome to the family of Christ, stay blessed. Type Next for any assistance.",
+                "I'm Panin, I'm here to help! How can I assist you today?",
+                "That's a great question! Let me check that for you.",
+                "I understand your concern. Here's what I suggest...",
+                "Thank you for reaching out! I'll look into that right away.",
+                "Is there anything specific you're having trouble with?",
+                "I can help you with that. Could you provide more details?",
+                "I've noted your issue and will get back to you soon.",
+                "Have you tried checking the tutorials section?",
+                "Let me guide you through the solution step by step.",
+                "I appreciate your feedback! We're always improving."
+            ];
+            
                     ];
                     const randomReply = replies[Math.floor(Math.random() * replies.length)];
                     addMessage(randomReply, 'developer');
@@ -4676,6 +4763,7 @@
         window.performSearch = performSearch;
         window.changeGallerySlide = changeGallerySlide;
         window.setGallerySlide = setGallerySlide;
+        window.closeWelcomeOverlay = closeWelcomeOverlay; // Make welcome overlay function available
     </script>
 </body>
 </html>
