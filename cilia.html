@@ -4329,11 +4329,20 @@
                 // Auto-reply from developer
                 setTimeout(() => {
                     const replies = [
-                        "Thanks for your message! How can I help you today?",
-                        "I'll forward your query to the appropriate department.",
-                        "That's a great question! Let me find the right information for you.",
-                        "I've noted your concern and will get back to you shortly.",
-                        "Is there anything specific about the platform you'd like to know?"
+                "GLORIOUS ONE! You are dear to Jesus Christ. If you do not yet know Him as your personal Savior, I would be blessed for you to repeat this after me: <br>Lord Jesus, I accept you into my heart, be the Lord of my life, and let your face shine upon me.</br> THANK YOU FOR ACCEPTING ME.AMEN! ",
+                "Welcome to the family of Christ, stay blessed. Type Next for any assistance.",
+                "I'm Panin, I'm here to help! How can I assist you today?",
+                "That's a great question! Let me check that for you.",
+                "I understand your concern. Here's what I suggest...",
+                "Thank you for reaching out! I'll look into that right away.",
+                "Is there anything specific you're having trouble with?",
+                "I can help you with that. Could you provide more details?",
+                "I've noted your issue and will get back to you soon.",
+                "Have you tried checking the tutorials section?",
+                "Let me guide you through the solution step by step.",
+                "I appreciate your feedback! We're always improving."
+            ];
+            
                     ];
                     const randomReply = replies[Math.floor(Math.random() * replies.length)];
                     addMessage(randomReply, 'developer');
@@ -4349,7 +4358,7 @@
             const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
             
             messageDiv.innerHTML = `
-                <div class="message-sender">${sender === 'user' ? 'You' : 'Developer'}</div>
+                <div class="message-sender">${sender === 'user' ? 'You' : 'PANIN'}</div>
                 <div>${text}</div>
                 <div class="message-time">${time}</div>
             `;
