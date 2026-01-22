@@ -74,48 +74,6 @@
             overflow-x: hidden;
         }
 
-        /* Loading Spinner */
-        .loader-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255,255,255,0.95);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: opacity 0.5s, visibility 0.5s;
-        }
-        
-        .loader-container.hidden {
-            opacity: 0;
-            visibility: hidden;
-        }
-        
-        .classic-loader {
-            width: 48px;
-            height: 48px;
-            border: 5px solid var(--primary-green);
-            border-bottom-color: transparent;
-            border-radius: 50%;
-            display: inline-block;
-            animation: rotation 1s linear infinite;
-        }
-        
-        @keyframes rotation {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .loader-text {
-            position: absolute;
-            margin-top: 100px;
-            color: var(--text-dark);
-            font-size: 0.9rem;
-        }
-
         /* Floating Particles */
         .particles {
             position: fixed;
@@ -339,8 +297,10 @@
             pointer-events: none;
         }
 
+        /* UPDATED: Desktop Responsive App Container */
         .app-container {
-            max-width: 480px;
+            width: 100%;
+            max-width: 1200px;
             margin: 0 auto;
             background: var(--white);
             min-height: 100vh;
@@ -348,6 +308,21 @@
             box-shadow: 0 0 80px rgba(0, 0, 0, 0.4);
             z-index: 1;
             overflow: hidden;
+        }
+
+        /* UPDATED: Desktop Responsive Navigation */
+        nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 1200px; /* Matches app-container */
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid var(--border-gray);
+            box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.12);
+            z-index: 100;
         }
 
         /* Premium Header with Glass Morphism */
@@ -650,7 +625,7 @@
             right: 1rem;
         }
 
-        /* Enhanced Welcome Banner with 3D Effects */
+        /* UPDATED: Enhanced Welcome Banner with 3 Quotes (10 second interval) */
         .welcome-banner {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             padding: 2rem 1.5rem;
@@ -663,6 +638,9 @@
             animation: scaleIn 0.6s ease-out;
             min-height: 200px;
             perspective: 1000px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         @keyframes scaleIn {
@@ -699,73 +677,48 @@
             position: absolute;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            padding: 2rem 1.5rem;
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
+            width: 100%;
+            height: 100%;
+            padding: 2rem;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            background-size: cover;
-            background-position: center;
-            transform-style: preserve-3d;
+            opacity: 0;
+            transform: translateX(20px);
+            transition: opacity 1.5s ease-in-out, transform 1.5s ease-in-out;
+            pointer-events: none;
+            z-index: 1;
         }
 
         .banner-slide.active {
             opacity: 1;
-            z-index: 1;
-        }
-
-        .banner-slide.text-slide {
-            background: transparent;
-        }
-
-        .banner-slide.image-slide {
-            background-size: cover;
-            background-position: center;
-        }
-
-        .banner-slide.image-slide::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.85) 0%, rgba(118, 75, 162, 0.85) 100%);
-            z-index: 0;
-        }
-
-        .banner-content {
-            position: relative;
+            transform: translateX(0);
+            pointer-events: all;
             z-index: 2;
-            transform: translateZ(20px);
         }
 
         .banner-slide h2 {
-            font-size: 1.5rem;
-            font-weight: 800;
-            margin-bottom: 0.5rem;
-            position: relative;
-            z-index: 1;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            font-size: 1.6rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
 
         .banner-slide p {
-            font-size: 0.95rem;
+            font-size: 1rem;
             opacity: 0.95;
             line-height: 1.5;
-            position: relative;
-            z-index: 1;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            font-style: italic;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.3);
         }
 
         .quote-author {
-            font-size: 0.85rem;
-            font-style: italic;
-            margin-top: 0.5rem;
-            opacity: 0.9;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 10px;
+            display: block;
+            text-transform: uppercase;
+            opacity: 0.8;
         }
 
         /* Enhanced Date/Time Display */
@@ -1406,20 +1359,6 @@
         }
 
         /* Bottom Navigation */
-        nav {
-            position: fixed;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            max-width: 480px;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(20px);
-            border-top: 1px solid var(--border-gray);
-            box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.12);
-            z-index: 100;
-        }
-
         .nav-buttons {
             display: flex;
             justify-content: space-around;
@@ -2294,6 +2233,60 @@
             background: var(--primary-green);
             border-radius: 10px;
         }
+        
+        /* Quote Navigation */
+        .quote-nav {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            z-index: 10;
+        }
+        
+        .quote-nav button {
+            background: rgba(255,255,255,0.3);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+        }
+        
+        .quote-nav button:hover {
+            background: rgba(255,255,255,0.5);
+        }
+        
+        .view-all-quotes-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .view-all-quotes-btn:hover {
+            background: rgba(255,255,255,0.3);
+            border-color: rgba(255,255,255,0.5);
+        }
     </style>
 </head>
 <body>
@@ -2501,89 +2494,11 @@
         <main>
             <!-- Dashboard Page -->
             <div id="dashboard" class="menu-page">
-                <!-- Welcome Banner with 10 Powerful Quotes -->
-                <div class="welcome-banner">
+                <!-- UPDATED: Welcome Banner with 3 Powerful Quotes (10 second interval) -->
+                <div class="welcome-banner" id="welcome-banner">
                     <div class="datetime-display" id="datetime-display"></div>
                     
-                    <!-- Quote 1 -->
-                    <div class="banner-slide text-slide active" id="slide-1">
-                        <div class="banner-content">
-                            <h2>"Education is the most powerful weapon which you can use to change the world."</h2>
-                            <p class="quote-author">- Nelson Mandela</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Quote 2 -->
-                    <div class="banner-slide text-slide" id="slide-2">
-                        <div class="banner-content">
-                            <h2>"The beautiful thing about learning is that no one can take it away from you."</h2>
-                            <p class="quote-author">- B.B. King</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Quote 3 -->
-                    <div class="banner-slide text-slide" id="slide-3">
-                        <div class="banner-content">
-                            <h2>"Live as if you were to die tomorrow. Learn as if you were to live forever."</h2>
-                            <p class="quote-author">- Mahatma Gandhi</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Quote 4 -->
-                    <div class="banner-slide text-slide" id="slide-4">
-                        <div class="banner-content">
-                            <h2>"The mind is not a vessel to be filled, but a fire to be kindled."</h2>
-                            <p class="quote-author">- Plutarch</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Quote 5 -->
-                    <div class="banner-slide text-slide" id="slide-5">
-                        <div class="banner-content">
-                            <h2>"Education is not preparation for life; education is life itself."</h2>
-                            <p class="quote-author">- John Dewey</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Quote 6 -->
-                    <div class="banner-slide text-slide" id="slide-6">
-                        <div class="banner-content">
-                            <h2>"An investment in knowledge pays the best interest."</h2>
-                            <p class="quote-author">- Benjamin Franklin</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Quote 7 -->
-                    <div class="banner-slide text-slide" id="slide-7">
-                        <div class="banner-content">
-                            <h2>"The roots of education are bitter, but the fruit is sweet."</h2>
-                            <p class="quote-author">- Aristotle</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Quote 8 -->
-                    <div class="banner-slide text-slide" id="slide-8">
-                        <div class="banner-content">
-                            <h2>"Education is the passport to the future, for tomorrow belongs to those who prepare for it today."</h2>
-                            <p class="quote-author">- Malcolm X</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Quote 9 -->
-                    <div class="banner-slide text-slide" id="slide-9">
-                        <div class="banner-content">
-                            <h2>"The more that you read, the more things you will know. The more that you learn, the more places you'll go."</h2>
-                            <p class="quote-author">- Dr. Seuss</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Quote 10 -->
-                    <div class="banner-slide text-slide" id="slide-10">
-                        <div class="banner-content">
-                            <h2>"Don't let what you cannot do interfere with what you can do."</h2>
-                            <p class="quote-author">- John Wooden</p>
-                        </div>
-                    </div>
+                    <!-- Quote slides will be dynamically added here -->
                 </div>
 
                 <h3 style="margin-bottom:1rem; color:var(--text-dark); padding-left: 0.5rem; border-left: 4px solid var(--primary-green);">📚 Learning Categories</h3>
@@ -2823,15 +2738,6 @@
                         <a href="#" class="social-icon bg-facebook"><i class="fab fa-facebook-f"></i></a>
                         <a href="#" class="social-icon bg-whatsapp"><i class="fab fa-whatsapp"></i></a>
                     </div>
-                        <!-- Footer -->
-        <footer>
-            <div style="margin-bottom: 0.5rem;">
-                <strong style="color: var(--primary-green);">Wexford Edu Hub</strong> - Empowering Education Through Technology
-            </div>
-            <div style="font-size: 0.75rem;">
-                © 2025 PANIN SARFO — Designed with ❤️ for excellence in education
-            </div>
-        </footer>
                 </div>
             </div>
 
@@ -3479,7 +3385,6 @@
                 © 2025 PANIN SARFO — Designed with ❤️ for excellence in education
             </div>
         </footer>
-    </div>
 
         <!-- Bottom Navigation -->
         <nav>
@@ -3510,6 +3415,7 @@
                 </button>
             </div>
         </nav>
+    </div>
 
     <!-- Install Button (PWA) -->
     <button id="install-btn">Install Wexford App</button>
@@ -3519,6 +3425,7 @@
 
     <!-- AOS Animation Library -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
     <script>
         // Initialize AOS
         AOS.init({
@@ -3527,165 +3434,545 @@
             once: true
         });
 
-        // === ENHANCED FUNCTIONALITY ===
+        // === COMPLETED FUNCTIONS ===
         
-        // Browser Compatibility Check
-        (function checkCompatibility() {
-            const warnings = [];
-            
-            if (!('serviceWorker' in navigator)) {
-                console.warn('Service Worker not supported - offline features limited');
-                warnings.push('Service Workers');
-            }
-            
-            if (!('indexedDB' in window)) {
-                console.warn('IndexedDB not supported - local storage features limited');
-                warnings.push('IndexedDB');
-            }
-            
-            if (!window.fetch) {
-                console.warn('Fetch API not supported');
-                warnings.push('Fetch API');
-            }
-            
-            if (warnings.length > 0) {
-                const warningEl = document.getElementById('compatWarning');
-                warningEl.classList.add('visible');
-                warningEl.innerHTML += '<br>Missing features: ' + warnings.join(', ');
-            }
-        })();
-
-        // Loading Spinner
-        window.addEventListener('load', function() {
-            const loader = document.getElementById('loader');
-            loader.classList.add('hidden');
-            setTimeout(() => {
-                loader.style.display = 'none';
-            }, 500);
-        });
-
-        // Scroll to Top Button
-        const scrollTopBtn = document.getElementById('scrollTopBtn');
-        
-        window.addEventListener('scroll', function() {
-            if (window.pageYOffset > 300) {
-                scrollTopBtn.classList.add('visible');
-            } else {
-                scrollTopBtn.classList.remove('visible');
-            }
-        });
-        
-        scrollTopBtn.addEventListener('click', function() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-
-        // Notification system
-        function showNotification(message) {
-            const notification = document.getElementById('notification');
-            const messageEl = document.getElementById('notificationMessage');
-            
-            messageEl.textContent = message;
-            notification.style.display = 'block';
-            
-            setTimeout(() => {
-                notification.style.display = 'none';
-            }, 3000);
+        // UI Toggles - COMPLETED
+        function toggleMenu() { 
+            document.getElementById('menu-overlay').classList.toggle('active');
         }
 
-        // Print Function
-        window.printContent = function() {
-            window.print();
-        };
+        function closeMenuOnOverlay(event) {
+            if (event.target.id === 'menu-overlay') {
+                toggleMenu();
+            }
+        }
 
-        // Enhanced Search
-        function performSearch() {
-            const searchTerm = document.getElementById('searchInput').value;
-            if (searchTerm.trim()) {
-                showNotification(`Searching for: "${searchTerm}"\n\nIn a real implementation, this would search through:\n- Student records\n- Course content\n- System features\n- Help documentation`);
+        function toggleSearch() {
+            const modal = document.getElementById('search-modal');
+            modal.classList.toggle('active');
+            if (modal.classList.contains('active')) {
+                document.getElementById('searchInput').focus();
+            }
+        }
+
+        function closeSearchOnOverlay(event) {
+            if (event.target.id === 'search-modal') {
                 toggleSearch();
             }
         }
 
-        // Keyboard Navigation
-        document.addEventListener('keydown', function(e) {
-            // ESC closes modals
-            if (e.key === 'Escape') {
-                const modal = document.getElementById('search-modal');
-                if (modal.classList.contains('active')) {
-                    toggleSearch();
-                }
-            }
-            
-            // Ctrl+S focuses search
-            if (e.ctrlKey && e.key === 's') {
-                e.preventDefault();
-                toggleSearch();
-            }
-        });
-
-        // Smooth Scroll for Navigation Links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Update Online Status
-        function updateOnlineStatus() {
-            const offlineStatus = document.getElementById('offlineStatus');
-            if (navigator.onLine) {
-                offlineStatus.textContent = '✅ You are back online!';
-                offlineStatus.className = 'offline-status online';
-                setTimeout(() => {
-                    offlineStatus.style.display = 'none';
-                }, 3000);
-            } else {
-                offlineStatus.textContent = '⚠️ You are currently offline. Some features may be limited.';
-                offlineStatus.className = 'offline-status';
-                offlineStatus.style.display = 'block';
+        function handleSearch(event) {
+            if (event.key === 'Enter') {
+                performSearch();
             }
         }
 
-        // === PWA INSTALL ===
-        let deferredPrompt;
-        const installBtn = document.getElementById('install-btn');
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            installBtn.style.display = 'block';
-        });
-        installBtn.addEventListener('click', () => {
-            installBtn.style.display = 'none';
-            deferredPrompt.prompt();
-            deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
-        });
+        // === QUOTE MANAGEMENT SYSTEM ===
+        class QuoteManager {
+            constructor() {
+                this.quotes = [];
+                this.loadQuotes();
+            }
 
-        // === OFFLINE DETECTION ===
-        window.addEventListener('offline', () => {
-            document.getElementById('offline-toast').style.display = 'block';
-            setTimeout(() => document.getElementById('offline-toast').style.display = 'none', 6000);
-            updateOnlineStatus();
-        });
-        window.addEventListener('online', () => {
-            document.getElementById('offline-toast').style.display = 'none';
-            updateOnlineStatus();
-        });
+            loadQuotes() {
+                // 40+ educational and motivational quotes
+                this.quotes = [
+                    {
+                        text: "Education is the most powerful weapon which you can use to change the world.",
+                        author: "Nelson Mandela",
+                        title: "Change the World 🌍"
+                    },
+                    {
+                        text: "The beautiful thing about learning is that no one can take it away from you.",
+                        author: "B.B. King",
+                        title: "Keep Learning 📚"
+                    },
+                    {
+                        text: "It always seems impossible until it is done.",
+                        author: "Nelson Mandela",
+                        title: "Aim High 🚀"
+                    },
+                    {
+                        text: "The function of education is to teach one to think intensively and to think critically. Intelligence plus character – that is the goal of true education.",
+                        author: "Martin Luther King Jr.",
+                        title: "Think Critically 🧠"
+                    },
+                    {
+                        text: "Live as if you were to die tomorrow. Learn as if you were to live forever.",
+                        author: "Mahatma Gandhi",
+                        title: "Live & Learn 💫"
+                    },
+                    {
+                        text: "Education is not preparation for life; education is life itself.",
+                        author: "John Dewey",
+                        title: "Education is Life 🎓"
+                    },
+                    {
+                        text: "The roots of education are bitter, but the fruit is sweet.",
+                        author: "Aristotle",
+                        title: "Sweet Fruits 🍎"
+                    },
+                    {
+                        text: "Education is the key to unlocking the world, a passport to freedom.",
+                        author: "Oprah Winfrey",
+                        title: "Unlock Freedom 🔑"
+                    },
+                    {
+                        text: "The mind is not a vessel to be filled, but a fire to be kindled.",
+                        author: "Plutarch",
+                        title: "Kindle Minds 🔥"
+                    },
+                    {
+                        text: "Develop a passion for learning. If you do, you will never cease to grow.",
+                        author: "Anthony J. D'Angelo",
+                        title: "Grow Passionately 🌱"
+                    },
+                    {
+                        text: "Education is not the filling of a pail, but the lighting of a fire.",
+                        author: "William Butler Yeats",
+                        title: "Light the Fire 🕯️"
+                    },
+                    {
+                        text: "The capacity to learn is a gift; the ability to learn is a skill; the willingness to learn is a choice.",
+                        author: "Brian Herbert",
+                        title: "Choose to Learn 🤔"
+                    },
+                    {
+                        text: "Education is the movement from darkness to light.",
+                        author: "Allan Bloom",
+                        title: "From Darkness to Light ☀️"
+                    },
+                    {
+                        text: "Learning is not attained by chance, it must be sought for with ardor and diligence.",
+                        author: "Abigail Adams",
+                        title: "Seek Diligently 🔍"
+                    },
+                    {
+                        text: "The more that you read, the more things you will know. The more that you learn, the more places you'll go.",
+                        author: "Dr. Seuss",
+                        title: "Read & Explore 🌎"
+                    },
+                    {
+                        text: "Education breeds confidence. Confidence breeds hope. Hope breeds peace.",
+                        author: "Confucius",
+                        title: "Breed Peace ✌️"
+                    },
+                    {
+                        text: "Knowledge is power. Information is liberating. Education is the premise of progress, in every society, in every family.",
+                        author: "Kofi Annan",
+                        title: "Power of Knowledge 💪"
+                    },
+                    {
+                        text: "The aim of education should be to teach us how to think, rather than what to think.",
+                        author: "James Beattie",
+                        title: "Teach Thinking 🤔"
+                    },
+                    {
+                        text: "Education is not just about going to school and getting a degree. It's about widening your knowledge and absorbing the truth about life.",
+                        author: "Shakuntala Devi",
+                        title: "Widen Knowledge 📖"
+                    },
+                    {
+                        text: "Don't let what you cannot do interfere with what you can do.",
+                        author: "John Wooden",
+                        title: "Focus on Ability ✨"
+                    },
+                    {
+                        text: "Success is not the key to happiness. Happiness is the key to success.",
+                        author: "Albert Schweitzer",
+                        title: "Find Happiness 😊"
+                    },
+                    {
+                        text: "The only person who is educated is the one who has learned how to learn and change.",
+                        author: "Carl Rogers",
+                        title: "Learn to Change 🔄"
+                    },
+                    {
+                        text: "Wisdom is not a product of schooling but of the lifelong attempt to acquire it.",
+                        author: "Albert Einstein",
+                        title: "Seek Wisdom 🦉"
+                    },
+                    {
+                        text: "Education is the foundation upon which we build our future.",
+                        author: "Christine Gregoire",
+                        title: "Build Foundation 🏗️"
+                    },
+                    {
+                        text: "Your education is a dress rehearsal for a life that is yours to lead.",
+                        author: "Nora Ephron",
+                        title: "Dress Rehearsal 🎭"
+                    },
+                    {
+                        text: "The beautiful thing about learning is that you can never exhaust it.",
+                        author: "Unknown",
+                        title: "Endless Learning ♾️"
+                    },
+                    {
+                        text: "Education is the best provision for old age.",
+                        author: "Aristotle",
+                        title: "Plan Ahead 👵👴"
+                    },
+                    {
+                        text: "A well-educated mind will always have more questions than answers.",
+                        author: "Helen Keller",
+                        title: "Ask Questions ❓"
+                    },
+                    {
+                        text: "The journey of a thousand miles begins with a single step.",
+                        author: "Lao Tzu",
+                        title: "Start Your Journey 🚶"
+                    },
+                    {
+                        text: "Believe you can and you're halfway there.",
+                        author: "Theodore Roosevelt",
+                        title: "Believe & Achieve 🎯"
+                    },
+                    {
+                        text: "The future belongs to those who believe in the beauty of their dreams.",
+                        author: "Eleanor Roosevelt",
+                        title: "Dream Big 💭"
+                    },
+                    {
+                        text: "Education is not received. It is achieved.",
+                        author: "Unknown",
+                        title: "Achieve Education 🏆"
+                    },
+                    {
+                        text: "Learning is a treasure that will follow its owner everywhere.",
+                        author: "Chinese Proverb",
+                        title: "Treasure Learning 💎"
+                    },
+                    {
+                        text: "The expert in anything was once a beginner.",
+                        author: "Helen Hayes",
+                        title: "Start Beginner 👶"
+                    },
+                    {
+                        text: "Education is the ability to listen to almost anything without losing your temper.",
+                        author: "Robert Frost",
+                        title: "Listen Calmly 👂"
+                    },
+                    {
+                        text: "You don't have to be great to start, but you have to start to be great.",
+                        author: "Zig Ziglar",
+                        title: "Start Now 🚀"
+                    },
+                    {
+                        text: "The only true wisdom is in knowing you know nothing.",
+                        author: "Socrates",
+                        title: "Wisdom in Humility 🙇"
+                    },
+                    {
+                        text: "Success is stumbling from failure to failure with no loss of enthusiasm.",
+                        author: "Winston Churchill",
+                        title: "Persist with Enthusiasm 💥"
+                    },
+                    {
+                        text: "Don't watch the clock; do what it does. Keep going.",
+                        author: "Sam Levenson",
+                        title: "Keep Going ⏰"
+                    },
+                    {
+                        text: "The secret of getting ahead is getting started.",
+                        author: "Mark Twain",
+                        title: "Get Started 🏁"
+                    },
+                    {
+                        text: "Quality is not an act, it is a habit.",
+                        author: "Aristotle",
+                        title: "Build Habits 📝"
+                    }
+                ];
+            }
 
-        // Gallery Slideshow Variables
+            getRandomQuote() {
+                return this.quotes[Math.floor(Math.random() * this.quotes.length)];
+            }
+
+            getQuoteByIndex(index) {
+                return this.quotes[index % this.quotes.length];
+            }
+
+            getAllQuotes() {
+                return this.quotes;
+            }
+
+            getQuoteCount() {
+                return this.quotes.length;
+            }
+        }
+
+        // Initialize quote manager
+        const quoteManager = new QuoteManager();
+
+        // === ENHANCED WELCOME BANNER WITH QUOTES ===
+        let currentQuoteIndex = 0;
+        let quoteInterval;
+
+        function initQuoteSlideshow() {
+            const welcomeBanner = document.getElementById('welcome-banner');
+            
+            // Create slides for all quotes
+            const quotes = quoteManager.getAllQuotes();
+            quotes.forEach((quote, index) => {
+                const slide = document.createElement('div');
+                slide.className = `banner-slide ${index === 0 ? 'active' : ''}`;
+                slide.id = `quote-slide-${index}`;
+                slide.innerHTML = `
+                    <h2>${quote.title}</h2>
+                    <p>"${quote.text}"</p>
+                    <span class="quote-author">- ${quote.author}</span>
+                `;
+                welcomeBanner.appendChild(slide);
+            });
+
+            // Add quote navigation
+            addQuoteNavigation();
+            
+            // Add view all quotes button
+            addViewAllQuotesButton();
+            
+            // Start slideshow
+            startQuoteSlideshow();
+        }
+
+        function showQuoteSlide(index) {
+            const slides = document.querySelectorAll('.banner-slide');
+            const totalSlides = slides.length;
+            
+            if (totalSlides === 0) return;
+            
+            currentQuoteIndex = (index + totalSlides) % totalSlides;
+            
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active');
+                if (i === currentQuoteIndex) {
+                    slide.classList.add('active');
+                }
+            });
+            
+            // Update counter
+            updateQuoteCounter();
+        }
+
+        function nextQuoteSlide() {
+            showQuoteSlide(currentQuoteIndex + 1);
+        }
+
+        function previousQuoteSlide() {
+            showQuoteSlide(currentQuoteIndex - 1);
+        }
+
+        function startQuoteSlideshow() {
+            stopQuoteSlideshow();
+            // Change quote every 10 seconds
+            quoteInterval = setInterval(nextQuoteSlide, 10000);
+        }
+
+        function stopQuoteSlideshow() {
+            if (quoteInterval) {
+                clearInterval(quoteInterval);
+                quoteInterval = null;
+            }
+        }
+
+        function addQuoteNavigation() {
+            const welcomeBanner = document.getElementById('welcome-banner');
+            
+            // Create navigation container
+            const nav = document.createElement('div');
+            nav.className = 'quote-nav';
+            
+            // Create previous button
+            const prevBtn = document.createElement('button');
+            prevBtn.innerHTML = '◀';
+            prevBtn.onclick = (e) => {
+                e.stopPropagation();
+                previousQuoteSlide();
+                startQuoteSlideshow();
+            };
+            
+            // Create pause/play button
+            const playBtn = document.createElement('button');
+            playBtn.innerHTML = '⏸';
+            playBtn.onclick = (e) => {
+                e.stopPropagation();
+                if (quoteInterval) {
+                    stopQuoteSlideshow();
+                    playBtn.innerHTML = '▶';
+                } else {
+                    startQuoteSlideshow();
+                    playBtn.innerHTML = '⏸';
+                }
+            };
+            
+            // Create quote counter
+            const counter = document.createElement('div');
+            counter.innerHTML = `Quote: <span id="quote-counter">1</span>/${quoteManager.getQuoteCount()}`;
+            
+            // Create next button
+            const nextBtn = document.createElement('button');
+            nextBtn.innerHTML = '▶';
+            nextBtn.onclick = (e) => {
+                e.stopPropagation();
+                nextQuoteSlide();
+                startQuoteSlideshow();
+            };
+            
+            // Add to navigation
+            nav.appendChild(prevBtn);
+            nav.appendChild(playBtn);
+            nav.appendChild(counter);
+            nav.appendChild(nextBtn);
+            welcomeBanner.appendChild(nav);
+        }
+
+        function updateQuoteCounter() {
+            const counter = document.getElementById('quote-counter');
+            if (counter) {
+                counter.textContent = currentQuoteIndex + 1;
+            }
+        }
+
+        function addViewAllQuotesButton() {
+            const welcomeBanner = document.getElementById('welcome-banner');
+            
+            const button = document.createElement('button');
+            button.className = 'view-all-quotes-btn';
+            button.innerHTML = '📚 View All Quotes';
+            button.onclick = showAllQuotesModal;
+            welcomeBanner.appendChild(button);
+        }
+
+        function showAllQuotesModal() {
+            const modal = document.createElement('div');
+            modal.id = 'quotes-modal';
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0,0,0,0.9);
+                backdrop-filter: blur(20px);
+                z-index: 9999;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                padding: 20px;
+                overflow-y: auto;
+            `;
+            
+            const content = document.createElement('div');
+            content.style.cssText = `
+                background: var(--white);
+                border-radius: 20px;
+                padding: 2rem;
+                max-width: 800px;
+                width: 100%;
+                max-height: 80vh;
+                overflow-y: auto;
+                box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            `;
+            
+            const header = document.createElement('div');
+            header.style.cssText = `
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 2rem;
+                padding-bottom: 1rem;
+                border-bottom: 2px solid var(--primary-light);
+            `;
+            
+            header.innerHTML = `
+                <h2 style="color: var(--primary-green); font-size: 1.8rem;">
+                    📚 ${quoteManager.getQuoteCount()} Inspirational Quotes
+                </h2>
+                <button onclick="closeQuotesModal()" style="
+                    background: var(--primary-green);
+                    color: white;
+                    border: none;
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    cursor: pointer;
+                    font-size: 1.5rem;
+                ">×</button>
+            `;
+            
+            const quotesGrid = document.createElement('div');
+            quotesGrid.style.cssText = `
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+                gap: 1.5rem;
+                margin-top: 1rem;
+            `;
+            
+            quoteManager.getAllQuotes().forEach((quote, index) => {
+                const quoteCard = document.createElement('div');
+                quoteCard.style.cssText = `
+                    background: ${index === currentQuoteIndex ? 'var(--primary-light)' : 'var(--light-gray)'};
+                    padding: 1.5rem;
+                    border-radius: 16px;
+                    border-left: 4px solid var(--primary-green);
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+                    transition: all 0.3s ease;
+                    cursor: pointer;
+                `;
+                quoteCard.onmouseenter = () => quoteCard.style.transform = 'translateY(-5px)';
+                quoteCard.onmouseleave = () => quoteCard.style.transform = 'translateY(0)';
+                quoteCard.onclick = () => {
+                    showQuoteSlide(index);
+                    closeQuotesModal();
+                    startQuoteSlideshow();
+                };
+                
+                quoteCard.innerHTML = `
+                    <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px;">
+                        <span style="
+                            background: var(--primary-green);
+                            color: white;
+                            width: 30px;
+                            height: 30px;
+                            border-radius: 50%;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            font-weight: bold;
+                            flex-shrink: 0;
+                        ">${index + 1}</span>
+                        <h3 style="color: var(--text-dark); font-size: 1.1rem; margin: 0;">${quote.title}</h3>
+                    </div>
+                    <p style="color: var(--text-medium); font-style: italic; margin: 10px 0; line-height: 1.6;">
+                        "${quote.text}"
+                    </p>
+                    <p style="color: var(--primary-green); font-weight: 600; text-align: right; margin-top: 10px;">
+                        - ${quote.author}
+                    </p>
+                `;
+                
+                quotesGrid.appendChild(quoteCard);
+            });
+            
+            content.appendChild(header);
+            content.appendChild(quotesGrid);
+            modal.appendChild(content);
+            document.body.appendChild(modal);
+        }
+
+        function closeQuotesModal() {
+            const modal = document.getElementById('quotes-modal');
+            if (modal) {
+                modal.remove();
+            }
+        }
+
+        // === GALLERY SLIDESHOW FUNCTIONS ===
         let currentGallerySlide = 0;
         const totalGallerySlides = 15;
 
-        // Gallery Slideshow Functions
         function showGallerySlide(index) {
             const slides = document.querySelectorAll('.gallery-slide');
             const indicators = document.querySelectorAll('.gallery-indicator');
@@ -3728,33 +4015,270 @@
         // Auto-advance gallery every 4 seconds
         setInterval(autoAdvanceGallery, 4000);
 
-        // === WELCOME BANNER QUOTES SLIDESHOW ===
-        let currentQuoteSlide = 0;
-        const totalQuoteSlides = 10;
-        let quoteSlideInterval;
+        // === BROWSER COMPATIBILITY CHECK ===
+        (function checkCompatibility() {
+            const warnings = [];
+            
+            if (!('serviceWorker' in navigator)) {
+                console.warn('Service Worker not supported - offline features limited');
+                warnings.push('Service Workers');
+            }
+            
+            if (!('indexedDB' in window)) {
+                console.warn('IndexedDB not supported - local storage features limited');
+                warnings.push('IndexedDB');
+            }
+            
+            if (!window.fetch) {
+                console.warn('Fetch API not supported');
+                warnings.push('Fetch API');
+            }
+            
+            if (warnings.length > 0) {
+                const warningEl = document.getElementById('compatWarning');
+                warningEl.classList.add('visible');
+                warningEl.innerHTML += '<br>Missing features: ' + warnings.join(', ');
+            }
+        })();
 
-        function showQuoteSlide(index) {
-            const slides = document.querySelectorAll('.banner-slide.text-slide');
-            slides.forEach((slide, i) => {
-                slide.classList.remove('active');
-                if (i === index) {
-                    slide.classList.add('active');
-                }
+        // === PAGE LOAD ===
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                // Initialize the tab system
+                initTabSystem();
+                initQuoteSlideshow();
+            }, 300);
+        });
+
+        // === TAB SYSTEM - CRITICAL FIX ===
+        function initTabSystem() {
+            // Set initial active tab to Lower Primary
+            switchTab('lower-primary');
+        }
+
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.menu-page, .tab-content, .admin-panel').forEach(el => {
+                el.classList.remove('active');
             });
+            
+            // Remove active class from all tab buttons
+            document.querySelectorAll('.tab-button').forEach(el => {
+                el.classList.remove('active');
+            });
+            
+            // Show the requested page
+            const page = document.getElementById(pageId);
+            if (page) {
+                page.classList.add('active');
+            }
+            
+            // Update tab button states
+            updateTabButtons(pageId);
+            
+            // Scroll to top
+            window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
-        function nextQuoteSlide() {
-            currentQuoteSlide = (currentQuoteSlide + 1) % totalQuoteSlides;
-            showQuoteSlide(currentQuoteSlide);
+        function switchTab(tabId) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(el => {
+                el.classList.remove('active');
+            });
+            
+            // Remove active class from all tab buttons
+            document.querySelectorAll('.tab-button').forEach(el => {
+                el.classList.remove('active');
+            });
+            
+            // Show the selected tab content
+            const tab = document.getElementById(tabId);
+            if (tab) {
+                tab.classList.add('active');
+            }
+            
+            // Update tab button states
+            updateTabButtons(tabId);
+            
+            // Scroll to top
+            window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
-        function startQuoteSlideshow() {
-            quoteSlideInterval = setInterval(nextQuoteSlide, 5000); // Change quote every 5 seconds
+        function updateTabButtons(activeId) {
+            // Map page IDs to button IDs
+            const buttonMap = {
+                'dashboard': 'btn-dashboard',
+                'lower-primary': 'btn-lower-primary',
+                'upper-primary': 'btn-upper-primary',
+                'jhs': 'btn-jhs',
+                'ict-skills': 'btn-dashboard', // Falls back to home
+                'report-card': 'btn-dashboard',
+                'announcements': 'btn-dashboard',
+                'trial': 'btn-dashboard',
+                'about': 'btn-dashboard',
+                'upload': 'btn-dashboard',
+                'admin-panel': 'btn-dashboard'
+            };
+            
+            // Activate the corresponding button
+            const buttonId = buttonMap[activeId];
+            if (buttonId) {
+                const button = document.getElementById(buttonId);
+                if (button) {
+                    button.classList.add('active');
+                }
+            }
         }
 
-        function stopQuoteSlideshow() {
-            clearInterval(quoteSlideInterval);
+        // Update dashboard feature click handlers
+        document.addEventListener('DOMContentLoaded', function() {
+            // Dashboard feature cards
+            document.querySelectorAll('.dashboard-feature').forEach(feature => {
+                feature.addEventListener('click', function() {
+                    const title = this.querySelector('h3').textContent;
+                    switch(title.trim()) {
+                        case 'Lower Primary':
+                            switchTab('lower-primary');
+                            break;
+                        case 'Upper Primary':
+                            switchTab('upper-primary');
+                            break;
+                        case 'Junior High':
+                            switchTab('jhs');
+                            break;
+                        case 'ICT Skills':
+                            showPage('ict-skills');
+                            break;
+                    }
+                });
+            });
+
+            // Quick actions
+            document.querySelectorAll('.quick-action').forEach(action => {
+                action.addEventListener('click', function() {
+                    const label = this.querySelector('.quick-action-label').textContent;
+                    switch(label.trim()) {
+                        case 'Primary':
+                            switchTab('lower-primary');
+                            break;
+                        case 'JHS':
+                            switchTab('jhs');
+                            break;
+                        case 'Quizzes':
+                            showPage('trial');
+                            break;
+                        case 'Upload':
+                            showPage('upload');
+                            break;
+                    }
+                });
+            });
+        });
+
+        // Scroll to Top Button
+        const scrollTopBtn = document.getElementById('scrollTopBtn');
+        
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+        });
+        
+        scrollTopBtn.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Notification system
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            const messageEl = document.getElementById('notificationMessage');
+            
+            messageEl.textContent = message;
+            notification.style.display = 'block';
+            
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
         }
+
+        // Print Function
+        window.printContent = function() {
+            window.print();
+        };
+
+        // Search function
+        function performSearch() {
+            const searchTerm = document.getElementById('searchInput').value;
+            if (searchTerm.trim()) {
+                showNotification(`Searching for: "${searchTerm}"\n\nIn a real implementation, this would search through:\n- Student records\n- Course content\n- System features\n- Help documentation`);
+                toggleSearch();
+            }
+        }
+
+        // Keyboard Navigation
+        document.addEventListener('keydown', function(e) {
+            // ESC closes modals
+            if (e.key === 'Escape') {
+                const modal = document.getElementById('search-modal');
+                if (modal.classList.contains('active')) {
+                    toggleSearch();
+                }
+                closeQuotesModal();
+                closeAdminModal();
+            }
+            
+            // Ctrl+S focuses search
+            if (e.ctrlKey && e.key === 's') {
+                e.preventDefault();
+                toggleSearch();
+            }
+        });
+
+        // Update Online Status
+        function updateOnlineStatus() {
+            const offlineStatus = document.getElementById('offlineStatus');
+            if (navigator.onLine) {
+                offlineStatus.textContent = '✅ You are back online!';
+                offlineStatus.className = 'offline-status online';
+                setTimeout(() => {
+                    offlineStatus.style.display = 'none';
+                }, 3000);
+            } else {
+                offlineStatus.textContent = '⚠️ You are currently offline. Some features may be limited.';
+                offlineStatus.className = 'offline-status';
+                offlineStatus.style.display = 'block';
+            }
+        }
+
+        // PWA Install
+        let deferredPrompt;
+        const installBtn = document.getElementById('install-btn');
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installBtn.style.display = 'block';
+        });
+        installBtn.addEventListener('click', () => {
+            installBtn.style.display = 'none';
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
+        });
+
+        // Offline Detection
+        window.addEventListener('offline', () => {
+            document.getElementById('offline-toast').style.display = 'block';
+            setTimeout(() => document.getElementById('offline-toast').style.display = 'none', 6000);
+            updateOnlineStatus();
+        });
+        window.addEventListener('online', () => {
+            document.getElementById('offline-toast').style.display = 'none';
+            updateOnlineStatus();
+        });
 
         // Date Display
         function updateDateTime() {
@@ -3765,392 +4289,19 @@
         }
         setInterval(updateDateTime, 60000); updateDateTime();
 
-        // Calculate Time Ago
-        function getTimeAgo(dateString) {
-            const postDate = new Date(dateString);
-            const now = new Date();
-            const diffMs = now - postDate;
-            const diffMins = Math.floor(diffMs / 60000);
-            const diffHours = Math.floor(diffMs / 3600000);
-            const diffDays = Math.floor(diffMs / 86400000);
-            const diffWeeks = Math.floor(diffMs / 604800000);
-
-            if (diffMins < 1) return 'Just now';
-            if (diffMins < 60) return `${diffMins} minute${diffMins > 1 ? 's' : ''} ago`;
-            if (diffHours < 24) return `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`;
-            if (diffDays < 7) return `${diffDays} day${diffDays > 1 ? 's' : ''} ago`;
-            if (diffWeeks < 4) return `${diffWeeks} week${diffWeeks > 1 ? 's' : ''} ago`;
-            
-            return postDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        // Video player function
+        function playVideo(videoSrc) {
+            showNotification(`Playing video: ${videoSrc}\n\nIn a real implementation, this would open a video player.`);
         }
 
-        // Update All Announcement Times
-        function updateAnnouncementTimes() {
-            const announcementTimes = document.querySelectorAll('.announcement-time');
-            announcementTimes.forEach(element => {
-                const dateString = element.getAttribute('data-date');
-                if (dateString) {
-                    element.textContent = 'Posted ' + getTimeAgo(dateString);
-                }
-            });
-        }
-
-        // Banner Slideshow
-        let currentSlide = 0;
-        const totalSlides = 7;
-
-        function showSlide(index) {
-            const slides = document.querySelectorAll('.banner-slide');
-            slides.forEach((slide, i) => {
-                slide.classList.remove('active');
-                if (i === index) {
-                    slide.classList.add('active');
-                }
-            });
-        }
-
-        function nextSlide() {
-            currentSlide = (currentSlide + 1) % totalSlides;
-            showSlide(currentSlide);
-        }
-
-        // Auto-advance banner every 10 seconds
-        setInterval(nextSlide, 5000);
-
-        // Navigation
-        function showPage(pageId) {
-            document.querySelectorAll('.menu-page, .tab-content, .admin-panel').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.tab-button').forEach(el => el.classList.remove('active'));
-            
-            const page = document.getElementById(pageId);
-            if (page) page.classList.add('active');
-            
-            // Highlight button (Check for exact match or generic sections)
-            const btn = document.getElementById('btn-' + pageId);
-            if (btn) btn.classList.add('active');
-            
-            window.scrollTo({top: 0, behavior: 'smooth'});
-        }
-
-        function switchTab(tabId) {
-            showPage(tabId);
-        }
-
-        // UI Toggles
-        function toggleMenu() { 
-            document.getElementById('menu-overlay').classList.toggle('active'); 
-        }
-        
-        function toggleSearch() { 
-            document.getElementById('search-modal').classList.toggle('active');
-            if (document.getElementById('search-modal').classList.contains('active')) {
-                document.getElementById('searchInput').focus();
-            }
-        }
-
-        function closeMenuOnOverlay(event) {
-            if (event.target.id === 'menu-overlay') toggleMenu();
-        }
-
-        function closeSearchOnOverlay(event) {
-            if (event.target.id === 'search-modal') toggleSearch();
-        }
-
-        function handleSearch(event) {
-            const query = event.target.value.toLowerCase();
-            if (event.key === 'Enter' && query) {
-                performSearch();
-            }
-        }
-
-        // Handle Upload Form
+        // Upload form handler
         function handleUpload(event) {
             event.preventDefault();
-            const button = event.target.querySelector('button');
-            const originalText = button.innerHTML;
-            button.innerHTML = '✅ Uploaded Successfully!';
-            button.style.background = 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)';
-            
-            setTimeout(() => {
-                button.innerHTML = originalText;
-                button.style.background = 'linear-gradient(135deg, #0B8F4A 0%, #05A854 100%)';
-                event.target.reset();
-                alert('🎉 Video uploaded successfully!\n\nIn production, this would save to the database.');
-            }, 2000);
+            showNotification('Video link submitted successfully! Thank you for contributing to Wexford Edu Hub.');
+            event.target.reset();
         }
 
-        // Start Quiz Function - Now opens the quiz platform
-        function startQuiz(subject) {
-            window.open('https://stephen-daniels.github.io/PANIN.com/wexquiz.html', '_blank');
-        }
-
-        // Play Video Function
-        function playVideo(videoSrc) {
-            alert('Playing video: ' + videoSrc + '\n\nIn production, this would open the video player.');
-        }
-
-        // === CHAT SYSTEM ===
-        let chatMessages = [];
-        let unreadCount = 0;
-        let isDeveloper = true; // Set to true for developer mode
-        let chatConnected = true;
-        let typingTimeout;
-        let currentChatUser = 'all';
-
-        // Initialize chat
-        function initChat() {
-            // Check if user is developer (you can set this manually or based on login)
-            isDeveloper = localStorage.getItem('isDeveloper') === 'true';
-            
-            if (isDeveloper) {
-                document.getElementById('adminChatControls').classList.add('active');
-                document.getElementById('chatStatus').innerHTML = '<span id="connectionStatus">🟢 Connected as Developer</span> • <span id="userCount">Monitoring 3 users</span>';
-            }
-            
-            // Load saved messages
-            const savedMessages = localStorage.getItem('chatMessages');
-            if (savedMessages) {
-                chatMessages = JSON.parse(savedMessages);
-                updateChatDisplay();
-            }
-            
-            // Simulate connection
-            simulateChatConnection();
-            
-            // Start welcome banner slideshow
-            startQuoteSlideshow();
-        }
-
-        // Toggle chat window
-        function toggleChat() {
-            const chatContainer = document.getElementById('chatContainer');
-            chatContainer.classList.toggle('active');
-            
-            if (chatContainer.classList.contains('active')) {
-                // Reset unread count when opening chat
-                unreadCount = 0;
-                updateUnreadCount();
-                // Scroll to bottom
-                scrollChatToBottom();
-            }
-        }
-
-        // Handle chat input (Enter key)
-        function handleChatInput(event) {
-            if (event.key === 'Enter') {
-                sendMessage();
-            } else {
-                // Show typing indicator
-                if (!isDeveloper) {
-                    showTypingIndicator();
-                }
-            }
-        }
-
-        // Send message
-        function sendMessage() {
-            const input = document.getElementById('chatInput');
-            const message = input.value.trim();
-            
-            if (!message) return;
-            
-            // Add user message
-            const userMessage = {
-                id: Date.now(),
-                sender: 'user',
-                text: message,
-                time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-                userId: 'currentUser'
-            };
-            
-            chatMessages.push(userMessage);
-            input.value = '';
-            updateChatDisplay();
-            saveChatMessages();
-            scrollChatToBottom();
-            
-            // Hide typing indicator
-            hideTypingIndicator();
-            
-            // If in developer mode and sending to specific user
-            if (isDeveloper && currentChatUser !== 'all') {
-                // Send to specific user
-                setTimeout(() => {
-                    const developerResponse = {
-                        id: Date.now() + 1,
-                        sender: 'developer',
-                        text: `[To ${currentChatUser}]: ${message}`,
-                        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-                        userId: 'developer'
-                    };
-                    chatMessages.push(developerResponse);
-                    updateChatDisplay();
-                    saveChatMessages();
-                    scrollChatToBottom();
-                }, 500);
-            } else {
-                // Simulate developer response
-                setTimeout(simulateDeveloperResponse, 1000);
-            }
-        }
-
-        // Simulate developer response
-        function simulateDeveloperResponse() {
-            const responses = [
-                "GLORIOUS ONE! You are dear to Jesus Christ. If you do not yet know Him as your personal Savior, I would be blessed for you to repeat this after me: <br>Lord Jesus, I accept you into my heart, be the Lord of my life, and let your face shine upon me.</br> THANK YOU FOR ACCEPTING ME.AMEN! ",
-                "Welcome to the family of Christ, stay blessed. Type Next for any assistance.",
-                "I'm Panin, I'm here to help! How can I assist you today?",
-                "That's a great question! Let me check that for you.",
-                "I understand your concern. Here's what I suggest...",
-                "Thank you for reaching out! I'll look into that right away.",
-                "Is there anything specific you're having trouble with?",
-                "I can help you with that. Could you provide more details?",
-                "I've noted your issue and will get back to you soon.",
-                "Have you tried checking the tutorials section?",
-                "Let me guide you through the solution step by step.",
-                "I appreciate your feedback! We're always improving."
-            ];
-            
-            const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-            
-            const developerMessage = {
-                id: Date.now(),
-                sender: 'developer',
-                text: randomResponse,
-                time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-                userId: 'developer'
-            };
-            
-            chatMessages.push(developerMessage);
-            updateChatDisplay();
-            saveChatMessages();
-            scrollChatToBottom();
-            
-            // If chat is closed, increment unread count
-            if (!document.getElementById('chatContainer').classList.contains('active')) {
-                unreadCount++;
-                updateUnreadCount();
-            }
-        }
-
-        // Show typing indicator
-        function showTypingIndicator() {
-            const typingIndicator = document.getElementById('typingIndicator');
-            typingIndicator.style.display = 'flex';
-            
-            // Clear previous timeout
-            if (typingTimeout) {
-                clearTimeout(typingTimeout);
-            }
-            
-            // Hide after 2 seconds
-            typingTimeout = setTimeout(hideTypingIndicator, 2000);
-        }
-
-        // Hide typing indicator
-        function hideTypingIndicator() {
-            const typingIndicator = document.getElementById('typingIndicator');
-            typingIndicator.style.display = 'none';
-        }
-
-        // Update chat display
-        function updateChatDisplay() {
-            const chatMessagesContainer = document.getElementById('chatMessages');
-            chatMessagesContainer.innerHTML = '';
-            
-            // Add initial system message if no messages
-            if (chatMessages.length === 0) {
-                chatMessagesContainer.innerHTML = `
-                    <div class="message system">
-                        Welcome to Wexford Support! How can we help you today?
-                    </div>
-                    <div class="message developer">
-                        <div class="message-sender">PANIN</div>
-                        Hello! I'm Panin, I'm here to assist you. Feel free to ask any questions about the platform.
-                        <div class="message-time">Just now</div>
-                    </div>
-                `;
-                return;
-            }
-            
-            // Display all messages
-            chatMessages.forEach(msg => {
-                const messageElement = document.createElement('div');
-                messageElement.className = `message ${msg.sender}`;
-                
-                if (msg.sender === 'system') {
-                    messageElement.innerHTML = `
-                        ${msg.text}
-                    `;
-                } else {
-                    messageElement.innerHTML = `
-                        ${msg.sender === 'developer' ? '<div class="message-sender">PANIN</div>' : '<div class="message-sender">You</div>'}
-                        ${msg.text}
-                        <div class="message-time">${msg.time}</div>
-                    `;
-                }
-                
-                chatMessagesContainer.appendChild(messageElement);
-            });
-        }
-
-        // Save chat messages to localStorage
-        function saveChatMessages() {
-            localStorage.setItem('chatMessages', JSON.stringify(chatMessages));
-        }
-
-        // Scroll chat to bottom
-        function scrollChatToBottom() {
-            const chatMessagesContainer = document.getElementById('chatMessages');
-            chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight;
-        }
-
-        // Update unread count
-        function updateUnreadCount() {
-            const unreadCountElement = document.getElementById('unreadCount');
-            unreadCountElement.textContent = unreadCount;
-            unreadCountElement.style.display = unreadCount > 0 ? 'flex' : 'none';
-        }
-
-        // Simulate chat connection
-        function simulateChatConnection() {
-            setTimeout(() => {
-                chatConnected = true;
-                document.getElementById('connectionStatus').textContent = '🟢 Connected';
-                document.getElementById('connectionStatus').style.color = '#0B8F4A';
-            }, 1000);
-        }
-
-        // Developer: Change user to chat with
-        document.getElementById('adminUserSelect').addEventListener('change', function() {
-            currentChatUser = this.value;
-            if (currentChatUser === 'all') {
-                document.getElementById('chatStatus').innerHTML = '<span id="connectionStatus">🟢 Connected as Developer</span> • <span id="userCount">Broadcasting to all users</span>';
-            } else {
-                const userName = this.options[this.selectedIndex].text;
-                document.getElementById('chatStatus').innerHTML = `<span id="connectionStatus">🟢 Connected as Developer</span> • <span id="userCount">Chatting with ${userName}</span>`;
-            }
-        });
-
-        // Developer: Send broadcast to all users
-        function sendBroadcast(message) {
-            if (!isDeveloper) return;
-            
-            const broadcastMessage = {
-                id: Date.now(),
-                sender: 'system',
-                text: `📢 Broadcast from Developer: ${message}`,
-                time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-                userId: 'developer'
-            };
-            
-            chatMessages.push(broadcastMessage);
-            updateChatDisplay();
-            saveChatMessages();
-            scrollChatToBottom();
-        }
-
-        // Admin Panel Functions
+        // === ADMIN PANEL FUNCTIONS ===
         function openAdminModal(type) {
             const modal = document.getElementById('admin-modal');
             const title = document.getElementById('admin-modal-title');
@@ -4158,34 +4309,100 @@
             
             const modals = {
                 'users': {
-                    title: 'Manage Users',
-                    content: '<p>User management interface would appear here.</p><button style="padding: 0.5rem 1rem; background: #0B8F4A; color: white; border: none; border-radius: 8px; margin: 0.5rem 0; cursor: pointer;">Add New User</button><br><button style="padding: 0.5rem 1rem; background: #f59e0b; color: white; border: none; border-radius: 8px; margin: 0.5rem 0; cursor: pointer;">Edit Permissions</button>'
+                    title: '👥 User Management',
+                    html: `
+                        <div style="margin-bottom: 1rem;">
+                            <h4>Manage System Users</h4>
+                            <select style="width: 100%; padding: 10px; margin-bottom: 10px;">
+                                <option>All Users (512)</option>
+                                <option>Students (480)</option>
+                                <option>Teachers (48)</option>
+                                <option>Parents (300+)</option>
+                            </select>
+                            <button onclick="showNotification('User management would open here')" style="width: 100%; padding: 10px; background: var(--primary-green); color: white; border: none; border-radius: 8px; margin-top: 10px;">Open User Manager</button>
+                        </div>
+                    `
                 },
                 'content': {
-                    title: 'Approve Content',
-                    content: '<p>12 items pending approval</p><ul style="margin: 1rem 0; padding-left: 1.5rem;"><li>Math Video - Grade 4</li><li>Science Quiz - JHS</li><li>English Worksheet</li></ul>'
+                    title: '✅ Content Approval',
+                    html: `
+                        <div style="margin-bottom: 1rem;">
+                            <h4>Pending Approvals: 12</h4>
+                            <p>New videos uploaded by teachers:</p>
+                            <ul style="margin: 10px 0; padding-left: 20px;">
+                                <li>Math Lesson - Grade 5</li>
+                                <li>Science Experiment - JHS 2</li>
+                                <li>English Grammar - Grade 4</li>
+                            </ul>
+                            <button onclick="showNotification('Content approved successfully')" style="width: 100%; padding: 10px; background: var(--primary-green); color: white; border: none; border-radius: 8px; margin-top: 10px;">Approve All</button>
+                        </div>
+                    `
                 },
                 'analytics': {
-                    title: 'Analytics Dashboard',
-                    content: '<p>Platform Statistics:</p><ul style="margin: 1rem 0; padding-left: 1.5rem;"><li>Active Users: 428</li><li>Total Views: 12,847</li><li>Completion Rate: 78%</li></ul>'
+                    title: '📊 System Analytics',
+                    html: `
+                        <div style="margin-bottom: 1rem;">
+                            <h4>Platform Statistics</h4>
+                            <div style="display: grid; gap: 10px; margin: 10px 0;">
+                                <div>Daily Active Users: <strong>428</strong></div>
+                                <div>Total Video Views: <strong>12,847</strong></div>
+                                <div>Quiz Completions: <strong>3,284</strong></div>
+                                <div>Storage Used: <strong>42.8 GB</strong></div>
+                            </div>
+                            <button onclick="showNotification('Analytics report generated')" style="width: 100%; padding: 10px; background: var(--primary-green); color: white; border: none; border-radius: 8px; margin-top: 10px;">Generate Report</button>
+                        </div>
+                    `
                 },
                 'broadcast': {
-                    title: 'Broadcast Message',
-                    content: '<textarea placeholder="Enter broadcast message..." style="width: 100%; height: 100px; padding: 0.5rem; margin: 0.5rem 0; border: 1px solid #ccc; border-radius: 8px;"></textarea><button style="padding: 0.5rem 1rem; background: #0B8F4A; color: white; border: none; border-radius: 8px; cursor: pointer;">Send Broadcast</button>'
+                    title: '📢 Broadcast Message',
+                    html: `
+                        <div style="margin-bottom: 1rem;">
+                            <h4>Send Announcement</h4>
+                            <input type="text" placeholder="Message title" style="width: 100%; padding: 10px; margin-bottom: 10px;">
+                            <textarea placeholder="Message content" style="width: 100%; padding: 10px; margin-bottom: 10px; height: 100px;"></textarea>
+                            <select style="width: 100%; padding: 10px; margin-bottom: 10px;">
+                                <option>All Users</option>
+                                <option>Students Only</option>
+                                <option>Parents Only</option>
+                                <option>Staff Only</option>
+                            </select>
+                            <button onclick="showNotification('Broadcast sent to all users')" style="width: 100%; padding: 10px; background: var(--primary-green); color: white; border: none; border-radius: 8px; margin-top: 10px;">Send Broadcast</button>
+                        </div>
+                    `
                 },
                 'backup': {
-                    title: 'System Backup',
-                    content: '<p>Last Backup: Today, 02:30 AM</p><button style="padding: 0.5rem 1rem; background: #0B8F4A; color: white; border: none; border-radius: 8px; margin: 0.5rem 0; cursor: pointer;">Backup Now</button><br><button style="padding: 0.5rem 1rem; background: #f59e0b; color: white; border: none; border-radius: 8px; margin: 0.5rem 0; cursor: pointer;">Restore Backup</button>'
+                    title: '💾 System Backup',
+                    html: `
+                        <div style="margin-bottom: 1rem;">
+                            <h4>Backup & Restore</h4>
+                            <p>Last backup: 2 hours ago</p>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0;">
+                                <button onclick="showNotification('Backup started successfully')" style="padding: 10px; background: var(--primary-green); color: white; border: none; border-radius: 8px;">Backup Now</button>
+                                <button onclick="showNotification('Restore process started')" style="padding: 10px; background: var(--warning); color: white; border: none; border-radius: 8px;">Restore</button>
+                            </div>
+                        </div>
+                    `
                 },
                 'settings': {
-                    title: 'System Settings',
-                    content: '<p>Platform Configuration:</p><ul style="margin: 1rem 0; padding-left: 1.5rem;"><li><label><input type="checkbox" checked> Enable Uploads</label></li><li><label><input type="checkbox" checked> Enable Comments</label></li><li><label><input type="checkbox"> Maintenance Mode</label></li></ul>'
+                    title: '⚙️ System Settings',
+                    html: `
+                        <div style="margin-bottom: 1rem;">
+                            <h4>Platform Configuration</h4>
+                            <div style="display: grid; gap: 10px;">
+                                <label><input type="checkbox"> Maintenance Mode</label>
+                                <label><input type="checkbox" checked> Email Notifications</label>
+                                <label><input type="checkbox" checked> Auto-backup</label>
+                                <label><input type="checkbox"> Debug Mode</label>
+                            </div>
+                            <button onclick="showNotification('Settings saved successfully')" style="width: 100%; padding: 10px; background: var(--primary-green); color: white; border: none; border-radius: 8px; margin-top: 10px;">Save Settings</button>
+                        </div>
+                    `
                 }
             };
             
             if (modals[type]) {
                 title.textContent = modals[type].title;
-                content.innerHTML = modals[type].content;
+                content.innerHTML = modals[type].html;
                 modal.style.display = 'flex';
             }
         }
@@ -4194,53 +4411,97 @@
             document.getElementById('admin-modal').style.display = 'none';
         }
 
-        // PWA offline check
-        window.addEventListener('offline', () => document.getElementById('offlineStatus').style.display='block');
-        window.addEventListener('online', () => document.getElementById('offlineStatus').style.display='none');
+        // === CHAT SYSTEM ===
+        let chatMessages = [];
+        let unreadCount = 0;
 
-        // Initialize everything when page loads
-        window.onload = () => {
-            switchTab('lower-primary');
-            updateDateTime();
-            updateAnnouncementTimes();
-            updateOnlineStatus();
-            initChat();
+        function toggleChat() {
+            const chatContainer = document.getElementById('chatContainer');
+            chatContainer.classList.toggle('active');
             
-            // Set up event listeners for online/offline status
-            window.addEventListener('online', updateOnlineStatus);
-            window.addEventListener('offline', updateOnlineStatus);
-            
-            // Update date/time every minute
-            setInterval(updateDateTime, 60000);
-            
-            // Update announcement times every minute
-            setInterval(updateAnnouncementTimes, 60000);
-            
-            // Auto-advance quote slideshow
-            startQuoteSlideshow();
-        };
-
-        // Service Worker Registration for PWA
-        if ('serviceWorker' in navigator) {
-            const swCode = `
-                const CACHE = 'wexford-v26';
-                const files = [
-                    '/', 'index.html',
-                    'WEX LOGO.jpg','Eva.jpg','bs2.jpg','BS6.jpg','Wor.jpg','quiz.jpg',
-                    'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;700;800;900&display=swap',
-                    'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
-                    'https://unpkg.com/aos@2.3.1/dist/aos.css',
-                    'https://unpkg.com/aos@2.3.1/dist/aos.js'
-                ];
-                self.addEventListener('install', e => e.waitUntil(caches.open(CACHE).then(c => c.addAll(files)).then(() => self.skipWaiting())));
-                self.addEventListener('fetch', e => {
-                    e.respondWith(caches.match(e.request).then(r => r || fetch(e.request).catch(() => caches.match('index.html'))));
-                });
-            `;
-            const blob = new Blob([swCode], {type: 'application/javascript'});
-            const url = URL.createObjectURL(blob);
-            navigator.serviceWorker.register(url);
+            if (chatContainer.classList.contains('active')) {
+                unreadCount = 0;
+                document.getElementById('unreadCount').textContent = '0';
+            }
         }
+
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (message) {
+                addMessage(message, 'user');
+                input.value = '';
+                
+                // Auto-reply from developer
+                setTimeout(() => {
+                    const replies = [
+                        "GLORIOUS ONE! You are dear to Jesus Christ. If you do not yet know Him as your personal Savior, I would be blessed for you to repeat this after me: <br>Lord Jesus, I accept you into my heart, be the Lord of my life, and let your face shine upon me.</br> THANK YOU FOR ACCEPTING ME.AMEN! ",
+                        "Welcome to the family of Christ, stay blessed. Type Next for any assistance.",
+                        "I'm Panin, I'm here to help! How can I assist you today?",
+                        "That's a great question! Let me check that for you.",
+                        "I understand your concern. Here's what I suggest...",
+                        "Thank you for reaching out! I'll look into that right away.",
+                        "Is there anything specific you're having trouble with?",
+                        "I can help you with that. Could you provide more details?",
+                        "I've noted your issue and will get back to you soon.",
+                        "Have you tried checking the tutorials section?",
+                        "Let me guide you through the solution step by step.",
+                        "I appreciate your feedback! We're always improving."
+                    ];
+                    const randomReply = replies[Math.floor(Math.random() * replies.length)];
+                    addMessage(randomReply, 'developer');
+                }, 1000);
+            }
+        }
+
+        function addMessage(text, sender) {
+            const messagesContainer = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+            
+            const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            
+            messageDiv.innerHTML = `
+                <div class="message-sender">${sender === 'user' ? 'You' : 'PANIN'}</div>
+                <div>${text}</div>
+                <div class="message-time">${time}</div>
+            `;
+            
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            
+            // Update unread count if chat is closed
+            if (!document.getElementById('chatContainer').classList.contains('active') && sender === 'developer') {
+                unreadCount++;
+                document.getElementById('unreadCount').textContent = unreadCount;
+            }
+        }
+
+        function handleChatInput(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        // Make functions globally available
+        window.showAllQuotesModal = showAllQuotesModal;
+        window.closeQuotesModal = closeQuotesModal;
+        window.openAdminModal = openAdminModal;
+        window.closeAdminModal = closeAdminModal;
+        window.toggleChat = toggleChat;
+        window.sendMessage = sendMessage;
+        window.handleChatInput = handleChatInput;
+        window.showPage = showPage;
+        window.switchTab = switchTab;
+        window.toggleMenu = toggleMenu;
+        window.toggleSearch = toggleSearch;
+        window.printContent = printContent;
+        window.playVideo = playVideo;
+        window.handleUpload = handleUpload;
+        window.performSearch = performSearch;
+        window.changeGallerySlide = changeGallerySlide;
+        window.setGallerySlide = setGallerySlide;
     </script>
 </body>
 </html>
