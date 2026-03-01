@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monthly Quiz with Sir Stephen · Entrance</title>
+    <style>
+        /* classic timeless background (same vintage style) */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background-color: #d9c8a9;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><filter id="noise" x="0%" y="0%" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="1" stitchTiles="stitch"/><feColorMatrix type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.08 0"/></filter><rect width="100" height="100" filter="url(%23noise)" opacity="0.15"/></svg>');
+            background-repeat: repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .entrance-wrapper {
+            width: 100%;
+            max-width: 750px;
+            padding: 20px;
+        }
+
+        /* main entrance card */
+        .welcome-card {
+            background: rgba(250, 245, 235, 0.96);
+            backdrop-filter: blur(2px);
+            padding: 3rem 2.5rem;
+            border-radius: 60px 12px 60px 12px;
+            box-shadow: 12px 14px 25px rgba(70, 40, 20, 0.4), inset 2px 2px 10px #fffae8;
+            border-left: 12px solid #a77b55;
+            border-right: 4px solid #dac09a;
+            text-align: center;
+        }
+
+        h1 {
+            color: #3b2b1f;
+            font-size: 3.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-shadow: 3px 3px 0 #e7cfb2;
+            border-bottom: 3px dashed #b48c63;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+
+        .subhead {
+            font-size: 1.6rem;
+            color: #5f4a33;
+            margin: 1.5rem 0 2rem 0;
+            font-style: italic;
+            background: rgba(220, 190, 155, 0.2);
+            padding: 15px 20px;
+            border-radius: 50px 5px 50px 5px;
+            border: 1px solid #c9af8b;
+        }
+
+        .invite-message {
+            font-size: 1.4rem;
+            color: #2e241f;
+            margin: 2.2rem 0 2.8rem 0;
+            line-height: 1.5;
+            background: #efe5d7;
+            padding: 25px;
+            border-radius: 30px 5px 30px 5px;
+            box-shadow: inset 0 0 0 2px #faf0e2, 5px 5px 0 #b5956e;
+        }
+
+        .invite-message strong {
+            color: #754c24;
+            font-size: 1.7rem;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .btn-start {
+            background-color: #5f4a33;
+            border: none;
+            border-bottom: 8px solid #342619;
+            color: #fcf3e5;
+            font-size: 2.8rem;
+            font-weight: bold;
+            padding: 25px 70px;
+            border-radius: 80px 12px 80px 12px;
+            cursor: pointer;
+            font-family: 'Georgia', serif;
+            letter-spacing: 6px;
+            box-shadow: 8px 12px 0 #3f2e1e, 0 10px 25px #1f140e;
+            transition: all 0.1s ease-out;
+            margin-top: 20px;
+            width: 100%;
+            max-width: 450px;
+        }
+
+        .btn-start:hover {
+            background-color: #7c6243;
+            transform: translateY(-4px);
+            box-shadow: 10px 14px 0 #3f2e1e, 0 15px 30px #2f200f;
+        }
+
+        .btn-start:active {
+            transform: translateY(5px);
+            border-bottom-width: 3px;
+            box-shadow: 3px 6px 0 #3f2e1e;
+        }
+
+        /* footer / tiny label */
+        .credit {
+            margin-top: 35px;
+            color: #5b4a36;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+        }
+
+        /* hide main quiz initially */
+        .quiz-container {
+            display: none;
+            width: 100%;
+            max-width: 950px;
+            margin: 20px auto;
+            background: transparent;
+        }
+
+        /* when quiz is active, we disable body scroll? not needed */
+        .quiz-active body {
+            height: auto;
+            display: block;
+        }
+
+        /* bring original quiz style inside, with tiny adaptations for smoothness */
+        .quiz-container.active {
+            display: block;
+        }
+
+        /* original quiz styles – exactly preserved (merged with vintage touches) */
+        .quiz-style {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            line-height: 1.6;
+            color: #2e241f;
+            max-width: 950px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+        .quiz-style h1 { 
+            color: #3b2b1f; 
+            text-align: center; 
+            border-bottom: 3px solid #8b6f4c; 
+            padding-bottom: 15px; 
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-shadow: 1px 1px 2px rgba(255, 245, 220, 0.8);
+            background: rgba(245, 235, 210, 0.7);
+            padding: 15px;
+            border-radius: 50px 10px 50px 10px;
+            font-size: 2.2rem;
+        }
+        .quiz-style .section { 
+            background: rgba(250, 245, 235, 0.9);
+            padding: 25px; 
+            margin-bottom: 30px; 
+            border-radius: 20px 5px 20px 5px; 
+            box-shadow: 8px 8px 12px rgba(70, 40, 20, 0.15), inset 1px 1px 4px #fff9e6; 
+            border-left: 8px solid #a77b55;
+            border-right: 2px solid #e5cfb5;
+        }
+        .quiz-style h2 { 
+            color: #4f3f2e; 
+            border-left: 6px solid #b48c63; 
+            padding-left: 15px; 
+            margin-top: 0; 
+            font-size: 1.9rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: linear-gradient(to right, #f0e1d0, transparent);
+        }
+        .quiz-style .question-block { 
+            margin-bottom: 25px; 
+            padding: 18px 20px; 
+            border-radius: 16px; 
+            border: 1px solid #e2cfb5; 
+            background: #fcf8f0; 
+            transition: 0.2s; 
+            box-shadow: 2px 3px 6px rgba(0,0,0,0.05);
+        }
+        .quiz-style .question-text { 
+            font-weight: bold; 
+            display: block; 
+            margin-bottom: 12px; 
+            color: #3c2e22; 
+            font-size: 1.15rem;
+            border-bottom: 1px dotted #bda78b;
+            padding-bottom: 5px;
+        }
+        .quiz-style .options-list { 
+            list-style: none; 
+            padding: 0; 
+            font-size: 1.1rem;
+        }
+        .quiz-style .options-list li { 
+            margin: 12px 0; 
+            padding: 3px 0 3px 25px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="%23957a5a"><circle cx="12" cy="12" r="6"/></svg>') left center no-repeat;
+            background-size: 16px;
+        }
+        .quiz-style input[type="radio"] { 
+            margin-right: 14px; 
+            cursor: pointer; 
+            transform: scale(1.15);
+            accent-color: #8b6f4c;
+        }
+        .quiz-style .btn-container { 
+            display: flex; 
+            gap: 20px; 
+            margin-top: 30px; 
+            justify-content: center;
+        }
+        .quiz-style button:not(.btn-start) { 
+            flex: 0 1 280px; 
+            padding: 16px 25px; 
+            border: none; 
+            border-radius: 40px 8px 40px 8px; 
+            font-size: 1.4rem; 
+            font-weight: bold; 
+            cursor: pointer; 
+            transition: 0.2s; 
+            font-family: 'Georgia', serif;
+            letter-spacing: 0.8px;
+            box-shadow: 5px 5px 10px #ad8e6b, -2px -2px 5px #faf0e0;
+        }
+        .quiz-style #submit-btn { 
+            background-color: #5f4a33; 
+            color: #fcf3e5; 
+            border-bottom: 4px solid #342619;
+        }
+        .quiz-style #submit-btn:hover { 
+            background-color: #7c6243; 
+            transform: translateY(-2px);
+            box-shadow: 8px 8px 12px #946b42;
+        }
+        .quiz-style #reset-btn { 
+            background-color: #9b8872; 
+            color: #2b211b; 
+            border-bottom: 4px solid #5f4f3d;
+        }
+        .quiz-style #reset-btn:hover { 
+            background-color: #b19e88; 
+            transform: translateY(-2px);
+        }
+        .quiz-style #result-area { 
+            margin-top: 40px; 
+            padding: 30px; 
+            text-align: center; 
+            font-size: 28px; 
+            font-weight: bold; 
+            border-radius: 40px 8px 40px 8px; 
+            display: none; 
+            border: 3px solid #ccb191;
+            background: rgba(250, 235, 210, 0.95);
+            box-shadow: inset 0 2px 8px #ab8e68, 0 6px 12px #4f3e2b;
+        }
+        .quiz-style .correct { 
+            background-color: #e8f0e4 !important; 
+            border-color: #7c9865 !important; 
+            border-left: 12px solid #3f8543 !important;
+        }
+        .quiz-style .incorrect { 
+            background-color: #fae1df !important; 
+            border-color: #dbb0ab !important; 
+            border-left: 12px solid #b15241 !important;
+        }
+    </style>
+</head>
+<body id="mainBody">
+    <!-- ENTRANCE SCREEN (visible by default) -->
+    <div id="entranceScreen" class="entrance-wrapper">
+        <div class="welcome-card">
+            <h1>📜 Sir Stephen's</h1>
+            <div class="subhead">Monthly Quiz</div>
+            <div class="invite-message">
+                <strong>✨ Welcome, scholar! ✨</strong>
+                Step into the classic quiz chamber.<br>
+                Test your knowledge in Integrated Science & Agriculture.<br>
+                <span style="font-size:1.7rem; display:block; margin-top:15px;">👇</span>
+            </div>
+            <button class="btn-start" id="startQuizBtn">START</button>
+            <div class="credit">JHS 2 · 20 questions · vintage edition</div>
+        </div>
+    </div>
+
+    <!-- QUIZ CONTAINER (hidden until start) -->
+    <div id="quizContainer" class="quiz-container">
+        <div class="quiz-style">
+            <h1>JHS 2 Integrated Science & Agriculture Quiz</h1>
+            <form id="quizForm">
+                <!-- ========== section 1 ========== -->
+                <div class="section">
+                    <h2>Section 1: Seedbed Preparation</h2>
+                    <div class="question-block" id="q1-block"><span class="question-text">1. Which of the following is the main reason for making a seedbed firm?</span><ul class="options-list"><li><input type="radio" name="q1" value="correct"> To ensure good contact between seed and soil</li><li><input type="radio" name="q1" value="wrong"> To prevent water from entering the soil</li><li><input type="radio" name="q1" value="wrong"> To make it difficult for weeds to grow</li><li><input type="radio" name="q1" value="wrong"> To keep the seeds warm</li></ul></div>
+                    <div class="question-block" id="q2-block"><span class="question-text">2. 'Tilth' refers to the:</span><ul class="options-list"><li><input type="radio" name="q2" value="wrong"> Depth of the topsoil</li><li><input type="radio" name="q2" value="wrong"> Color of the soil</li><li><input type="radio" name="q2" value="correct"> Physical condition of soil for planting</li><li><input type="radio" name="q2" value="wrong"> Amount of fertilizer in the soil</li></ul></div>
+                    <div class="question-block" id="q3-block"><span class="question-text">3. Which tool is best for leveling a seedbed?</span><ul class="options-list"><li><input type="radio" name="q3" value="wrong"> Garden Fork</li><li><input type="radio" name="q3" value="correct"> Garden Rake</li><li><input type="radio" name="q3" value="wrong"> Pickaxe</li><li><input type="radio" name="q3" value="wrong"> Hand Trowel</li></ul></div>
+                    <div class="question-block" id="q4-block"><span class="question-text">4. Why should a seedbed be well-drained?</span><ul class="options-list"><li><input type="radio" name="q4" value="correct"> To prevent seeds from rotting</li><li><input type="radio" name="q4" value="wrong"> To keep the soil very dry</li><li><input type="radio" name="q4" value="wrong"> To stop the roots from growing deep</li><li><input type="radio" name="q4" value="wrong"> To increase soil acidity</li></ul></div>
+                    <div class="question-block" id="q5-block"><span class="question-text">5. What is the advantage of using a nursery?</span><ul class="options-list"><li><input type="radio" name="q5" value="wrong"> Seeds grow slower in a nursery</li><li><input type="radio" name="q5" value="correct"> Delicate seedlings get better care</li><li><input type="radio" name="q5" value="wrong"> It uses more water than direct planting</li><li><input type="radio" name="q5" value="wrong"> It prevents photosynthesis</li></ul></div>
+                </div>
+                <!-- ========== section 2 ========== -->
+                <div class="section">
+                    <h2>Section 2: Animal Feed and Nutrients</h2>
+                    <div class="question-block" id="q6-block"><span class="question-text">6. Which nutrient is primarily needed for egg production in poultry?</span><ul class="options-list"><li><input type="radio" name="q6" value="wrong"> Carbohydrates</li><li><input type="radio" name="q6" value="correct"> Proteins</li><li><input type="radio" name="q6" value="wrong"> Fats</li><li><input type="radio" name="q6" value="wrong"> Fiber</li></ul></div>
+                    <div class="question-block" id="q7-block"><span class="question-text">7. Maize and cassava are examples of which nutrient group?</span><ul class="options-list"><li><input type="radio" name="q7" value="correct"> Carbohydrates</li><li><input type="radio" name="q7" value="wrong"> Minerals</li><li><input type="radio" name="q7" value="wrong"> Vitamins</li><li><input type="radio" name="q7" value="wrong"> Fats</li></ul></div>
+                    <div class="question-block" id="q8-block"><span class="question-text">8. Livestock lacking Calcium and Phosphorus will likely have:</span><ul class="options-list"><li><input type="radio" name="q8" value="wrong"> Poor eyesight</li><li><input type="radio" name="q8" value="correct"> Weak bones and teeth</li><li><input type="radio" name="q8" value="wrong"> Excessive weight gain</li><li><input type="radio" name="q8" value="wrong"> Long hair</li></ul></div>
+                    <div class="question-block" id="q9-block"><span class="question-text">9. Which of these is a 'Roughage'?</span><ul class="options-list"><li><input type="radio" name="q9" value="wrong"> Fish meal</li><li><input type="radio" name="q9" value="wrong"> Groundnut cake</li><li><input type="radio" name="q9" value="correct"> Grass/Hay</li><li><input type="radio" name="q9" value="wrong"> Bone meal</li></ul></div>
+                    <div class="question-block" id="q10-block"><span class="question-text">10. 'Concentrates' are feeds that are:</span><ul class="options-list"><li><input type="radio" name="q10" value="wrong"> High in fiber and low in energy</li><li><input type="radio" name="q10" value="correct"> Low in fiber and high in nutrients</li><li><input type="radio" name="q10" value="wrong"> Only made of water</li><li><input type="radio" name="q10" value="wrong"> Only fed to wild animals</li></ul></div>
+                </div>
+                <!-- ========== section 3 ========== -->
+                <div class="section">
+                    <h2>Section 3: Mammalian Feeding</h2>
+                    <div class="question-block" id="q11-block"><span class="question-text">11. What is Colostrum?</span><ul class="options-list"><li><input type="radio" name="q11" value="wrong"> A type of medicine</li><li><input type="radio" name="q11" value="correct"> The first milk produced after birth</li><li><input type="radio" name="q11" value="wrong"> A special type of grass</li><li><input type="radio" name="q11" value="wrong"> The solid food given to piglets</li></ul></div>
+                    <div class="question-block" id="q12-block"><span class="question-text">12. Why is Colostrum vital for a newborn mammal?</span><ul class="options-list"><li><input type="radio" name="q12" value="wrong"> It helps them walk faster</li><li><input type="radio" name="q12" value="wrong"> It is very sweet</li><li><input type="radio" name="q12" value="correct"> It provides antibodies for immunity</li><li><input type="radio" name="q12" value="wrong"> It makes them grow feathers</li></ul></div>
+                    <div class="question-block" id="q13-block"><span class="question-text">13. The process of stopping a young mammal from taking its mother's milk is:</span><ul class="options-list"><li><input type="radio" name="q13" value="wrong"> Sowing</li><li><input type="radio" name="q13" value="wrong"> Milking</li><li><input type="radio" name="q13" value="correct"> Weaning</li><li><input type="radio" name="q13" value="wrong"> Fertilizing</li></ul></div>
+                    <div class="question-block" id="q14-block"><span class="question-text">14. Which group of mammals eats only plants?</span><ul class="options-list"><li><input type="radio" name="q14" value="correct"> Herbivores</li><li><input type="radio" name="q14" value="wrong"> Carnivores</li><li><input type="radio" name="q14" value="wrong"> Omnivores</li><li><input type="radio" name="q14" value="wrong"> Predators</li></ul></div>
+                    <div class="question-block" id="q15-block"><span class="question-text">15. A 'Balanced Ration' is a feed that:</span><ul class="options-list"><li><input type="radio" name="q15" value="wrong"> Contains only water</li><li><input type="radio" name="q15" value="correct"> Contains all nutrients in correct proportions</li><li><input type="radio" name="q15" value="wrong"> Is given once a week</li><li><input type="radio" name="q15" value="wrong"> Consists only of maize</li></ul></div>
+                </div>
+                <!-- ========== section 4 ========== -->
+                <div class="section">
+                    <h2>Section 4: The Solar System</h2>
+                    <div class="question-block" id="q16-block"><span class="question-text">16. Which planet is the largest in the Solar System?</span><ul class="options-list"><li><input type="radio" name="q16" value="wrong"> Saturn</li><li><input type="radio" name="q16" value="correct"> Jupiter</li><li><input type="radio" name="q16" value="wrong"> Neptune</li><li><input type="radio" name="q16" value="wrong"> Earth</li></ul></div>
+                    <div class="question-block" id="q17-block"><span class="question-text">17. Which planet is known as the "Morning Star" or "Evening Star"?</span><ul class="options-list"><li><input type="radio" name="q17" value="wrong"> Mars</li><li><input type="radio" name="q17" value="correct"> Venus</li><li><input type="radio" name="q17" value="wrong"> Mercury</li><li><input type="radio" name="q17" value="wrong"> Uranus</li></ul></div>
+                    <div class="question-block" id="q18-block"><span class="question-text">18. Between which two planets is the Asteroid Belt located?</span><ul class="options-list"><li><input type="radio" name="q18" value="wrong"> Earth and Mars</li><li><input type="radio" name="q18" value="correct"> Mars and Jupiter</li><li><input type="radio" name="q18" value="wrong"> Jupiter and Saturn</li><li><input type="radio" name="q18" value="wrong"> Mercury and Venus</li></ul></div>
+                    <div class="question-block" id="q19-block"><span class="question-text">19. Which planet rotates on its side?</span><ul class="options-list"><li><input type="radio" name="q19" value="wrong"> Neptune</li><li><input type="radio" name="q19" value="correct"> Uranus</li><li><input type="radio" name="q19" value="wrong"> Saturn</li><li><input type="radio" name="q19" value="wrong"> Jupiter</li></ul></div>
+                    <div class="question-block" id="q20-block"><span class="question-text">20. What is a 'Natural Satellite'?</span><ul class="options-list"><li><input type="radio" name="q20" value="wrong"> A man-made rocket</li><li><input type="radio" name="q20" value="correct"> A moon orbiting a planet</li><li><input type="radio" name="q20" value="wrong"> A shooting star</li><li><input type="radio" name="q20" value="wrong"> The Sun</li></ul></div>
+                </div>
+                <div class="btn-container">
+                    <button type="button" id="submit-btn" onclick="calculateScore()">Submit Quiz</button>
+                    <button type="button" id="reset-btn" onclick="resetQuiz()">Reset</button>
+                </div>
+            </form>
+            <div id="result-area"></div>
+        </div>
+    </div>
+
+    <script>
+        // get elements
+        const entrance = document.getElementById('entranceScreen');
+        const quizContainer = document.getElementById('quizContainer');
+        const startBtn = document.getElementById('startQuizBtn');
+
+        // original quiz functions (copied from earlier, must be globally available)
+        function calculateScore() {
+            const totalQuestions = 20;
+            let score = 0;
+            const form = document.getElementById('quizForm');
+            const resultArea = document.getElementById('result-area');
+
+            for (let i = 1; i <= totalQuestions; i++) {
+                const questionName = 'q' + i;
+                const radios = form.elements[questionName];
+                let selectedValue = null;
+                
+                if (radios) {
+                    for (const radio of radios) {
+                        if (radio.checked) {
+                            selectedValue = radio.value;
+                            break;
+                        }
+                    }
+                }
+
+                const block = document.getElementById(questionName + '-block');
+                if (selectedValue === 'correct') {
+                    score++;
+                    block.classList.add('correct');
+                    block.classList.remove('incorrect');
+                } else {
+                    block.classList.add('incorrect');
+                    block.classList.remove('correct');
+                }
+            }
+
+            const percentage = Math.round((score / totalQuestions) * 100);
+            resultArea.style.display = 'block';
+            resultArea.innerHTML = `Your Final Score: ${score} / ${totalQuestions} (${percentage}%)`;
+            
+            if (percentage >= 80) {
+                resultArea.style.backgroundColor = '#d9e8cf';
+                resultArea.style.color = '#235c2b';
+                resultArea.innerHTML += "<br>Excellent! You are a Science Star!";
+            } else if (percentage >= 50) {
+                resultArea.style.backgroundColor = '#f7e7c3';
+                resultArea.style.color = '#7d6236';
+                resultArea.innerHTML += "<br>Good job! Review the red sections to improve.";
+            } else {
+                resultArea.style.backgroundColor = '#f4cfc9';
+                resultArea.style.color = '#992f1d';
+                resultArea.innerHTML += "<br>Don't give up! Study the notes and try again.";
+            }
+            
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        }
+
+        function resetQuiz() {
+            const form = document.getElementById('quizForm');
+            const blocks = document.getElementsByClassName('question-block');
+            const resultArea = document.getElementById('result-area');
+            
+            form.reset();
+            resultArea.style.display = 'none';
+            for (let block of blocks) {
+                block.classList.remove('correct', 'incorrect');
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // start button action: hide entrance, show quiz
+        startBtn.addEventListener('click', function() {
+            entrance.style.display = 'none';
+            quizContainer.classList.add('active');  // make visible
+            // scroll smoothly to top of quiz
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // ensure if someone manually adjusts, entrance starts visible, quiz hidden
+        window.addEventListener('load', function() {
+            entrance.style.display = 'flex';   // it's a flex container via wrapper
+            quizContainer.classList.remove('active');
+        });
+    </script>
+</body>
+</html>
