@@ -2,35 +2,48 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>STEVE EDU HUB | JHS Excellence</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STEVE EDU HUB | JHS Learning</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root { --primary: #1e3a8a; --secondary: #f59e0b; --math: #0284C7; --sci: #059669; --comp: #7C3AED; }
+        :root {
+            --primary: #1e3a8a; --secondary: #f59e0b; --white: #ffffff;
+            --math-color: #0284C7; --sci-color: #059669; --comp-color: #7C3AED;
+        }
         body { font-family: 'Poppins', sans-serif; background: #f8fafc; margin: 0; padding-bottom: 80px; }
         
-        /* Banner & Quote System */
+        /* --- Logo & Header --- */
+        header { background: var(--white); padding: 1rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .logo-box { display: flex; align-items: center; gap: 10px; }
+        .logo-graphic { width: 45px; height: 45px; background: var(--primary); border-radius: 10px; color: white; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.2rem; }
+        .logo-text { font-weight: 900; color: var(--primary); font-size: 1.2rem; }
+
+        /* --- Quote Slideshow --- */
         .banner-container { background: var(--primary); padding: 2rem; color: white; text-align: center; border-radius: 20px; margin: 20px; position: relative; min-height: 200px; }
         .quote-slide { display: none; }
         .quote-slide.active { display: block; animation: fadeIn 0.5s; }
         .dot-container { display: flex; justify-content: center; gap: 10px; margin-top: 15px; }
         .dot { width: 10px; height: 10px; background: rgba(255,255,255,0.5); border-radius: 50%; cursor: pointer; }
         .dot.active { background: var(--secondary); }
-        
-        /* Navigation & Content */
-        header { background: white; padding: 1rem; display: flex; align-items: center; gap: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .logo { background: var(--primary); color: white; padding: 10px; border-radius: 8px; font-weight: 800; }
+
+        /* --- Tabs --- */
         .content-section { display: none; padding: 20px; }
         .content-section.active { display: block; }
-        .card { background: white; padding: 20px; border-radius: 15px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .subject-card { background: white; padding: 20px; border-radius: 15px; margin-bottom: 15px; border-left: 5px solid var(--primary); box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+
+        /* --- Bottom Nav --- */
         nav { position: fixed; bottom: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 15px; box-shadow: 0 -2px 10px rgba(0,0,0,0.05); }
         .nav-item { cursor: pointer; text-align: center; font-size: 0.8rem; }
+        .active-tab { color: var(--primary); font-weight: bold; }
     </style>
 </head>
 <body>
 
 <header>
-    <div class="logo">SEH</div>
-    <div style="font-weight:900; color:var(--primary)">STEVE EDU HUB</div>
+    <div class="logo-box">
+        <div class="logo-graphic">SEH</div>
+        <div class="logo-text">STEVE EDU HUB</div>
+    </div>
 </header>
 
 <div id="home" class="content-section active">
@@ -38,30 +51,32 @@
         <div id="slideshow"></div>
         <div class="dot-container" id="dots"></div>
     </div>
-    <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; padding: 20px;">
-        <div class="card" onclick="switchTab('math')"><i class="fas fa-calculator" style="color:var(--math)"></i><h3>Math</h3></div>
-        <div class="card" onclick="switchTab('sci')"><i class="fas fa-flask" style="color:var(--sci)"></i><h3>Science</h3></div>
-        <div class="card" onclick="switchTab('comp')"><i class="fas fa-laptop-code" style="color:var(--comp)"></i><h3>Computing</h3></div>
+
+    <div class="dashboard-grid" style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; padding: 20px;">
+        <div class="subject-card" onclick="switchTab('math')"><h3>Mathematics</h3></div>
+        <div class="subject-card" onclick="switchTab('sci')"><h3>Science</h3></div>
+        <div class="subject-card" onclick="switchTab('comp')"><h3>Computing</h3></div>
     </div>
 </div>
 
 <div id="math" class="content-section">
     <h1>Mathematics</h1>
-    <div class="card">
-        <h3>Example: Ratio Problem</h3>
-        <p><strong>Q:</strong> In a test, 2/3 of the learners passed. If the number of learners who failed was 69, how many passed?</p>
-        <button onclick="document.getElementById('m1').style.display='block'">Show Solution</button>
-        <div id="m1" style="display:none; margin-top:10px; background:#e0f2fe; padding:10px;">
-            <p>1/3 failed = 69.<br>Total = 69 × 3 = 207.<br>Passed = 207 - 69 = <strong>138</strong>.</p>
+    <div class="subject-card">
+        <h3>Practice Question</h3>
+        <p><strong>Question:</strong> In a test, 2/3 of the learners passed. If the number of learners who failed was 69, how many passed?</p>
+        <button onclick="document.getElementById('math-ans').style.display='block'">Show Solution</button>
+        <div id="math-ans" style="display:none; margin-top:10px; background:#e0f2fe; padding:10px;">
+            <p><strong>Solution:</strong><br>
+            If 2/3 passed, then 1/3 failed.<br>
+            1/3 of total = 69<br>
+            Total learners = 69 × 3 = 207<br>
+            Passed = 207 - 69 = <strong>138 learners</strong></p>
         </div>
     </div>
 </div>
 
-<div id="sci" class="content-section"><h1>Science</h1><p>Integrated Science modules coming soon!</p></div>
-<div id="comp" class="content-section"><h1>Computing</h1><p>ICT and Digital Skills modules coming soon!</p></div>
-
 <nav>
-    <div class="nav-item" onclick="switchTab('home')"><i class="fas fa-home"></i><div>Home</div></div>
+    <div class="nav-item active-tab" onclick="switchTab('home')"><i class="fas fa-home"></i><div>Home</div></div>
     <div class="nav-item" onclick="switchTab('math')"><i class="fas fa-calculator"></i><div>Math</div></div>
     <div class="nav-item" onclick="switchTab('sci')"><i class="fas fa-flask"></i><div>Science</div></div>
     <div class="nav-item" onclick="switchTab('comp')"><i class="fas fa-laptop-code"></i><div>Computing</div></div>
@@ -72,33 +87,48 @@
 </footer>
 
 <script>
+    // Quote Slideshow
     const quotes = [
         {text: "Education is the most powerful weapon to change the world.", author: "Nelson Mandela"},
         {text: "Mathematics is the language of the universe.", author: "Galileo"},
         {text: "Science is magic that works.", author: "Kurt Vonnegut"}
     ];
+    
     let current = 0;
-    function init() {
-        const container = document.getElementById('slideshow');
+    const container = document.getElementById('slideshow');
+    const dots = document.getElementById('dots');
+
+    function renderQuotes() {
+        container.innerHTML = '';
         quotes.forEach((q, i) => {
             container.innerHTML += `<div class="quote-slide ${i===0?'active':''}">
-                <div style="font-size:1.2rem; font-style:italic;">"${q.text}"</div>
-                <div style="margin-top:10px; color:var(--secondary)">- ${q.author}</div>
+                <div class="quote-text">${q.text}</div>
+                <div class="quote-author">- ${q.author}</div>
             </div>`;
-            document.getElementById('dots').innerHTML += `<div class="dot ${i===0?'active':''}" onclick="show(${i})"></div>`;
+            dots.innerHTML += `<div class="dot ${i===0?'active':''}" onclick="show(${i})"></div>`;
         });
     }
+
     function show(i) {
         current = i;
         document.querySelectorAll('.quote-slide').forEach((s, idx) => s.classList.toggle('active', idx === i));
         document.querySelectorAll('.dot').forEach((d, idx) => d.classList.toggle('active', idx === i));
     }
-    setInterval(() => { current = (current + 1) % quotes.length; show(current); }, 6000);
+
+    setInterval(() => {
+        current = (current + 1) % quotes.length;
+        show(current);
+    }, 6000);
+
+    // Tab Switching
     function switchTab(id) {
         document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
         document.getElementById(id).classList.add('active');
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active-tab'));
+        if(document.getElementById('nav-'+id)) document.getElementById('nav-'+id).classList.add('active-tab');
     }
-    init();
+
+    renderQuotes();
 </script>
 </body>
 </html>
