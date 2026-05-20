@@ -80,14 +80,15 @@
         .search-button:hover, .menu-button:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(30, 58, 138, 0.4); }
         main { padding: 1.5rem 1.25rem 100px; background: var(--light-gray); }
         
-        .dashboard-features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 2rem 0; }
+        /* Updated Grid to 2 columns */
+        .dashboard-features { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin: 2rem 0; }
         @media (max-width: 768px) { .dashboard-features { grid-template-columns: 1fr; } }
         .dashboard-feature { background: white; padding: 1.5rem; border-radius: 16px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.08); cursor: pointer; transition: all 0.3s ease; border: 1px solid transparent; }
         .dashboard-feature:hover { transform: translateY(-5px); box-shadow: 0 12px 32px rgba(0,0,0,0.15); border-color: var(--primary-color); }
         .dashboard-feature i { font-size: 2.5rem; margin-bottom: 1rem; display: inline-block; padding: 15px; border-radius: 50%; }
-        .feat-math i { background: #E0F2FE; color: #0284C7; }
-        .feat-sci i { background: #DCFCE7; color: #059669; }
-        .feat-eng i { background: #FEF3C7; color: #D97706; }
+        /* Updated Icon Themes */
+        .feat-eng i { background: #E0F2FE; color: #0284C7; }
+        .feat-comp i { background: #DCFCE7; color: #059669; }
         
         .subject-section { background: var(--white); padding: 1.75rem; border-radius: 20px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06); margin-bottom: 1.75rem; border: 1px solid var(--border-gray); transition: all 0.4s ease; position: relative; overflow: hidden; }
         .subject-section::before { content: ''; position: absolute; top: 0; left: 0; width: 5px; height: 100%; background: linear-gradient(135deg, var(--primary-color) 0%, var(--info) 100%); transform: scaleY(0); transition: transform 0.4s ease; }
@@ -229,7 +230,7 @@
 
         <div id="search-modal" class="search-modal" onclick="closeSearchOnOverlay(event)"><div class="search-content"><h3 style="margin-bottom: 1rem;">🔍 Search Platform</h3><input type="text" class="search-input" placeholder="Search courses, quizzes..." id="searchInput"><div id="searchResults" style="margin-top: 1rem; font-size:0.9rem;"></div><button class="close-search" onclick="toggleSearch()">Close</button></div></div>
 
-        <div id="menu-overlay" class="menu-overlay" onclick="closeMenuOnOverlay(event)"><div class="side-menu"><div class="menu-header"><h3>STEVE EDU HUB</h3><button class="menu-close" onclick="toggleMenu()">✕</button></div><ul class="menu-list"><li><a href="#" onclick="switchTab('dashboard'); toggleMenu()"><i class="fas fa-home"></i> Home</a></li><li><a href="#" onclick="switchTab('math'); toggleMenu()"><i class="fas fa-calculator"></i> Mathematics</a></li><li><a href="#" onclick="switchTab('sci'); toggleMenu()"><i class="fas fa-flask"></i> Science</a></li><li><a href="#" onclick="switchTab('eng'); toggleMenu()"><i class="fas fa-book"></i> English</a></li><li><a href="#" onclick="showLeaderboardModal(); toggleMenu()"><i class="fas fa-trophy"></i> Leaderboard</a></li><li><a href="#" onclick="generateCertificate(); toggleMenu()"><i class="fas fa-certificate"></i> Get Certificate</a></li><li><a href="#" onclick="resetProgress(); toggleMenu()"><i class="fas fa-sync-alt"></i> Reset Progress</a></li></ul></div></div>
+        <div id="menu-overlay" class="menu-overlay" onclick="closeMenuOnOverlay(event)"><div class="side-menu"><div class="menu-header"><h3>STEVE EDU HUB</h3><button class="menu-close" onclick="toggleMenu()">✕</button></div><ul class="menu-list"><li><a href="#" onclick="switchTab('dashboard'); toggleMenu()"><i class="fas fa-home"></i> Home</a></li><li><a href="#" onclick="switchTab('eng'); toggleMenu()"><i class="fas fa-book"></i> English</a></li><li><a href="#" onclick="switchTab('comp'); toggleMenu()"><i class="fas fa-laptop-code"></i> Computing</a></li><li><a href="#" onclick="showLeaderboardModal(); toggleMenu()"><i class="fas fa-trophy"></i> Leaderboard</a></li><li><a href="#" onclick="generateCertificate(); toggleMenu()"><i class="fas fa-certificate"></i> Get Certificate</a></li><li><a href="#" onclick="resetProgress(); toggleMenu()"><i class="fas fa-sync-alt"></i> Reset Progress</a></li></ul></div></div>
 
         <main>
             <div id="dashboard" class="tab-content active">
@@ -251,48 +252,40 @@
                 </div>
 
                 <div class="dashboard-features">
-                    <div class="dashboard-feature feat-math" onclick="switchTab('math')"><i class="fas fa-square-root-alt"></i><h3>Mathematics</h3><p>Algebra, Calculus & more</p></div>
-                    <div class="dashboard-feature feat-sci" onclick="switchTab('sci')"><i class="fas fa-atom"></i><h3>Science</h3><p>Physics, Bio, Chemistry</p></div>
-                    <div class="dashboard-feature feat-eng" onclick="switchTab('eng')"><i class="fas fa-spell-check"></i><h3>English</h3><p>Grammar & Literature</p></div>
+                    <div class="dashboard-feature feat-eng" onclick="switchTab('eng')"><i class="fas fa-book"></i><h3>English</h3><p>Grammar, Literature & Writing</p></div>
+                    <div class="dashboard-feature feat-comp" onclick="switchTab('comp')"><i class="fas fa-laptop-code"></i><h3>Computing</h3><p>Digital Skills & Programming</p></div>
                 </div>
                 
                 <div class="leaderboard-preview"><h3><i class="fas fa-crown"></i> Top Learners</h3><div id="leaderboardMini"></div></div>
             </div>
 
-            <div id="math" class="tab-content"><div class="welcome-banner" style="padding:1.5rem"><h2>Mathematics</h2></div>
-                <section class="subject-section"><h3 class="subject-header">📐 Algebra Essentials</h3>
-                    <div class="embed-video"><iframe src="https://www.youtube.com/embed/NybHckSEQBI" title="Algebra Basics" frameborder="0" allowfullscreen></iframe></div>
-                    <div id="mathQuizContainer" class="quiz-card"><h4>🧠 Quick Quiz: Algebra</h4><div id="mathQuiz"></div><button class="certificate-btn" onclick="submitQuiz('math')">Submit Math Quiz</button></div>
-                </section>
-            </div>
-
-            <div id="sci" class="tab-content"><div class="welcome-banner" style="background: linear-gradient(135deg, #059669 0%, #10b981 100%); padding:1.5rem"><h2>Science</h2></div>
-                <section class="subject-section"><h3 class="subject-header">🔬 Cell Biology</h3>
-                    <div class="embed-video"><iframe src="https://www.youtube.com/embed/8IlzKcy5HfY" title="Biology Intro" frameborder="0" allowfullscreen></iframe></div>
-                    <div id="sciQuizContainer" class="quiz-card"><h4>🧬 Science Challenge</h4><div id="sciQuiz"></div><button class="certificate-btn" onclick="submitQuiz('sci')">Submit Science Quiz</button></div>
-                </section>
-            </div>
-
-            <div id="eng" class="tab-content"><div class="welcome-banner" style="background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%); padding:1.5rem"><h2>English</h2></div>
+            <div id="eng" class="tab-content"><div class="welcome-banner" style="background: linear-gradient(135deg, #0284C7 0%, #38bdf8 100%); padding:1.5rem"><h2>English</h2></div>
                 <section class="subject-section"><h3 class="subject-header">📖 Grammar Mastery</h3>
                     <div class="embed-video"><iframe src="https://www.youtube.com/embed/2JrDjdjYhHE" title="English Grammar" frameborder="0" allowfullscreen></iframe></div>
                     <div id="engQuizContainer" class="quiz-card"><h4>✍️ English Quiz</h4><div id="engQuiz"></div><button class="certificate-btn" onclick="submitQuiz('eng')">Submit English Quiz</button></div>
                 </section>
             </div>
+
+            <div id="comp" class="tab-content"><div class="welcome-banner" style="background: linear-gradient(135deg, #059669 0%, #10b981 100%); padding:1.5rem"><h2>Computing</h2></div>
+                <section class="subject-section"><h3 class="subject-header">💻 Digital Literacy</h3>
+                    <div class="embed-video"><iframe src="https://www.youtube.com/embed/O_X61-x4J-Y" title="Computing Basics" frameborder="0" allowfullscreen></iframe></div>
+                    <div id="compQuizContainer" class="quiz-card"><h4>🖥️ Computing Challenge</h4><div id="compQuiz"></div><button class="certificate-btn" onclick="submitQuiz('comp')">Submit Computing Quiz</button></div>
+                </section>
+            </div>
         </main>
 
         <footer class="custom-footer"><p class="footer-text">Created by <span class="footer-creator">Sir Steve</span> — World-Class Edu Platform</p></footer>
-        <nav><div class="nav-buttons"><button id="btn-dashboard" class="tab-button active" onclick="switchTab('dashboard')"><i class="fas fa-home fa-lg"></i><span>Home</span></button><button id="btn-math" class="tab-button" onclick="switchTab('math')"><i class="fas fa-calculator fa-lg"></i><span>Math</span></button><button id="btn-sci" class="tab-button" onclick="switchTab('sci')"><i class="fas fa-flask fa-lg"></i><span>Science</span></button><button id="btn-eng" class="tab-button" onclick="switchTab('eng')"><i class="fas fa-book fa-lg"></i><span>English</span></button></div></nav>
+        <nav><div class="nav-buttons"><button id="btn-dashboard" class="tab-button active" onclick="switchTab('dashboard')"><i class="fas fa-home fa-lg"></i><span>Home</span></button><button id="btn-eng" class="tab-button" onclick="switchTab('eng')"><i class="fas fa-book fa-lg"></i><span>English</span></button><button id="btn-comp" class="tab-button" onclick="switchTab('comp')"><i class="fas fa-laptop-code fa-lg"></i><span>Computing</span></button></div></nav>
     </div>
 
     <script>
-        // ----- QUOTE SLIDESHOW LOGIC -----
+        // ----- FIXED QUOTE SLIDESHOW LOGIC -----
         const quotes = [
             { text: "Education is the most powerful weapon which you can use to change the world.", author: "Nelson Mandela" },
-            { text: "Science is a way of thinking much more than it is a body of knowledge.", author: "Carl Sagan" },
-            { text: "Mathematics is the language in which God has written the universe.", author: "Galileo Galilei" },
-            { text: "The important thing is to never stop questioning.", author: "Albert Einstein" },
-            { text: "Biology is the most powerful technology ever created.", author: "Craig Venter" }
+            { text: "The beautiful thing about learning is that no one can take it away from you.", author: "B.B. King" },
+            { text: "Live as if you were to die tomorrow. Learn as if you were to live forever.", author: "Mahatma Gandhi" },
+            { text: "The function of education is to teach one to think intensively and to think critically.", author: "Martin Luther King Jr." },
+            { text: "Knowledge is power. Information is liberating. Education is the premise of progress.", author: "Kofi Annan" }
         ];
 
         let currentQuote = 0;
@@ -301,10 +294,15 @@
             const sliderContainer = document.getElementById('quote-slider');
             const dotsContainer = document.getElementById('slider-dots');
             
+            // Clear existing content just in case
+            sliderContainer.innerHTML = '';
+            dotsContainer.innerHTML = '';
+            
             quotes.forEach((quote, index) => {
                 // Create Slide
                 const slide = document.createElement('div');
                 slide.className = `quote-slide ${index === 0 ? 'active' : ''}`;
+                slide.id = `quote-slide-${index}`;
                 slide.innerHTML = `
                     <div class="quote-text">"${quote.text}"</div>
                     <div class="quote-author">- ${quote.author}</div>
@@ -314,6 +312,7 @@
                 // Create Dot
                 const dot = document.createElement('div');
                 dot.className = `dot ${index === 0 ? 'active' : ''}`;
+                dot.id = `quote-dot-${index}`;
                 dot.onclick = () => showSlide(index);
                 dotsContainer.appendChild(dot);
             });
@@ -332,30 +331,32 @@
             slides.forEach(s => s.classList.remove('active'));
             dots.forEach(d => d.classList.remove('active'));
             
-            if(slides[currentQuote]) slides[currentQuote].classList.add('active');
-            if(dots[currentQuote]) dots[currentQuote].classList.add('active');
+            const targetSlide = document.getElementById(`quote-slide-${index}`);
+            const targetDot = document.getElementById(`quote-dot-${index}`);
+            
+            if(targetSlide) targetSlide.classList.add('active');
+            if(targetDot) targetDot.classList.add('active');
         }
 
         // ----- GLOBAL EDUCATION PLATFORM ENHANCEMENTS -----
         const quizzes = {
-            math: { q: "Solve: What is x if 2x + 5 = 15?", options: ["x=5", "x=10", "x=7", "x=4"], correct: 0, points: 10 },
-            sci: { q: "Which organelle is the powerhouse of the cell?", options: ["Nucleus", "Mitochondria", "Ribosome", "Chloroplast"], correct: 1, points: 10 },
-            eng: { q: "Which sentence is grammatically correct?", options: ["He go to school.", "They plays football.", "She runs fast.", "I am happy."], correct: 2, points: 10 }
+            eng: { q: "Which sentence is grammatically correct?", options: ["He go to school.", "They plays football.", "She runs fast.", "I am happy."], correct: 2, points: 10 },
+            comp: { q: "What does CPU stand for?", options: ["Computer Personal Unit", "Central Processing Unit", "Central Printed Unit", "Computer Processor Unit"], correct: 1, points: 10 }
         };
         
-        let userProgress = { mathDone: false, sciDone: false, engDone: false, totalXP: 0, streak: 0, lastLogin: Date.now() };
+        let userProgress = { engDone: false, compDone: false, totalXP: 0, streak: 0, lastLogin: Date.now() };
         
         function loadProgress() {
             const saved = localStorage.getItem("steveEduProgress");
             if(saved) { userProgress = JSON.parse(saved); }
-            else { userProgress = { mathDone: false, sciDone: false, engDone: false, totalXP: 0, streak: 0, lastLogin: Date.now() }; }
+            else { userProgress = { engDone: false, compDone: false, totalXP: 0, streak: 0, lastLogin: Date.now() }; }
             updateUIStats();
         }
         function saveProgress() { localStorage.setItem("steveEduProgress", JSON.stringify(userProgress)); updateUIStats(); updateLeaderboardUI(); }
         
         function updateUIStats() {
             document.getElementById("totalPoints").innerText = userProgress.totalXP;
-            let completedCount = (userProgress.mathDone?1:0)+(userProgress.sciDone?1:0)+(userProgress.engDone?1:0);
+            let completedCount = (userProgress.engDone?1:0)+(userProgress.compDone?1:0);
             document.getElementById("completedQuizzes").innerText = completedCount;
             document.getElementById("streakDays").innerText = userProgress.streak;
         }
@@ -422,7 +423,7 @@
         
         function resetProgress() {
             if(confirm("⚠️ Reset all progress, points and quizzes? This cannot be undone.")){
-                userProgress = { mathDone: false, sciDone: false, engDone: false, totalXP: 0, streak: 0, lastLogin: Date.now() };
+                userProgress = { engDone: false, compDone: false, totalXP: 0, streak: 0, lastLogin: Date.now() };
                 saveProgress();
                 renderQuizzes();
                 alert("Progress has been reset. Start fresh!");
@@ -434,3 +435,69 @@
             if(total < 10) { alert("Complete at least one quiz to unlock your certificate! Earn 10+ XP first."); return; }
             let certDiv = document.createElement('div');
             certDiv.style.position = 'fixed'; certDiv.style.top = '-1000px'; certDiv.style.left = '-1000px';
+            certDiv.style.width = '800px'; certDiv.style.padding = '40px'; certDiv.style.background = 'linear-gradient(145deg, #fff8e7, #fff)';
+            certDiv.style.border = '12px solid #f59e0b'; certDiv.style.borderRadius = '24px'; certDiv.style.textAlign = 'center'; certDiv.style.fontFamily = 'Poppins, serif';
+            certDiv.innerHTML = `<div style="margin-bottom:20px;"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%231e3a8a'/%3E%3Ctext x='50' y='68' font-size='48' text-anchor='middle' fill='white' font-weight='bold'%3ESE%3C/text%3E%3C/svg%3E" width="80"></div>
+            <h1 style="color:#1e3a8a; font-size:42px;">🏅 CERTIFICATE OF EXCELLENCE</h1>
+            <p style="font-size:20px;">This certifies that</p>
+            <h2 style="font-size:38px; font-weight:800; margin:15px;">STEVE EDU SCHOLAR</h2>
+            <p>has successfully completed world-class modules and earned <strong style="color:#f59e0b;">${userProgress.totalXP} XP points</strong> on STEVE EDU HUB.</p>
+            <p style="margin-top:30px;">🎓 Mastery in English & Computing 🎓</p>
+            <hr style="margin:30px 0;"><p style="font-size:12px;">Issued: ${new Date().toDateString()} | STEVE EDU PLATFORM</p>`;
+            document.body.appendChild(certDiv);
+            try {
+                const canvas = await html2canvas(certDiv, { scale: 2 });
+                const imgData = canvas.toDataURL('image/png');
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF('landscape', 'mm', 'a4');
+                pdf.addImage(imgData, 'PNG', 10, 10, 280, 190);
+                pdf.save(`STEVE_EDU_Certificate.pdf`);
+            } catch(e) { alert("Certificate generation error."); }
+            document.body.removeChild(certDiv);
+        }
+        
+        function performSearch() {
+            let query = document.getElementById("searchInput").value.toLowerCase().trim();
+            let resultsDiv = document.getElementById("searchResults");
+            if(!query) { resultsDiv.innerHTML = ""; return; }
+            let subjects = ["eng", "comp"];
+            let matches = [];
+            subjects.forEach(sub => {
+                let content = document.getElementById(sub)?.innerText.toLowerCase() || "";
+                if(content.includes(query)) matches.push(`✅ ${sub.toUpperCase()} section contains "${query}"`);
+            });
+            if(matches.length) resultsDiv.innerHTML = `<div style="background:#f1f5f9; border-radius:12px; padding:8px;">🔎 ${matches.join('<br>')}</div>`;
+            else resultsDiv.innerHTML = `<div>📚 No matches — try "grammar" or "computing".</div>`;
+        }
+        
+        function updateOfflineUI() { const statusDiv = document.getElementById('offlineStatus'); if(!navigator.onLine) { statusDiv.innerText = "⚠️ You are offline — content is cached and fully available!"; statusDiv.style.display = "block"; statusDiv.classList.remove('online'); } else { statusDiv.innerText = "✅ You are online — STEVE EDU HUB ready!"; statusDiv.style.display = "block"; statusDiv.classList.add('online'); setTimeout(()=>{ statusDiv.style.display = "none"; }, 3000); } }
+        
+        window.addEventListener('load', () => {
+            initSlideshow();
+            loadProgress(); renderQuizzes(); updateOfflineUI();
+            window.addEventListener('online', updateOfflineUI); window.addEventListener('offline', updateOfflineUI);
+            const searchInputDom = document.getElementById('searchInput');
+            if(searchInputDom) searchInputDom.addEventListener('input', performSearch);
+            window.onscroll = function() { document.getElementById('scrollTopBtn').classList.toggle('visible', window.scrollY > 300); };
+            document.getElementById('scrollTopBtn').onclick = () => window.scrollTo({top:0, behavior:'smooth'});
+            if(!localStorage.getItem("steveInit")) { localStorage.setItem("steveInit","true"); }
+        });
+        
+        function toggleMenu() { document.getElementById('menu-overlay').classList.toggle('active'); }
+        function closeMenuOnOverlay(event) { if (event.target.id === 'menu-overlay') toggleMenu(); }
+        function toggleSearch() { document.getElementById('search-modal').classList.toggle('active'); document.getElementById('searchResults').innerHTML = ""; }
+        function closeSearchOnOverlay(event) { if (event.target.id === 'search-modal') toggleSearch(); }
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-button').forEach(el => el.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            const btnId = 'btn-' + tabId; const btn = document.getElementById(btnId); if(btn) btn.classList.add('active');
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+        
+        if('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js').catch(err => console.log("SW registration skipped, offline still works via cache", err));
+        }
+    </script>
+</body>
+</html>
